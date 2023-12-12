@@ -1,3 +1,4 @@
+import { Navbar } from "@material-tailwind/react";
 import { Outlet } from "react-router-dom"
 
 

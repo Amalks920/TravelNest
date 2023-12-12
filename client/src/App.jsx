@@ -6,38 +6,70 @@ import Login from './pages/Login';
 import VerifyEmailOrPhone from './features/authentication/components/VerifyEmailOrPhone';
 import AuthPageContainer from './layouts/AuthPageContainer';
 import ForgotPasswordForm from './features/authentication/components/ForgotPasswordForm';
+import PageContainer from './layouts/PageContainer';
+import HotelRegistration from './pages/HotelRegistration';
+
 
 function App() {
 
-  
 
- const appRouter=createBrowserRouter([
-  {
-    path:'/',
-    element:<AuthPageContainer/>,
-    children:[
-      {
-        path:'/signup',
-        element:<Signup/>
+
+  const appRouter = createBrowserRouter([
+    {
+      element: <AuthPageContainer />,
+      children: [
+        {
+          path: '/signup',
+          element: <Signup />
+        },
+        {
+          path: '/login',
+          element: <Login />
+        },
+        {
+          path: '/verify-email-or-phone',
+          element: <VerifyEmailOrPhone />
+        },
+        {
+          path: '/forgot-password',
+          element: <ForgotPasswordForm />
+        },
+      ]
+    },
+
+    {
+      element:<PageContainer/>,
+      children:[
+        {
+          path:'/',
+          element:<HotelRegistration/>
+        }
+      ]
+    },
+
+    {
+      path: '/owner',
+      element: <AuthPageContainer />,
+      children: [
+        {
+          path: '/owner/signup',
+          element: <Signup />
+        }
+      ]
     },
     {
-      path:'/login',
-      element:<Login/>
-    },
-    {
-      path:'/verify-email-or-phone',
-      element:<VerifyEmailOrPhone/>
-    },
-    {
-      path:'/forgot-password',
-      element:<ForgotPasswordForm/>
+      path: '/admin',
+      element: <AuthPageContainer />,
+      children: [
+        {
+          path: '/admin/login',
+          element: <Login />
+        }
+      ]
     }
-    ]
-  },
 
+  ]);
 
-]);
- 
   return (
     <RouterProvider router={appRouter}>
 
