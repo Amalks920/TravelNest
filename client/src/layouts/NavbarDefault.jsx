@@ -39,7 +39,7 @@ export function NavbarDefault() {
                     variant="h6"
                     className="mr-4 cursor-pointer py-1.5 lg:ml-2"
                 >
-                    Material Tailwind
+                    TravelNest
                 </Typography>
                 <div className="hidden lg:block">
                     <NavList />

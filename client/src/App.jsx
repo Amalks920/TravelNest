@@ -8,6 +8,7 @@ import AuthPageContainer from './layouts/AuthPageContainer';
 import ForgotPasswordForm from './features/authentication/components/ForgotPasswordForm';
 import PageContainer from './layouts/PageContainer';
 import HotelRegistration from './pages/HotelRegistration';
+import CustomersList from './pages/customersList';
 
 
 function App() {
@@ -49,11 +50,19 @@ function App() {
 
     {
       path: '/owner',
-      element: <AuthPageContainer />,
+      element: <PageContainer />,
       children: [
         {
           path: '/owner/signup',
           element: <Signup />
+        },
+        {
+          path:'/owner/hotel-registration',
+          element:<HotelRegistration/>
+        },
+        {
+          path:'/owner/users-list',
+          element:<CustomersList/>
         }
       ]
     },

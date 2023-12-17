@@ -94,7 +94,7 @@ export function Sidebar() {
                 <ShoppingBagIcon className="h-5 w-5" />
               </ListItemPrefix>
               <Typography color="blue-gray" className="mr-auto font-normal">
-                E-Commerce
+                Guests
               </Typography>
             </AccordionHeader>
           </ListItem>
@@ -104,13 +104,13 @@ export function Sidebar() {
                 <ListItemPrefix>
                   <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                 </ListItemPrefix>
-                Orders
+                Hotels
               </ListItem>
               <ListItem>
                 <ListItemPrefix>
                   <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                 </ListItemPrefix>
-                Products
+                Bookings
               </ListItem>
             </List>
           </AccordionBody>
@@ -134,7 +134,7 @@ export function Sidebar() {
           <ListItemPrefix>
             <Cog6ToothIcon className="h-5 w-5" />
           </ListItemPrefix>
-          Settings
+          Sales
         </ListItem>
         <ListItem>
           <ListItemPrefix>
