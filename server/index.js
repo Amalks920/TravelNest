@@ -4,6 +4,8 @@ const morgan=require('morgan')
 const swaggerDocs=require('./utils/swagger')
 const dbConnect = require('./src/config/dbConfig')
 const routes=require('./routes')
+const cors=require('cors')
+const corsOptions=require('./src/config/cors/corsOption')
 const authRouter=require('./src/api/routes/authenticationRoute')
 const userRouter=require('./src/api/routes/userRoute')
 const hotelRouter=require('./src/api/routes/hotelRoute')
@@ -16,7 +18,7 @@ const messageRouter=require('./src/api/routes/messageRoute')
 
 app.use(morgan('combined'))
 app.use(express.json());
-
+app.use(cors(corsOptions))
 
 app.use('/api/auth',authRouter)
 app.use('/api/user',userRouter)

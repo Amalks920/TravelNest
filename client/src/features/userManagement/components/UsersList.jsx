@@ -35,7 +35,7 @@ import {
     },
   ];
    
-  const TABLE_HEAD = ["Member", "Function", "Status", "Employed", ""];
+  const TABLE_HEAD = ["Guest", "NO of People", "Status", "CheckIn","CheckOut", "Room No", ""];
    
   const TABLE_ROWS = [
     {
@@ -82,20 +82,20 @@ import {
       org: "Executive",
       online: false,
       date: "04/10/21",
-    },
+    }
   ];
    
   export function UsersList() {
     return (
-      <Card className="h-full w-full">
+      <Card className="h-full w-full my-6">
         <CardHeader floated={false} shadow={false} className="rounded-none">
           <div className="mb-8 flex items-center justify-between gap-8">
             <div>
               <Typography variant="h5" color="blue-gray">
-                Members list
+                Guests
               </Typography>
               <Typography color="gray" className="mt-1 font-normal">
-                See information about all members
+                See information about All Guests
               </Typography>
             </div>
             <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
@@ -103,7 +103,7 @@ import {
                 view all
               </Button>
               <Button className="flex items-center gap-3" size="sm">
-                <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add member
+                <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add Guest
               </Button>
             </div>
           </div>
@@ -223,6 +223,7 @@ import {
                           </IconButton>
                         </Tooltip>
                       </td>
+                      
                     </tr>
                   );
                 },

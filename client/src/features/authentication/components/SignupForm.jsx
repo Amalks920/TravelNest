@@ -50,7 +50,7 @@ const SignupForm = ({ role }) => {
          }) => (
 
             <form onSubmit={handleSubmit} className="grid grid-rows-7  gap-8 shadow-2xl p-10 ">
-               <p>{role}</p>
+               <h1 className="text-2xl font-bold text-center">{role}</h1>
                <div><Auth text={'SIGNIN WITH GOOGLE'} /></div>
                <div><FormInput
                   onChange={handleChange}

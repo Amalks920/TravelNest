@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const validateResource = require('../middlewares/validateResource')
-const userModel = require('../models/userModel')
+const userModel = require('../models/userModel');
+const { registerNewUser } = require('../controllers/authController');
 
   /**
    * @openapi
@@ -29,9 +30,7 @@ const userModel = require('../models/userModel')
    *        description: Bad request
    */
 
-router.post('/signup', (req, res) => {
-    res.status(201).json({ message: 'signup success' })
-})
+router.post('/signup', registerNewUser)
 
   /**
    * @openapi

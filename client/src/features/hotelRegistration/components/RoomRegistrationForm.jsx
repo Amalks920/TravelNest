@@ -1,6 +1,7 @@
-import {FormInput} from "../components/form/FormInput"
+import { ButtonDefault } from "../../../components/form/ButtonDefault";
+import { FormInput } from "../../../components/form/FormInput";
 
-const HotelRegistration=()=>{
+const RoomRegistrationForm=()=>{
     return (
         <form className="grid grid-rows-6 gap-6" action="">
             <div>
@@ -21,8 +22,20 @@ const HotelRegistration=()=>{
             <div>
                 <FormInput/>
             </div>
+            <div>
+                <FormInput/>
+            </div>
+            <div>
+                <FormInput/>
+            </div>
+            <div>
+                <FormInput type={'file'}/>
+            </div>
+            <div>
+               <ButtonDefault bg={'blue'}/>
+            </div>
         </form>
     )
 }
 
-export default HotelRegistration;
+export default RoomRegistrationForm;

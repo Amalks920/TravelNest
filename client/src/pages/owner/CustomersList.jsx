@@ -1,4 +1,4 @@
-import { UsersList } from "../features/userManagement/components/UsersList";
+import { UsersList } from "../../features/userManagement/components/UsersList";
 
 
 const CustomersList=()=>{
