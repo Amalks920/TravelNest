@@ -2,7 +2,10 @@ const express = require('express');
 const router = express.Router();
 const validateResource = require('../middlewares/validateResource')
 const userModel = require('../models/userModel');
-const { registerNewUser } = require('../controllers/authController');
+const { registerNewUser, login, handleRefreshToken } = require('../controllers/authController');
+const { signUpValidation, loginValidation } = require('../utils/validations');
+const handleError = require('../middlewares/errorHandler');
+
 
   /**
    * @openapi
@@ -30,7 +33,7 @@ const { registerNewUser } = require('../controllers/authController');
    *        description: Bad request
    */
 
-router.post('/signup', registerNewUser)
+router.post('/signup',signUpValidation,handleError, registerNewUser)
 
   /**
    * @openapi
@@ -58,10 +61,25 @@ router.post('/signup', registerNewUser)
    *        description: Bad request
    */
 
-  router.post('/login', (req, res) => {
-    res.status(201).json({ message: 'login success' });
-})
+  router.post('/login',loginValidation,handleError,login)
 
+  /**
+   * @openapi
+   * '/api/auth/refresh':
+   *  get:
+   *     tags:
+   *     - Auth
+   *     summary: refresh token
+   *     responses:
+   *      200:
+   *        description: Success
+   *      402:
+   *        description: password or email incorrect
+   *      400:
+   *        description: Bad request
+   */
+
+  router.get('/refresh',handleRefreshToken)
 
   /**
    * @openapi

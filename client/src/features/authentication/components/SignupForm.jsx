@@ -1,25 +1,45 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ButtonDefault } from "../../../components/form/ButtonDefault";
 import { CheckboxDefault } from "../../../components/form/CheckboxDefault";
 import { FormInput } from "../../../components/form/FormInput";
 import { Auth } from "./Auth";
 import { Formik } from "formik";
 import * as  Yup from 'yup'
+import { useDispatch, useSelector } from "react-redux";
+//import signup from "../services/signup";
+import { getSignupStatus,getSignupError,selectData,createUser } from "../services/signupSlice";
 
 const SignupForm = ({ role }) => {
    
-   const _onSave = (values) => {
-      console.log(values)
-  }
-   return (
+   const error=useSelector(getSignupError)
+   const status=useSelector(getSignupStatus)
 
+   const dispatch=useDispatch()
+   const navigate=useNavigate()
+
+   const _onSave = (values) => {
+      dispatch(createUser(values))
+  }
+
+
+  if(status==="pending"){
+   return (
+      <h1>Loading.....</h1>
+   )
+  }else if(status==='succeeded'){
+      navigate('/login')
+  }
+
+
+   return (
+    
       <Formik
          initialValues={{ username: '', email: '', phone: '', password: '', repassword: '' }}
          validationSchema={Yup.object({
             username: Yup.string()
                .min(6, 'username is too short - should be 6 chars minimum'),
             email: Yup.string().email('Invalid email address').required('Required'),
-            phone: Yup.string().email('Invalid email address').required('Required'),
+            phone: Yup.string(),
             password: Yup.string()
                .required('Required')
                .min(8, 'Password is too short - should be 8 chars minimum')
@@ -36,7 +56,10 @@ const SignupForm = ({ role }) => {
                )
 
          })}
-         onSubmit={(values) => _onSave(values)}
+         onSubmit={(values) =>{
+            _onSave(values)
+            //signup(values)
+         }}
       >
          {({
             values,
@@ -50,7 +73,9 @@ const SignupForm = ({ role }) => {
          }) => (
 
             <form onSubmit={handleSubmit} className="grid grid-rows-7  gap-8 shadow-2xl p-10 ">
+               
                <h1 className="text-2xl font-bold text-center">{role}</h1>
+               <p className="text-red-600 border-2 text-center">{error}</p>
                <div><Auth text={'SIGNIN WITH GOOGLE'} /></div>
                <div><FormInput
                   onChange={handleChange}

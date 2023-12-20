@@ -4,13 +4,26 @@ import { FormInput } from "../../../components/form/FormInput"
 import { Auth } from "./Auth"
 import { Formik } from "formik"
 import * as Yup from 'yup'
+import { setCredentials } from "../services/loginSlice"
+import { useLoginMutation } from "../../../services/apiAuthSlice"
+import { useDispatch } from "react-redux"
 
 
 
 const LoginForm = () => {
+    const dispatch=useDispatch()
 
-    const _onSave = (values) => {
-        console.log(values)
+    const [login,{isLoading}]=useLoginMutation()
+   console.log(login)
+    const _onSave = async (values) => {
+        try {
+            values.role='user'
+            const userData=await login(values).unwrap()
+            console.log(userData)
+            dispatch(setCredentials(userData))
+        } catch (error) {
+            
+        }
     }
 
     return (

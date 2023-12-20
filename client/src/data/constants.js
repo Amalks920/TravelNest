@@ -76,3 +76,6 @@ export const SITEMAP = [
       links: ["Templates", "UI Kits", "Icons", "Mockups"],
     },
   ];
+
+
+export const BASE_URL='http://localhost:5000/api'

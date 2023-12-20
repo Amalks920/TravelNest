@@ -5,6 +5,8 @@ const swaggerDocs=require('./utils/swagger')
 const dbConnect = require('./src/config/dbConfig')
 const routes=require('./routes')
 const cors=require('cors')
+const cookieParser=require('cookie-parser')
+const credentials=require('./src/api/middlewares/credentials')
 const corsOptions=require('./src/config/cors/corsOption')
 const authRouter=require('./src/api/routes/authenticationRoute')
 const userRouter=require('./src/api/routes/userRoute')
@@ -15,10 +17,15 @@ const reviewRouter=require('./src/api/routes/reviewRoute')
 const couponRouter=require('./src/api/routes/couponRoute')
 const salesRouter=require('./src/api/routes/salesRoute')
 const messageRouter=require('./src/api/routes/messageRoute')
+const handleError = require('./src/api/middlewares/errorHandler')
+
 
 app.use(morgan('combined'))
 app.use(express.json());
+app.use(credentials);
 app.use(cors(corsOptions))
+app.use(cookieParser())
+
 
 app.use('/api/auth',authRouter)
 app.use('/api/user',userRouter)
@@ -32,7 +39,7 @@ app.use('/api/messages',messageRouter)
 
 app.listen(5000,async ()=>{
     console.log('server running')
-   //  dbConnect()
+     dbConnect()
       routes(app)
      swaggerDocs(app,5000)
 })

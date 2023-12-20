@@ -221,6 +221,11 @@ var userSchema = new mongoose.Schema({
         match: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}$/,
         message: 'Invalid email address',
     },
+    
+    phone:{
+        type:Number,
+        required:true
+    },
 
     password:{
         type:String,
@@ -238,7 +243,10 @@ var userSchema = new mongoose.Schema({
         type:String,
         default:"user"
     },
-
+    refreshToken:{
+        type:String,
+        default:null
+    },
   favorites:[{
     type:mongoose.ObjectId,
     ref:"Hotels"
