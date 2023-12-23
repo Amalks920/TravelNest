@@ -18,8 +18,6 @@ export const createUser=createAsyncThunk('signup/createUser',async  (data)=>{
    // return await response.data
 })
 
-console.log(createUser)
-
 
 // export const extendedApiSlice=apiSlice.injectEndpoints({
 //     endpoints:builder=>{

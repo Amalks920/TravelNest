@@ -20,6 +20,7 @@ import {
   PowerIcon,
 } from "@heroicons/react/24/solid";
 import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
 
  
 export function Sidebar() {
@@ -30,7 +31,7 @@ export function Sidebar() {
   };
  
   return (
-    <Card className="h-[calc(100vh-2rem)] w-fit max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
+    <Card className="h-[calc(100vh-2rem)] w-fit max-w-[20rem] p-4 shadow-2xl shadow-blue-gray-200">
       <div className="mb-2 p-4">
         <Typography variant="h5" color="blue-gray">
           Sidebar
@@ -141,13 +142,13 @@ export function Sidebar() {
                 <ListItemPrefix>
                   <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                 </ListItemPrefix>
-                My Hotels
+                <Link to={'/owner/register-hotel'}>Register Hotel</Link>
               </ListItem>
               <ListItem>
                 <ListItemPrefix>
                   <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                 </ListItemPrefix>
-                Hotel2
+                <Link to={'/owner/hotel-list'}>Hotel List</Link>
               </ListItem>
             </List>
           </AccordionBody>

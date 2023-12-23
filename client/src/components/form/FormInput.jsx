@@ -4,20 +4,22 @@ import { Formik } from "formik";
 
  
 export function FormInput(props) {
-  function handleChange(){}
   return (
     // w-72
-    <div className="w-96">
-
+    // <div className="w-80">
+<>
       <Input {...props}
-       onChange={props.onChange}
-       onBlur={props.onBlur}
-       value={props.value}
-       error={props.error}
-       success={props.success}
+      color="lightBlue"
+      size="regular"
+      outline={true}
+      onChange={props.onChange}
+      onBlur={props.onBlur}
+      value={props.value}
+      error={props.error}
+      success={props.success}
          />
-      
-    </div>
+      </>
+    // </div>
     
   );
 }

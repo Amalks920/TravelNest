@@ -1,0 +1,25 @@
+const cloudinary=require('../../config/cloudinary')
+
+const uploadImages=(files)=>{
+    return new Promise(async (resolve,reject)=>{
+        let cloudImgArray=[]
+        try {
+            for(var i=0;i<files.length;i++){
+                cloudImage = await cloudinary.uploader.upload(files[i].path, {
+                    timeout: 60000,
+                  });
+                  cloudImgArray.push(cloudImage)
+            }
+            console.log(cloudImgArray)
+            resolve(cloudImgArray)
+
+        } catch (error) {
+            console.log(error)
+            reject(error)
+        }
+    })
+}
+
+module.exports={
+    uploadImages
+}

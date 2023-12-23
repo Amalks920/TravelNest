@@ -8,7 +8,8 @@ export const apiAuthSlice = apiSlice.injectEndpoints({
                 url: '/auth/login',
                 method: 'POST',
                 body: { ...credentials }
-            })
+            }),
+            // providesTags:['auth'],
         })
     })
 })

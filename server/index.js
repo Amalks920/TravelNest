@@ -22,6 +22,7 @@ const handleError = require('./src/api/middlewares/errorHandler')
 
 app.use(morgan('combined'))
 app.use(express.json());
+app.use(express.urlencoded({extended:false}));
 app.use(credentials);
 app.use(cors(corsOptions))
 app.use(cookieParser())

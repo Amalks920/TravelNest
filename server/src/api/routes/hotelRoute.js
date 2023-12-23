@@ -1,6 +1,7 @@
 const express = require('express');
+const { createHotel } = require('../controllers/hotelController');
 const router = express.Router();
-
+const uploader=require('../../config/multer')
 /**
  * @openapi
  * paths:
@@ -143,9 +144,7 @@ router.put('edit-hotel/{hotel-id}',(req,res)=>{
  */
 
 
-router.post('/add-hotel',(req,res)=>{
- res.status(200).json({message:'hotel added'})   
-})
+router.post('/add-hotel',uploader.array('images',10),createHotel)
 
 
 /**

@@ -6,26 +6,26 @@ import { Sidebar } from "./Sidebar"
 
 const PageContainer = () => {
 
-    // return (
+    return (
 
-    //     <div className="grid grid-cols-5 gap-4">
-    //         <div className="border-2 col-span-full">
-    //             <NavbarDefault />
-    //         </div>
+        <div className="grid grid-cols-12">
+            <div className=" col-span-full">
+                <NavbarDefault />
+            </div>
 
-    //         <div className="border-2 border-black col-span-1 relative z-30">
-    //             <Sidebar />
-    //         </div>
-    //         <div className="border-2 border-green-700 col-span-4 flex justify-center items-center">
-    //             <Outlet />
-    //         </div>
+            <div className=" w-fit col-span-2 relative z-30 ">
+                <Sidebar />
+            </div>
+            <div className="col-span-10  flex justify-center items-center">
+                <Outlet />
+            </div>
 
-    //         <div className="border-2 col-span-full">
-    //             <Footer />
-    //         </div>
-    //     </div>
+            <div className="border-2 col-span-full">
+                <Footer />
+            </div>
+        </div>
 
-    // )
+    )
 
 
     return (

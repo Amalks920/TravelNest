@@ -40,5 +40,6 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
  export const apiSlice=createApi({
     baseQuery:baseQueryWithReauth,
-    endpoints:builder => ({})
+    endpoints:builder => ({}),
+    //provideTags:['user','verifyEmail']
  })
