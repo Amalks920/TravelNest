@@ -1,4 +1,5 @@
 const cloudinary=require('../../config/cloudinary')
+const hotelModel=require('../models/hotelModel')
 
 const uploadImages=(files)=>{
     return new Promise(async (resolve,reject)=>{
@@ -20,6 +21,29 @@ const uploadImages=(files)=>{
     })
 }
 
+const saveHotelDocumentHelper = function (data) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const response = await hotelModel.create(data)
+            resolve(response)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+const getHotelsHelper=function (id=null){
+    return new Promise(async (resolve,reject)=>{
+        try {
+        const hotels=await hotelModel.find({});
+            resolve(hotels)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 module.exports={
-    uploadImages
+    uploadImages,
+    saveHotelDocumentHelper,getHotelsHelper
 }

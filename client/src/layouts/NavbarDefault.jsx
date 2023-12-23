@@ -18,10 +18,13 @@ import {
     XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { NavList,NavListMenu } from "../components/Navbar/NavComponents";
+import { useDispatch } from "react-redux";
+import { logout } from "../features/authentication/services/loginSlice";
 
 
 export function NavbarDefault() {
     const [openNav, setOpenNav] = React.useState(false);
+    const dispatch=useDispatch()
 
     React.useEffect(() => {
         window.addEventListener(
@@ -29,6 +32,10 @@ export function NavbarDefault() {
             () => window.innerWidth >= 960 && setOpenNav(false),
         );
     }, []);
+
+    function handleLogout(){
+        dispatch(logout())
+    }
 
     return (
         <Navbar className="mx-auto max-w-[100vw] mb-1 px-4 py-2 shadow-2xl shadow-blue-gray-200">
@@ -68,8 +75,10 @@ export function NavbarDefault() {
             <Collapse open={openNav}>
                 <NavList />
                 <div className="flex w-full flex-nowrap items-center gap-2 lg:hidden">
-                    <Button variant="outlined" size="sm" color="blue-gray" fullWidth>
-                        Log In
+                    <Button onClick={()=>{
+                        handleLogout()
+                    }} variant="outlined" size="sm" color="blue-gray" fullWidth>
+                        Logout
                     </Button>
                     <Button variant="gradient" size="sm" fullWidth>
                         Sign In

@@ -3,6 +3,8 @@ import { Outlet } from "react-router-dom"
 import { NavbarDefault } from "./NavbarDefault"
 import { Footer } from "./Footer"
 import { Sidebar } from "./Sidebar"
+import { useSelector } from "react-redux"
+import { selectToken } from "../features/authentication/services/loginSlice"
 
 const PageContainer = () => {
 
@@ -28,12 +30,7 @@ const PageContainer = () => {
     )
 
 
-    return (
-        <div className="flex justify-center items-center w-[100vw] h-[100vh]">
-            <Outlet />
-        </div>
 
-    )
 }
 
 export default PageContainer

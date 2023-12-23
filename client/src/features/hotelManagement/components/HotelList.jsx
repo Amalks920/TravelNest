@@ -20,6 +20,9 @@ import {
     Tooltip,
   } from "@material-tailwind/react";
    
+
+  import { useGetHotelsQuery } from "../services/hotelsSlice";
+
   const TABS = [
     {
       label: "All",
@@ -48,8 +51,15 @@ import {
       date: "23/04/18",
     }
   ];
+
+
    
    function HotelList() {
+
+    const {data:hotels,isLoading,isSuccess,isError,error}=useGetHotelsQuery()
+
+    console.table(hotels)
+
     return (
       <Card className="h-full w-full p-16">
         <CardHeader floated={false} shadow={false} className="rounded-none">

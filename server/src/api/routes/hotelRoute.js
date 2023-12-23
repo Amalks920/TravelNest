@@ -1,5 +1,5 @@
 const express = require('express');
-const { createHotel } = require('../controllers/hotelController');
+const { createHotel, getAllHotels } = require('../controllers/hotelController');
 const router = express.Router();
 const uploader=require('../../config/multer')
 /**
@@ -23,9 +23,7 @@ const uploader=require('../../config/multer')
  *           description: Bad request
  */
 
-router.get('/get-all-hotels',(req,res)=>{
-    res.status(200).json({})
-})
+router.get('/get-all-hotels',getAllHotels)
 
 
 /**

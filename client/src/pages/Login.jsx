@@ -1,9 +1,12 @@
+import { useLocation } from "react-router"
 import LoginForm from "../features/authentication/components/LoginForm"
 
 const Login=()=>{
+    const {pathname}= useLocation()
+    console.log(pathname)
     return (
         
-        <LoginForm/>
+        <LoginForm role={pathname==='/login'?'user':pathname==='/owner/login'?'owner':pathname==='/admin/login'?'admin':null}/>
      
     )
 }

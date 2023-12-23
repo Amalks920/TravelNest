@@ -1,5 +1,5 @@
-const mongoose = require('mongoose'); // Erase if already required
-const ObjectId=require('mongodb').ObjectId
+const mongoose = require("mongoose"); // Erase if already required
+const ObjectId = require("mongodb").ObjectId;
 
 /**
  * @openapi
@@ -30,40 +30,43 @@ const ObjectId=require('mongodb').ObjectId
  *          type: string
  */
 
-
 // Define the Hotel schema
 const hotelSchema = new mongoose.Schema({
-  
-    // Name of the hotel
-    name: { type: String, required: true },
-  
-    // Description of the hotel
-    description: { type: String, required: true },
-  
-    // Array of images associated with the hotel
-    images: { type: [String], default: [] },
-  
-    // Reference to reviews associated with the hotel
-    reviews: { type: mongoose.Schema.Types.ObjectId, ref: 'Review' },
-  
-    // Average rating for the hotel
-    averageRating: { type: Number, default: 0 },
-  
-    // Array of room references associated with the hotel
-    rooms: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Room' }],
-  
-    // Reference to a coupon associated with the hotel
-    coupon: { type: mongoose.Schema.Types.ObjectId, ref: 'Coupon' },
-  
-    // Location information for the hotel
-    location: { type: String, required: true },
-  
-    // Timestamp for when the hotel was created
-    createdAt: { type: Date, default: Date.now },
+  // Name of the hotel
+  hotelName: { type: String, required: true },
 
-    updatedAt: { type: Date, default: Date.now }
-  });
+  // Description of the hotel
+  description: { type: String, required: true },
 
+  // Array of images associated with the hotel
+  images: { type: [String], default: [] },
+
+  // Reference to reviews associated with the hotel
+  reviews: { type: mongoose.Schema.Types.ObjectId, ref: "Review" },
+
+  // Average rating for the hotel
+  averageRating: { type: Number, default: 0 },
+
+  // Array of room references associated with the hotel
+  rooms: [{ type: mongoose.Schema.Types.ObjectId, ref: "Room", default: null }],
+
+  // Reference to a coupon associated with the hotel
+  coupon: { type: mongoose.Schema.Types.ObjectId, ref: "Coupon" },
+
+  // Location information for the hotel
+  location: { type: String, required: true },
+
+  status: {
+    type: String,
+    enum: ["listed", "delisted"],
+    default: "delisted",
+    required: true,
+  },
+  // Timestamp for when the hotel was created
+  createdAt: { type: Date, default: Date.now },
+
+  updatedAt: { type: Date, default: Date.now },
+});
 
 //Export the model
-module.exports = mongoose.model('hotel', hotelSchema);
+module.exports = mongoose.model("hotel", hotelSchema);

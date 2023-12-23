@@ -16,6 +16,7 @@ const signupHelper = function (data) {
 const loginHelper = function ({ email, password, role }) {
     return new Promise(async (resolve, reject) => {
         try {
+
             const foundUser = await userModel.findOne({ email: email, role: role })
 
             if (!foundUser) return reject('user not found')

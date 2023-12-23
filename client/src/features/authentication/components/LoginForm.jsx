@@ -4,14 +4,15 @@ import { FormInput } from "../../../components/form/FormInput"
 import { Auth } from "./Auth"
 import { Formik } from "formik"
 import * as Yup from 'yup'
-import { setCredentials } from "../services/loginSlice"
+import { selectToken, setCredentials } from "../services/loginSlice"
 import { useLoginMutation } from "../../../services/apiAuthSlice"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 
 
 
-const LoginForm = () => {
+const LoginForm = ({role}) => {
+    const token=useSelector(selectToken)
     const dispatch=useDispatch()
     const navigate=useNavigate()
 
@@ -19,11 +20,17 @@ const LoginForm = () => {
 
     const _onSave = async (values) => {
         try {
-            values.role='user'
+            values.role=role
             const userData=await login(values).unwrap()
             console.log(userData)
             dispatch(setCredentials({...userData.data}))
-             navigate('/home')
+       
+            if(isSuccess){
+                console.log(console.log(token))
+            }
+            
+            navigate(role==='user'?'/home':role==='owner'?'/owner/register-hotel':role==='admin'?'/owner/home':null)
+           
         } catch (error) {
             console.log('error')
             console.log(error)
@@ -58,6 +65,7 @@ const LoginForm = () => {
 
 
                 <form onSubmit={handleSubmit} className="grid grid-rows-7 gap-8 shadow-2xl p-10 pt-20 border-t-2 border-t-gray-100 rounded-3xl">
+                    <p>{role}</p>
                     <div><Auth text={'SIGNIN WITH GOOGLE'} /></div>
                     <div><FormInput label={'Email'}
                         name={'email'}
@@ -80,7 +88,7 @@ const LoginForm = () => {
                     /></div>
 
                     <Link to={'/signup'}><p className="  font-light -mt-5 text-black">Don't Have an Account?</p></Link>
-                    <div className=" -mt-5"><ButtonDefault type={'submit'} onSubmit={handleSubmit} disabled={isSubmitting} /></div>
+                    <div className=" -mt-5"><ButtonDefault type={'submit'}  onSubmit={handleSubmit} disabled={isSubmitting} /></div>
                     <Link to={'/verify-email-or-phone'} className="relative bottom-6 left-24"><p className="font-medium  text-sm text-black">Forgot Password?</p></Link>
                 </form>
             )}

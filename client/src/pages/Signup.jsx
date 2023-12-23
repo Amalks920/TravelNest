@@ -7,7 +7,7 @@ const Signup=()=>{
    console.log(pathname)
     return (
       
-        <SignupForm role={pathname==='/signup'?'user':'owner'}/>
+        <SignupForm role={pathname==='/signup'?'user':pathname==='/owner/signup'?'owner':null}/>
 
     )
 }

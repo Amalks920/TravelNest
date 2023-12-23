@@ -10,10 +10,13 @@ import { useEffect, useRef } from "react";
 import { useRegisterHotelMutation } from "../services/hotelRegApiSlice";
 import axios from "axios";
 import { BASE_URL } from "../../../data/constants";
+import { useSelector } from "react-redux";
+import { selectToken } from "../../authentication/services/loginSlice";
 
 const RegistrationForm = () => {
 
-
+    const select=useSelector(selectToken)
+    console.log(select)
     const [registerHotel, { isError, isLoading, isSuccess }] = useRegisterHotelMutation()
 
     const _onSave = async (values) => {
@@ -28,15 +31,7 @@ const RegistrationForm = () => {
             for(var i=0;i<images.length;i++){
                 formData.append('images',images[i])
             }
-            
 
-           //.log(values)
-        //    const response = await axios.post(BASE_URL+'/hotel/add-hotel', formData, {
-        //     headers: {
-        //       'Content-Type': 'multipart/form-data',
-        //     },
-        //   });
-        //   console.log(response)
            const response = await registerHotel(formData)
             console.log(response)
         } catch (error) {
