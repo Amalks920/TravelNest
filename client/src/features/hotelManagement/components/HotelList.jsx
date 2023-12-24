@@ -22,6 +22,7 @@ import {
    
 
   import { useGetHotelsQuery } from "../services/hotelsSlice";
+import { Link } from "react-router-dom";
 
   const TABS = [
     {
@@ -38,7 +39,7 @@ import {
     },
   ];
    
-  const TABLE_HEAD = ["Hotel Name", "", "Status", "Created", ""];
+  const TABLE_HEAD = ["Hotel Name", "description", "Status", "Created", "hell"];
    
   const TABLE_ROWS = [
     {
@@ -58,7 +59,7 @@ import {
 
     const {data:hotels,isLoading,isSuccess,isError,error}=useGetHotelsQuery()
 
-    console.table(hotels)
+    console.log(hotels)
 
     return (
       <Card className="h-full w-full p-16">
@@ -66,11 +67,11 @@ import {
           <div className="mb-8 flex items-center justify-between gap-8">
             <div>
               <Typography variant="h5" color="blue-gray">
-                Members list
+                Guests list
               </Typography>
-              <Typography color="gray" className="mt-1 font-normal">
+              {/* <Typography color="gray" className="mt-1 font-normal">
                 See information about all members
-              </Typography>
+              </Typography> */}
             </div>
             <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
               <Button variant="outlined" size="sm">
@@ -123,32 +124,32 @@ import {
               </tr>
             </thead>
             <tbody>
-              {TABLE_ROWS.map(
-                ({ img, name, email, job, org, online, date }, index) => {
+              {hotels?.response?.map(
+                ({ _id, hotelName, description, images, location, status, createdAt }, index) => {
                   const isLast = index === TABLE_ROWS.length - 1;
                   const classes = isLast
                     ? "p-4"
                     : "p-4 border-b border-blue-gray-50";
    
                   return (
-                    <tr key={name}>
+                    <tr key={hotelName}>
                       <td className={classes}>
                         <div className="flex items-center gap-3">
-                          <Avatar src={img} alt={name} size="sm" />
+                          <Avatar src={images[0]} alt={hotelName} size="sm" />
                           <div className="flex flex-col">
                             <Typography
                               variant="small"
                               color="blue-gray"
                               className="font-normal"
                             >
-                              {name}
+                              {hotelName}
                             </Typography>
                             <Typography
                               variant="small"
                               color="blue-gray"
-                              className="font-normal opacity-70"
+                              className="font-normal opacity-70 "
                             >
-                              {email}
+                              {description}
                             </Typography>
                           </div>
                         </div>
@@ -160,24 +161,39 @@ import {
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {job}
+                            {location}
                           </Typography>
                           <Typography
                             variant="small"
                             color="blue-gray"
                             className="font-normal opacity-70"
                           >
-                            {org}
+                            {'hiiiii'}
                           </Typography>
                         </div>
                       </td>
+
+                      <td className={classes}>
+                        <div className="flex flex-col">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {console.log(_id)}
+                        <Link to={`/owner/room-list/${_id}`}>View Rooms</Link>   
+                          </Typography>
+\
+                        </div>
+                      </td>
+
                       <td className={classes}>
                         <div className="w-max">
                           <Chip
                             variant="ghost"
                             size="sm"
-                            value={online ? "online" : "offline"}
-                            color={online ? "green" : "blue-gray"}
+                            value={status==='listed' ? "Listed" : "offline"}
+                            color={status==='listed' ? "green" : "blue-gray"}
                           />
                         </div>
                       </td>
@@ -187,7 +203,17 @@ import {
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {date}
+                          {createdAt}
+                        </Typography>
+
+                      </td>
+                      <td>
+                      <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                         <Link to={`/owner/register-room/${_id}`}> <Button width={'sm'}>Add Rooms</Button></Link>
                         </Typography>
                       </td>
                       <td className={classes}>

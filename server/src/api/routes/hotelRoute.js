@@ -83,6 +83,10 @@ router.get(`/get-a-hotel/{hotel-id}`,(req,res)=>{
     res.status(200).json({})
   })
 
+  router.post('/test',(req,res)=>{
+    console.log(req.body)
+  })
+
 
 
   

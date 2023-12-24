@@ -35,6 +35,7 @@ getAllHotels=async (req,res,next)=>{
     const response=await getHotelsHelper()
     res.status(200).json({response})
   } catch (error) {
+    console.log(error.message)
     res.status(404).json({error})
   }
     

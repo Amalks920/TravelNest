@@ -29,10 +29,10 @@ const AuthPageContainer = () => {
                     <NavbarDefault />
                 </div>
 
-                <div className="border-2 border-black col-span-1 relative z-30">
+                <div className="md:hidden lg:flex col-span-1 relative z-30">
                     <Sidebar />
                 </div>
-                <div className="border-2 border-green-700 col-span-4 flex justify-center items-center">
+                <div className=" col-span-4 flex justify-center items-center">
                     <Outlet />
                 </div>
 

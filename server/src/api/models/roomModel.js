@@ -1,5 +1,5 @@
-const mongoose = require('mongoose'); // Erase if already required
-const ObjectId = require('mongodb').ObjectId
+const mongoose = require("mongoose"); // Erase if already required
+const ObjectId = require("mongodb").ObjectId;
 
 /**
  * @openapi
@@ -61,48 +61,65 @@ const ObjectId = require('mongodb').ObjectId
  */
 
 const roomSchema = new mongoose.Schema({
-    // Unique identifier for the room
-    id: { type: mongoose.Schema.Types.ObjectId, required: true },
+  // Unique identifier for the room
+  id: { type: mongoose.Schema.Types.ObjectId },
 
-    // Type of the room (e.g., single, double, suite, etc.)
-    roomType: {
-        type: String,
-        enum: ['single', 'double', 'suite', 'family', 'adjoining', 'presidential', 'penthouse'],
-        required: true,
-    },
+  // Type of the room (e.g., single, double, suite, etc.)
+  roomType: {
+    type: String,
+    enum: [
+      "single",
+      "double",
+      "suite",
+      "family",
+      "adjoining",
+      "presidential",
+      "penthouse",
+    ],
+    required: true,
+  },
 
-    // Description of the room
-    description: { type: String, required: true },
+  // Description of the room
+  description: { type: String, required: true },
 
-    // Type of bedding in the room
-    bedding: { type: String, required: true },
+  // Type of bedding in the room
+  //bedding: { type: String, enum: ['En-suite', 'Bathtub', 'Shower'], required: true },
 
-    // Features associated with the room (as an array of strings)
-    features: { type: [String], default: [] },
+  // Features associated with the room (as an array of strings)
+  features: { type: [String], default: [] },
 
-    // Size of the room in square units
-    size: { type: Number, required: true },
+  // Size of the room in square units
+  size: { type: Number, required: true },
 
-    // Amenities available in the room (as an array of strings)
-    amenities: { type: [String], default: [] },
+  // Amenities available in the room (as an array of strings)
+  amenities: { type: String, default: "" },
 
-    // Type of bathroom in the room (e.g., En-suite, Bathtub, Shower)
-    bathroomType: {
-        type: String,
-        enum: ['En-suite', 'Bathtub', 'Shower'],
-        required: true,
-    },
+  // Type of bathroom in the room (e.g., En-suite, Bathtub, Shower)
+  bathroomType: {
+    type: String,
+    enum: ["en-suite", "bathtub", "shower"],
+    required: true,
+  },
 
-    // Rate or cost of the room
-    rate: { type: Number, required: true },
+  hotel_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Hotel",
+    required: true,
+  },
 
-    // Timestamp for when the room was created
-    timestamps: { type: Date, default: Date.now },
+  // Array of images associated with the hotel
+  images: { type: [String], default: [] },
+  
+  // Rate or cost of the room
+  rate: { type: Number, required: true },
+
+  // Timestamp for when the room was created
+  // timestamps: { type: Date, default: Date.now },
+  created_at: { type: Date, required: true, default: Date.now },
 });
 
-
 // Define the Room model
-const Room = mongoose.model('Room', roomSchema);
+const Room = mongoose.model("Room", roomSchema);
 
 // Export the Room model
 module.exports = Room;

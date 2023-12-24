@@ -63,9 +63,9 @@ const hotelSchema = new mongoose.Schema({
     required: true,
   },
   // Timestamp for when the hotel was created
-  createdAt: { type: Date, default: Date.now },
+  created_at    : { type: Date, required: true, default: Date.now }
 
-  updatedAt: { type: Date, default: Date.now },
+  //updatedAt: { type: Date, default: Date.now },
 });
 
 //Export the model

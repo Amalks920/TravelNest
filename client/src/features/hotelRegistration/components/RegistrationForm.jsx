@@ -61,7 +61,6 @@ const RegistrationForm = () => {
                     isSubmitting
                 }) => (
 
-
                     <Form onSubmit={handleSubmit}  className="grid grid-rows-12 gap-6  p-20 mb-8 w-fit" action="">
                         <h1 className="text-center text-2xl">Hotel Registration</h1>
                         <div className="w-[50vw] row-span-1 flex gap-4">
@@ -108,7 +107,7 @@ const RegistrationForm = () => {
                                 type={'file'} multiple accept=".jpg, .jpeg, .png" label="images" name='images' />
                         </div>
                         <div className="w-1/4 ml-72">
-                            <ButtonDefault bg={'blue'} type={'submit'} />
+                            <ButtonDefault bg={'blue'} type={'submit'} value={'submit'}/>
                         </div>
                     </Form>
                 )

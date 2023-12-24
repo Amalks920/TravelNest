@@ -7,7 +7,7 @@ import * as Yup from 'yup'
 import { selectToken, setCredentials } from "../services/loginSlice"
 import { useLoginMutation } from "../../../services/apiAuthSlice"
 import { useDispatch, useSelector } from "react-redux"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 
 
@@ -16,7 +16,8 @@ const LoginForm = ({role}) => {
     const dispatch=useDispatch()
     const navigate=useNavigate()
 
-    const [login,{isLoading,isError,isSuccess}]=useLoginMutation()
+    const [login,{isLoading,isError,isSuccess,error}]=useLoginMutation()
+    const [err,setErr]=useState('')
 
     const _onSave = async (values) => {
         try {
@@ -34,6 +35,7 @@ const LoginForm = ({role}) => {
         } catch (error) {
             console.log('error')
             console.log(error)
+            setErr(error?.error)
         }
     }
 
@@ -66,6 +68,7 @@ const LoginForm = ({role}) => {
 
                 <form onSubmit={handleSubmit} className="grid grid-rows-7 gap-8 shadow-2xl p-10 pt-20 border-t-2 border-t-gray-100 rounded-3xl">
                     <p>{role}</p>
+                    <p className="text-red-700 w-56 text-sm text-center">{err}</p>
                     <div><Auth text={'SIGNIN WITH GOOGLE'} /></div>
                     <div><FormInput label={'Email'}
                         name={'email'}

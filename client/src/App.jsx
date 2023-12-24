@@ -23,6 +23,7 @@ import path from 'path';
 import RequireOwnerAuth from './features/authentication/components/RequireOwnerAuth';
 import CheckAuth from './features/authentication/components/CheckAuth';
 import HotelList from './features/hotelManagement/components/HotelList';
+import RoomList from './features/hotelManagement/components/RoomList';
 
 function App() {
   const token = useSelector(selectToken)
@@ -53,9 +54,10 @@ function App() {
         <Route element={<RequireOwnerAuth allowedRole={'owner'} />}>
         <Route path="/owner/register-hotel" element={<HotelRegistration />} />
       </Route>
-        <Route path="/owner/register-room" element={<RoomRegistration />} />
+        <Route path="/owner/register-room/:hotel_id" element={<RoomRegistration />} />
       </Route>
         <Route path='/owner/hotel-list' element={<HotelList/>}></Route>
+        <Route path='/owner/room-list/:_id' element={<RoomList/>}></Route>
       </Route>
    
   </Routes>

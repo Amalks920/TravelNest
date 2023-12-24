@@ -38,7 +38,7 @@ app.use('/api/coupon',couponRouter)
 app.use('/api/sales',salesRouter)
 app.use('/api/messages',messageRouter)
 
-app.listen(5000,async ()=>{
+app.listen(4000,async ()=>{
     console.log('server running')
      dbConnect()
       routes(app)
