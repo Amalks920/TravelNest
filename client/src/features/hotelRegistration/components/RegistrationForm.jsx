@@ -6,10 +6,10 @@ import { Form, Field } from "formik";
 import * as Yup from "yup";
 import KErrorMessage from "../../../components/form/ErrorMessage";
 import useEventCallback from "use-event-callback";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRegisterHotelMutation } from "../services/hotelRegApiSlice";
 import axios from "axios";
-import { BASE_URL } from "../../../data/constants";
+import { BASE_URL, IMAGE_BASE_URL } from "../../../data/constants";
 import { useSelector } from "react-redux";
 import { selectToken } from "../../authentication/services/loginSlice";
 
@@ -33,8 +33,9 @@ const RegistrationForm = ({ isEditForm }) => {
   const initialLocation=useSelector(selectLocation)
   const initialDescription=useSelector(selectDescription)
   const initialImages=useSelector(selectImages)
+  const hotelImages=useGetHotel(hotel_id)
 
-  const hotel=useGetHotel(hotel_id)
+  
   
 
   const [registerHotel, { isError, isLoading, isSuccess }] =
@@ -52,7 +53,7 @@ const RegistrationForm = ({ isEditForm }) => {
         formData.append("images", images[i]);
       }
 
-      const response = await registerHotel(formData);
+      const response = await isEditForm?registerHotel(formData):edit;
       console.log(response);
     } catch (error) {
       console.log(error);
@@ -94,26 +95,33 @@ const RegistrationForm = ({ isEditForm }) => {
       }) => (
         <Form
           onSubmit={handleSubmit}
-          className="grid grid-rows-12 gap-6  p-20 mb-8 w-fit"
+          className={`grid grid-rows-[80px,80px,80px,80px,80px,${isEditForm && '80px'}] grid-cols-[30%,30%] gap-4 border-2 place-content-center  border-black w-full h-[100vh]`}
           action=""
         >
+
+          <div className="row-span-1 col-span-2">
           <h1 className="text-center text-2xl">
             {!isEditForm ? "Hotel Registration" : "Edit Hotel Details"}
           </h1>
-          <div className="w-[50vw] row-span-1 flex gap-4">
+          </div>
+
+          <div className=" row-span-1 col-span-2 md:col-span-1 ">
             <FormInput
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.hotelName}
               error={errors.hotelName && touched.hotelName && errors.hotelName}
               success={!errors.hotelName && touched.hotelName ? true : false}
-              width={"lg"}
               type={"text-area"}
               name="hotelName"
               label={"Hotel Name"}
             />
             {/* <KErrorMessage name={'hotelName'}/> */}
-            <FormInput
+
+          </div>
+
+          <div className="md:col-span-1 col-span-2 border">
+          <FormInput
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.location}
@@ -124,7 +132,7 @@ const RegistrationForm = ({ isEditForm }) => {
               label="Location"
             />
           </div>
-          <div>
+          <div className='row-span-2 col-span-2'>
             <Textarea
               onChange={handleChange}
               onBlur={handleBlur}
@@ -140,7 +148,17 @@ const RegistrationForm = ({ isEditForm }) => {
             ></Textarea>
             {/* <FormInput /> */}
           </div>
-          <div className="row-span-2 ">
+        { isEditForm===true &&  <div className="row-span-1 col-span-2 ">
+              <div className="flex w-[150px]  gap-5 ">
+                {
+                  hotelImages.map((img)=>{
+                    return <img className="w-fit h-fit" key={img} src={IMAGE_BASE_URL+img}/>
+                  })
+                }
+              </div>
+          </div>
+        }
+          <div className="row-span-1 col-span-2 ">
             <FormInput
               onChange={(event) => {
                 setFieldValue("images", event.target.files);
@@ -156,8 +174,8 @@ const RegistrationForm = ({ isEditForm }) => {
               name="images"
             />
           </div>
-          <div className="mx-auto border-2">
-            <ButtonDefault bg={"blue"} type={"submit"} value={"submit"} fullwidth/>
+          <div className="row-span-1 col-span-2">
+            <ButtonDefault bg={"blue"} type={"submit"} loading={isLoading?true:false} value={"submit"} fullwidth/>
           </div>
         </Form>
       )}

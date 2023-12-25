@@ -34,11 +34,11 @@ export function Sidebar() {
     <Card className="h-[calc(100vh-2rem)] fixed w-fit max-w-[20rem] p-4 shadow-2xl rounded-none shadow-blue-gray-200 z-10">
       <div className="mb-2 p-4">
         <Typography variant="h5" color="blue-gray">
-          Sidebar
+          TravelNest
         </Typography>
       </div>
       <List>
-        <Accordion
+        {/* <Accordion
           open={open === 1}
           icon={
             <ChevronDownIcon
@@ -115,7 +115,7 @@ export function Sidebar() {
               </ListItem>
             </List>
           </AccordionBody>
-        </Accordion>
+        </Accordion> */}
 
         <Accordion
           open={open === 3}

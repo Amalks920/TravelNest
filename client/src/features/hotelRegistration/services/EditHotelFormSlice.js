@@ -11,6 +11,12 @@ const editFormSlice=createSlice({
     name:'editHotelForm',
     initialState,
     reducers:{
+        updateEditHotelFormSlice:(state,action)=>{
+            state.hotelName=action.payload.hotelName
+            state.location=action.payload.location
+            state.description=action.payload.description
+            state.images=action.payload.images
+        },
         updateHotelName:(state,action)=>{
             state.hotelName=action.payload
         },
@@ -27,7 +33,7 @@ const editFormSlice=createSlice({
 })
 
 
-export const {updateDescription,updateHotelName,updateImage,updateLocation} =editFormSlice.actions 
+export const {updateDescription,updateHotelName,updateImage,updateLocation,updateEditHotelFormSlice} =editFormSlice.actions 
 
 export const selectHotelName=(state)=>state.editHotelForm.hotelName
 export const selectLocation=(state)=>state.editHotelForm.location
