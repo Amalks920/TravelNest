@@ -1,6 +1,9 @@
 import { Card, Typography } from "@material-tailwind/react";
 import { useParams } from "react-router-dom";
 import { useGetRoomsQuery } from "../services/roomsApiSlice";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { addRooms } from "../services/hotelListSlice";
  
 const TABLE_HEAD = ["Name", "Job", "Employed", ""];
  
@@ -36,8 +39,12 @@ const TABLE_ROWS = [
 const RoomList=()=>{
 
     const {_id}=useParams() 
+    const dispatch=useDispatch()
     const {data:rooms,isLoading,isSuccess,isError,error}=useGetRoomsQuery({_id});
-    console.log(rooms)
+console.log(rooms)
+    useEffect(()=>{
+      isSuccess && dispatch(addRooms(rooms.response))
+    },[isSuccess])
 
     return (
         <Card className="h-full w-full overflow-scroll">

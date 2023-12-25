@@ -1,7 +1,8 @@
 const express = require('express');
-const { createHotel, getAllHotels, getAHotel } = require('../controllers/hotelController');
+const { createHotel, getAllHotels, getAHotel, editHotel } = require('../controllers/hotelController');
 const router = express.Router();
-const uploader=require('../../config/multer')
+const uploader=require('../../config/multer');
+
 /**
  * @openapi
  * paths:
@@ -117,9 +118,7 @@ router.get(`/get-a-hotel/:hotel-id`,getAHotel)
  *           description: Bad request
  */
 
-router.put('edit-hotel/{hotel-id}',(req,res)=>{
-    res.status(200).json({})
-})
+router.put('/edit-hotel/:hotel_id',uploader.array('images',10), editHotel)
 
 
 /**

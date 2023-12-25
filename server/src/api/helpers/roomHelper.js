@@ -41,8 +41,30 @@ const getRoomsHelper=(hotel_id)=>{
     })
 }
 
+const editRoomHelper=(hotel_id,room_id,data,imgPathArr)=>{
+    return new Promise(async(resolve,reject)=>{
+      try {
+        const result=await roomModel.updateOne(
+          {_id:room_id},
+          {
+            $set:{
+              data
+            },
+            $push:{
+              images:{
+                $each:imgPathArr
+              }
+            }
+          }
+        )
+      } catch (error) {
+        reject(error)
+      }
+    })
+}
+
 module.exports = {
   addRoomHelper,addRoomToHotel,
-  getRoomsHelper
+  getRoomsHelper,editRoomHelper
 
 };

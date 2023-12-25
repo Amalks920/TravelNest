@@ -1,5 +1,5 @@
 const express = require('express');
-const { addRoom, getRooms } = require('../controllers/roomController');
+const { addRoom, getRooms, editRoom } = require('../controllers/roomController');
 const router = express.Router();
 const uploader=require('../../config/multer')
 /**
@@ -78,9 +78,7 @@ router.post('/add-room/:hotel_id',uploader.array('images',10),addRoom)
  *           description: Bad request
  */
 
-router.put('/edit-room/{hotel-id}/{room-id}',(req,res)=>{
-    res.status(200).json({msg:'room edited'})
-})
+router.put('/edit-room/{hotel-id}/{room-id}',editRoom)
 
 /**
  * @openapi

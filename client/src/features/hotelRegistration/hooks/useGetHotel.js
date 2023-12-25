@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useGetAHotelQuery } from "../services/getAHotelApiSlice";
 import { selectHotelById } from "../../hotelManagement/services/hotelListSlice";
-import { updateEditHotelFormSlice } from "../services/EditHotelFormSlice";
+import { updateEditHotelFormSlice } from "../services/editHotelFormSlice";
 
 
 const useGetHotel=(hotel_id)=>{

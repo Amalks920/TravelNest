@@ -1,8 +1,8 @@
 import RoomRegistrationForm from "../../features/hotelRegistration/components/RoomRegistrationForm";
 
-const RoomRegistration=()=>{
+const RoomRegistration=({isEditForm})=>{
     return (
-       <RoomRegistrationForm/>
+       <RoomRegistrationForm isEditForm/>
     )
 }
 

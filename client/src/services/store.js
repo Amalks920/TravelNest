@@ -6,8 +6,9 @@ import { persistReducer,persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import {thunk} from 'redux-thunk';
 import verifyEmailSlice from '../features/authentication/services/verifyEmailSlice';
-import EditHotelFormSlice from '../features/hotelRegistration/services/EditHotelFormSlice';
+import EditHotelFormSlice from '../features/hotelRegistration/services/editHotelFormSlice';
 import hotelListSlice from '../features/hotelManagement/services/hotelListSlice';
+import editRoomFormSlice from '../features/hotelRegistration/services/editRoomFormSlice';
 
 const persistConfig={
     key:'root',
@@ -27,7 +28,8 @@ const store=configureStore({
         persistedSlice:persistedAuthReducer,
         verify:verifyEmailSlice,
         signup:signupSlice,
-        editHotelForm:EditHotelFormSlice
+        editHotelForm:EditHotelFormSlice,
+        editRoomForm:editRoomFormSlice
     },
     middleware:[thunk],
     middleware: getDefaultMiddleware =>

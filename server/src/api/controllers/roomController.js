@@ -1,5 +1,10 @@
-const { addRoomHelper, addRoomToHotel, getRoomsHelper } = require("../helpers/roomHelper");
-const {uploadImages}=require('../helpers/hotelHelper');
+const {
+  addRoomHelper,
+  addRoomToHotel,
+  getRoomsHelper,
+  editRoomHelper,
+} = require("../helpers/roomHelper");
+const { uploadImages } = require("../helpers/hotelHelper");
 
 const addRoom = async (req, res, next) => {
   try {
@@ -17,24 +22,47 @@ const addRoom = async (req, res, next) => {
 
     res.status(200).json({ response });
   } catch (error) {
-    console.log('id errorrr')
-    console.log(error)
+    console.log("id errorrr");
+    console.log(error);
     res.status(400).json({ error });
   }
 };
 
+const editRoom = async (req, res, next) => {
 
-const getRooms = async (req,res,next)=>{
-    console.log('jsdljdslk')
-    try {
-        const hotel_id=req.params.hotel_id
-        const response = await getRoomsHelper(hotel_id) 
-        res.status(200).json({response})
-    } catch (error) {
-        res.status(404).json({error})
+  let hotel_id = req.params.hotel_id;
+  let room_id = req.params.room_id;
+  let files = req.files;
+
+  try {
+
+    const hotelImgArray = await uploadImages(files);
+
+    let imgStringArr = [];
+    for (var i = 0; i < hotelImgArray.length; i++) {
+      imgStringArr.push(hotelImgArray[i].public_id + ".png");
     }
-}
+
+    const response = await editRoomHelper(hotel_id,room_id,req.body,imgStringArr);
+
+    res.status(200).json({ response });
+  } catch (error) {
+    res.status(200).json({ error });
+  }
+};
+
+const getRooms = async (req, res, next) => {
+  console.log("jsdljdslk");
+  try {
+    const hotel_id = req.params.hotel_id;
+    const response = await getRoomsHelper(hotel_id);
+    res.status(200).json({ response });
+  } catch (error) {
+    res.status(404).json({ error });
+  }
+};
 
 module.exports = {
-  addRoom,getRooms
+  addRoom,editRoom,
+  getRooms
 };

@@ -1,4 +1,4 @@
-const { getHotelsHelper, getAHotelHelper } = require("../helpers/hotelHelper")
+const { getHotelsHelper, getAHotelHelper, editHotelHelper } = require("../helpers/hotelHelper")
 const { saveHotelDocumentHelper } = require("../helpers/hotelHelper")
 const { uploadImages } = require("../helpers/hotelHelper")
 require('dotenv').config()
@@ -8,8 +8,6 @@ const createHotel=async (req,res,next)=>{
   const {hotelName,description,location}=req.body
     try {
       const hotelImgArray=await uploadImages(req.files)
-      console.log(process.env.IMAGE_BASE_URL)
-      let imgBaseUrlLength=process.env.IMAGE_BASE_URL.length
       
       let imgStringArr=[]
       for(var i=0;i<hotelImgArray.length;i++){
@@ -53,10 +51,31 @@ const getAHotel=async (req,res,next)=>{
    
 }
 
+const editHotel=async (req,res,next)=>{
+  let hotel_id=req.params.hotel_id
+  let files=req.files
+  try {
+
+    const hotelImgArray=await uploadImages(req.files)
+      
+    let imgStringArr=[]
+    for(var i=0;i<hotelImgArray.length;i++){
+      imgStringArr.push(hotelImgArray[i].public_id+'.png')
+    }
+
+    const response=await editHotelHelper(req.body,imgStringArr)
+    res.status(200).json({response:true})
+  } catch (error) {
+    console.log(error)
+    res.status(404).json({error})
+  }
+}
+
+
 
 
 module.exports={
     createHotel,getAllHotels,
-    getAllHotels,getAHotel
+    getAllHotels,getAHotel,editHotel
 }
 

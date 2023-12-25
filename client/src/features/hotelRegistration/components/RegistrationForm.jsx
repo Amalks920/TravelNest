@@ -22,9 +22,10 @@ import {
   updateHotelName,
   updateImage,
   updateLocation,
-} from "../services/EditHotelFormSlice";
+} from "../services/editHotelFormSlice";
 import useGetHotel from "../hooks/useGetHotel";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useEditHotelMutation } from "../services/EditHotelApiSlice";
 
 const RegistrationForm = ({ isEditForm }) => {
   const {hotel_id}=useParams()
@@ -34,12 +35,11 @@ const RegistrationForm = ({ isEditForm }) => {
   const initialDescription=useSelector(selectDescription)
   const initialImages=useSelector(selectImages)
   const hotelImages=useGetHotel(hotel_id)
-
+  const navigate=useNavigate()
   
-  
 
-  const [registerHotel, { isError, isLoading, isSuccess }] =
-    useRegisterHotelMutation();
+  const [registerOrEditHotel, { isError, isLoading, isSuccess }] =
+    !isEditForm?useRegisterHotelMutation():useEditHotelMutation();
   const _onSave = async (values) => {
     try {
       const { hotelName, location, description, images } = values;
@@ -52,13 +52,20 @@ const RegistrationForm = ({ isEditForm }) => {
       for (var i = 0; i < images.length; i++) {
         formData.append("images", images[i]);
       }
-
-      const response = await isEditForm?registerHotel(formData):edit;
-      console.log(response);
+      isEditForm && formData.set('hotel_id',hotel_id)
+      
+      const response = await registerOrEditHotel(formData);
+      
     } catch (error) {
       console.log(error);
     }
   };
+
+
+  useEffect(()=>{
+    console.log(isSuccess)
+    isSuccess && navigate('/owner/hotel-list')
+  },[isSuccess])
 
 
 

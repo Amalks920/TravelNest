@@ -1,14 +1,44 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ButtonDefault } from "../../../components/form/ButtonDefault";
 import { FormInput } from "../../../components/form/FormInput";
 import { Textarea, Select, Option } from "@material-tailwind/react";
 import { Formik } from "formik";
 import { useAddRoomMutation } from "../services/roomRegApiSlice";
 import * as Yup from "yup";
-const RoomRegistrationForm = () => {
+import { useEffect } from "react";
+
+import editRoomFormSlice, {
+  selectRoomType,
+  selectAmenities,
+  selectBathroomType,
+  selectDescription,
+  selectNoOfRooms,
+  selectSize,
+  selectRate,
+} from "../services/editRoomFormSlice";
+import { useSelector } from "react-redux";
+import useGetRoom from "../hooks/useGetRoom";
+
+const RoomRegistrationForm = ({ isEditForm }) => {
   const { hotel_id } = useParams();
+  const { room_id } = useParams();
+
+  const initialRoomType=useSelector(selectRoomType)
+  const initialAmenities=useSelector(selectAmenities)
+  const initialBathroomType=useSelector(selectBathroomType)
+  const initialDescription=useSelector(selectDescription)
+  const initialNoOfRooms=useSelector(selectNoOfRooms)
+  const initialRate=useSelector(selectRate)
+  const initialSize=useSelector(selectSize)
+  const img=useGetRoom(room_id)
+
+  const navigate = useNavigate();
   const [addRoom, { isError, isLoading, isSuccess }] = useAddRoomMutation();
-  console.log(hotel_id);
+  console.log(initialNoOfRooms)
+  useEffect(() => {
+    isSuccess && navigate(`/owner/room-list/${hotel_id}`);
+  }, [isSuccess]);
+
   const _onSave = async (values) => {
     try {
       const {
@@ -48,13 +78,13 @@ const RoomRegistrationForm = () => {
     //   <h1 className="absolute top-28 text-2xl">Room Registration</h1>
     <Formik
       initialValues={{
-        roomType: "single",
-        noOfRooms: null,
-        amenities: null,
-        rate: null,
-        size: null,
-        bathroomType: "en-suite",
-        description: "",
+        roomType: !isEditForm ? "single" : initialRoomType,
+        noOfRooms: !isEditForm?null:initialNoOfRooms,
+        amenities: !isEditForm?null:initialAmenities,
+        rate: !isEditForm?null:initialRate,
+        size: !isEditForm?null:initialSize,
+        bathroomType: !isEditForm?"en-suite":initialBathroomType,
+        description: !isEditForm?"":initialDescription,
         images: [],
       }}
       validationSchema={Yup.object().shape({
@@ -92,7 +122,7 @@ const RoomRegistrationForm = () => {
           action=""
         >
           <div className="col-span-2 row-span-1">
-          <h1 className=" top-28 text-2xl text-center">Room Registration</h1>
+            <h1 className=" top-28 text-2xl text-center">Room Registration</h1>
           </div>
           <div className="md:col-span-1 col-span-2">
             <Select

@@ -94,6 +94,11 @@ const roomSchema = new mongoose.Schema({
   // Amenities available in the room (as an array of strings)
   amenities: { type: String, default: "" },
 
+  noOfRooms: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
   // Type of bathroom in the room (e.g., En-suite, Bathtub, Shower)
   bathroomType: {
     type: String,
@@ -109,7 +114,7 @@ const roomSchema = new mongoose.Schema({
 
   // Array of images associated with the hotel
   images: { type: [String], default: [] },
-  
+
   // Rate or cost of the room
   rate: { type: Number, required: true },
 
