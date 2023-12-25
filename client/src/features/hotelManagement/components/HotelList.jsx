@@ -23,6 +23,8 @@ import {
 
   import { useGetHotelsQuery } from "../services/hotelsSlice";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addHotels } from "../services/hotelListSlice";
 
   const TABS = [
     {
@@ -56,10 +58,10 @@ import { Link } from "react-router-dom";
 
    
    function HotelList() {
-
+    const dispatch=useDispatch()
     const {data:hotels,isLoading,isSuccess,isError,error}=useGetHotelsQuery()
-
     console.log(hotels)
+    isSuccess&& dispatch(addHotels(hotels.response))
 
     return (
       <Card className="h-full w-full p-16">
@@ -182,6 +184,20 @@ import { Link } from "react-router-dom";
                           >
                             {console.log(_id)}
                         <Link to={`/owner/room-list/${_id}`}>View Rooms</Link>   
+                          </Typography>
+\
+                        </div>
+                      </td>
+
+                      <td className={classes}>
+                        <div className="flex flex-col">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {console.log(_id)}
+                        <Link to={`/owner/edit-hotel/${_id}`}>edit hotels</Link>   
                           </Typography>
 \
                         </div>

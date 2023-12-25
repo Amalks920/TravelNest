@@ -43,7 +43,19 @@ const getHotelsHelper=function (id=null){
     })
 }
 
+const getAHotelHelper=function (hotel_id){
+    return new Promise((resolve,reject)=>{
+        try {
+            const hotel=hotelModel.findOne({_id:hotel_id})
+            resolve(hotel)
+        } catch (error) {
+            console.log(error)
+            reject(error)
+        }
+    })
+}
+
 module.exports={
-    uploadImages,
+    uploadImages,getAHotelHelper,
     saveHotelDocumentHelper,getHotelsHelper
 }

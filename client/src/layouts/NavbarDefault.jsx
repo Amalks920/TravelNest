@@ -38,7 +38,7 @@ export function NavbarDefault() {
     }
 
     return (
-        <Navbar className="mx-auto max-w-[100vw] mb-1 px-4 py-2 shadow-2xl shadow-blue-gray-200">
+        <Navbar className="fixed max-w-[100vw] rounded-none h-[80px] mb-1 px-4 py-2 shadow-2xl shadow-blue-gray-200 z-10">
             <div className="flex items-center justify-between text-blue-gray-900">
                 <Typography
                     as="a"

@@ -8,6 +8,7 @@ const RequireOwnerAuth=({allowedRole})=>{
     const role=useSelector(selectRole)
     const location=useLocation()
   // const navigate=useNavigate()
+  console.log(token)
 console.log(allowedRole)
    return (
       token && role==='owner'?<Outlet/>:<Navigate to={'/owner/login'} state={{from:location}} replace/>

@@ -1,5 +1,5 @@
 const express = require('express');
-const { createHotel, getAllHotels } = require('../controllers/hotelController');
+const { createHotel, getAllHotels, getAHotel } = require('../controllers/hotelController');
 const router = express.Router();
 const uploader=require('../../config/multer')
 /**
@@ -79,9 +79,7 @@ router.get('/get-hotels-group-by-location',(req,res)=>{
  */
 
 
-router.get(`/get-a-hotel/{hotel-id}`,(req,res)=>{
-    res.status(200).json({})
-  })
+router.get(`/get-a-hotel/:hotel-id`,getAHotel)
 
   router.post('/test',(req,res)=>{
     console.log(req.body)

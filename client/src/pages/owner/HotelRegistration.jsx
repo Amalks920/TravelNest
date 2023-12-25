@@ -1,9 +1,10 @@
 
-import RegistrationForm from "../../features/hotelRegistration/components/registrationForm";
+import { useLocation } from "react-router-dom";
+import RegistrationForm from "../../features/hotelRegistration/components/RegistrationForm";
 
-const HotelRegistration=()=>{
+const HotelRegistration=({isEditForm})=>{
 
-    return <RegistrationForm/>
+    return<RegistrationForm isEditForm={isEditForm}/>
  
 }
 

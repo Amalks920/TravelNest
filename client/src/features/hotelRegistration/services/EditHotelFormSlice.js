@@ -1,0 +1,37 @@
+import { createSlice } from "@reduxjs/toolkit";
+
+const initialState={
+        hotelName:"",
+        location:null,
+        description:null,
+        images:null
+    }
+
+const editFormSlice=createSlice({
+    name:'editHotelForm',
+    initialState,
+    reducers:{
+        updateHotelName:(state,action)=>{
+            state.hotelName=action.payload
+        },
+        updateLocation:(state,action)=>{
+            state.location=action.payload
+        },
+        updateDescription:(state,action)=>{
+            state.description=action.payload
+        },
+        updateImage:(state,action)=>{
+            state.images=action.payload
+        }
+    }
+})
+
+
+export const {updateDescription,updateHotelName,updateImage,updateLocation} =editFormSlice.actions 
+
+export const selectHotelName=(state)=>state.editHotelForm.hotelName
+export const selectLocation=(state)=>state.editHotelForm.location
+export const selectDescription=(state)=>state.editHotelForm.description
+export const selectImages=(state)=>state.editHotelForm.images
+
+export default editFormSlice.reducer

@@ -7,7 +7,7 @@ const baseQuery=fetchBaseQuery({
     baseUrl:BASE_URL,
     credentials:'include',
     prepareHeaders:(headers,{getState})=>{
-        const token=getState().auth.user.token
+        const token=getState().persistedSlice.auth.user.token
 
         if(token){
             headers.set('authorization',`Bearer ${token}`)

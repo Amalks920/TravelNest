@@ -1,4 +1,4 @@
-const { getHotelsHelper } = require("../helpers/hotelHelper")
+const { getHotelsHelper, getAHotelHelper } = require("../helpers/hotelHelper")
 const { saveHotelDocumentHelper } = require("../helpers/hotelHelper")
 const { uploadImages } = require("../helpers/hotelHelper")
 require('dotenv').config()
@@ -30,7 +30,7 @@ const createHotel=async (req,res,next)=>{
     }
 }
 
-getAllHotels=async (req,res,next)=>{
+const getAllHotels=async (req,res,next)=>{
   try {
     const response=await getHotelsHelper()
     res.status(200).json({response})
@@ -41,8 +41,22 @@ getAllHotels=async (req,res,next)=>{
     
 }
 
+const getAHotel=async (req,res,next)=>{
+  let hotel_id=req.params.hotel_id
+  try {
+    const response=await getAHotelHelper(hotel_id)
+    res.status(200).json({response})
+  } catch (error) {
+    console.log(error)
+    res.status(404).json({error})
+  }
+   
+}
+
+
+
 module.exports={
     createHotel,getAllHotels,
-    getAllHotels
+    getAllHotels,getAHotel
 }
 

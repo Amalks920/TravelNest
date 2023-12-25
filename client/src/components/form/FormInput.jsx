@@ -9,9 +9,9 @@ export function FormInput(props) {
     // <div className="w-80">
 <>
       <Input {...props}
-      color="lightBlue"
-      size="regular"
-      outline={true}
+      color="blue-gray"
+      size="md"
+      outline={""}
       onChange={props.onChange}
       onBlur={props.onBlur}
       value={props.value}

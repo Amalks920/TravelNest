@@ -24,6 +24,7 @@ import RequireOwnerAuth from './features/authentication/components/RequireOwnerA
 import CheckAuth from './features/authentication/components/CheckAuth';
 import HotelList from './features/hotelManagement/components/HotelList';
 import RoomList from './features/hotelManagement/components/RoomList';
+import HotelListPage from './pages/owner/HotelListPage';
 
 function App() {
   const token = useSelector(selectToken)
@@ -52,12 +53,15 @@ function App() {
       </Route>
 
         <Route element={<RequireOwnerAuth allowedRole={'owner'} />}>
-        <Route path="/owner/register-hotel" element={<HotelRegistration />} />
-      </Route>
+        <Route path="/owner/register-hotel" element={<HotelRegistration isEditForm={false} />} />
+        <Route path="/owner/edit-hotel/:hotel_id" element={<HotelRegistration isEditForm={true} />} />
+        <Route path='/owner/hotel-list' element={<HotelListPage/>}></Route>
+        <Route path='/owner/room-list/:_id' element={<RoomList/>}></Route>
         <Route path="/owner/register-room/:hotel_id" element={<RoomRegistration />} />
       </Route>
-        <Route path='/owner/hotel-list' element={<HotelList/>}></Route>
-        <Route path='/owner/room-list/:_id' element={<RoomList/>}></Route>
+       
+      </Route>
+       
       </Route>
    
   </Routes>
