@@ -2,6 +2,7 @@ const express = require('express');
 const { createHotel, getAllHotels, getAHotel, editHotel } = require('../controllers/hotelController');
 const router = express.Router();
 const uploader=require('../../config/multer');
+const verifyJWT=require('../utils/verifyJwt');
 
 /**
  * @openapi
@@ -24,7 +25,7 @@ const uploader=require('../../config/multer');
  *           description: Bad request
  */
 
-router.get('/get-all-hotels',getAllHotels)
+router.get('/get-all-hotels',verifyJWT,getAllHotels)
 
 
 /**

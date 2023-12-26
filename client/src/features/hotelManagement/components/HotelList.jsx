@@ -2,7 +2,7 @@ import {
     MagnifyingGlassIcon,
     ChevronUpDownIcon,
   } from "@heroicons/react/24/outline";
-  import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
+  import { PencilIcon, UserPlusIcon,HomeModernIcon } from "@heroicons/react/24/solid";
   import {
     Card,
     CardHeader,
@@ -32,16 +32,16 @@ import { addHotels } from "../services/hotelListSlice";
       value: "all",
     },
     {
-      label: "Monitored",
-      value: "monitored",
+      label: "Approved",
+      value: "Approved",
     },
     {
-      label: "Unmonitored",
-      value: "unmonitored",
+      label: "Not Approved",
+      value: "notApproved",
     },
   ];
    
-  const TABLE_HEAD = ["Hotel Name", "description", "Status", "Created", "hell"];
+  const TABLE_HEAD = ["Hotel Name","Location", "Status", "Created","","","" ];
    
   const TABLE_ROWS = [
     {
@@ -76,19 +76,19 @@ import { addHotels } from "../services/hotelListSlice";
               </Typography> */}
             </div>
             <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-              <Button variant="outlined" size="sm">
+              {/* <Button variant="outlined" size="sm">
                 view all
-              </Button>
+              </Button> */}
               <Button className="flex items-center gap-3" size="sm">
-                <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add member
+                <HomeModernIcon strokeWidth={2} className="h-4 w-4" /> Add Hotel
               </Button>
             </div>
           </div>
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <Tabs value="all" className="w-full md:w-max">
+            <Tabs value="all" className="w-full md:w-max z-0">
               <TabsHeader>
                 {TABS.map(({ label, value }) => (
-                  <Tab key={value} value={value}>
+                  <Tab key={value} className="text-[0.8rem] w-[150px]  " value={value}>
                     &nbsp;&nbsp;{label}&nbsp;&nbsp;
                   </Tab>
                 ))}
@@ -102,6 +102,7 @@ import { addHotels } from "../services/hotelListSlice";
             </div>
           </div>
         </CardHeader>
+        
         <CardBody className="overflow-scroll px-0">
           <table className="mt-4 w-full min-w-max table-auto text-left">
             <thead>
@@ -135,28 +136,28 @@ import { addHotels } from "../services/hotelListSlice";
    
                   return (
                     <tr key={hotelName}>
-                      <td className={classes}>
-                        <div className="flex items-center gap-3">
-                          <Avatar src={images[0]} alt={hotelName} size="sm" />
+                      <td className={classes +" "+"border-r-2"} >
+                        <div className="flex items-center  gap-3">
+                          <Avatar src={images[0]} alt={''} size="sm" />
                           <div className="flex flex-col">
                             <Typography
                               variant="small"
                               color="blue-gray"
-                              className="font-normal"
+                              className="font-thin text-left "
                             >
                               {hotelName}
                             </Typography>
-                            <Typography
+                            {/* <Typography
                               variant="small"
                               color="blue-gray"
                               className="font-normal opacity-70 "
                             >
                               {description}
-                            </Typography>
+                            </Typography> */}
                           </div>
                         </div>
                       </td>
-                      <td className={classes}>
+                      <td className={classes+" "+"border-r-2"}>
                         <div className="flex flex-col">
                           <Typography
                             variant="small"
@@ -165,17 +166,10 @@ import { addHotels } from "../services/hotelListSlice";
                           >
                             {location}
                           </Typography>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal opacity-70"
-                          >
-                            {'hiiiii'}
-                          </Typography>
                         </div>
                       </td>
 
-                      <td className={classes}>
+                      <td className={classes+" "+"border-r-2"}>
                         <div className="flex flex-col">
                           <Typography
                             variant="small"
@@ -183,59 +177,59 @@ import { addHotels } from "../services/hotelListSlice";
                             className="font-normal"
                           >
                             {console.log(_id)}
-                        <Link to={`/owner/room-list/${_id}`}>View Rooms</Link>   
+                       {createdAt}  
                           </Typography>
-\
                         </div>
                       </td>
 
-                      <td className={classes}>
+                      {/* <td className={classes}>
                         <div className="flex flex-col">
                           <Typography
                             variant="small"
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {console.log(_id)}
+                           
                         <Link to={`/owner/edit-hotel/${_id}`}>edit hotels</Link>   
                           </Typography>
 \
                         </div>
-                      </td>
+                      </td> */}
 
-                      <td className={classes}>
+                      <td className={classes+" "+'border-r-2'}>
                         <div className="w-max">
                           <Chip
                             variant="ghost"
                             size="sm"
-                            value={status==='listed' ? "Listed" : "offline"}
+                            
+                            value={status==='listed' ? "Listed" : "Delisted"}
                             color={status==='listed' ? "green" : "blue-gray"}
                           />
                         </div>
                       </td>
-                      <td className={classes}>
+                      {/* <td className={classes+" "+'border-r-2'}>
                         <Typography
                           variant="small"
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {createdAt}
+                          
                         </Typography>
 
-                      </td>
-                      <td>
+                      </td> */}
+                      <td className="border-r-2 px-4">
                       <Typography
                           variant="small"
                           color="blue-gray"
                           className="font-normal"
                         >
-                         <Link to={`/owner/register-room/${_id}`}> <Button width={'sm'}>Add Rooms</Button></Link>
+                         <Link to={`/owner/register-room/${_id}`} className="text-[0.56rem] text-center">Add Rooms</Link>
                         </Typography>
                       </td>
                       <td className={classes}>
                         <Tooltip content="Edit User">
                           <IconButton variant="text">
-                            <PencilIcon className="h-4 w-4" />
+                          <Link to={`/owner/edit-hotel/${_id}`}>  <PencilIcon className="h-4 w-4" /> </Link>
                           </IconButton>
                         </Tooltip>
                       </td>

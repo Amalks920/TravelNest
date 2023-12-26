@@ -29,6 +29,7 @@ const createHotel=async (req,res,next)=>{
 }
 
 const getAllHotels=async (req,res,next)=>{
+  console.log(req.user)
   try {
     const response=await getHotelsHelper()
     res.status(200).json({response})

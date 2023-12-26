@@ -102,7 +102,7 @@ const RegistrationForm = ({ isEditForm }) => {
       }) => (
         <Form
           onSubmit={handleSubmit}
-          className={`grid grid-rows-[80px,80px,80px,80px,80px,${isEditForm && '80px'}] grid-cols-[30%,30%] gap-4 border-2 place-content-center  border-black w-full h-[100vh]`}
+          className={`grid grid-rows-[80px,80px,80px,80px,80px,${isEditForm && '80px'}] grid-cols-[30%,30%] gap-4  place-content-center   w-full h-[100vh]`}
           action=""
         >
 

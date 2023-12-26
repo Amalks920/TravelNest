@@ -1,4 +1,5 @@
 const express = require('express');
+const { getAllUsers, blockOrUnblockUser } = require('../controllers/userController');
 const router = express.Router();
 
 /**
@@ -95,9 +96,7 @@ router.delete(`/delete-user/{user-id}`,(req,res)=>{
  */
 
 
-router.put('/block-user/:user-id',(req,res)=>{
-  res.status(200).json({message:'user blocked successfully'})
-})
+router.put('/block-user/:user-id',blockOrUnblockUser)
 
 
 /**
@@ -149,9 +148,7 @@ router.put('/block-user/:user-id',(req,res)=>{
    *        description: Bad request
    */
 
-router.get('/get-all-users',(req,res)=>{
-  res.status(200).json({})
-})
+router.get('/get-all-users',getAllUsers)
 
 /**
  * @openapi

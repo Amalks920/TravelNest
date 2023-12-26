@@ -34,19 +34,20 @@ console.log(token)
 </header>
 
 
-<nav class="lg:col-span-1 lg:row-span-2  hidden lg:block">
+<nav class="lg:col-span-1 lg:row-span-2 -mt-2 border-2  hidden lg:block">
     <Sidebar/>
 </nav>
 
-<main className="lg:col-span-1 col-span-2 row-span-2 border-2">
+<main className="lg:col-span-1 col-span-2 row-span-2 ">
 <div className="flex justify-center items-center min-h-screen w-full max-w-[100vw]"><Outlet/></div>
 </main>
 
 
 
 
+<div className="col-span-1"></div>
 
-<footer class="col-span-3 row-span-1  border-2 border-black">
+<footer className="col-span-2 row-span-1 border-2 ml-[290px]">
     <Footer/>
 </footer>
 

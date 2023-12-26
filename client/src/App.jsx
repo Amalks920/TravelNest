@@ -25,6 +25,11 @@ import CheckAuth from './features/authentication/components/CheckAuth';
 import HotelList from './features/hotelManagement/components/HotelList';
 import RoomList from './features/hotelManagement/components/RoomList';
 import HotelListPage from './pages/owner/HotelListPage';
+import RequireAdminAuth from './features/authentication/components/RequireAdminAuth';
+import { UsersList } from './features/userManagement/components/UsersList';
+import DetailsPage from './pages/admin/DetailsPage.jsx';
+import { lazy } from 'react';
+const DetailsPage=lazy(()=>import('../'))
 
 function App() {
   const token = useSelector(selectToken)
@@ -36,7 +41,7 @@ function App() {
     <Routes>
     <Route path="/" element={<AuthPageContainer />}>
 
-      <Route element={<CheckAuth role={'user'}/>} >
+      <Route element={<CheckAuth currentRole={'user'}/>} >
       <Route path="login" element={<Login />} />
       <Route path="signup" element={<Signup />} />
       </Route>
@@ -47,7 +52,7 @@ function App() {
 
 
       <Route path='/owner' >
-      <Route element={<CheckAuth role={'owner'}/>} >
+      <Route element={<CheckAuth currentRole={'owner'}/>} >
         <Route path="/owner/login" element={<Login />} />
         <Route path="/owner/signup" element={<Signup />} />
       </Route>
@@ -61,6 +66,17 @@ function App() {
         <Route path="/owner/register-room/:hotel_id" element={<RoomRegistration isEditForm={false}/>} />
       </Route>
        
+      </Route>
+
+      <Route path='/admin'>
+        <Route element={<CheckAuth currentRole={'admin'}/>}>
+          <Route path='/admin/login' element={<Login/>}></Route>
+        </Route>
+
+        <Route element={<RequireAdminAuth allowedRole={'admin'}/>}>
+            <Route path='/admin/home' element={<UsersList/>}></Route>
+            <Route path='/admin/user-details/:_id' element={<DetailsPage/>} > </Route>
+          </Route>
       </Route>
        
       </Route>

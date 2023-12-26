@@ -30,7 +30,7 @@ const LoginForm = ({role}) => {
                 console.log(console.log(token))
             }
             
-            navigate(role==='user'?'/home':role==='owner'?'/owner/register-hotel':role==='admin'?'/owner/home':null)
+            navigate(role==='user'?'/home':role==='owner'?'/owner/register-hotel':role==='admin'?'/admin/home':null)
            
         } catch (error) {
             console.log('error')
