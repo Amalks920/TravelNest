@@ -3,6 +3,7 @@ const {
   addRoomToHotel,
   getRoomsHelper,
   editRoomHelper,
+  groupRoomByType,
 } = require("../helpers/roomHelper");
 const { uploadImages } = require("../helpers/hotelHelper");
 
@@ -62,7 +63,20 @@ const getRooms = async (req, res, next) => {
   }
 };
 
+
+const getRoomsByType=async (req,res,next) => {
+  let hotel_id=req.params.hotel_id
+    try {
+      console.log(res.cookies)
+        const response=await groupRoomByType(hotel_id)
+        res.status(200).json({response})
+    } catch (error) {
+      console.log(error)
+      res.status(404).json({error})
+    }
+}
+
 module.exports = {
   addRoom,editRoom,
-  getRooms
+  getRooms,getRoomsByType
 };

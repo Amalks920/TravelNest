@@ -5,7 +5,7 @@ export const roomsApiSlice=apiSlice.injectEndpoints({
         getRooms:builder.query({
             query:(data)=>{
                 console.log(data._id)
-               return  `/room/get-rooms/${data?._id}`
+               return  `/room/get-rooms-list/${data?._id}`
             }
         })
     })

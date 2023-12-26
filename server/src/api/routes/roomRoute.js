@@ -1,5 +1,5 @@
 const express = require('express');
-const { addRoom, getRooms, editRoom } = require('../controllers/roomController');
+const { addRoom, getRooms, editRoom, getRoomsByType } = require('../controllers/roomController');
 const router = express.Router();
 const uploader=require('../../config/multer')
 /**
@@ -79,6 +79,9 @@ router.post('/add-room/:hotel_id',uploader.array('images',10),addRoom)
  */
 
 router.put('/edit-room/{hotel-id}/{room-id}',editRoom)
+
+
+router.get('/get-rooms-list/:hotel_id',getRoomsByType)
 
 /**
  * @openapi

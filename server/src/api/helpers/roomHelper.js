@@ -1,5 +1,6 @@
 const roomModel = require("../models/roomModel");
-const hotelModel=require('../models/hotelModel')
+const hotelModel=require('../models/hotelModel');
+const { default: mongoose } = require("mongoose");
 
 const addRoomHelper = (data) => {
 
@@ -63,8 +64,47 @@ const editRoomHelper=(hotel_id,room_id,data,imgPathArr)=>{
     })
 }
 
+const groupRoomByType=(hotel_id)=>{
+  console.log(hotel_id)
+   return new Promise(async (resolve,reject)=>{
+    try {
+
+      const response= await roomModel.aggregate([
+        {
+          $match:{
+            hotel_id: new mongoose.Types.ObjectId(hotel_id) 
+          }
+        },
+        {
+          $group: {
+            _id: '$roomType',
+            // rooms: { $push: { roomType: '$roomType'} }, // Include only the fields you need
+            count: { $sum: 1 }
+          }
+        },
+        {
+          $project: {
+            _id: 0, // Exclude the _id field if you don't need it
+            roomType: '$_id',
+            rooms: 1, // Include the 'rooms' field
+            count: 1 // Include the 'count' field
+          }
+        }
+        
+       ])
+
+       resolve(response)
+
+    } catch (error) {
+      console.log(error)
+      reject(error)
+    }
+   })
+}
+
 module.exports = {
   addRoomHelper,addRoomToHotel,
-  getRoomsHelper,editRoomHelper
+  getRoomsHelper,editRoomHelper,
+  groupRoomByType
 
 };
