@@ -1,5 +1,6 @@
 const express = require('express');
 const { getAllUsers, blockOrUnblockUser } = require('../controllers/userController');
+const verifyJwt = require('../utils/verifyJwt');
 const router = express.Router();
 
 /**
@@ -96,7 +97,7 @@ router.delete(`/delete-user/{user-id}`,(req,res)=>{
  */
 
 
-router.put('/block-user/:user-id',blockOrUnblockUser)
+router.put('/block-or-unblock-user/:user_id',verifyJwt,blockOrUnblockUser)
 
 
 /**

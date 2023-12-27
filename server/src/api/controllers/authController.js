@@ -19,6 +19,7 @@ const login = async (req, res, next) => {
     res.cookie('jwt', foundUser.refreshToken, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000 })
 
     const {
+      _id,
       username,
       email,
       phone,
@@ -27,6 +28,7 @@ const login = async (req, res, next) => {
     } = foundUser
 
     const data = {
+      user_id:_id,
       username,
       email,
       phone,

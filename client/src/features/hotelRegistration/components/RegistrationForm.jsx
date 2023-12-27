@@ -1,7 +1,7 @@
 import { Formik } from "formik";
 import { ButtonDefault } from "../../../components/form/ButtonDefault";
 import { FormInput } from "../../../components/form/FormInput";
-import { Textarea } from "@material-tailwind/react";
+import { Button, Textarea } from "@material-tailwind/react";
 import { Form, Field } from "formik";
 import * as Yup from "yup";
 import KErrorMessage from "../../../components/form/ErrorMessage";
@@ -11,7 +11,7 @@ import { useRegisterHotelMutation } from "../services/hotelRegApiSlice";
 import axios from "axios";
 import { BASE_URL, IMAGE_BASE_URL } from "../../../data/constants";
 import { useSelector } from "react-redux";
-import { selectToken } from "../../authentication/services/loginSlice";
+import { selectToken, selectUserId } from "../../authentication/services/loginSlice";
 
 import {
   selectHotelName,
@@ -29,7 +29,9 @@ import { useEditHotelMutation } from "../services/EditHotelApiSlice";
 
 const RegistrationForm = ({ isEditForm }) => {
   const {hotel_id}=useParams()
-  const select = useSelector(selectToken);
+  const token = useSelector(selectToken);
+  const user_id=useSelector(selectUserId)
+
   const initialHotelName=useSelector(selectHotelName)
   const initialLocation=useSelector(selectLocation)
   const initialDescription=useSelector(selectDescription)
@@ -40,14 +42,17 @@ const RegistrationForm = ({ isEditForm }) => {
 
   const [registerOrEditHotel, { isError, isLoading, isSuccess }] =
     !isEditForm?useRegisterHotelMutation():useEditHotelMutation();
+    console.log(user_id,'user_Idiii')
   const _onSave = async (values) => {
     try {
       const { hotelName, location, description, images } = values;
 
       const formData = new FormData();
+      console.log(user_id,'user_Idiii')
       formData.append("hotelName", hotelName);
       formData.append("location", location);
       formData.append("description", description);
+      formData.append('owner_id',user_id)
 
       for (var i = 0; i < images.length; i++) {
         formData.append("images", images[i]);
@@ -55,7 +60,7 @@ const RegistrationForm = ({ isEditForm }) => {
       isEditForm && formData.set('hotel_id',hotel_id)
       
       const response = await registerOrEditHotel(formData);
-      
+      console.log(response)
     } catch (error) {
       console.log(error);
     }
@@ -102,7 +107,7 @@ const RegistrationForm = ({ isEditForm }) => {
       }) => (
         <Form
           onSubmit={handleSubmit}
-          className={`grid grid-rows-[80px,80px,80px,80px,80px,${isEditForm && '80px'}] grid-cols-[30%,30%] gap-4  place-content-center   w-full h-[100vh]`}
+          className={`grid grid-rows-[80px,80px,80px,80px,80px,${isEditForm && '80px'}] grid-cols-[20%,20%] gap-4  place-content-center   w-full h-[100vh]`}
           action=""
         >
 
@@ -182,7 +187,7 @@ const RegistrationForm = ({ isEditForm }) => {
             />
           </div>
           <div className="row-span-1 col-span-2">
-            <ButtonDefault bg={"blue"} type={"submit"} loading={isLoading?true:false} value={"submit"} fullwidth/>
+            <ButtonDefault bg={"blue"} type={"submit"}  value={"submit"} fullwidth/>
           </div>
         </Form>
       )}

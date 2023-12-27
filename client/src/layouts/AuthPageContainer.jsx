@@ -1,7 +1,7 @@
 import { Navbar } from "@material-tailwind/react";
 import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom"
-import { selectToken, store } from "../features/authentication/services/loginSlice";
+import { selectToken } from "../features/authentication/services/loginSlice";
 import PageContainer from "./PageContainer";
 import { NavbarDefault } from "./NavbarDefault";
 import { Sidebar } from "./Sidebar";
@@ -11,7 +11,6 @@ import { Footer } from "./Footer";
 
 const AuthPageContainer = () => {
     const token = useSelector(selectToken)
-console.log(token)
 
     if (!token) {
 

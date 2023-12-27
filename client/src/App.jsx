@@ -28,8 +28,6 @@ import HotelListPage from './pages/owner/HotelListPage';
 import RequireAdminAuth from './features/authentication/components/RequireAdminAuth';
 import { UsersList } from './features/userManagement/components/UsersList';
 import DetailsPage from './pages/admin/DetailsPage.jsx';
-import { lazy } from 'react';
-const DetailsPage=lazy(()=>import('../'))
 
 function App() {
   const token = useSelector(selectToken)

@@ -1,5 +1,5 @@
 const express = require('express');
-const { createHotel, getAllHotels, getAHotel, editHotel } = require('../controllers/hotelController');
+const { createHotel, getAllHotels, getAHotel, editHotel, getAllHotelDetails } = require('../controllers/hotelController');
 const router = express.Router();
 const uploader=require('../../config/multer');
 const verifyJWT=require('../utils/verifyJwt');
@@ -82,6 +82,8 @@ router.get('/get-hotels-group-by-location',(req,res)=>{
 
 
 router.get(`/get-a-hotel/:hotel-id`,getAHotel)
+
+router.get('/get-all-hotel-details/:hotel_id',getAllHotelDetails)
 
   router.post('/test',(req,res)=>{
     console.log(req.body)

@@ -5,7 +5,7 @@ require('dotenv').config()
 
 
 const createHotel=async (req,res,next)=>{
-  const {hotelName,description,location}=req.body
+  const {hotelName,description,location,owner_id}=req.body
     try {
       const hotelImgArray=await uploadImages(req.files)
       
@@ -18,13 +18,16 @@ const createHotel=async (req,res,next)=>{
         hotelName,
         description,
         location,
+        owner_id,
         images:imgStringArr
       }
       const response=await saveHotelDocumentHelper(data)
-      
+      console.log('rreeessspp=')
+      console.log(response)
       res.status(200).json({response})
     } catch (error) {
        console.log(error) 
+       res.status(404).json({error})
     }
 }
 
@@ -52,6 +55,17 @@ const getAHotel=async (req,res,next)=>{
    
 }
 
+const getAllHotelDetails=async (req,res,next)=>{
+  let hotel_id=req.params.hotel_id;
+
+  try {
+    const response=getAllHotelDetailsHelper()
+  } catch (error) {
+    res.status(404).json({error})
+  }
+}
+
+
 const editHotel=async (req,res,next)=>{
   let hotel_id=req.params.hotel_id
   let files=req.files
@@ -77,6 +91,7 @@ const editHotel=async (req,res,next)=>{
 
 module.exports={
     createHotel,getAllHotels,
-    getAllHotels,getAHotel,editHotel
+    getAllHotels,getAHotel,editHotel,
+    getAllHotelDetails
 }
 

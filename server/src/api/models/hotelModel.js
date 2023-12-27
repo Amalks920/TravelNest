@@ -41,6 +41,12 @@ const hotelSchema = new mongoose.Schema({
   // Array of images associated with the hotel
   images: { type: [String], default: [] },
 
+  owner_id: {
+    type: String,
+    required: true,
+    ref: "User",
+  },
+
   // Reference to reviews associated with the hotel
   reviews: { type: mongoose.Schema.Types.ObjectId, ref: "Review" },
 
@@ -63,7 +69,7 @@ const hotelSchema = new mongoose.Schema({
     required: true,
   },
   // Timestamp for when the hotel was created
-  created_at    : { type: Date, required: true, default: Date.now }
+  created_at: { type: Date, required: true, default: Date.now },
 
   //updatedAt: { type: Date, default: Date.now },
 });

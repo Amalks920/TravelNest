@@ -91,7 +91,7 @@ const LoginForm = ({role}) => {
                     /></div>
 
                     <Link to={'/signup'}><p className="  font-light -mt-5 text-black">Don't Have an Account?</p></Link>
-                    <div className=" -mt-5"><ButtonDefault type={'submit'}  onSubmit={handleSubmit} disabled={isSubmitting} /></div>
+                    <div className=" -mt-5"><ButtonDefault value='submit' type={'submit'}  onSubmit={handleSubmit} disabled={isSubmitting} /></div>
                     <Link to={'/verify-email-or-phone'} className="relative bottom-6 left-24"><p className="font-medium  text-sm text-black">Forgot Password?</p></Link>
                 </form>
             )}

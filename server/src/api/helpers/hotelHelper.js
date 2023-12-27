@@ -1,5 +1,6 @@
 const cloudinary = require("../../config/cloudinary");
 const hotelModel = require("../models/hotelModel");
+const mongoose=require('mongoose')
 
 const uploadImages = (files) => {
   return new Promise(async (resolve, reject) => {
@@ -26,6 +27,7 @@ const saveHotelDocumentHelper = function (data) {
       const response = await hotelModel.create(data);
       resolve(response);
     } catch (error) {
+      console.log(error)
       reject(error);
     }
   });
@@ -86,10 +88,37 @@ const editHotelHelper = function (data, imagePathArray) {
   });
 };
 
+
+const getAllHotelDetailsHelper=(hotel_id)=>{
+  return new Promise(async (resolve,reject)=>{
+    try {
+      const response=await hotelModel.aggregate([
+        {
+          $match:{
+            hotel_id: new mongoose.Types.ObjectId(hotel_id)
+          }
+        },
+        {
+          $lookup:{
+            from:'users',
+            localField:'user_id',
+            foreignField:'_id',
+            as:'users'
+          }
+        }
+      ])
+      resolve(response)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
 module.exports = {
   uploadImages,
   getAHotelHelper,
   saveHotelDocumentHelper,
   getHotelsHelper,
   editHotelHelper,
+  getAllHotelDetailsHelper
 };
