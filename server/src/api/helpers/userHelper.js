@@ -25,7 +25,24 @@ const blockOrUnblockUserHelper=(user_id,isBlocked)=>{
     })
 }
 
+const checkUserBlockedOrNotHelper=(user_id)=>{
+    return new Promise( async (resolve,reject)=>{
+        try {
+            const response=await userModel.findOne({_id:user_id})
+            if(response.isBlocked){
+                resolve(true)
+            }else{
+                resolve(false)
+            }
+            
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 
 module.exports={
-    fetchAllUsersHelper,blockOrUnblockUserHelper
+    fetchAllUsersHelper,blockOrUnblockUserHelper,
+    checkUserBlockedOrNotHelper
 }

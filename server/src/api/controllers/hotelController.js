@@ -1,6 +1,7 @@
-const { getHotelsHelper, getAHotelHelper, editHotelHelper } = require("../helpers/hotelHelper")
+const { getHotelsHelper, getAHotelHelper, editHotelHelper, getAllHotelDetailsHelper } = require("../helpers/hotelHelper")
 const { saveHotelDocumentHelper } = require("../helpers/hotelHelper")
 const { uploadImages } = require("../helpers/hotelHelper")
+const { findRoomsInHotelHelper } = require("../helpers/roomHelper")
 require('dotenv').config()
 
 
@@ -59,8 +60,11 @@ const getAllHotelDetails=async (req,res,next)=>{
   let hotel_id=req.params.hotel_id;
 
   try {
-    const response=getAllHotelDetailsHelper()
+    const hotel_details=await getAllHotelDetailsHelper(hotel_id)
+    const room_details=await findRoomsInHotelHelper(hotel_id)
+    res.status(200).json({hotel_details,room_details})
   } catch (error) {
+    console.log(error)
     res.status(404).json({error})
   }
 }

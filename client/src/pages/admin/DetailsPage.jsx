@@ -1,9 +1,9 @@
-import UserDetails from "../../features/userManagement/components/UserDetails"
+import HotelDetails from "../../features/adminSideHotelManagement/components/HotelDetails"
 
 const DetailsPage=()=>{
 
     return (
-        <UserDetails/>
+        <HotelDetails/>
     )
 }
 

@@ -28,6 +28,7 @@ import HotelListPage from './pages/owner/HotelListPage';
 import RequireAdminAuth from './features/authentication/components/RequireAdminAuth';
 import { UsersList } from './features/userManagement/components/UsersList';
 import DetailsPage from './pages/admin/DetailsPage.jsx';
+import AdminHotelListPage from './pages/admin/AdminHotelListPage.jsx';
 
 function App() {
   const token = useSelector(selectToken)
@@ -73,7 +74,8 @@ function App() {
 
         <Route element={<RequireAdminAuth allowedRole={'admin'}/>}>
             <Route path='/admin/home' element={<UsersList/>}></Route>
-            <Route path='/admin/user-details/:_id' element={<DetailsPage/>} > </Route>
+            <Route path='/admin/hotel-details/:_id' element={<DetailsPage/>} > </Route>
+            <Route path='/admin/hotel-list' element={<AdminHotelListPage/>} > </Route>
           </Route>
       </Route>
        

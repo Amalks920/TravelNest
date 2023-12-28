@@ -1,4 +1,4 @@
-const { fetchAllUsersHelper, blockOrUnblockUserHelper } = require("../helpers/userHelper")
+const { fetchAllUsersHelper, blockOrUnblockUserHelper, checkUserBlockedOrNotHelper } = require("../helpers/userHelper")
 
 
 const getAllUsers=async (req,res,next)=>{
@@ -21,7 +21,20 @@ const blockOrUnblockUser=async (req,res,next)=>{
     }
 }
 
+const checkIfUserBlockedOrNot=async (req,res,next)=>{
+    let user_id=req.params.user_id;
+
+    try { 
+        const response=await checkUserBlockedOrNotHelper(user_id)
+        console.log(response)
+        res.status(200).json({response})
+    } catch (error) {
+        res.status(404).json({error})
+    }
+}
+
 
 module.exports={
-    getAllUsers,blockOrUnblockUser
+    getAllUsers,blockOrUnblockUser,
+    checkIfUserBlockedOrNot
 }

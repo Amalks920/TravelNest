@@ -102,9 +102,24 @@ const groupRoomByType=(hotel_id)=>{
    })
 }
 
+const findRoomsInHotelHelper=(hotel_id)=>{
+  console.log('entered room helper')
+  return new Promise(async (resolve,reject)=>{
+    try {
+      console.log(hotel_id)
+      const response=await roomModel.find({hotel_id:hotel_id})
+      console.log(response)
+      console.log('response room model')
+      resolve(response)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
 module.exports = {
   addRoomHelper,addRoomToHotel,
   getRoomsHelper,editRoomHelper,
-  groupRoomByType
+  groupRoomByType,findRoomsInHotelHelper
 
 };

@@ -90,20 +90,41 @@ const editHotelHelper = function (data, imagePathArray) {
 
 
 const getAllHotelDetailsHelper=(hotel_id)=>{
+  console.log(hotel_id)
   return new Promise(async (resolve,reject)=>{
     try {
       const response=await hotelModel.aggregate([
         {
           $match:{
-            hotel_id: new mongoose.Types.ObjectId(hotel_id)
+            _id: new mongoose.Types.ObjectId(hotel_id)
           }
         },
         {
           $lookup:{
             from:'users',
-            localField:'user_id',
+            localField:'owner_id',
             foreignField:'_id',
-            as:'users'
+            as:'owner'
+          }
+        },
+        {
+          $unwind:'$owner'
+        },
+        {
+          $project:{
+            _id:1,
+            hotelName:1,
+            description:1,
+            images:1,
+            averageRating:1,
+            location:1,
+            status:1,
+            created_at:1,
+            owners_name:'$owner.username',
+            owners_email:'$owner.email',
+            owners_phone:'$owner.phone',
+            owner_isBlocked:'$owner.isBlocked',
+            owner_joined_date:'$owner.createdAt'
           }
         }
       ])
@@ -113,6 +134,7 @@ const getAllHotelDetailsHelper=(hotel_id)=>{
     }
   })
 }
+
 
 module.exports = {
   uploadImages,

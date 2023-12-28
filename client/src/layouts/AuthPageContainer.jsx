@@ -1,16 +1,22 @@
 import { Navbar } from "@material-tailwind/react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom"
-import { selectToken } from "../features/authentication/services/loginSlice";
+import { logout, selectToken, selectUserId } from "../features/authentication/services/loginSlice";
 import PageContainer from "./PageContainer";
 import { NavbarDefault } from "./NavbarDefault";
 import { Sidebar } from "./Sidebar";
 import { Footer } from "./Footer";
+import { useChekckBlockedOrNotQuery } from "../services/checkISBlockedOrNot";
 
 
 
 const AuthPageContainer = () => {
     const token = useSelector(selectToken)
+    const user_id=useSelector(selectUserId)
+    const dispatch=useDispatch()
+    const {data:isBlocked,isError,isFetching,isLoading,isSuccess}=useChekckBlockedOrNotQuery({user_id})
+     
+    isBlocked &&  dispatch(logout())
 
     if (!token) {
 

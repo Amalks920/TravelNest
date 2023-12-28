@@ -42,7 +42,7 @@ const hotelSchema = new mongoose.Schema({
   images: { type: [String], default: [] },
 
   owner_id: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref: "User",
   },

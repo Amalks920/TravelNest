@@ -178,7 +178,7 @@ export function Sidebar() {
                 <ShoppingBagIcon className="h-5 w-5" />
               </ListItemPrefix>
               <Typography color="blue-gray" className="mr-auto font-normal">
-               { role==='owner'?'Hotels':role==='admin'?'Users':null}
+               { role==='owner'?'Hotels':role==='admin'?'Hotels':null}
               </Typography>
             </AccordionHeader>
           </ListItem>
@@ -188,7 +188,7 @@ export function Sidebar() {
                 <ListItemPrefix>
                   <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                 </ListItemPrefix>
-                <Link to={role==='owner'?'/owner/register-hotel':role==='admin'?'/admin/home':null}>{role==='owner'?'Register Hotel':role==='admin'?'users list':null}</Link>
+                <Link to={role==='owner'?'/owner/register-hotel':role==='admin'?'/admin/hotel-list':null}>{role==='owner'?'Register Hotel':role==='admin'?'Hotel List':null}</Link>
               </ListItem>
 
               {

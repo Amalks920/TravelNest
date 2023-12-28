@@ -1,154 +1,48 @@
-import {
-  MagnifyingGlassIcon,
-  ChevronUpDownIcon,
-  HomeModernIcon,
-} from "@heroicons/react/24/outline";
-import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
-import {
-  Card,
-  CardHeader,
-  Input,
-  Typography,
-  Button,
-  CardBody,
-  Chip,
-  CardFooter,
-  Tabs,
-  TabsHeader,
-  Tab,
-  Avatar,
-  IconButton,
-  Tooltip,
-} from "@material-tailwind/react";
-import { useGetAllUserQuery } from "../services/getAllUsersApiSlice";
+import { Avatar, Button, Card, CardBody, CardFooter, CardHeader, Chip, Input, Tab, Tabs, TabsHeader, Typography } from "@material-tailwind/react";
+import { useGetHotelsQuery } from "../services/getHotelsApiSlice";
+import { ChevronUpDownIcon, HomeModernIcon, MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
-import { NotificationDialog } from "../../../components/modals/NotificationModal";
-import { useEffect, useRef, useState } from "react";
-import { useBlockOrUnblockUserMutation } from "../services/blockOrUnblockUserApiSlice";
-import useBlockOrUnblockUser from "../hooks/useBlockOrUnblockUser";
+
 const TABS = [
-  {
-    label: "All",
-    value: "all",
-  },
-  {
-    label: "Monitored",
-    value: "monitored",
-  },
-  {
-    label: "Unmonitored",
-    value: "unmonitored",
-  },
-];
-
-const TABLE_HEAD = [
-  "SL NO",
-  "ID",
-  "USERNAME",
-  "EMIAL",
-  "PHONE",
-  "STATUS",
-  "",
-  "",
-];
-
-const TABLE_ROWS = [
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
-    name: "John Michael",
-    email: "john@creative-tim.com",
-    job: "Manager",
-    org: "Organization",
-    online: true,
-    date: "23/04/18",
-  },
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-2.jpg",
-    name: "Alexa Liras",
-    email: "alexa@creative-tim.com",
-    job: "Programator",
-    org: "Developer",
-    online: false,
-    date: "23/04/18",
-  },
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-1.jpg",
-    name: "Laurent Perrier",
-    email: "laurent@creative-tim.com",
-    job: "Executive",
-    org: "Projects",
-    online: false,
-    date: "19/09/17",
-  },
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-4.jpg",
-    name: "Michael Levi",
-    email: "michael@creative-tim.com",
-    job: "Programator",
-    org: "Developer",
-    online: true,
-    date: "24/12/08",
-  },
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-5.jpg",
-    name: "Richard Gran",
-    email: "richard@creative-tim.com",
-    job: "Manager",
-    org: "Executive",
-    online: false,
-    date: "04/10/21",
-  },
-];
-
-export function UsersList() {
-  
-  const {
-    data: users,
-    isError,
-    isFetching,
-    isLoading,
-    isSuccess
-  } = useGetAllUserQuery();
-
-  console.log(users);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const isBlockedRef=useRef(false)
-  const userIdRef=useRef(null)
-
-  const [
-    blockOrUnblockUser,
     {
-      isError:blockUserIsError,
-      isLoading:blockUserIsLoading,
-      isSuccess:blockUserIsSuccess,
-      isFetching:blockUserIsFetching,
-      reset:blockUserReset
+      label: "All",
+      value: "all",
     },
-  ] = useBlockOrUnblockUserMutation();
+    {
+      label: "Approved",
+      value: "Approved",
+    },
+    {
+      label: "Not Approved",
+      value: "notApproved",
+    },
+  ];
 
-  useEffect(() => {
-    console.log("rerender");
-  });
+  const TABLE_ROWS = [
+    {
+      img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
+      name: "John Michael",
+      email: "john@creative-tim.com",
+      job: "Manager",
+      org: "Organization",
+      online: true,
+      date: "23/04/18",
+    }
+  ];
+   
+  const TABLE_HEAD = ["Hotel Name","Location", "Status", "Created","","","" ];
 
-  return (
-    <>
-      <NotificationDialog
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-        isBlocked={!isBlockedRef.current}
-        user_id={userIdRef.current}
-        sendRequestHandler={blockOrUnblockUser}
-         error = {blockUserIsError}
-         loading = {blockUserIsLoading}
-         success = {blockUserIsSuccess}
-         reset={blockUserReset}
-      />
-      <Card className="h-full w-full p-16">
+const HotelList=()=>{
+
+  
+    const {data:hotels,isError,isFetching,isLoading,isSuccess}=useGetHotelsQuery();
+    console.log(hotels)
+    return (
+        <Card className="h-full w-full p-16">
         <CardHeader floated={false} shadow={false} className="rounded-none">
           <div className="mb-8 flex items-center justify-between gap-8">
             <div>
               <Typography variant="h5" color="blue-gray">
-                Users li st
               </Typography>
               {/* <Typography color="gray" className="mt-1 font-normal">
               See information about all members
@@ -213,8 +107,8 @@ export function UsersList() {
               </tr>
             </thead>
             <tbody>
-              {users?.map(
-                ({ _id, username, email, phone, role, isBlocked }, index) => {
+              {hotels?.response?.map(
+                ({ _id, hotelName, description, phone, location, status,createdAt }, index) => {
                   const isLast = index === TABLE_ROWS.length - 1;
                   const classes = isLast
                     ? "p-4"
@@ -256,7 +150,7 @@ export function UsersList() {
                             className="font-normal"
                           >
                             {console.log(_id)}
-                            {username}
+                            {hotelName}
                           </Typography>
                         </div>
                       </td>
@@ -268,7 +162,7 @@ export function UsersList() {
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {email}
+                            {description}
                           </Typography>
                         </div>
                       </td>
@@ -280,7 +174,7 @@ export function UsersList() {
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {phone}
+                            {location}
                           </Typography>
                         </div>
                       </td>
@@ -291,9 +185,9 @@ export function UsersList() {
                             variant="ghost"
                             size="sm"
                             value={
-                              isBlocked === true ? "Blocked" : "Not Blocked"
+                              status === "delisted" ? "Delisted" : "Listed"
                             }
-                            color={isBlocked === false ? "green" : "blue-gray"}
+                            color={status === 'listed' ? "green" : "blue-gray"}
                           />
                         </div>
                       </td>
@@ -305,28 +199,12 @@ export function UsersList() {
                           className="font-normal"
                         >
                           <Link
-                            to={`/admin/user-details/${_id}`}
+                            to={`/admin/hotel-details/${_id}`}
                             className="text-[0.56rem] text-center"
                           >
                             View Details
                           </Link>
                         </Typography>
-                      </td>
-                      <td className={classes}>
-                        {/* <PencilIcon className="h-4 w-4" /> */}
-                        <Button
-                          onClick={() => {
-                            console.log('hello====>===>')
-                            setIsModalOpen(true);
-                            isBlockedRef.current=isBlocked
-                            userIdRef.current=_id
-                          }}
-                          size="sm"
-                          variant="outlined"
-                          className="text-[0.4rem] w-fit "
-                        >
-                          unblock
-                        </Button>
                       </td>
                     </tr>
                   );
@@ -349,6 +227,8 @@ export function UsersList() {
           </div>
         </CardFooter>
       </Card>
-    </>
-  );
+    )
 }
+
+
+export default HotelList;

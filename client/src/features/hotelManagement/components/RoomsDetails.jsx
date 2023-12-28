@@ -75,24 +75,6 @@ const TABLE_ROWS = [
                     className="font-normal"
                   >
                     {date}
-                    <h1>sldkf</h1>
-                    <h1>sldkfslkf</h1>
-                    <h1>sldk</h1>
-                    <h1>slkj</h1>
-                    <h1>sldkfslkf</h1>
-                    <h1>sldk</h1>
-                    <h1>slkj</h1>
-                    <h1>lsdkjf
-                        klsd</h1>
-                        <h1>sldkf</h1>
-                    <h1>sldkfslkf</h1>
-                    <h1>sldk</h1>
-                    <h1>slkj</h1>
-                    <h1>sldkfslkf</h1>
-                    <h1>sldk</h1>
-                    <h1>slkj</h1>
-                    <h1>lsdkjf
-                        klsd</h1>
                   </Typography>
                 </td>
                 <td className={classes}>

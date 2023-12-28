@@ -1,5 +1,5 @@
 const express = require('express');
-const { getAllUsers, blockOrUnblockUser } = require('../controllers/userController');
+const { getAllUsers, blockOrUnblockUser, checkIfUserBlockedOrNot } = require('../controllers/userController');
 const verifyJwt = require('../utils/verifyJwt');
 const router = express.Router();
 
@@ -67,6 +67,7 @@ const router = express.Router();
  *           description: Bad request
  */
 
+router.get('/check-blocked-or-not/:user_id',verifyJwt,checkIfUserBlockedOrNot);
 
 router.delete(`/delete-user/{user-id}`,(req,res)=>{
   res.status(200).json({message:'user successfully deleted'})
