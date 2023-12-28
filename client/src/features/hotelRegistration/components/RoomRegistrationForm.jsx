@@ -36,8 +36,7 @@ const RoomRegistrationForm = ({ isEditForm }) => {
   const [addRoom, { isError, isLoading, isSuccess }] = useAddRoomMutation();
   console.log(initialNoOfRooms)
   useEffect(() => {
-    console.log(hotel_id)
-    console.log('hoioootooterllkllll iiiiiiddd')
+ 
     isSuccess && navigate(`/owner/room-list/${hotel_id}`);
   }, [isSuccess]);
 
@@ -56,12 +55,12 @@ const RoomRegistrationForm = ({ isEditForm }) => {
       console.log(images);
       let formData = new FormData();
 
-      formData.append("roomType", 'single');
+      formData.append("roomType", roomType);
       formData.append("noOfRooms", noOfRooms);
       formData.append("amenities", amenities);
       formData.append("rate", rate);
       formData.append("size", size);
-      formData.append("bathroomType", "bathtub");
+      formData.append("bathroomType", bathroomType);
       formData.append("description", description);
       formData.append("hotel_id", hotel_id);
       console.log(formData["hotel_id"]);

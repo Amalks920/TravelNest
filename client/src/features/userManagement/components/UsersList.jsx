@@ -126,22 +126,25 @@ export function UsersList() {
     },
   ] = useBlockOrUnblockUserMutation();
 
-  useEffect(() => {
-    console.log("rerender");
-  });
 
+
+  
   return (
     <>
       <NotificationDialog
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
-        isBlocked={!isBlockedRef.current}
-        user_id={userIdRef.current}
+        // isBlocked={!isBlockedRef.current}
+        // user_id={userIdRef.current}
+        args={{isBlocked:!isBlockedRef.current,user_id:userIdRef.current}}
         sendRequestHandler={blockOrUnblockUser}
          error = {blockUserIsError}
          loading = {blockUserIsLoading}
          success = {blockUserIsSuccess}
          reset={blockUserReset}
+         heading={'Do you need to block this user ?'}
+         description={'user will be blocked and they could not able to login to their account after blocking.'}
+         buttonText={'block'}
       />
       <Card className="h-full w-full p-16">
         <CardHeader floated={false} shadow={false} className="rounded-none">

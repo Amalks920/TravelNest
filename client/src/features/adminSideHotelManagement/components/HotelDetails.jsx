@@ -4,6 +4,7 @@ import { HotelTable } from "./HotelTable";
 import { OwnerTable } from "./ownerTable";
 import RoomDetails from "../../hotelManagement/components/RoomsDetails";
 import { RoomsTable } from "./RoomsTable";
+import { Button } from "@material-tailwind/react";
 
 const HotelDetails=()=>{
 const {_id}=useParams()
@@ -25,9 +26,11 @@ console.log(room_details)
             <div className=" w-full px-6">
                 <OwnerTable data={hotel_details}/>
             </div>
-            <div className=" w-full px-6">
+            {room_details.length!==0 && <div className=" w-full px-6">
                 <RoomsTable data={room_details}/>
-            </div>
+            </div>}
+            <div className="flex justify-center mt-16"><Button color="green" className="">Approve</Button></div>
+
         </div>
     
     )

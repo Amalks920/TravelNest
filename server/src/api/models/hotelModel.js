@@ -33,7 +33,7 @@ const ObjectId = require("mongodb").ObjectId;
 // Define the Hotel schema
 const hotelSchema = new mongoose.Schema({
   // Name of the hotel
-  hotelName: { type: String, required: true },
+  hotelName: { type: String, required: true, unique:true },
 
   // Description of the hotel
   description: { type: String, required: true },
@@ -64,10 +64,11 @@ const hotelSchema = new mongoose.Schema({
 
   status: {
     type: String,
-    enum: ["listed", "delisted"],
-    default: "delisted",
+    enum: ["listed", "delisted",'not-registered'],
+    default: "not-registered",
     required: true,
   },
+
   // Timestamp for when the hotel was created
   created_at: { type: Date, required: true, default: Date.now },
 

@@ -135,6 +135,24 @@ const getAllHotelDetailsHelper=(hotel_id)=>{
   })
 }
 
+const deleteHotelImageHelper=(hotel_id,img_public_id)=>{
+  return new Promise(async (resolve,reject)=>{
+    try {
+      const response=await hotelModel.updateOne(
+        {_id:hotel_id},
+        {
+          $pull:{
+            images:img_public_id
+          }
+        }
+        )
+      resolve(response)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
 
 module.exports = {
   uploadImages,
@@ -142,5 +160,6 @@ module.exports = {
   saveHotelDocumentHelper,
   getHotelsHelper,
   editHotelHelper,
-  getAllHotelDetailsHelper
+  getAllHotelDetailsHelper,
+  deleteHotelImageHelper
 };

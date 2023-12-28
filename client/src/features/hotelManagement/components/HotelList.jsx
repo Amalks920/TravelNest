@@ -28,20 +28,23 @@ import { addHotels } from "../services/hotelListSlice";
 
   const TABS = [
     {
-      label: "All",
-      value: "all",
+      label: "Listed",
+      value: "listed",
+      className:'text-green-500'
     },
     {
-      label: "Approved",
-      value: "Approved",
+      label: "Delisted",
+      value: "delisted",
+      className:'text-red-500'
     },
     {
-      label: "Not Approved",
-      value: "notApproved",
+      label: "Not Registered",
+      value: "not-reigstered",
+      className:'text-blue-gray-500'
     },
   ];
    
-  const TABLE_HEAD = ["Hotel Name","Location", "Status", "Created","","","" ];
+  const TABLE_HEAD = ["Hotel Name","Location", "Created", "Status","","","" ];
    
   const TABLE_ROWS = [
     {
@@ -69,26 +72,28 @@ import { addHotels } from "../services/hotelListSlice";
           <div className="mb-8 flex items-center justify-between gap-8">
             <div>
               <Typography variant="h5" color="blue-gray">
-                Guests list
+                Hotels list
               </Typography>
               {/* <Typography color="gray" className="mt-1 font-normal">
                 See information about all members
               </Typography> */}
             </div>
-            <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-              {/* <Button variant="outlined" size="sm">
+
+            {/* <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
+              <Button variant="outlined" size="sm">
                 view all
-              </Button> */}
+              </Button>
               <Button className="flex items-center gap-3" size="sm">
                 <HomeModernIcon strokeWidth={2} className="h-4 w-4" /> Add Hotel
               </Button>
-            </div>
+            </div> */}
+
           </div>
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <Tabs value="all" className="w-full md:w-max z-0">
               <TabsHeader>
-                {TABS.map(({ label, value }) => (
-                  <Tab key={value} className="text-[0.8rem] w-[150px]  " value={value}>
+                {TABS.map(({ label, value,className }) => (
+                  <Tab key={value} className={"text-[0.8rem] w-[150px] font-bold "+className} value={value}>
                     &nbsp;&nbsp;{label}&nbsp;&nbsp;
                   </Tab>
                 ))}
@@ -157,6 +162,7 @@ import { addHotels } from "../services/hotelListSlice";
                           </div>
                         </div>
                       </td>
+
                       <td className={classes+" "+"border-r-2"}>
                         <div className="flex flex-col">
                           <Typography
@@ -176,25 +182,13 @@ import { addHotels } from "../services/hotelListSlice";
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {console.log(_id)}
+                        
                        {createdAt}  
                           </Typography>
                         </div>
                       </td>
 
-                      {/* <td className={classes}>
-                        <div className="flex flex-col">
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal"
-                          >
-                           
-                        <Link to={`/owner/edit-hotel/${_id}`}>edit hotels</Link>   
-                          </Typography>
-\
-                        </div>
-                      </td> */}
+             
 
                       <td className={classes+" "+'border-r-2'}>
                         <div className="w-max">
@@ -202,8 +196,8 @@ import { addHotels } from "../services/hotelListSlice";
                             variant="ghost"
                             size="sm"
                             
-                            value={status==='listed' ? "Listed" : "Delisted"}
-                            color={status==='listed' ? "green" : "blue-gray"}
+                            value={status==='listed' ? "Listed" :status==='delisted'? "Delisted":'Not Registered'}
+                            color={status==='listed' ? "green" :status==='delisted'? "red":'blue-gray'}
                           />
                         </div>
                       </td>

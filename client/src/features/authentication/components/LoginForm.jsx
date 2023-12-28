@@ -43,13 +43,13 @@ const LoginForm = ({role}) => {
         <Formik
             initialValues={{ email: "", password: "" }}
             validationSchema={Yup.object({
-                email: Yup.string().email('Invalid email address').required('Required'),
+                email: Yup.string().email('Invalid email address').required('Email Required'),
                 password: Yup.string()
                     .required('Required')
                     .min(8, 'Password is too short - should be 8 chars minimum')
                     .matches(
                         /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-                        'Include at least one Uppercase,Lowercase,Number and  a special character'
+                        'use mix of uppercase,lowercase,numbers, and symbols'
                     )
             })}
             onSubmit={(values) => _onSave(values)}
@@ -66,11 +66,16 @@ const LoginForm = ({role}) => {
             }) => (
 
 
-                <form onSubmit={handleSubmit} className="grid grid-rows-7 gap-8 shadow-2xl p-10 pt-20 border-t-2 border-t-gray-100 rounded-3xl">
-                    <p>{role}</p>
+                <form onSubmit={handleSubmit} className="grid grid-rows-8 gap-8 shadow-2xl  p-10 border-t-2 border-t-gray-100 rounded-3xl">
+
+                    <div className="row-span-1">
+                    <p className="text-center">{role}</p>
                     <p className="text-red-700 w-56 text-sm text-center">{err}</p>
+                    {console.log(errors)}
+                    </div>
+
                     <div><Auth text={'SIGNIN WITH GOOGLE'} /></div>
-                    <div><FormInput label={'Email'}
+                    <div><FormInput label={!errors.email?'Email':errors.email}
                         name={'email'}
                         type="email"
                         onChange={handleChange}
@@ -80,7 +85,7 @@ const LoginForm = ({role}) => {
                         success={!errors.email && touched.email ? true : false}
                     /></div>
 
-                    <div className="w-72"><FormInput label={'Password'}
+                    <div className="w-72"><FormInput label={!errors.password?'Password':errors.password}
                         name="password"
                         type="password"
                         onChange={handleChange}

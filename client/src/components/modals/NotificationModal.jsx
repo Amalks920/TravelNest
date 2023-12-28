@@ -9,7 +9,7 @@ import {
 } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 
-export function NotificationDialog({ isModalOpen, setIsModalOpen,isBlocked,user_id,sendRequestHandler,error,loading,success,reset }) {
+export function NotificationDialog({ isModalOpen, setIsModalOpen,isBlocked,user_id,args,sendRequestHandler,error,loading,success,reset,heading,description,buttonText }) {
     console.log(isModalOpen)
     console.log(success)
   const navigate=useNavigate()
@@ -58,10 +58,10 @@ export function NotificationDialog({ isModalOpen, setIsModalOpen,isBlocked,user_
           </svg>
 
           <Typography color="black" variant="h4">
-            Do you need to block this user ?
+           {heading}
           </Typography>
           <Typography className="text-center font-normal">
-           user will be blocked and they could not able to login to their account after blocking.
+            {description}
           </Typography>
         </DialogBody>
         <DialogFooter className="space-x-2">
@@ -72,8 +72,8 @@ export function NotificationDialog({ isModalOpen, setIsModalOpen,isBlocked,user_
 
             Cancel
           </Button>
-          <Button variant="gradient" color="red" onClick={()=>{sendRequestHandler({isBlocked:isBlocked,user_id:user_id})}}>
-            Block
+          <Button variant="gradient" color="red" onClick={()=>{sendRequestHandler(args)}}>
+           {buttonText}
           </Button>
         </DialogFooter>
       </Dialog>

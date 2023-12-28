@@ -189,7 +189,6 @@ export function RoomsTable({data}) {
         </table>
       </CardBody>
     </Card>
-    <div className="flex justify-center mt-16"><Button color="green" className="">Approve</Button></div>
     </>
   );
 }

@@ -185,9 +185,9 @@ const HotelList=()=>{
                             variant="ghost"
                             size="sm"
                             value={
-                              status === "delisted" ? "Delisted" : "Listed"
+                              status === "delisted" ? "Delisted" : status==='listed'? "Listed":'Not Registered'
                             }
-                            color={status === 'listed' ? "green" : "blue-gray"}
+                            color={status === 'listed' ? "green": status==='delisted'?'red' : "blue-gray"}
                           />
                         </div>
                       </td>
