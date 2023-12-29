@@ -6,8 +6,10 @@ export const roomsApiSlice=apiSlice.injectEndpoints({
             query:(data)=>{
                 console.log(data._id)
                return  `/room/get-rooms-list/${data?._id}`
-            }
+            },
+            transformErrorResponse:(response)=>response.response
         })
+        
     })
 })
 

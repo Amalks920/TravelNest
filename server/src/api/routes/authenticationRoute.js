@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const validateResource = require('../middlewares/validateResource')
 const userModel = require('../models/userModel');
-const { registerNewUser, login, handleRefreshToken, verifyEmailOrPhone } = require('../controllers/authController');
+const { registerNewUser, login, handleRefreshToken, verifyEmail } = require('../controllers/authController');
 const { signUpValidation, loginValidation } = require('../utils/validations');
 const handleError = require('../middlewares/errorHandler');
 
@@ -107,7 +107,7 @@ router.post('/signup',signUpValidation,handleError, registerNewUser)
    *        description: Bad request
    */
 
-router.post('/verify-email-or-phone',verifyEmailOrPhone)
+router.post('/verify-email',verifyEmail)
 
   /**
    * @openapi

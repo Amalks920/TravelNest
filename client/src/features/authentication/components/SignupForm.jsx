@@ -71,8 +71,8 @@ const SignupForm = ({ role }) => {
 
             <form onSubmit={handleSubmit} className="grid grid-rows-7  gap-8 shadow-2xl p-10 ">
 
-               <h1 className="text-2xl font-bold text-center">{role}</h1>
-               <p className="text-red-600 border-2 text-center">{error}</p>
+               <h1 className="text-2xl font-bold text-center ">{role}</h1>
+               <p className="text-red-600 border-2 text-center text-[0.8rem]">{error}</p>
                <div><Auth text={'SIGNIN WITH GOOGLE'} /></div>
                <div className="w-80"><FormInput
                   onChange={handleChange}
@@ -80,7 +80,7 @@ const SignupForm = ({ role }) => {
                   value={values.username}
                   error={errors.username && touched.username && errors.username}
                   success={!errors.username && touched.username ? true : false}
-                  label={'username'} type={'text'} name={'username'} /></div>
+                  label={!errors.username?'username':errors.username} type={'text'} name={'username'} /></div>
 
                <div><FormInput
                   onChange={handleChange}
@@ -88,7 +88,7 @@ const SignupForm = ({ role }) => {
                   value={values.email}
                   error={errors.email && touched.email && errors.email}
                   success={!errors.email && touched.email ? true : false}
-                  label={'Email'} type={'email'} name={'email'} /></div>
+                  label={!errors.email?'Email':errors.email} type={'email'} name={'email'} /></div>
 
                <div><FormInput
                   onChange={handleChange}
@@ -96,7 +96,7 @@ const SignupForm = ({ role }) => {
                   value={values.phone}
                   error={errors.phone && touched.phone && errors.phone}
                   success={!errors.phone && touched.phone ? true : false}
-                  label={'Phone'} type={'phone'} name={'phone'} /></div>
+                  label={!errors.phone?'Phone':errors.phone} type={'phone'} name={'phone'} /></div>
 
                <div><FormInput
                   onChange={handleChange}
@@ -104,7 +104,7 @@ const SignupForm = ({ role }) => {
                   value={values.password}
                   error={errors.password && touched.password && errors.password}
                   success={!errors.password && touched.password ? true : false}
-                  label={'password'} type={'password'} name={'password'} /></div>
+                  label={!errors.password?'password':errors.password} type={'password'} name={'password'} /></div>
 
                <div><FormInput
                   onChange={handleChange}
@@ -112,7 +112,7 @@ const SignupForm = ({ role }) => {
                   value={values.repassword}
                   error={errors.repassword && touched.repassword && errors.repassword}
                   success={!errors.repassword && touched.repassword ? true : false}
-                  label={'Re Enter Password'} type={'password'} name={'repassword'} /></div>
+                  label={!errors.repassword?'Re Enter Password':errors.repassword} type={'password'} name={'repassword'} /></div>
 
                <Link to={'/login'}><p className="font-medium text-sm text-blue-900">Already Have an Account?</p></Link>
                <div><ButtonDefault type={'submit'} onSubmit={handleSubmit} value={'submit'} disabled={isSubmitting} /></div>

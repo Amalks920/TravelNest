@@ -220,6 +220,17 @@ import { addHotels } from "../services/hotelListSlice";
                          <Link to={`/owner/register-room/${_id}`} className="text-[0.56rem] text-center">Add Rooms</Link>
                         </Typography>
                       </td>
+
+                      <td className="border-r-2 px-4">
+                      <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                         <Link to={`/owner/room-list/${_id}`} className="text-[0.56rem] text-center">View Rooms</Link>
+                        </Typography>
+                      </td>
+
                       <td className={classes}>
                         <Tooltip content="Edit User">
                           <IconButton variant="text">

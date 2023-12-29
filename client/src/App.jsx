@@ -11,7 +11,7 @@ import HotelRegistration from './pages/owner/HotelRegistration';
 import CustomersList from './pages/owner/CustomersList';
 import RoomRegistration from './pages/owner/RoomRegistration';
 import HotelDetails from './pages/owner/HotelDetails';
-import Home from './pages/user/Home';
+import HomePage from './pages/user/HomePage.jsx';
 import RequireUserAuth from './features/authentication/components/RequireUserAuth';
 import PublicRoutes from './utils/routes/PublicRoutes';
 import UserRoutes from './utils/routes/UserRoutes';
@@ -29,6 +29,8 @@ import RequireAdminAuth from './features/authentication/components/RequireAdminA
 import { UsersList } from './features/userManagement/components/UsersList';
 import DetailsPage from './pages/admin/DetailsPage.jsx';
 import AdminHotelListPage from './pages/admin/AdminHotelListPage.jsx';
+import SingleHotelPage from './pages/user/SingleHotelPage.jsx';
+import VerifyEmailPage from './pages/VeirfyEmailPage.jsx';
 
 function App() {
   const token = useSelector(selectToken)
@@ -43,10 +45,13 @@ function App() {
       <Route element={<CheckAuth currentRole={'user'}/>} >
       <Route path="login" element={<Login />} />
       <Route path="signup" element={<Signup />} />
+      <Route path='verify-email' element={<VerifyEmailPage isOtpVerified={false}/>}></Route>
+      <Route path='verify-otp' element={<VerifyEmailPage isOtpVerified={true}/>}></Route>
       </Route>
 
       <Route element={<RequireUserAuth allowedRole={'user'} />}>
-        <Route path="/home" element={<Home />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/hotel-details" element={<SingleHotelPage/>} />
       </Route>
 
 

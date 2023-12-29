@@ -1,7 +1,7 @@
-const { getHotelsHelper, getAHotelHelper, editHotelHelper, getAllHotelDetailsHelper, deleteHotelImageHelper } = require("../helpers/hotelHelper")
+const { getHotelsHelper, getAHotelHelper, editHotelHelper, getAllHotelDetailsHelper, deleteHotelImageHelper, changeHotelStatusHelper } = require("../helpers/hotelHelper")
 const { saveHotelDocumentHelper } = require("../helpers/hotelHelper")
 const { uploadImages } = require("../helpers/hotelHelper")
-const { findRoomsInHotelHelper } = require("../helpers/roomHelper")
+const { findRoomsInHotelHelper, changeAllRoomStatus } = require("../helpers/roomHelper")
 require('dotenv').config()
 
 
@@ -102,12 +102,28 @@ const deleteHotelImage=async (req,res,next)=>{
   }
 }
 
+const changeHotelStatus=async (req,res,next)=>{
+  const hotel_id=req.params.hotel_id;
+  const status=req.params.status;
+  try {
+
+      const response=await  changeHotelStatusHelper(hotel_id,status);
+
+     // const changeRoomStatus=await changeAllRoomStatus(hotel_id,status)
+     
+      res.status(200).json({response})
+  } catch (error) {
+      res.status(404).json({error})
+  }
+}
+
 
 
 
 module.exports={
     createHotel,getAllHotels,
     getAllHotels,getAHotel,editHotel,
-    getAllHotelDetails,deleteHotelImage
+    getAllHotelDetails,deleteHotelImage,
+    changeHotelStatus
 }
 

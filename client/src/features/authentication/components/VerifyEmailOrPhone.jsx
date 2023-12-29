@@ -1,22 +1,37 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ButtonDefault } from "../../../components/form/ButtonDefault";
 import { FormInput } from "../../../components/form/FormInput";
 import { Formik } from "formik";
 import * as Yup from 'yup'
 import { useVerifyEmailMutation } from "../services/verifyEmailApiSlice";
 import { useDispatch } from "react-redux";
+import { useVerifyOtpMutation } from "../services/verifyOtpApiSlice";
+import { useEffect } from "react";
 
-const VerifyEmailOrPhone = () => {
+const VerifyEmailOrPhone = ({isOtpVerified}) => {
+    const navigate=useNavigate()
 
+    const navigateToVerifyOtpPage=()=>navigate('/verify-otp')
+
+ 
     const [verifyEmail,{isError,isLoading,isSuccess}]=useVerifyEmailMutation()
+    const [verifyOtp,{isError:verifyOtpIsError,isLoading:verifyOtpIsLoading,isSuccess:verifyOtpIsSuccess}]=useVerifyOtpMutation()
+   
+    
+
+ 
 
     const  _onSave= async (values)=>{    
-        try {
-            
-            const response=await verifyEmail(values).unwrap()
+        try {  
+             const response=await verifyEmail(values).unwrap()
              console.log(response)
+            if(response.isOtpSend){
+                console.log('navigate to otp page')
+                navigate('/verify-otp')
+            }
+
+             
         } catch (error) {
-            console.log('err--------->');
             console.log(error)
         }
     }
@@ -24,9 +39,9 @@ const VerifyEmailOrPhone = () => {
 
     return (
         <Formik
-            initialValues={{ email: ''}}
+            initialValues={isOtpVerified?{ email: ''}:{otp:null}}
             validationSchema={Yup.object({
-                email: Yup.string().email('Invalid email address').required('Required'),
+                email: Yup.string().email('Invalid email address').required('Email Required'),
             })}
             onSubmit={(values) => _onSave(values)}
         >
@@ -42,14 +57,26 @@ const VerifyEmailOrPhone = () => {
             }) => (
                 <form  onSubmit={handleSubmit} className="grid grid-rows-7  gap-8 shadow-2xl p-10 border-t-2 border-t-gray-100">
                     <p className="text-center font-bold">Enter Email/Phone</p>
-                    <div><FormInput
-                        label={'Email'} type={'email'} name={'email'}
+                    <div className="w-80">
+{           
+        !isOtpVerified  ?            <FormInput
+                        label={!errors.email?'Email':errors.email} type={'email'} name={'email'}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.email}
                         error={errors.email && touched.email && errors.email}
                         success={!errors.email && touched.email ? true : false}
-                         /></div>
+                         />:
+                         <FormInput
+                         label={!errors.otp?'otp':errors.otp} type={'number'} name={'otp'}
+                         onChange={handleChange}
+                         onBlur={handleBlur}
+                         value={values.otp}
+                         error={errors.otp && touched.otp && errors.otp}
+                         success={!errors.otp && touched.otp ? true : false}
+                          />
+                         }
+                         </div>
 
                     <div><ButtonDefault  type={'submit'} onSubmit={handleSubmit} disabled={isSubmitting} /></div>
                 </form>

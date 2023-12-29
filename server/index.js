@@ -1,6 +1,7 @@
 const express=require('express')
 const app=express()
 const morgan=require('morgan')
+const session = require('express-session');
 const swaggerDocs=require('./utils/swagger')
 const dbConnect = require('./src/config/dbConfig')
 const routes=require('./routes')
@@ -26,6 +27,7 @@ app.use(express.urlencoded({extended:false}));
 app.use(credentials);
 app.use(cors(corsOptions))
 app.use(cookieParser())
+app.use(session({ secret: "Private", resave: true, saveUninitialized: true}))
 
 
 app.use('/api/auth',authRouter)

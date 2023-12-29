@@ -2,7 +2,7 @@ import { lazy, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { selectRole, selectToken } from '../../features/authentication/services/loginSlice';
-import Home from '../../pages/user/Home';
+import Home from '../../pages/user/HomePage';
 const Login = lazy(() => import('../../pages/Login'));
 const Signup = lazy(() => import('../../pages/Signup'));
 const VerifyEmailOrPhone = lazy(() => import('../../features/authentication/components/VerifyEmailOrPhone'));

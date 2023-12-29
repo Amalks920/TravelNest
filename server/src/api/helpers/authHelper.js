@@ -42,6 +42,8 @@ const loginHelper = function ({ email, password, role }) {
                     { $set: { refreshToken: refreshToken } }
                 )
                 resolve({ foundUser, accessToken })
+            }else{
+                return reject('password is incorrect')
             }
 
 

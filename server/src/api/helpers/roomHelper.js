@@ -65,7 +65,7 @@ const editRoomHelper=(hotel_id,room_id,data,imgPathArr)=>{
 }
 
 const groupRoomByType=(hotel_id)=>{
-  console.log(hotel_id)
+
    return new Promise(async (resolve,reject)=>{
     try {
 
@@ -78,21 +78,41 @@ const groupRoomByType=(hotel_id)=>{
         {
           $group: {
             _id: '$roomType',
-            // rooms: { $push: { roomType: '$roomType'} }, // Include only the fields you need
+            rooms: { $push:
+               { 
+                id: '$_id',
+                description:'$description',
+                size:'$size',
+                amenities:'$amenities',
+                noOfRooms:'$noOfRooms',
+                bathRoomType:'$bathroomType',
+                images:'$images',
+                rate:'$rate',
+                createdAt:'$createdAt'
+              },
+               }, // Include only the fields you need
             count: { $sum: 1 }
           }
         },
         {
           $project: {
-            _id: 0, // Exclude the _id field if you don't need it
+            _id: 1, // Exclude the _id field if you don't need it
             roomType: '$_id',
+            description:'$rooms.description',
+            size:'$rooms.size',
+            amenities:'$rooms.amenities',
+            noOfRooms:'$rooms.noOfRooms',
+            bathRoomType:'$rooms.bathRoomType',
+            images:'$rooms.images',
+            rate:'$rooms.rate',
+            createdAt:'$rooms.createdAt',
             rooms: 1, // Include the 'rooms' field
             count: 1 // Include the 'count' field
           }
         }
         
        ])
-
+       console.log(response)
        resolve(response)
 
     } catch (error) {
@@ -117,9 +137,28 @@ const findRoomsInHotelHelper=(hotel_id)=>{
   })
 }
 
+const changeAllRoomStatus=(hotel_id,status)=>{
+  return new Promise(async (resolve,reject)=>{
+    try {
+      const response=await roomModel.updateMany(
+        {hotel_id:hotel_id},
+        {
+          $set:{
+            status:status
+          }
+        }
+        )
+        resolve(response)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
 module.exports = {
   addRoomHelper,addRoomToHotel,
   getRoomsHelper,editRoomHelper,
-  groupRoomByType,findRoomsInHotelHelper
+  groupRoomByType,findRoomsInHotelHelper,
+  changeAllRoomStatus
 
 };

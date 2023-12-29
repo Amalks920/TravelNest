@@ -1,6 +1,7 @@
+const { resolve } = require("path");
 const cloudinary = require("../../config/cloudinary");
 const hotelModel = require("../models/hotelModel");
-const mongoose=require('mongoose')
+const mongoose = require("mongoose");
 
 const uploadImages = (files) => {
   return new Promise(async (resolve, reject) => {
@@ -27,7 +28,7 @@ const saveHotelDocumentHelper = function (data) {
       const response = await hotelModel.create(data);
       resolve(response);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       reject(error);
     }
   });
@@ -69,13 +70,13 @@ const editHotelHelper = function (data, imagePathArray) {
           $set: {
             hotelName,
             location,
-            description
+            description,
           },
-          $push:{
-            images:{
-                $each:imagePathArray
-            }
-          }
+          $push: {
+            images: {
+              $each: imagePathArray,
+            },
+          },
         }
       );
 
@@ -88,71 +89,88 @@ const editHotelHelper = function (data, imagePathArray) {
   });
 };
 
-
-const getAllHotelDetailsHelper=(hotel_id)=>{
-  console.log(hotel_id)
-  return new Promise(async (resolve,reject)=>{
+const getAllHotelDetailsHelper = (hotel_id) => {
+  console.log(hotel_id);
+  return new Promise(async (resolve, reject) => {
     try {
-      const response=await hotelModel.aggregate([
+      const response = await hotelModel.aggregate([
         {
-          $match:{
-            _id: new mongoose.Types.ObjectId(hotel_id)
-          }
+          $match: {
+            _id: new mongoose.Types.ObjectId(hotel_id),
+          },
         },
         {
-          $lookup:{
-            from:'users',
-            localField:'owner_id',
-            foreignField:'_id',
-            as:'owner'
-          }
+          $lookup: {
+            from: "users",
+            localField: "owner_id",
+            foreignField: "_id",
+            as: "owner",
+          },
         },
         {
-          $unwind:'$owner'
+          $unwind: "$owner",
         },
         {
-          $project:{
-            _id:1,
-            hotelName:1,
-            description:1,
-            images:1,
-            averageRating:1,
-            location:1,
-            status:1,
-            created_at:1,
-            owners_name:'$owner.username',
-            owners_email:'$owner.email',
-            owners_phone:'$owner.phone',
-            owner_isBlocked:'$owner.isBlocked',
-            owner_joined_date:'$owner.createdAt'
-          }
-        }
-      ])
-      resolve(response)
+          $project: {
+            _id: 1,
+            hotelName: 1,
+            description: 1,
+            images: 1,
+            averageRating: 1,
+            location: 1,
+            status: 1,
+            created_at: 1,
+            owners_name: "$owner.username",
+            owners_email: "$owner.email",
+            owners_phone: "$owner.phone",
+            owner_isBlocked: "$owner.isBlocked",
+            owner_joined_date: "$owner.createdAt",
+          },
+        },
+      ]);
+      resolve(response);
     } catch (error) {
-      reject(error)
+      reject(error);
     }
-  })
-}
+  });
+};
 
-const deleteHotelImageHelper=(hotel_id,img_public_id)=>{
-  return new Promise(async (resolve,reject)=>{
+const deleteHotelImageHelper = (hotel_id, img_public_id) => {
+  return new Promise(async (resolve, reject) => {
     try {
-      const response=await hotelModel.updateOne(
-        {_id:hotel_id},
+      const response = await hotelModel.updateOne(
+        { _id: hotel_id },
         {
-          $pull:{
-            images:img_public_id
-          }
+          $pull: {
+            images: img_public_id,
+          },
         }
-        )
-      resolve(response)
+      );
+      resolve(response);
     } catch (error) {
-      reject(error)
+      reject(error);
     }
-  })
-}
+  });
+};
 
+const changeHotelStatusHelper = (hotel_id, status) => {
+
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await hotelModel.updateOne(
+        { _id: hotel_id },
+        {
+          $set: {
+            status: status,
+          },
+        }
+      );
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
 
 module.exports = {
   uploadImages,
@@ -161,5 +179,6 @@ module.exports = {
   getHotelsHelper,
   editHotelHelper,
   getAllHotelDetailsHelper,
-  deleteHotelImageHelper
+  deleteHotelImageHelper,
+  changeHotelStatusHelper,
 };

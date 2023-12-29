@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ButtonDefault } from "../../../components/form/ButtonDefault";
 import { FormInput } from "../../../components/form/FormInput";
 import { Textarea, Select, Option } from "@material-tailwind/react";
-import { Formik } from "formik";
+import { Field, Formik } from "formik";
 import { useAddRoomMutation } from "../services/roomRegApiSlice";
 import * as Yup from "yup";
 import { useEffect } from "react";
@@ -52,7 +52,8 @@ const RoomRegistrationForm = ({ isEditForm }) => {
         description,
         images,
       } = values;
-      console.log(images);
+      console.log(values)
+
       let formData = new FormData();
 
       formData.append("roomType", roomType);
@@ -102,7 +103,7 @@ const RoomRegistrationForm = ({ isEditForm }) => {
         description: Yup.string()
           .min(30, "description should contain atleast 30 characters")
           .max(300, "maximum characters allowed exceeded")
-          .required(),
+          .required('description required'),
         images: Yup.mixed().required(),
       })}
       onSubmit={(values) => _onSave(values)}
@@ -126,26 +127,31 @@ const RoomRegistrationForm = ({ isEditForm }) => {
             <h1 className=" top-28 text-2xl text-center">Room Registration</h1>
           </div>
           <div className="md:col-span-1 col-span-2">
-            <Select
+            <Field
+            className='w-full h-1/2 ps-3 rounded-md bg-white border-2 border-gray-300'
+              name="roomType"
               onChange={handleChange}
               onBlur={handleBlur}
-              value={values.bathroomType}
+              value={values.roomType}
               error={
-                errors.bathroomType &&
-                touched.bathroomType &&
-                errors.bathroomType
+                errors.roomType &&
+                touched.roomType &&
+                errors.roomType
               }
               success={
                 !errors.bathroomType && touched.bathroomType ? true : false
               }
               as="select"
-              name="bathroomType"
               label="roomType"
             >
-              <Option value="single">single</Option>
-              <Option value="double">double</Option>
-              <Option value="deluxe">deluxe</Option>
-            </Select>
+              <option className="font-light" value="single">single</option>
+              <option value="double">double</option>
+              <option value="suite">suite</option>
+              <option value="family">family</option> 
+              <option value="adjoining">adjoining</option>   
+              <option value="presidential">presidential</option>   
+              <option value="penthouse">penthouse</option>   
+            </Field>
           </div>
           <div className="md:col-span-1 col-span-2">
             <FormInput
@@ -155,7 +161,8 @@ const RoomRegistrationForm = ({ isEditForm }) => {
               error={errors.noOfRooms && touched.noOfRooms && errors.noOfRooms}
               success={!errors.noOfRooms && touched.noOfRooms ? true : false}
               name="noOfRooms"
-              label={"No of Rooms"}
+              type='number'
+              label={!errors.noOfRooms?"No of Rooms":errors.noOfRooms}
             />
           </div>
           <div className="row-span-1 md:col-span-1 col-span-2">
@@ -166,7 +173,7 @@ const RoomRegistrationForm = ({ isEditForm }) => {
               error={errors.amenities && touched.amenities && errors.amenities}
               success={!errors.amenities && touched.amenities ? true : false}
               name="amenities"
-              label={"amenities"}
+              label={!errors.amenities?"amenities":errors.amenities}
             />
           </div>
           <div className="md:col-span-1 col-span-2">
@@ -177,7 +184,8 @@ const RoomRegistrationForm = ({ isEditForm }) => {
               error={errors.rate && touched.rate && errors.rate}
               success={!errors.rate && touched.rate ? true : false}
               name="rate"
-              label={"Rate Per Room"}
+              type='number'
+              label={!errors.rate?"Rate Per Room":errors?.rate}
             />
           </div>
 
@@ -189,11 +197,13 @@ const RoomRegistrationForm = ({ isEditForm }) => {
               error={errors.size && touched.size && errors.size}
               success={!errors.size && touched.size ? true : false}
               name="size"
-              label={"Size of the room in square units"}
+              type='number'
+              label={!errors?.size?"Size of the room in square units":errors.size}
             />
           </div>
           <div className="md:col-span-1 col-span-2">
-            <Select
+            <Field
+            className='w-full h-1/2 ps-3 border-2 bg-white border-gray-300 rounded-md'
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.bathroomType}
@@ -207,12 +217,12 @@ const RoomRegistrationForm = ({ isEditForm }) => {
               }
               as="select"
               name="bathroomType"
-              label="Bathroom Type"
+              label={!errors.bathroomType?"Bathroom Type":errors.bathroomType}
             >
-              <Option value="en-suite">En-suite</Option>
-              <Option value="bathtub">Bathtub</Option>
-              <Option value="shower">Shower</Option>
-            </Select>
+              <option value="en-suite">En-suite</option>
+              <option value="bathtub">Bathtub</option>
+              <option value="shower">Shower</option>
+            </Field>
           </div>
           <div className=" row-span-2 col-span-2 ">
             <Textarea
@@ -226,7 +236,7 @@ const RoomRegistrationForm = ({ isEditForm }) => {
               success={
                 !errors.description && touched.description ? true : false
               }
-              label={"Description"}
+              label={!errors?.description?"Description":errors.description}
             ></Textarea>
           </div>
 
@@ -239,7 +249,7 @@ const RoomRegistrationForm = ({ isEditForm }) => {
               type={"file"}
               multiple
               accept=".jpg, .jpeg, .png"
-              label="Images"
+              label={!errors.images?"Images":errors.images}
             />
           </div>
 

@@ -30,12 +30,17 @@ const LoginForm = ({role}) => {
                 console.log(console.log(token))
             }
             
+            if(isError){
+                console.log(error)
+                setErr(error)
+            }
+
             navigate(role==='user'?'/home':role==='owner'?'/owner/register-hotel':role==='admin'?'/admin/home':null)
            
         } catch (error) {
             console.log('error')
             console.log(error)
-            setErr(error?.error)
+            setErr(error?.data?.error)
         }
     }
 
@@ -70,7 +75,7 @@ const LoginForm = ({role}) => {
 
                     <div className="row-span-1">
                     <p className="text-center">{role}</p>
-                    <p className="text-red-700 w-56 text-sm text-center">{err}</p>
+                    <p className="text-red-700  text-sm text-center text-[0.8rem]  w-full">{err}</p>
                     {console.log(errors)}
                     </div>
 
@@ -97,7 +102,7 @@ const LoginForm = ({role}) => {
 
                     <Link to={'/signup'}><p className="  font-light -mt-5 text-black">Don't Have an Account?</p></Link>
                     <div className=" -mt-5"><ButtonDefault value='submit' type={'submit'}  onSubmit={handleSubmit} disabled={isSubmitting} /></div>
-                    <Link to={'/verify-email-or-phone'} className="relative bottom-6 left-24"><p className="font-medium  text-sm text-black">Forgot Password?</p></Link>
+                    <Link to={'/verify-email'} className="relative bottom-6 left-24"><p className="font-medium  text-sm text-black">Forgot Password?</p></Link>
                 </form>
             )}
         </Formik>

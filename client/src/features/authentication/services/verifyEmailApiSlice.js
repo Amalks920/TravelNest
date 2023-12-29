@@ -6,7 +6,7 @@ export const verifyEmailSlice=apiSlice.injectEndpoints({
     endpoints:builder=>({
         verifyEmail: builder.mutation({
             query:credentials=>({
-                url:'/auth/verify-email-or-phone',
+                url:'/auth/verify-email',
                 method:'POST',
                 body:{...credentials}
             }),

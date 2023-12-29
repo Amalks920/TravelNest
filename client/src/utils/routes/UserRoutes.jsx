@@ -7,7 +7,7 @@ import AuthPageContainer from "../../layouts/AuthPageContainer";
 import { useSelector } from "react-redux";
 import { selectToken } from "../../features/authentication/services/loginSlice";
 import HotelRegistration from "../../pages/owner/HotelRegistration";
-const Home = lazy(() => import("../../pages/user/Home"));
+const Home = lazy(() => import("../../pages/user/HomePage"));
 
 
 const UserRoutes = () => {

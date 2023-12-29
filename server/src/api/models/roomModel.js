@@ -99,6 +99,12 @@ const roomSchema = new mongoose.Schema({
     required: true,
     default: 0,
   },
+
+  no_of_occupied_rooms: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
   // Type of bathroom in the room (e.g., En-suite, Bathtub, Shower)
   bathroomType: {
     type: String,
@@ -118,6 +124,12 @@ const roomSchema = new mongoose.Schema({
   // Rate or cost of the room
   rate: { type: Number, required: true },
 
+  status: {
+    type: String,
+    required: true,
+    enum: ["delisted,listed,not-registered"],
+  },
+
   // Timestamp for when the room was created
   // timestamps: { type: Date, default: Date.now },
   created_at: { type: Date, required: true, default: Date.now },
@@ -128,3 +140,6 @@ const Room = mongoose.model("Room", roomSchema);
 
 // Export the Room model
 module.exports = Room;
+
+// things to add in this schema
+// no of rooms  available || no of occupied rooms
