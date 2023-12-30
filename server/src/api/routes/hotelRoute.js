@@ -1,5 +1,5 @@
 const express = require('express');
-const { createHotel, getAllHotels, getAHotel, editHotel, getAllHotelDetails, deleteHotelImage, changeHotelStatus } = require('../controllers/hotelController');
+const { createHotel, getAllHotels, getAHotel, editHotel, getAllHotelDetails, deleteHotelImage, changeHotelStatus, getAllHotelsForUser, getAHotelForUser } = require('../controllers/hotelController');
 const router = express.Router();
 const uploader=require('../../config/multer');
 const verifyJWT=require('../utils/verifyJwt');
@@ -89,6 +89,9 @@ router.get('/get-all-hotel-details/:hotel_id',getAllHotelDetails)
 router.delete('/delete-image/:hotel_id/:img_public_id',verifyJwt,deleteHotelImage)
 
 router.put('/change-hotel-status/:hotel_id/:status',verifyJwt,changeHotelStatus)
+
+router.get('/get-all-hotels-user',verifyJwt,getAllHotelsForUser)
+router.get('/get-a-hotel-user/:hotel_id',verifyJWT,getAHotelForUser)
 
   router.post('/test',(req,res)=>{
     console.log(req.body)

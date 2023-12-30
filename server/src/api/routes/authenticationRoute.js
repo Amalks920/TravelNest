@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 const validateResource = require('../middlewares/validateResource')
 const userModel = require('../models/userModel');
-const { registerNewUser, login, handleRefreshToken, verifyEmail } = require('../controllers/authController');
+const { registerNewUser, login, handleRefreshToken, verifyEmail, verifyOtp, changePassword } = require('../controllers/authController');
 const { signUpValidation, loginValidation } = require('../utils/validations');
 const handleError = require('../middlewares/errorHandler');
+const { changePasswordHelper } = require('../helpers/authHelper');
 
 
   /**
@@ -135,9 +136,7 @@ router.post('/verify-email',verifyEmail)
    *        description: Bad request
    */
 
-  router.post('/verify-otp', (req, res) => {
-    res.status(201).json({ message: 'otp verification success' });
-})
+  router.post('/verify-otp', verifyOtp)
 
  /**
    * @openapi
@@ -165,8 +164,12 @@ router.post('/verify-email',verifyEmail)
    *        description: Bad request
    */
 
-router.put('/change-password', (req, res) => {
-    res.status(201).json({ message: 'password changeed successfully' });
-})
+// router.put('/change-password', (req, res) => {
+//     res.status(201).json({ message: 'password changeed successfully' });
+// })
+
+
+
+router.post('/change-password',changePassword)
 
 module.exports = router;

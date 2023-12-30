@@ -31,6 +31,8 @@ import DetailsPage from './pages/admin/DetailsPage.jsx';
 import AdminHotelListPage from './pages/admin/AdminHotelListPage.jsx';
 import SingleHotelPage from './pages/user/SingleHotelPage.jsx';
 import VerifyEmailPage from './pages/VeirfyEmailPage.jsx';
+import ResetPassword from './features/authentication/components/ResetPassword.jsx';
+import ResetPasswordPage from './pages/ResetPasswordPage.jsx';
 
 function App() {
   const token = useSelector(selectToken)
@@ -46,12 +48,13 @@ function App() {
       <Route path="login" element={<Login />} />
       <Route path="signup" element={<Signup />} />
       <Route path='verify-email' element={<VerifyEmailPage isOtpVerified={false}/>}></Route>
-      <Route path='verify-otp' element={<VerifyEmailPage isOtpVerified={true}/>}></Route>
+      <Route path='verify-otp/:email' element={<VerifyEmailPage isOtpVerified={true}/>}></Route>
+      <Route path='reset-password/:email' element={<ResetPasswordPage/>}></Route>
       </Route>
 
       <Route element={<RequireUserAuth allowedRole={'user'} />}>
         <Route path="/home" element={<HomePage />} />
-        <Route path="/hotel-details" element={<SingleHotelPage/>} />
+        <Route path="/hotel-details/:hotel_id" element={<SingleHotelPage/>} />
       </Route>
 
 

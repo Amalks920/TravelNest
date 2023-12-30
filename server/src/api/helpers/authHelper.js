@@ -1,5 +1,7 @@
+const { resolve } = require("path");
 const userModel = require("../models/userModel")
 const jwt = require('jsonwebtoken');
+const { findOne } = require("../models/hotelModel");
 require('dotenv').config();
 
 const signupHelper = function (data) {
@@ -53,7 +55,22 @@ const loginHelper = function ({ email, password, role }) {
     })
 }
 
+const changePasswordHelper= function (email,password){
+    return new Promise(async (resolve,reject)=>{
+        try {
+            console.log(email,password)
+            const findUser=await userModel.findOne({email:email})
+            findUser.password=password;
+            findUser.save()
+           resolve(true)
+
+        } catch (error) {
+            reject(error.message)
+        }
+    })
+}
 
 module.exports = {
-    signupHelper, loginHelper
+    signupHelper, loginHelper,
+    changePasswordHelper
 }

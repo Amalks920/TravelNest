@@ -155,10 +155,37 @@ const changeAllRoomStatus=(hotel_id,status)=>{
   })
 }
 
+const getAllRoomsOfAHotelForUserHelper=(hotel_id)=>{
+  return new Promise(async (resolve,reject)=>{
+    try {
+      const response=await roomModel.find(
+        {
+          hotel_id:hotel_id
+        }
+        // {
+        //   $and:[
+        //     {
+        //       hotel_id:hotel_id
+        //     },
+        //     {
+        //       status:'listed'
+        //     }
+        //   ]
+        // }
+      )
+
+      resolve(response)
+    } catch (error) {
+      console.log(error)
+      reject(error)
+    }
+  })
+}
+
 module.exports = {
   addRoomHelper,addRoomToHotel,
   getRoomsHelper,editRoomHelper,
   groupRoomByType,findRoomsInHotelHelper,
-  changeAllRoomStatus
+  changeAllRoomStatus,getAllRoomsOfAHotelForUserHelper
 
 };

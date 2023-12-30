@@ -154,7 +154,6 @@ const deleteHotelImageHelper = (hotel_id, img_public_id) => {
 };
 
 const changeHotelStatusHelper = (hotel_id, status) => {
-
   return new Promise(async (resolve, reject) => {
     try {
       const response = await hotelModel.updateOne(
@@ -172,6 +171,38 @@ const changeHotelStatusHelper = (hotel_id, status) => {
   });
 };
 
+const getAllHotelsForUserHelper = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await hotelModel.find({ status: "listed" });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+const getAHotelForUserHelper = (hotel_id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await hotelModel.findOne({
+        $and: [
+          {
+            _id: hotel_id,
+          },
+          {
+            status: "listed",
+          },
+        ],
+      });
+
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 module.exports = {
   uploadImages,
   getAHotelHelper,
@@ -181,4 +212,6 @@ module.exports = {
   getAllHotelDetailsHelper,
   deleteHotelImageHelper,
   changeHotelStatusHelper,
+  getAllHotelsForUserHelper,
+  getAHotelForUserHelper
 };

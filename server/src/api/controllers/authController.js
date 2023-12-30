@@ -1,4 +1,4 @@
-const { signupHelper, loginHelper } = require("../helpers/authHelper");
+const { signupHelper, loginHelper, changePasswordHelper } = require("../helpers/authHelper");
 const userModel = require("../models/userModel");
 const MailGen = require("mailgen");
 const nodemailer = require("nodemailer");
@@ -145,9 +145,49 @@ const verifyEmail = async (req, res, next) => {
   }
 };
 
+
+const verifyOtp=async (req,res,next)=>{
+  let otp=req.body.otp;
+  let email=req.body.email
+  console.log(req.body)
+console.log(req.session.email)
+console.log(req.session.otp)
+console.log(otp)
+console.log(email)
+  try {
+    console.log(email,otp)
+  if(req.session.otp==otp && req.session.email==email){
+    res.status(200).json(true)
+  }else{
+    res.status(404).json({msg:'incorrect otp'})
+  }
+
+
+    
+  } catch (error) {
+    console.log(error)
+    res.status(404).json({error})
+  }
+}
+
+const changePassword= async (req,res,next) => {
+  console.log('entereeed')
+  console.log(req.body)
+  try {
+    let {email,password}=req.body;
+    const response=await  changePasswordHelper(email,password)
+    res.status(200).json({response})
+  } catch (error) {
+    console.log(error.message)
+    res.status(404).json({error})
+  }
+}
+
 module.exports = {
   registerNewUser,
   login,
   handleRefreshToken,
   verifyEmail,
+  changePassword,
+  verifyOtp
 };

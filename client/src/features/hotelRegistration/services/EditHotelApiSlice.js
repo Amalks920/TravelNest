@@ -9,6 +9,7 @@ const editHotelApiSlice = apiSlice.injectEndpoints({
         body: data,
         formData: true,
       }),
+      invalidatesTags:['Hotels']
     }),
   }),
 });

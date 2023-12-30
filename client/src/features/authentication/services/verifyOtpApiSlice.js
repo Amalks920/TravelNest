@@ -7,7 +7,7 @@ const verifyOtpApiSlice=apiSlice.injectEndpoints({
             query:data=>({
                 url:'/auth/verify-otp',
                 method:'POST',
-                body:data.otp
+                body:data
             })
         })
     })

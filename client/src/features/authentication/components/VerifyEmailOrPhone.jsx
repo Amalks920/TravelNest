@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { ButtonDefault } from "../../../components/form/ButtonDefault";
 import { FormInput } from "../../../components/form/FormInput";
 import { Formik } from "formik";
@@ -6,18 +6,18 @@ import * as Yup from 'yup'
 import { useVerifyEmailMutation } from "../services/verifyEmailApiSlice";
 import { useDispatch } from "react-redux";
 import { useVerifyOtpMutation } from "../services/verifyOtpApiSlice";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 const VerifyEmailOrPhone = ({isOtpVerified}) => {
     const navigate=useNavigate()
 
     const navigateToVerifyOtpPage=()=>navigate('/verify-otp')
-
- 
+    const {email}=useParams()
+    const emailRef=useRef(null)
     const [verifyEmail,{isError,isLoading,isSuccess}]=useVerifyEmailMutation()
     const [verifyOtp,{isError:verifyOtpIsError,isLoading:verifyOtpIsLoading,isSuccess:verifyOtpIsSuccess}]=useVerifyOtpMutation()
    
-    
+    console.log(email)
 
  
 
@@ -26,8 +26,9 @@ const VerifyEmailOrPhone = ({isOtpVerified}) => {
              const response=await verifyEmail(values).unwrap()
              console.log(response)
             if(response.isOtpSend){
+                emailRef.current=values.email;
                 console.log('navigate to otp page')
-                navigate('/verify-otp')
+                navigate(`/verify-otp/${emailRef.current}`)
             }
 
              
@@ -36,14 +37,28 @@ const VerifyEmailOrPhone = ({isOtpVerified}) => {
         }
     }
 
+    const handleVerifyOtp= async (values)=>{
+        console.log(values)
+       
+        try {
+            const response=await verifyOtp({email:email,otp:values.otp})
+            console.log(response)
+            if(response.data){
+             navigate(`/reset-password/${email}`)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     return (
         <Formik
-            initialValues={isOtpVerified?{ email: ''}:{otp:null}}
+            initialValues={!isOtpVerified?{ email: ''}:{otp:null}}
             validationSchema={Yup.object({
                 email: Yup.string().email('Invalid email address').required('Email Required'),
             })}
-            onSubmit={(values) => _onSave(values)}
+            onSubmit={(values) => !isOtpVerified?_onSave(values):handleVerifyOtp(values)}
         >
             {({
                 values,
