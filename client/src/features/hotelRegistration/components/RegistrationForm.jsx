@@ -88,6 +88,9 @@ const RegistrationForm = ({ isEditForm }) => {
     isSuccess && navigate("/owner/hotel-list");
   }, [isSuccess]);
 
+  
+  if(isLoading) return <h1>Loading...</h1>
+
   return (
     <Formik
       initialValues={{
@@ -103,7 +106,7 @@ const RegistrationForm = ({ isEditForm }) => {
         location: Yup.string().min(4, "location is required").required(),
         description: Yup.string()
           .min(30, " atleast 30 characters")
-          .max(300, "maximum 300 characters")
+          .max(1000, "maximum 1000 characters")
           .required(),
         images: Yup.mixed(),
       })}
@@ -140,7 +143,7 @@ const RegistrationForm = ({ isEditForm }) => {
         }
         <Form
           onSubmit={handleSubmit}
-          className={`grid grid-rows-[80px,80px,80px,80px,80px,${
+          className={`grid grid-rows-[80px,80px,80px,80px,80px,80px,80px,80px,${
             isEditForm && "80px"
           }] sm:grid-cols-[25%,20%] grid-cols-[40%,40%] gap-4  place-content-center border-2   w-full min-h-[100vh]`}
           action=""
@@ -151,7 +154,7 @@ const RegistrationForm = ({ isEditForm }) => {
             </h1>
           </div>
 
-          <div className=" row-span-1 col-span-2 xl:col-span-1">
+          <div className=" row-span-2 col-span-2 xl:col-span-1">
             <FormInput
               onChange={handleChange}
               onBlur={handleBlur}
@@ -177,7 +180,7 @@ const RegistrationForm = ({ isEditForm }) => {
               label={!errors.location ? "Location" : errors.location}
             />
           </div>
-          <div className="row-span-2 col-span-2">
+          <div className="row-span-3 col-span-2">
             <Textarea
               onChange={handleChange}
               onBlur={handleBlur}
@@ -194,7 +197,7 @@ const RegistrationForm = ({ isEditForm }) => {
             {/* <FormInput /> */}
           </div>
           {isEditForm === true && hotelImages?.length!=0 && (
-            <div className="row-span-1 col-span-2 my-14 shadow-sm p-5">
+            <div className="row-span-2 col-span-2 my-14 shadow-sm p-5">
               <div className="flex flex-wrap justify-center items-center">
                 {hotelImages.map((img) => {
                   return (
@@ -233,7 +236,7 @@ const RegistrationForm = ({ isEditForm }) => {
               success={!errors.images && touched.images ? true : false}
               type={"file"}
               multiple
-              accept=".jpg, .jpeg, .png"
+              accept=".jpg, .jpeg, .png, image/*"
               label={errors.images ? "images" : errors.images}
               name="images"
             />

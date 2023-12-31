@@ -40,7 +40,7 @@ const login = async (req, res, next) => {
 
     res.status(200).json({ data });
   } catch (error) {
-    res.status(404).json({ error });
+    res.status(404).json({message :error.message });
   }
 };
 
@@ -79,7 +79,7 @@ const verifyEmail = async (req, res, next) => {
   try {
     const user = await findUserHelper(email);
 
-    if (true) {
+    if (user) {
       userEmail = req.body.email;
       const EMAIL = process.env.MAILGEN_EMAIL;
       const PASSWORD = process.env.MAILGEN_PASSWORD;
@@ -136,11 +136,12 @@ const verifyEmail = async (req, res, next) => {
       });
 
     } else {
-
-      res.status(404).json({message:'user not found'})
+      //throw new Error('user not found')
+     res.status(404).json({message:'user not found'})
 
     }
   } catch (error) {
+
     res.status(404).json({ error });
   }
 };

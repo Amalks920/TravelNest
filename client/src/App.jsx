@@ -49,7 +49,7 @@ function App() {
       <Route path="signup" element={<Signup />} />
       <Route path='verify-email' element={<VerifyEmailPage isOtpVerified={false}/>}></Route>
       <Route path='verify-otp/:email' element={<VerifyEmailPage isOtpVerified={true}/>}></Route>
-      <Route path='reset-password/:email' element={<ResetPasswordPage/>}></Route>
+      <Route path='reset-password/:email' element={<ResetPasswordPage role={'user'}/>}></Route>
       </Route>
 
       <Route element={<RequireUserAuth allowedRole={'user'} />}>
@@ -62,6 +62,9 @@ function App() {
       <Route element={<CheckAuth currentRole={'owner'}/>} >
         <Route path="/owner/login" element={<Login />} />
         <Route path="/owner/signup" element={<Signup />} />
+        <Route path='/owner/verify-email' element={<VerifyEmailPage isOtpVerified={false}/>}></Route>
+      <Route path='/owner/verify-otp/:email' element={<VerifyEmailPage isOtpVerified={true}/>}></Route>
+      <Route path='/owner/reset-password/:email' element={<ResetPasswordPage role={'owner'}/>}></Route>
       </Route>
 
         <Route element={<RequireOwnerAuth allowedRole={'owner'} />}>
@@ -78,6 +81,9 @@ function App() {
       <Route path='/admin'>
         <Route element={<CheckAuth currentRole={'admin'}/>}>
           <Route path='/admin/login' element={<Login/>}></Route>
+          <Route path='/admin/verify-email' element={<VerifyEmailPage isOtpVerified={false}/>}></Route>
+      <Route path='/admin/verify-otp/:email' element={<VerifyEmailPage isOtpVerified={true}/>}></Route>
+      <Route path='/admin/reset-password/:email' element={<ResetPasswordPage role={'admin'}/>}></Route>
         </Route>
 
         <Route element={<RequireAdminAuth allowedRole={'admin'}/>}>

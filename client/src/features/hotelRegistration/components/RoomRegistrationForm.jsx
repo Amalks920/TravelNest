@@ -75,6 +75,10 @@ const RoomRegistrationForm = ({ isEditForm }) => {
       console.log(error);
     }
   };
+
+
+  if(isLoading) return <h1>Loading...</h1>
+
   return (
     // <>
     //   <h1 className="absolute top-28 text-2xl">Room Registration</h1>

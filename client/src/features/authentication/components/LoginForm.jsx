@@ -40,7 +40,7 @@ const LoginForm = ({role}) => {
         } catch (error) {
             console.log('error')
             console.log(error)
-            setErr(error?.data?.error)
+            setErr(error?.data?.error || 'network error')
         }
     }
 
@@ -100,9 +100,9 @@ const LoginForm = ({role}) => {
                         success={!errors.password && touched.password ? true: false}
                     /></div>
 
-                    <Link to={'/signup'}><p className="  font-light -mt-5 text-black">Don't Have an Account?</p></Link>
+                    <Link to={role==='user'?'/signup':'/owner/signup'}><p className="  font-light -mt-5 text-black">Don't Have an Account?</p></Link>
                     <div className=" -mt-5"><ButtonDefault value='submit' type={'submit'}  onSubmit={handleSubmit} disabled={isSubmitting} /></div>
-                    <Link to={'/verify-email'} className="relative bottom-6 left-24"><p className="font-medium  text-sm text-black">Forgot Password?</p></Link>
+                    <Link to={role==='user'?'/verify-email':role==='owner'?'/owner/verify-email':'/admin/verify-email'} className="relative bottom-6 left-24"><p className="font-medium  text-sm text-black">Forgot Password?</p></Link>
                 </form>
             )}
         </Formik>

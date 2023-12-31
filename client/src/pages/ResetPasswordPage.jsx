@@ -1,9 +1,9 @@
 import ResetPassword from "../features/authentication/components/ResetPassword";
 
 
-const ResetPasswordPage=()=>{
+const ResetPasswordPage=({role})=>{
     return (
-        <ResetPassword/>
+        <ResetPassword role={role}/>
     )
 }
 

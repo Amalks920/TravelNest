@@ -202,10 +202,10 @@ const RoomList=()=>{
                           <Typography
                             variant="small"
                             color="blue-gray"
-                            className="font-normal"
+                            className="font-normal  p-5"
                           >
                         
-                       {description}  
+                         <h2 className="max-w-[500px] break-words">{description}</h2>
                           </Typography>
                         </div>
                       </td>
@@ -226,7 +226,7 @@ const RoomList=()=>{
                           <Typography
                             variant="small"
                             color="blue-gray"
-                            className="font-normal"
+                            className="font-normal max-w-[300px] break-words"
                           >
                         
                        {amenities}  

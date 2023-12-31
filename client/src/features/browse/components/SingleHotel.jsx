@@ -6,6 +6,7 @@ import { FormInput } from "../../../components/form/FormInput";
 import DatePicker from "../../../components/form/DatePicker";
 import { useParams } from "react-router-dom";
 import useGetAHotel from "../hooks/useGetAHotel";
+import { IMAGE_BASE_URL } from "../../../data/constants";
 
 const SingleHotel = () => {
   const [size, setSize] = useState(null);
@@ -17,22 +18,30 @@ const SingleHotel = () => {
     isLoading,
     isSuccess 
   }=useGetAHotel(hotel_id)
+  
+  if(isLoading) return <h1>Loading..</h1>
   console.log(hotel)
-
+  const {hotelName,images}=hotel?.response[0]
+  console.log(images)
   return (
     <>
       <XXLDialog className="overflow-hidden sticky" size={size} setSize={setSize} />
-      <div className="grid grid-cols-6 grid-rows-[200px,200px,auto,auto] shadow-2xl w-[80%] min-h-[100vh] border-2 gap-3">
+      <div className="grid grid-cols-6 grid-rows-[100px,200px,200px,auto,auto] shadow-2xl w-[80%] min-h-[100vh] border-2 gap-3">
+      <div className="row-span-1 col-span-6 border-2">
+        <h1 className="font-bold mt-10 ms-5">{'hotelName'}</h1>
+      </div>
         <div
           onClick={() => {
             setSize("xxl");
           }}
           className="row-span-2 col-span-4 border-2"
-        ></div>
+        >
+          <img src={`${IMAGE_BASE_URL}/${images[1]} `} className="w-full h-full" alt="" />
+        </div>
+        <div className="row-span-2 col-span-2 border-2"></div>
+        {/* <div className="row-span-1 col-span-1 border-2"></div>
         <div className="row-span-1 col-span-1 border-2"></div>
-        <div className="row-span-1 col-span-1 border-2"></div>
-        <div className="row-span-1 col-span-1 border-2"></div>
-        <div className="row-span-1 col-span-1 border-2"></div>
+        <div className="row-span-1 col-span-1 border-2"></div> */}
 
         <div className="row-span-2 col-span-4 border-2"></div>
         <div className="row-span-2 col-span-2 shadow-2xl rounded-lg">
