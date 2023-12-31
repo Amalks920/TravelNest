@@ -123,7 +123,7 @@ export function OwnerTable({data}) {
                         <Chip
                           size="sm"
                           variant="ghost"
-                          value={status}
+                          value={owner_isBlocked}
                           color={
                             owner_isBlocked === false
                               ? "green"

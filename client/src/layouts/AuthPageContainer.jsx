@@ -10,7 +10,7 @@ import { useChekckBlockedOrNotQuery } from "../services/checkISBlockedOrNot";
 
 
 
-const AuthPageContainer = () => {
+const AuthPageContainer = ({home}) => {
     const token = useSelector(selectToken)
     const role=useSelector(selectRole)
     const user_id=useSelector(selectUserId)
@@ -63,11 +63,11 @@ const AuthPageContainer = () => {
             
             
                     )
-    }else{
+    }else if(role==='user'){
         return (
                 
 
-            <div className="grid grid-rows-[80px,auto,auto] grid-cols-[49%,49%] gap-2  min-h-screen">
+            <div className="grid grid-rows-[30px,auto,auto] grid-cols-[49%,49%] gap-2  min-h-screen">
                 
             
             <header className="col-span-2 row-span-1">

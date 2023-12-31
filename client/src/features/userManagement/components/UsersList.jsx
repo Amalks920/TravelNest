@@ -127,7 +127,7 @@ export function UsersList() {
   ] = useBlockOrUnblockUserMutation();
 
 
-
+  if(isLoading) return <h1>Loading...</h1>
   
   return (
     <>

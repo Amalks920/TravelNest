@@ -37,7 +37,7 @@ const saveHotelDocumentHelper = function (data) {
 const getHotelsHelper = function (id = null) {
   return new Promise(async (resolve, reject) => {
     try {
-      const hotels = await hotelModel.find({});
+      const hotels = await hotelModel.find({owner_id:id});
       resolve(hotels);
     } catch (error) {
       reject(error);

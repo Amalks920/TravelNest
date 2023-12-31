@@ -22,7 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout, selectRole } from "../features/authentication/services/loginSlice";
 
 
-export function NavbarDefault() {
+export function NavbarDefault({home}) {
     const [openNav, setOpenNav] = React.useState(false);
     const dispatch=useDispatch()
     const role=useSelector(selectRole)
@@ -41,7 +41,7 @@ export function NavbarDefault() {
 
     if(!role=='user'){
         return (
-            <Navbar className="fixed max-w-[100vw] rounded-none h-[80px] mb-1 px-4 py-2  z-10">
+            <Navbar className="fixed max-w-[100vw] rounded-none h-[30px] mb-1 px-4 py-2  z-10">
                 <div className="flex items-center justify-between text-blue-gray-900">
                     <Typography
                         as="a"
@@ -55,10 +55,15 @@ export function NavbarDefault() {
                         <NavList />
                     </div>
                     <div className="hidden gap-2 lg:flex">
-                        <Button variant="text" size="sm" color="blue-gray">
+                        {/* <Button
+                         variant="text" size="sm" color="blue-gray">
                             Log In
-                        </Button>
-                        <Button variant="gradient" size="sm">
+                        </Button> */}
+                        <Button 
+                        onClick={()=>{
+                            handleLogout()
+                        }}
+                        variant="gradient" size="sm">
                             Sign In
                         </Button>
                     </div>
@@ -83,7 +88,8 @@ export function NavbarDefault() {
                         }} variant="outlined" size="sm" color="blue-gray" fullWidth>
                             Logout
                         </Button>
-                        <Button variant="gradient" size="sm" fullWidth>
+                        <Button
+                         variant="gradient" size="sm" fullWidth>
                             Sign In
                         </Button>
                     </div>
@@ -106,11 +112,15 @@ export function NavbarDefault() {
                         <NavList />
                     </div>
                     <div className="hidden gap-2 lg:flex">
-                        <Button variant="text" size="sm" color="blue-gray">
+                        {/* <Button variant="text" size="sm" color="blue-gray">
                             Log In
-                        </Button>
-                        <Button variant="gradient" size="sm">
-                            Sign In
+                        </Button> */}
+                        <Button
+                                                    onClick={()=>{
+                                                        handleLogout()
+                                                    }}
+                        variant="gradient" size="sm">
+                           Logout
                         </Button>
                     </div>
                     <IconButton
@@ -134,8 +144,12 @@ export function NavbarDefault() {
                         }} variant="outlined" size="sm" color="blue-gray" fullWidth>
                             Logout
                         </Button>
-                        <Button variant="gradient" size="sm" fullWidth>
-                            Sign In
+                        <Button
+                                                onClick={()=>{
+                                                    handleLogout()
+                                                }}
+                         variant="gradient" size="sm" fullWidth>
+                            Logout
                         </Button>
                     </div>
                 </Collapse>

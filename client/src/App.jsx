@@ -50,10 +50,15 @@ function App() {
       <Route path='verify-email' element={<VerifyEmailPage isOtpVerified={false}/>}></Route>
       <Route path='verify-otp/:email' element={<VerifyEmailPage isOtpVerified={true}/>}></Route>
       <Route path='reset-password/:email' element={<ResetPasswordPage role={'user'}/>}></Route>
+
+
       </Route>
 
-      <Route element={<RequireUserAuth allowedRole={'user'} />}>
-        <Route path="/home" element={<HomePage />} />
+      <Route
+     // element={<AuthPageContainer home={true} />}
+       element={<RequireUserAuth allowedRole={'user'} />}
+       >
+      <Route path="/home" element={<HomePage />} />
         <Route path="/hotel-details/:hotel_id" element={<SingleHotelPage/>} />
       </Route>
 

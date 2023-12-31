@@ -26,7 +26,7 @@ const verifyJwt = require('../utils/verifyJwt');
  *           description: Bad request
  */
 
-router.get('/get-all-hotels',verifyJWT,getAllHotels)
+router.get('/get-all-hotels/:userId',verifyJWT,getAllHotels)
 
 
 /**
@@ -90,8 +90,8 @@ router.delete('/delete-image/:hotel_id/:img_public_id',verifyJwt,deleteHotelImag
 
 router.put('/change-hotel-status/:hotel_id/:status',verifyJwt,changeHotelStatus)
 
-router.get('/get-all-hotels-user',verifyJwt,getAllHotelsForUser)
-router.get('/get-a-hotel-user/:hotel_id',verifyJWT,getAHotelForUser)
+router.get('/get-all-hotels-user',getAllHotelsForUser)
+router.get('/get-a-hotel-user/:hotel_id',getAHotelForUser)
 
   router.post('/test',(req,res)=>{
     console.log(req.body)

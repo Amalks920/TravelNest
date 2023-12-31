@@ -85,9 +85,7 @@ const Cards=({hotel_id,hotelName,price,description,images})=>{
   </div>
   <div class="p-3 ">
     <div class="flex items-center justify-between ">
-      <div>
-        star rating
-      </div>
+
       {/* <p class="block font-sans text-base antialiased font-medium leading-relaxed text-white">
         {hotelName}
       </p>

@@ -172,16 +172,17 @@ export function Sidebar() {
             />
           }
         >
-          <ListItem className="p-0" selected={open === 4}>
+        {role==='admin'? <ListItem className="p-0" selected={open === 4}>
             <AccordionHeader onClick={() => handleOpen(4)} className="border-b-0 p-3">
               <ListItemPrefix>
                 <ShoppingBagIcon className="h-5 w-5" />
               </ListItemPrefix>
               <Typography color="blue-gray" className="mr-auto font-normal">
-               { role==='owner'?'Hotels':role==='admin'?'Hotels':null}
+               { role==='admin'?'Hotels':null}
               </Typography>
             </AccordionHeader>
-          </ListItem>
+          </ListItem>:null}
+
           <AccordionBody className="py-1">
             <List className="p-0">
               <ListItem>

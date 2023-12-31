@@ -127,7 +127,8 @@ const roomSchema = new mongoose.Schema({
   status: {
     type: String,
     required: true,
-    enum: ["delisted,listed,not-registered"],
+    enum: ["delisted","listed","not-registered"],
+    default:'not-registered'
   },
 
   // Timestamp for when the room was created

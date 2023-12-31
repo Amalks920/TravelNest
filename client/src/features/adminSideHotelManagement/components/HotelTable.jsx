@@ -18,7 +18,7 @@ import {
 } from "@material-tailwind/react";
 import { IMAGE_BASE_URL } from "../../../data/constants";
  
-const TABLE_HEAD = ["id", "Hotelname", "Description",  "created at","status", ""];
+const TABLE_HEAD = ["id", "Hotelname", "Description",  "created at","status", "Location"];
  
 
  
@@ -110,7 +110,7 @@ export function HotelTable({data}) {
                       <Typography
                         variant="small"
                         color="blue-gray"
-                        className="font-normal break-words"
+                        className="font-normal max-w-[500px] break-words"
                       >
                         {description}
                       </Typography>
@@ -147,17 +147,17 @@ export function HotelTable({data}) {
                           <Typography
                             variant="small"
                             color="blue-gray"
-                            className="font-normal capitalize"
+                            className="font-normal capitalize min-w-[100px]"
                           >
                             {location}
                           </Typography>
-                          <Typography
+                          {/* <Typography
                             variant="small"
                             color="blue-gray"
                             className="font-normal opacity-70"
                           >
                         
-                          </Typography>
+                          </Typography> */}
                         </div>
                       </div>
                     </td>

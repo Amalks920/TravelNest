@@ -33,9 +33,10 @@ const createHotel=async (req,res,next)=>{
 }
 
 const getAllHotels=async (req,res,next)=>{
-  console.log(req.user)
+
+  const userId=req.params.userId
   try {
-    const response=await getHotelsHelper()
+    const response=await getHotelsHelper(userId)
     res.status(200).json({response})
   } catch (error) {
     console.log(error.message)
@@ -139,6 +140,7 @@ const getAHotelForUser=async (req,res,next)=>{
 
     res.status(200).json({response})
   } catch (error) {
+    console.log(error)
     res.status(404).json({error})
   }
 }

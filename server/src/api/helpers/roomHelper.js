@@ -158,21 +158,70 @@ const changeAllRoomStatus=(hotel_id,status)=>{
 const getAllRoomsOfAHotelForUserHelper=(hotel_id)=>{
   return new Promise(async (resolve,reject)=>{
     try {
-      const response=await roomModel.find(
+      // const response=await roomModel.find(
+      //   {
+      //     hotel_id:hotel_id
+      //   }
+      //   {
+      //     $and:[
+      //       {
+      //         hotel_id:hotel_id
+      //       },
+      //       {
+      //         status:'listed'
+      //       }
+      //     ]
+      //   }
+      // )
+      
+      const response= await roomModel.aggregate([
         {
-          hotel_id:hotel_id
+          $match:{
+           // hotel_id: new mongoose.Types.ObjectId(hotel_id),
+            $and:[
+              {
+                hotel_id: new mongoose.Types.ObjectId(hotel_id),
+              }
+            ]
+          }
+        },
+        {
+          $group: {
+            _id: '$roomType',
+            rooms: { $push:
+               { 
+                id: '$_id',
+                description:'$description',
+                size:'$size',
+                amenities:'$amenities',
+                noOfRooms:'$noOfRooms',
+                bathRoomType:'$bathroomType',
+                images:'$images',
+                rate:'$rate',
+                createdAt:'$createdAt'
+              },
+               }, // Include only the fields you need
+            count: { $sum: 1 }
+          }
+        },
+        {
+          $project: {
+            _id: 1, // Exclude the _id field if you don't need it
+            roomType: '$_id',
+            // description:'$rooms.description',
+            // size:'$rooms.size',
+            // amenities:'$rooms.amenities',
+            // noOfRooms:'$rooms.noOfRooms',
+            // bathRoomType:'$rooms.bathRoomType',
+            // images:'$rooms.images',
+            // rate:'$rooms.rate',
+            // createdAt:'$rooms.createdAt',
+            rooms: 1, // Include the 'rooms' field
+            count: 1 // Include the 'count' field
+          }
         }
-        // {
-        //   $and:[
-        //     {
-        //       hotel_id:hotel_id
-        //     },
-        //     {
-        //       status:'listed'
-        //     }
-        //   ]
-        // }
-      )
+        
+       ])
 
       resolve(response)
     } catch (error) {

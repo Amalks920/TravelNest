@@ -46,6 +46,8 @@ const HotelDetails = () => {
 
   const { hotel_details, room_details } = isSuccess ? hotels : [];
 
+
+  if(isLoading || isFetching) return <h1>Loading...</h1>
   if (isSuccess)
     return (
 

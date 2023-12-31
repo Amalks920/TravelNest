@@ -6,8 +6,9 @@ import {
   DialogBody,
   DialogFooter,
 } from "@material-tailwind/react";
+import { IMAGE_BASE_URL } from "../../data/constants";
  
- function XXLDialog({size,setSize}) {
+ function XXLDialog({size,setSize,imagesToDisplayOnModal}) {
 
  
   const handleOpen = (value) =>{
@@ -17,44 +18,36 @@ import {
  
   return (
     <>
-      {/* <div className="mb-3 flex gap-3">
-        <Button onClick={() => handleOpen("xs")} variant="gradient">
-          Open Dialog XS
-        </Button>
-        <Button onClick={() => handleOpen("sm")} variant="gradient">
-          Open Dialog SM
-        </Button>
-        <Button onClick={() => handleOpen("md")} variant="gradient">
-          Open Dialog MD
-        </Button>
-      </div> */}
-      {/* <div className="flex gap-3">
-        <Button onClick={() => handleOpen("lg")} variant="gradient">
-          Open Dialog LG
-        </Button>
-        <Button onClick={() => handleOpen("xl")} variant="gradient">
-          Open Dialog XL
-        </Button>
-        <Button onClick={() => handleOpen("xxl")} variant="gradient">
-          Open Dialog XXL
-        </Button>
-      </div> */}
+
       <Dialog
+      className="border-2 border-black"
         open={
-          size === "xs" ||
-          size === "sm" ||
-          size === "md" ||
-          size === "lg" ||
-          size === "xl" ||
+          // size === "xs" ||
+          // size === "sm" ||
+          // size === "md" ||
+          // size === "lg" ||
+          // size === "xl" ||
           size === "xxl"
         }
         size={'xxl'}
         handler={handleOpen}
         
       >
-        <DialogHeader>Its a simple dialog.</DialogHeader>
-        <DialogBody>
+        <DialogHeader>Images.</DialogHeader>
+        <DialogBody className="border-2 border-black h-full">
+        <div className="grid grid-rows-[50%,50%] grid-cols-3 h-full gap-2">
+          {
+            imagesToDisplayOnModal?.map((image,index)=>{
+              console.log(image)
+              return(   
+                <div key={index} className="flex col-span-1 border-2 border-green-700">
+                  <img className="justify-center items-center w-full" src={`${IMAGE_BASE_URL}/${image}`} alt="image not found" />
+                </div>
+                )
+            })
+          }
 
+        </div>
         </DialogBody>
         <DialogFooter>
           <Button

@@ -23,8 +23,9 @@ import {
 
   import { useGetHotelsQuery } from "../services/hotelsSlice";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addHotels } from "../services/hotelListSlice";
+import { selectUserId } from "../../authentication/services/loginSlice";
 
   const TABS = [
     {
@@ -61,11 +62,13 @@ import { addHotels } from "../services/hotelListSlice";
 
    
    function HotelList() {
+    const userId=useSelector(selectUserId);
     const dispatch=useDispatch()
-    const {data:hotels,isLoading,isSuccess,isError,error}=useGetHotelsQuery()
+    const {data:hotels,isLoading,isSuccess,isError,error}=useGetHotelsQuery({userId})
     console.log(hotels)
     isSuccess&& dispatch(addHotels(hotels.response))
 
+    if(!hotels) return <h1 className="font-bold" >Hotel List is Empty.</h1>
     return (
       <Card className="h-full w-full p-16">
         <CardHeader floated={false} shadow={false} className="rounded-none">
@@ -140,7 +143,7 @@ import { addHotels } from "../services/hotelListSlice";
                     : "p-4 border-b border-blue-gray-50";
    
                   return (
-                    <tr key={hotelName}>
+                    <tr key={_id}>
                       <td className={classes +" "+"border-r-2"} >
                         <div className="flex items-center  gap-3">
                           <Avatar src={images[0]} alt={''} size="sm" />
