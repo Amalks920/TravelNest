@@ -1,7 +1,8 @@
 const express = require('express');
 const { addRoom, getRooms, editRoom, getRoomsByType } = require('../controllers/roomController');
 const router = express.Router();
-const uploader=require('../../config/multer')
+const uploader=require('../../config/multer');
+const verifyJwt = require('../utils/verifyJwt');
 /**
  * @openapi
  * paths:
@@ -36,7 +37,7 @@ const uploader=require('../../config/multer')
  *           description: Bad request
  */
 
-router.post('/add-room/:hotel_id',uploader.array('images',10),addRoom)
+router.post('/add-room/:hotel_id',verifyJwt,uploader.array('images',10),addRoom)
 
 /**
  * @openapi
@@ -78,10 +79,10 @@ router.post('/add-room/:hotel_id',uploader.array('images',10),addRoom)
  *           description: Bad request
  */
 
-router.put('/edit-room/{hotel-id}/{room-id}',editRoom)
+router.put('/edit-room/{hotel-id}/{room-id}',verifyJwt,editRoom)
 
 
-router.get('/get-rooms-list/:hotel_id',getRoomsByType)
+router.get('/get-rooms-list/:hotel_id',verifyJwt,getRoomsByType)
 
 /**
  * @openapi
@@ -177,6 +178,6 @@ router.get('/get-a-room/{room_id}',(req,res)=>{
  *           description: Bad request
  */
 
-router.get('/get-rooms/:hotel_id',getRooms)
+router.get('/get-rooms/:hotel_id',verifyJwt,getRooms)
 
 module.exports=router;

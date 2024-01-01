@@ -1,5 +1,5 @@
 const express = require('express');
-const { createHotel, getAllHotels, getAHotel, editHotel, getAllHotelDetails, deleteHotelImage, changeHotelStatus, getAllHotelsForUser, getAHotelForUser } = require('../controllers/hotelController');
+const { createHotel, getAllHotels, getAHotel, editHotel, getAllHotelDetails,getAHotelForUser,deleteHotelImage, changeHotelStatus, getAllHotelsForUser, getAllHotelsForAdmin } = require('../controllers/hotelController');
 const router = express.Router();
 const uploader=require('../../config/multer');
 const verifyJWT=require('../utils/verifyJwt');
@@ -26,9 +26,9 @@ const verifyJwt = require('../utils/verifyJwt');
  *           description: Bad request
  */
 
-router.get('/get-all-hotels/:userId',verifyJWT,getAllHotels)
+router.get('/get-all-hotels/:userId',verifyJwt,getAllHotels)
 
-
+router.get('/get-all-hotels-admin',verifyJwt,getAllHotelsForAdmin)
 /**
  * @openapi
  * paths:
@@ -82,9 +82,9 @@ router.get('/get-hotels-group-by-location',(req,res)=>{
  */
 
 
-router.get(`/get-a-hotel/:hotel-id`,getAHotel)
+router.get(`/get-a-hotel/:hotel-id`,verifyJwt,getAHotel)
 
-router.get('/get-all-hotel-details/:hotel_id',getAllHotelDetails)
+router.get('/get-all-hotel-details/:hotel_id',verifyJwt,getAllHotelDetails)
 
 router.delete('/delete-image/:hotel_id/:img_public_id',verifyJwt,deleteHotelImage)
 

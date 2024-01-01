@@ -135,6 +135,17 @@ const getAllHotelDetailsHelper = (hotel_id) => {
   });
 };
 
+const getAllHotelsForAdminHelper=()=>{
+  return new Promise(async (resolve,reject)=>{
+    try {
+      const response = await hotelModel.find({})
+      resolve(response)
+    } catch (error) {
+        reject(error)
+    }
+  })
+}
+
 const deleteHotelImageHelper = (hotel_id, img_public_id) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -213,5 +224,6 @@ module.exports = {
   deleteHotelImageHelper,
   changeHotelStatusHelper,
   getAllHotelsForUserHelper,
-  getAHotelForUserHelper
+  getAHotelForUserHelper,
+  getAllHotelsForAdminHelper
 };

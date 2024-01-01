@@ -14,7 +14,7 @@ const Home=()=>{
     }=useGetAllHotels();
     console.log(hotels)
     return (
-        <div className=" flex flex-wrap xl:justify-start justify-center items-center    mt-14  gap-16">
+        <div className=" flex flex-wrap xl:justify-start justify-start items-center    mt-14  gap-16">
             {/* <div className="border-2"> */}
         
         {

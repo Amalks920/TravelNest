@@ -1,10 +1,10 @@
 import VerifyEmailOrPhone from "../features/authentication/components/VerifyEmailOrPhone";
 
 
-const VerifyEmailPage=({isOtpVerified})=>{
+const VerifyEmailPage=({role,isOtpVerified})=>{
 
     return (
-        <VerifyEmailOrPhone isOtpVerified={isOtpVerified}/>
+        <VerifyEmailOrPhone role={role} isOtpVerified={isOtpVerified}/>
     )
 }
 

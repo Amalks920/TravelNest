@@ -9,6 +9,7 @@ const { uploadImages } = require("../helpers/hotelHelper");
 
 const addRoom = async (req, res, next) => {
   try {
+    console.log(req.body)
     const hotelImgArray = await uploadImages(req.files);
     console.log(process.env.IMAGE_BASE_URL);
     let imgBaseUrlLength = process.env.IMAGE_BASE_URL.length;

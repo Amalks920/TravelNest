@@ -16,7 +16,7 @@ const AuthPageContainer = ({home}) => {
     const user_id=useSelector(selectUserId)
     const dispatch=useDispatch()
     const {data:isBlocked,isError,isFetching,isLoading,isSuccess}=useChekckBlockedOrNotQuery({user_id})
-     
+     console.log(home)
     isBlocked &&  dispatch(logout())
 
     if (!token) {

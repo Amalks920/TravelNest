@@ -26,6 +26,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addHotels } from "../services/hotelListSlice";
 import { selectUserId } from "../../authentication/services/loginSlice";
+import { useGetHotelsForAdminQuery } from "../services/HotelListAdmin";
 
   const TABS = [
     {
@@ -65,10 +66,18 @@ import { selectUserId } from "../../authentication/services/loginSlice";
     const userId=useSelector(selectUserId);
     const dispatch=useDispatch()
     const {data:hotels,isLoading,isSuccess,isError,error}=useGetHotelsQuery({userId})
+//   const  {
+//     hotels,
+//     isError,
+//     isFetching,
+//     isLoading,
+//     isSuccess
+// }=useGetHotelsForAdminQuery()
+
     console.log(hotels)
     isSuccess&& dispatch(addHotels(hotels.response))
 
-    if(!hotels) return <h1 className="font-bold" >Hotel List is Empty.</h1>
+    if(hotels?.response?.length===0) return <h1 className="font-bold" >Hotel List is Empty.</h1>
     return (
       <Card className="h-full w-full p-16">
         <CardHeader floated={false} shadow={false} className="rounded-none">

@@ -34,14 +34,15 @@ import { IMAGE_BASE_URL } from "../../data/constants";
         
       >
         <DialogHeader>Images.</DialogHeader>
-        <DialogBody className="border-2 border-black h-full">
+        <DialogBody className=" h-full">
         <div className="grid grid-rows-[50%,50%] grid-cols-3 h-full gap-2">
           {
             imagesToDisplayOnModal?.map((image,index)=>{
               console.log(image)
               return(   
-                <div key={index} className="flex col-span-1 border-2 border-green-700">
-                  <img className="justify-center items-center w-full" src={`${IMAGE_BASE_URL}/${image}`} alt="image not found" />
+                <div key={index} className="flex col-span-1 bg-cover bg-no-repeat " style={{backgroundImage:`url(${IMAGE_BASE_URL}/${image})`}}>
+
+                  {/* <img className="justify-center items-center w-full" src={`${IMAGE_BASE_URL}/${image}`} alt="image not found" /> */}
                 </div>
                 )
             })

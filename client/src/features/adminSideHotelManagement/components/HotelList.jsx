@@ -19,6 +19,7 @@ import {
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
+import { useGetHotelsForAdminQuery } from "../../hotelManagement/services/HotelListAdmin";
 
 const TABS = [
   {
@@ -59,16 +60,26 @@ const TABLE_HEAD = [
 ];
 
 const HotelList = () => {
-  const {
-    data: hotels,
-    isError,
-    isFetching,
-    isLoading,
-    isSuccess,
-  } = useGetHotelsQuery();
+  // const {
+  //   data: hotels,
+  //   isError,
+  //   isFetching,
+  //   isLoading,
+  //   isSuccess,
+  // } = useGetHotelsQuery();
+
+    const {
+      data:hotels,
+      isError,
+      isFetching,
+      isLoading,
+      isSuccess,
+    }=useGetHotelsForAdminQuery()
   
 
   if(isLoading) return <h1>Loading...</h1>
+
+  if(!hotels) return <h1>Err</h1>
   return (
     <Card className="h-full w-full p-16">
       <CardHeader floated={false} shadow={false} className="rounded-none">

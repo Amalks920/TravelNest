@@ -47,28 +47,28 @@ function App() {
       <Route element={<CheckAuth currentRole={'user'}/>} >
       <Route path="login" element={<Login />} />
       <Route path="signup" element={<Signup />} />
-      <Route path='verify-email' element={<VerifyEmailPage isOtpVerified={false}/>}></Route>
-      <Route path='verify-otp/:email' element={<VerifyEmailPage isOtpVerified={true}/>}></Route>
+      <Route path='verify-email' element={<VerifyEmailPage  role={'user'} isOtpVerified={false}/>}></Route>
+      <Route path='verify-otp/:email' element={<VerifyEmailPage role={'user'}  isOtpVerified={true}/>}></Route>
       <Route path='reset-password/:email' element={<ResetPasswordPage role={'user'}/>}></Route>
 
 
       </Route>
 
-      <Route
+      {/* <Route
      // element={<AuthPageContainer home={true} />}
        element={<RequireUserAuth allowedRole={'user'} />}
        >
       <Route path="/home" element={<HomePage />} />
         <Route path="/hotel-details/:hotel_id" element={<SingleHotelPage/>} />
-      </Route>
+      </Route> */}
 
 
       <Route path='/owner' >
       <Route element={<CheckAuth currentRole={'owner'}/>} >
         <Route path="/owner/login" element={<Login />} />
         <Route path="/owner/signup" element={<Signup />} />
-        <Route path='/owner/verify-email' element={<VerifyEmailPage isOtpVerified={false}/>}></Route>
-      <Route path='/owner/verify-otp/:email' element={<VerifyEmailPage isOtpVerified={true}/>}></Route>
+        <Route path='/owner/verify-email' element={<VerifyEmailPage  role={'owner'} isOtpVerified={false}/>}></Route>
+      <Route path='/owner/verify-otp/:email' element={<VerifyEmailPage role={'owner'} isOtpVerified={true}/>}></Route>
       <Route path='/owner/reset-password/:email' element={<ResetPasswordPage role={'owner'}/>}></Route>
       </Route>
 
@@ -86,8 +86,8 @@ function App() {
       <Route path='/admin'>
         <Route element={<CheckAuth currentRole={'admin'}/>}>
           <Route path='/admin/login' element={<Login/>}></Route>
-          <Route path='/admin/verify-email' element={<VerifyEmailPage isOtpVerified={false}/>}></Route>
-      <Route path='/admin/verify-otp/:email' element={<VerifyEmailPage isOtpVerified={true}/>}></Route>
+          <Route path='/admin/verify-email' element={<VerifyEmailPage role={'admin'} isOtpVerified={false}/>}></Route>
+      <Route path='/admin/verify-otp/:email' element={<VerifyEmailPage role={'admin'}  isOtpVerified={true}/>}></Route>
       <Route path='/admin/reset-password/:email' element={<ResetPasswordPage role={'admin'}/>}></Route>
         </Route>
 
@@ -98,6 +98,15 @@ function App() {
           </Route>
       </Route>
        
+      </Route>
+
+
+      <Route
+     // element={<AuthPageContainer home={true} />}
+       element={<PageContainer allowedRole={'user'} />}
+       >
+      <Route path="/home" element={<HomePage />} />
+        <Route path="/hotel-details/:hotel_id" element={<SingleHotelPage/>} />
       </Route>
    
   </Routes>
