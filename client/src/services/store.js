@@ -4,6 +4,7 @@ import { apiSlice } from './apiSlice';
 import loginSlice from '../features/authentication/services/loginSlice';
 import { persistReducer,persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+
 import {thunk} from 'redux-thunk';
 import verifyEmailSlice from '../features/authentication/services/verifyEmailSlice';
 import EditHotelFormSlice from '../features/hotelRegistration/services/editHotelFormSlice';

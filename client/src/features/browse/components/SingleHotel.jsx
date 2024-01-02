@@ -14,6 +14,7 @@ const SingleHotel = () => {
   const [size, setSize] = useState(null);
   const [imagesToPass, setImages] = useState([]);
   const [isAccordionOpen, setIsAccordionOpen] = useState(-1);
+  const [price,setPrice]=useState(0);
 
   const { hotel_id } = useParams();
   const { hotel, isError, isFetching, isLoading, isSuccess } =
@@ -84,7 +85,7 @@ const SingleHotel = () => {
           <div className=" h-fit p-5 font-medium">{description}</div>
           <div className=" h-fit ">{amenities}</div>
           <div className=" h-fit  p-5">
-            <h1>Rooms</h1>
+            <h1 className="font-bold text-2xl ms-1">Rooms</h1>
 
             {!rooms && <h1>RoomsList Empty</h1> }
             {rooms && rooms?.map((room, index) => {
@@ -120,7 +121,7 @@ const SingleHotel = () => {
               </div>
             </div>
           </div> */}
-          <PriceCard className={""} />
+          <PriceCard price={price} className={""} />
         </div>
       </div>
     </>

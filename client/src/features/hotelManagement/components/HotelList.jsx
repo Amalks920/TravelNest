@@ -244,7 +244,7 @@ import { useGetHotelsForAdminQuery } from "../services/HotelListAdmin";
                       </td>
 
                       <td className={classes}>
-                        <Tooltip content="Edit User">
+                        <Tooltip content="Edit Hotel">
                           <IconButton variant="text">
                           <Link to={`/owner/edit-hotel/${_id}`}>  <PencilIcon className="h-4 w-4" /> </Link>
                           </IconButton>

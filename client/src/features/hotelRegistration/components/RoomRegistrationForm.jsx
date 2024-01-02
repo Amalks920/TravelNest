@@ -18,10 +18,12 @@ import editRoomFormSlice, {
 } from "../services/editRoomFormSlice";
 import { useSelector } from "react-redux";
 import useGetRoom from "../hooks/useGetRoom";
+import { useEditHotelMutation } from "../services/EditHotelApiSlice";
+import { useEditRoomMutation } from "../services/editRoomApiSlice";
 
 const RoomRegistrationForm = ({ isEditForm }) => {
   const { hotel_id } = useParams();
-  const { room_id } = useParams();
+  const { _id:room_id } = useParams();
 
   const initialRoomType=useSelector(selectRoomType)
   const initialAmenities=useSelector(selectAmenities)
@@ -34,6 +36,7 @@ const RoomRegistrationForm = ({ isEditForm }) => {
 
   const navigate = useNavigate();
   const [addRoom, { isError, isLoading, isSuccess }] = useAddRoomMutation();
+  const [editRoom,{isError:editIsError,isLoading:editIsLoading}]=useEditRoomMutation()
   console.log(initialNoOfRooms)
   useEffect(() => {
  
@@ -64,12 +67,14 @@ const RoomRegistrationForm = ({ isEditForm }) => {
       formData.append("bathroomType", bathroomType);
       formData.append("description", description);
       formData.append("hotel_id", hotel_id);
+
       console.log(formData["hotel_id"]);
       for (var i = 0; i < images.length; i++) {
         formData.append("images", images[i]);
       }
-      console.log(formData);
-      const response = await addRoom(formData);
+      
+      isEditForm && formData.append('room_id',room_id)
+      const response = addRoom(formData)
       console.log(response);
     } catch (error) {
       console.log(error);

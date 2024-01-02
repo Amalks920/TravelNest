@@ -31,7 +31,7 @@ const addRoom = async (req, res, next) => {
 };
 
 const editRoom = async (req, res, next) => {
-
+console.log('sdlkdskjlkl')
   let hotel_id = req.params.hotel_id;
   let room_id = req.params.room_id;
   let files = req.files;

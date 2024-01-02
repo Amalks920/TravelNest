@@ -75,7 +75,7 @@ function App() {
         <Route element={<RequireOwnerAuth allowedRole={'owner'} />}>
         <Route path="/owner/register-hotel" element={<HotelRegistration isEditForm={false} />} />
         <Route path="/owner/edit-hotel/:hotel_id" element={<HotelRegistration isEditForm={true} />} />
-        <Route path="/owner/edit-room/:room_id" element={<RoomRegistration isEditForm={true} />} />
+        <Route path="/owner/edit-room/:hotel_id/:_id" element={<RoomRegistration isEditForm={true} />} />
         <Route path='/owner/hotel-list' element={<HotelListPage/>}></Route>
         <Route path='/owner/room-list/:_id' element={<RoomList/>}></Route>
         <Route path="/owner/register-room/:hotel_id" element={<RoomRegistration isEditForm={false}/>} />

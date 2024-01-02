@@ -79,7 +79,7 @@ router.post('/add-room/:hotel_id',verifyJwt,uploader.array('images',10),addRoom)
  *           description: Bad request
  */
 
-router.put('/edit-room/{hotel-id}/{room-id}',verifyJwt,editRoom)
+router.put('/edit-room/:hotel-id/:room-id',verifyJwt,editRoom)
 
 
 router.get('/get-rooms-list/:hotel_id',verifyJwt,getRoomsByType)

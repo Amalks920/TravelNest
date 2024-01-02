@@ -29,8 +29,9 @@ import {
   IconButton,
   Tooltip,
 } from "@material-tailwind/react";
+import { NotificationDialog } from "../../../components/modals/NotificationModal";
 
-const TABLE_HEAD = ["SL NO", "Room Type", "Description", "size",'amenities','No Of Rooms','No Of Occupied Rooms','Bathroom Type','Rate','',''];
+const TABLE_HEAD = ["SL NO", "Room Type", "Description", "size",'amenities','No Of Rooms','Edit Room','Bathroom Type','Rate','',''];
  
 const TABLE_ROWS = [
   {
@@ -82,17 +83,21 @@ const TABS = [
 
 const RoomList=()=>{
 
-    const {_id}=useParams() 
+    const {_id:hotel_id}=useParams() 
     const dispatch=useDispatch()
-    const {data:rooms,isLoading,isSuccess,isError,error}=useGetRoomsQuery({_id});
+    const {data:rooms,isLoading,isSuccess,isError,error}=useGetRoomsQuery({hotel_id});
 
     isSuccess && console.log(rooms.response)
     useEffect(()=>{
       isSuccess && dispatch(addRooms(rooms.response))
     },[isSuccess])
     console.log(rooms)
+
+    if(isLoading)  return  <h1>Loading...</h1>
+
+    if(rooms?.response?.length===0)  return  <h1>Rooms Empty</h1>
     return (
-   
+      <>
       <Card className="h-full w-full p-16">
         <CardHeader floated={false} shadow={false} className="rounded-none">
           <div className="mb-8 flex items-center justify-between gap-8">
@@ -253,7 +258,7 @@ const RoomList=()=>{
                             className="font-normal"
                           >
                         
-                       {bathRoomType}  
+                       <Link to={`/owner/edit-room/${hotel_id}/${_id}`}>Edit Room</Link>
                           </Typography>
                         </div>
                       </td>
@@ -316,13 +321,17 @@ const RoomList=()=>{
                           color="blue-gray"
                           className="font-normal"
                         >
-                          <Button>UnList</Button>
+                          <Button 
+                          onClick={()=>{
+                          
+                          }}
+                          >UnList</Button>
                         </Typography>
                       </td>
                       <td className={classes}>
                         <Tooltip content="Edit User">
                           <IconButton variant="text">
-                          <Link to={`/owner/edit-hotel/${'_id'}`}>  <PencilIcon className="h-4 w-4" /> </Link>
+                          <Link to={`/owner/edit-hotel/${_id}`}>  <PencilIcon className="h-4 w-4" /> </Link>
                           </IconButton>
                         </Tooltip>
                       </td>
@@ -347,6 +356,7 @@ const RoomList=()=>{
           </div>
         </CardFooter>
       </Card>
+      </>
     )
 }
 

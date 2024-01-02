@@ -1,10 +1,16 @@
+import { Button } from "@material-tailwind/react"
 
 export const Auth=({text,icon})=>{
     return (
-        <div className="border-2 p-2 flex justify-center items-center">
-            <i>{icon}</i>
-           <h1 className="text-center text-sm text-black">{text}</h1> 
-        </div>
+        <Button
+        size="sm"
+        variant="outlined"
+        color="blue-gray"
+        className="flex items-center gap-3 w-[100%] justify-center"
+      >
+        <img src="https://docs.material-tailwind.com/icons/google.svg" alt="metamask" className="h-6 w-6" />
+        Continue with Google
+      </Button>
     )
 }
 

@@ -48,7 +48,7 @@ const TABLE_HEAD = [
   "EMIAL",
   "PHONE",
   "STATUS",
-  "",
+  "ROLE", 
   "",
 ];
 
@@ -151,7 +151,7 @@ export function UsersList() {
           <div className="mb-8 flex items-center justify-between gap-8">
             <div>
               <Typography variant="h5" color="blue-gray">
-                Users li st
+                Users list
               </Typography>
               {/* <Typography color="gray" className="mt-1 font-normal">
               See information about all members
@@ -311,7 +311,7 @@ export function UsersList() {
                             to={`/admin/user-details/${_id}`}
                             className="text-[0.56rem] text-center"
                           >
-                            View Details
+                            {role}
                           </Link>
                         </Typography>
                       </td>
@@ -328,7 +328,7 @@ export function UsersList() {
                           variant="outlined"
                           className="text-[0.4rem] w-fit "
                         >
-                          unblock
+                          change status
                         </Button>
                       </td>
                     </tr>

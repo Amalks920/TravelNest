@@ -9,7 +9,7 @@ export const RemoveImageApiSlice=apiSlice.injectEndpoints({
                     url:`/hotel/delete-image/${data.hotel_id}/${data.imageToBeRemoved}`,
                     method:'DELETE'
                 }),
-                invalidatesTags: ['Users'],
+                invalidatesTags: ['Hotels'],
             })
         })
 })

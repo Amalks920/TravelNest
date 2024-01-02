@@ -3,7 +3,7 @@ import DatePicker from "../../../components/form/DatePicker";
 import { Button } from "@material-tailwind/react";
 
 
-const PriceCard=()=>{
+const PriceCard=({price})=>{
 
     return (
 
@@ -12,8 +12,13 @@ const PriceCard=()=>{
             <DatePicker label={"Check in"} />
             <DatePicker label={"Check out"} /> 
             <Button className="w-full mt-4">Choose Date</Button>
+            <div className="mt-6 flex justify-between">
+                <p className="font-bold">Price</p>
+                <p className="me-3 font-bold">₹{price}</p>
+            </div>
                 </div>  
             <div className="col-span-2">
+            
             
                 </div>  
         </div>
