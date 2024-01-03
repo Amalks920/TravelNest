@@ -33,6 +33,7 @@ import SingleHotelPage from './pages/user/SingleHotelPage.jsx';
 import VerifyEmailPage from './pages/VeirfyEmailPage.jsx';
 import ResetPassword from './features/authentication/components/ResetPassword.jsx';
 import ResetPasswordPage from './pages/ResetPasswordPage.jsx';
+import HotelDetailsPage from './pages/owner/HotelDetailsPage.jsx';
 
 function App() {
   const token = useSelector(selectToken)
@@ -79,6 +80,7 @@ function App() {
         <Route path='/owner/hotel-list' element={<HotelListPage/>}></Route>
         <Route path='/owner/room-list/:_id' element={<RoomList/>}></Route>
         <Route path="/owner/register-room/:hotel_id" element={<RoomRegistration isEditForm={false}/>} />
+        <Route path='/owner/hotel-details/:hotel_id' element={<HotelDetailsPage/>}></Route>
       </Route>
        
       </Route>

@@ -129,7 +129,7 @@ const RoomRegistrationForm = ({ isEditForm }) => {
       }) => (
         <form
           onSubmit={handleSubmit}
-          className=" grid grid-rows-[80px,80px,80px,80px,80px,80px,80px,80px] grid-cols-[30%,30%] w-[100%]  min-h-[150vh] place-content-center gap-4"
+          className=" grid grid-rows-[80px,80px,80px,80px,80px,80px,80px,80px]  grid-cols-[30%,30%] w-[100%]  min-h-[150vh] place-content-center gap-4"
           action=""
         >
           <div className="col-span-2 row-span-1">

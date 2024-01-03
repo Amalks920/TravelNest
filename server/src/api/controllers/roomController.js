@@ -5,6 +5,7 @@ const {
   editRoomHelper,
   groupRoomByType,
 } = require("../helpers/roomHelper");
+
 const { uploadImages } = require("../helpers/hotelHelper");
 
 const addRoom = async (req, res, next) => {
@@ -54,7 +55,7 @@ console.log('sdlkdskjlkl')
 };
 
 const getRooms = async (req, res, next) => {
-  console.log("jsdljdslk");
+  
   try {
     const hotel_id = req.params.hotel_id;
     const response = await getRoomsHelper(hotel_id);

@@ -1,5 +1,5 @@
 const express = require('express');
-const { createHotel, getAllHotels, getAHotel, editHotel, getAllHotelDetails,getAHotelForUser,deleteHotelImage, changeHotelStatus, getAllHotelsForUser, getAllHotelsForAdmin } = require('../controllers/hotelController');
+const { createHotel, getAllHotels, getAHotel, editHotel, getAllHotelDetails,getAHotelForUser,deleteHotelImage, changeHotelStatus, getAllHotelsForUser, getAllHotelsForAdmin, editHotelDetail } = require('../controllers/hotelController');
 const router = express.Router();
 const uploader=require('../../config/multer');
 const verifyJWT=require('../utils/verifyJwt');
@@ -93,11 +93,14 @@ router.put('/change-hotel-status/:hotel_id/:status',verifyJwt,changeHotelStatus)
 router.get('/get-all-hotels-user',getAllHotelsForUser)
 router.get('/get-a-hotel-user/:hotel_id',getAHotelForUser)
 
+router.get('/get-a-hotel-for-owner/:hotel_id',verifyJwt,getAHotel)
+
   router.post('/test',(req,res)=>{
     console.log(req.body)
   })
 
-
+//owner 
+router.put('/edit-hotel-details/:hotel_id',verifyJwt,editHotelDetail)
 
   
 

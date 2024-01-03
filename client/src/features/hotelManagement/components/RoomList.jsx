@@ -28,6 +28,7 @@ import {
   Avatar,
   IconButton,
   Tooltip,
+  Spinner,
 } from "@material-tailwind/react";
 import { NotificationDialog } from "../../../components/modals/NotificationModal";
 
@@ -93,7 +94,7 @@ const RoomList=()=>{
     },[isSuccess])
     console.log(rooms)
 
-    if(isLoading)  return  <h1>Loading...</h1>
+    if(isLoading)  return  <Spinner className="h-12 w-12" />
 
     if(rooms?.response?.length===0)  return  <h1>Rooms Empty</h1>
     return (

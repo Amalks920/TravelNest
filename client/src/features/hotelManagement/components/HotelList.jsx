@@ -145,14 +145,14 @@ import { useGetHotelsForAdminQuery } from "../services/HotelListAdmin";
             </thead>
             <tbody>
               {hotels?.response?.map(
-                ({ _id, hotelName, description, images, location, status, createdAt }, index) => {
+                ({_id:hotel_id, hotelName, description, images, location, status, createdAt }, index) => {
                   const isLast = index === TABLE_ROWS.length - 1;
                   const classes = isLast
                     ? "p-4"
                     : "p-4 border-b border-blue-gray-50";
    
                   return (
-                    <tr key={_id}>
+                    <tr key={hotel_id}>
                       <td className={classes +" "+"border-r-2"} >
                         <div className="flex items-center  gap-3">
                           <Avatar src={images[0]} alt={''} size="sm" />
@@ -229,7 +229,7 @@ import { useGetHotelsForAdminQuery } from "../services/HotelListAdmin";
                           color="blue-gray"
                           className="font-normal"
                         >
-                         <Link to={`/owner/register-room/${_id}`} className="text-[0.56rem] text-center">Add Rooms</Link>
+                         <Link to={`/owner/register-room/${hotel_id}`} className="text-[0.56rem] text-center">Add Rooms</Link>
                         </Typography>
                       </td>
 
@@ -239,14 +239,15 @@ import { useGetHotelsForAdminQuery } from "../services/HotelListAdmin";
                           color="blue-gray"
                           className="font-normal"
                         >
-                         <Link to={`/owner/room-list/${_id}`} className="text-[0.56rem] text-center">View Rooms</Link>
+                         {/* <Link to={`/owner/room-list/${_id}`} className="text-[0.56rem] text-center">View Rooms</Link> */}
+                         <Link to={`/owner/hotel-details/${hotel_id}`} className="text-[0.56rem] text-center">View Details</Link>
                         </Typography>
                       </td>
 
                       <td className={classes}>
                         <Tooltip content="Edit Hotel">
                           <IconButton variant="text">
-                          <Link to={`/owner/edit-hotel/${_id}`}>  <PencilIcon className="h-4 w-4" /> </Link>
+                          <Link to={`/owner/edit-hotel/${hotel_id}`}>  <PencilIcon className="h-4 w-4" /> </Link>
                           </IconButton>
                         </Tooltip>
                       </td>

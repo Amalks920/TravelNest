@@ -70,6 +70,17 @@ const changePasswordHelper= function (email,password){
     })
 }
 
+
+// const authHelper=()=>{
+//     return new Promise((resolve,reject)=>{
+//         try {
+            
+//         } catch (error) {
+//             reject(error)
+//         }
+//     })
+// }
+
 module.exports = {
     signupHelper, loginHelper,
     changePasswordHelper

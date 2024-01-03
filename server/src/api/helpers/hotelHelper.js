@@ -214,6 +214,36 @@ const getAHotelForUserHelper = (hotel_id) => {
   });
 };
 
+
+// const getAHotelForOwnerHelper=(hotel_id)=>{
+
+//   return new Promise(async (resolve,reject)=>{
+//     try {
+//       const response=await hotelModel.findOne({hotel})
+//     } catch (error) {
+//         reject(error)
+//     }
+//   })
+// }
+
+const editHotelDetailHelper=(hotel_id,data)=>{
+  return new Promise(async (resolve,reject)=>{
+    try {
+      const response=await hotelModel.updateOne(
+        {_id:hotel_id},
+        {
+          $set:{
+            data
+          }
+        }
+        )
+      resolve(response)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
 module.exports = {
   uploadImages,
   getAHotelHelper,
@@ -225,5 +255,6 @@ module.exports = {
   changeHotelStatusHelper,
   getAllHotelsForUserHelper,
   getAHotelForUserHelper,
-  getAllHotelsForAdminHelper
+  getAllHotelsForAdminHelper,
+  editHotelDetailHelper
 };

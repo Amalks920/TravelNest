@@ -1,4 +1,4 @@
-const { getHotelsHelper, getAHotelHelper, editHotelHelper, getAllHotelDetailsHelper, deleteHotelImageHelper, changeHotelStatusHelper, getAllHotelsForUserHelper, getAHotelForUserHelper, getAllHotelsForAdminHelper } = require("../helpers/hotelHelper")
+const { getHotelsHelper, getAHotelHelper, editHotelHelper, getAllHotelDetailsHelper, deleteHotelImageHelper, changeHotelStatusHelper, getAllHotelsForUserHelper, getAHotelForUserHelper, getAllHotelsForAdminHelper, editHotelDetailHelper } = require("../helpers/hotelHelper")
 const { saveHotelDocumentHelper } = require("../helpers/hotelHelper")
 const { uploadImages } = require("../helpers/hotelHelper")
 const { findRoomsInHotelHelper, changeAllRoomStatus, getAllRoomsOfAHotelForUserHelper } = require("../helpers/roomHelper")
@@ -154,6 +154,26 @@ const getAHotelForUser=async (req,res,next)=>{
   }
 }
 
+// const getAHotelForOwner=()=>{
+//   const hotel_id= req.params.hotel_id
+
+//   try {
+//       getAHotelForOwnerHelper()
+//   } catch (error) {
+//     res.status(404).json({error})
+//   }
+// }
+
+const editHotelDetail=async (req,res,next)=>{
+  const hotel_id=req.params.hotel_id
+  const hotelName=req.body.hotelName
+  try {
+    const response=await editHotelDetailHelper(hotel_id,data)
+    res.status(200).json({response})
+  } catch (error) {
+    res.status(404).json({error})
+  }
+}
 
 
 module.exports={
@@ -161,6 +181,6 @@ module.exports={
     getAllHotels,getAHotel,editHotel,
     getAllHotelDetails,deleteHotelImage,
     changeHotelStatus,getAllHotelsForAdmin,
-    getAllHotelsForUser,getAHotelForUser
+    getAllHotelsForUser,getAHotelForUser,editHotelDetail
 }
 
