@@ -1,7 +1,31 @@
+import { useRef, useState } from "react";
+import { NotificationDialog } from "../../../components/modals/NotificationModal";
 import { IMAGE_BASE_URL } from "../../../data/constants";
+import { useRemoveHotelImageMutation } from "../services/editHotelDetailsApiSlice";
 
-const Images = ({ image, index }) => {
+const Images = ({ image, index,hotel_id }) => {
+  const [removeHotelImage,{isError:removeImgIsError,isLoading:removeImgIsLoading,isSuccess:removeImgIsSuccess,reset:removeImgReset}]=useRemoveHotelImageMutation()
+  const imageToBeRemoved=useRef(null)
+  const [isModalOpen,setIsModalOpen]=useState(false)
   return (
+
+    <>
+     <NotificationDialog
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          heading={'Do you want to delete this Image?'}
+          description={'image will be deleted from hotel'}
+          buttonText={'Delete'}
+          args={{hotel_id,imageToBeRemoved:imageToBeRemoved.current}}
+          // isBlocked={!isBlockedRef.current}
+          // user_id={userIdRef.current}
+           sendRequestHandler={removeHotelImage}
+           error = {removeImgIsError}
+           loading = {removeImgIsLoading}
+           success = {removeImgIsSuccess}
+           reset={removeImgReset}
+        />
+
     <div
       key={index}
       className="border-2 border-black  h-[200px] w-[300px] rounded-md"
@@ -9,8 +33,8 @@ const Images = ({ image, index }) => {
     >
       <svg
         onClick={() => {
-          console.log(img);
-          imageToBeRemoved.current = img;
+          
+          imageToBeRemoved.current = image;
           setIsModalOpen(true);
         }}
         xmlns="http://www.w3.org/2000/svg"
@@ -25,6 +49,7 @@ const Images = ({ image, index }) => {
         />
       </svg>
     </div>
+    </>
   );
 };
 

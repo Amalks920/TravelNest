@@ -14,7 +14,8 @@ const RoomDetailsSection = ({ hotel_id }) => {
 
   
       <div className="flex flex-col">
-        <h1 className="font-bold text-xl text-center  w-full">Room Details</h1>
+        <h2 className="font-bold text-xl text-center  w-full">Room Details</h2>
+        {console.log(rooms)}
         {
             rooms?.map((room,index)=>{
                 return <RoomDetailsAccordian key={room?._id} room={room} />

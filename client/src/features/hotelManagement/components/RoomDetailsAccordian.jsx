@@ -7,15 +7,14 @@ return (
 <>
 <div className="flex flex-col">
 <div className=" mt-3 h-[60px] flex items-center justify-between  shadow-xl border-2"> 
-<h1>{roomType}</h1>
-
+<h1>2{roomType}</h1>
 
 
 
 
 </div>
 
-<Row heading={'Description'} text={description}/> 
+<Row room={room}/> 
 <ImageContainer images={images}/>
 </div>
 

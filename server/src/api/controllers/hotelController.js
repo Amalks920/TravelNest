@@ -1,4 +1,4 @@
-const { getHotelsHelper, getAHotelHelper, editHotelHelper, getAllHotelDetailsHelper, deleteHotelImageHelper, changeHotelStatusHelper, getAllHotelsForUserHelper, getAHotelForUserHelper, getAllHotelsForAdminHelper, editHotelDetailHelper } = require("../helpers/hotelHelper")
+const { getHotelsHelper, getAHotelHelper, editHotelHelper, getAllHotelDetailsHelper, deleteHotelImageHelper, changeHotelStatusHelper, getAllHotelsForUserHelper, getAHotelForUserHelper, getAllHotelsForAdminHelper, editHotelNameHelper, editHotelLocationHelper, editHotelDescriptionHelper } = require("../helpers/hotelHelper")
 const { saveHotelDocumentHelper } = require("../helpers/hotelHelper")
 const { uploadImages } = require("../helpers/hotelHelper")
 const { findRoomsInHotelHelper, changeAllRoomStatus, getAllRoomsOfAHotelForUserHelper } = require("../helpers/roomHelper")
@@ -164,15 +164,46 @@ const getAHotelForUser=async (req,res,next)=>{
 //   }
 // }
 
-const editHotelDetail=async (req,res,next)=>{
+const editHotelName=async (req,res,next)=>{
   const hotel_id=req.params.hotel_id
   const hotelName=req.body.hotelName
   try {
-    const response=await editHotelDetailHelper(hotel_id,data)
+    const response=await editHotelNameHelper(hotel_id,hotelName)
     res.status(200).json({response})
   } catch (error) {
+    console.log(error)
     res.status(404).json({error})
   }
+}
+
+const editHotelLocation= async (req,res,next)=>{
+  console.log('hosijodijod')
+const hotel_id=req.params.hotel_id;
+const location=req.body.location;
+
+try {
+    const response=await editHotelLocationHelper(hotel_id,location)
+
+    res.status(200).json({response})
+} catch (error) {
+  console.log(error)
+    res.status(404).json({error})
+}
+}
+
+const editHotelDescription= async (req,res,next)=>{
+
+const hotel_id=req.params.hotel_id;
+const location=req.body.description;
+
+try {
+    const response=await editHotelDescriptionHelper(hotel_id,location)
+
+    res.status(200).json({response})
+} catch (error) {
+  console.log(error)
+    res.status(404).json({error})
+}
 }
 
 
@@ -181,6 +212,7 @@ module.exports={
     getAllHotels,getAHotel,editHotel,
     getAllHotelDetails,deleteHotelImage,
     changeHotelStatus,getAllHotelsForAdmin,
-    getAllHotelsForUser,getAHotelForUser,editHotelDetail
+    getAllHotelsForUser,getAHotelForUser,editHotelName,
+    editHotelLocation,editHotelDescription
 }
 

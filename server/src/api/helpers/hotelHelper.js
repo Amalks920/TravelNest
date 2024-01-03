@@ -226,14 +226,14 @@ const getAHotelForUserHelper = (hotel_id) => {
 //   })
 // }
 
-const editHotelDetailHelper=(hotel_id,data)=>{
+const editHotelNameHelper=(hotel_id,hotelName)=>{
   return new Promise(async (resolve,reject)=>{
     try {
       const response=await hotelModel.updateOne(
         {_id:hotel_id},
         {
           $set:{
-            data
+            'hotelName':hotelName
           }
         }
         )
@@ -243,6 +243,43 @@ const editHotelDetailHelper=(hotel_id,data)=>{
     }
   })
 }
+
+const editHotelLocationHelper=(hotel_id,location)=>{
+  return new Promise(async (resolve,reject)=>{
+    try {
+      const response=await hotelModel.updateOne(
+        {_id:hotel_id},
+        {
+          $set:{
+            'location':location
+          }
+        }
+        )
+      resolve(response)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+const editHotelDescriptionHelper=(hotel_id,description)=>{
+  return new Promise(async (resolve,reject)=>{
+    try {
+      const response=await hotelModel.updateOne(
+        {_id:hotel_id},
+        {
+          $set:{
+            'description':description
+          }
+        }
+        )
+      resolve(response)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
 
 module.exports = {
   uploadImages,
@@ -256,5 +293,6 @@ module.exports = {
   getAllHotelsForUserHelper,
   getAHotelForUserHelper,
   getAllHotelsForAdminHelper,
-  editHotelDetailHelper
+  editHotelNameHelper,
+  editHotelLocationHelper,editHotelDescriptionHelper
 };
