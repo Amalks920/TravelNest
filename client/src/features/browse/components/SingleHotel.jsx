@@ -84,8 +84,8 @@ const SingleHotel = () => {
           </div>
           <div className=" h-fit p-5 font-medium">{description}</div>
           <div className=" h-fit ">{amenities}</div>
-          <div className=" h-fit  p-5">
-            <h1 className="font-bold text-2xl ms-1">Rooms</h1>
+          <div className=" h-fit ">
+            <h1 className="font-bold text-2xl ms-5">Rooms</h1>
 
             {!rooms && <h1>RoomsList Empty</h1> }
             {rooms && rooms?.map((room, index) => {
@@ -108,7 +108,7 @@ const SingleHotel = () => {
             })}
           </div>
         </div>
-        <div className="row-span-2 col-span-2 shadow-2xl border-t-2   rounded-lg">
+        <div className="row-span-2 col-span-2  border-t-2   rounded-lg">
           {/* <div className="flex flex-col ">
             <div className="border-2 h-[400px]">
               <h1 className="text-left font-bold mt-6 ms-4 text-xl"></h1>

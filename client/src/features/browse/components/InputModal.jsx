@@ -1,5 +1,4 @@
-
-import React from "react";
+import React, { useRef, useState } from "react";
 import {
   Button,
   Dialog,
@@ -10,21 +9,24 @@ import {
   Input,
   Textarea,
 } from "@material-tailwind/react";
- 
-export function InputModal({inputModalOpen,setInputModalOpen}) {
+import { useDispatch, useSelector } from "react-redux";
+import { insertCheckedRoomId, selectRoomId, updateIsModalOpen, updateNoOfRooms, updatePrice } from "../services/priceSlice";
 
- 
-  const handleOpen = () => setInputModalOpen(!inputModalOpen);
- 
+export function   InputModal({ inputModalOpen, setInputModalOpen,id,description }) {
+  console.log(id)
+  const dispatch = useDispatch();
+  const selectedRoomId=useSelector(selectRoomId)
+  const handleOpen = () => dispatch(updateIsModalOpen(!inputModalOpen));
+  const [noOfRooms,setNoOfRooms]=useState(0)
+
   return (
     <>
-      <Button onClick={handleOpen}>Message Dialog</Button>
-    <Dialog open={inputModalOpen} size="xs" handler={handleOpen}>
+      <Dialog open={inputModalOpen} size="xs">
         <div className="flex items-center justify-between">
           <DialogHeader className="flex flex-col items-start">
             {" "}
             <Typography className="mb-1" variant="h4">
-             No of Rooms Needed
+              No of Rooms Needed
             </Typography>
           </DialogHeader>
           <svg
@@ -49,7 +51,17 @@ export function InputModal({inputModalOpen,setInputModalOpen}) {
             <Typography className="-mb-1" color="blue-gray" variant="h6">
               No of rooms needed
             </Typography>
-            <Input label="No Of Rooms Needed" type="number" />
+            <Input
+
+              value={noOfRooms}
+              onChange={(e)=>{
+                console.log(e.target.value)
+                setNoOfRooms(e.target.value)
+              }}
+              max={5} 
+              label="No Of Rooms Needed"
+              type="number"
+            />
             {/* <Textarea label="Message" /> */}
           </div>
         </DialogBody>
@@ -57,8 +69,17 @@ export function InputModal({inputModalOpen,setInputModalOpen}) {
           <Button variant="text" color="gray" onClick={handleOpen}>
             cancel
           </Button>
-          <Button variant="gradient" color="gray" onClick={handleOpen}>
-            send message
+          <Button
+            variant="gradient"
+            color="gray"
+            onClick={() => {
+              console.log(id)
+              // dispatch(updateNoOfRooms(Number(noOfRooms)));
+              dispatch(insertCheckedRoomId({id:selectedRoomId,noOfRooms:noOfRooms,description:description}))
+              handleOpen()
+            }}
+          >
+            submit
           </Button>
         </DialogFooter>
       </Dialog>

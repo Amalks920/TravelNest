@@ -10,6 +10,7 @@ import verifyEmailSlice from '../features/authentication/services/verifyEmailSli
 import EditHotelFormSlice from '../features/hotelRegistration/services/editHotelFormSlice';
 import hotelListSlice from '../features/hotelManagement/services/hotelListSlice';
 import editRoomFormSlice from '../features/hotelRegistration/services/editRoomFormSlice';
+import priceSlice from '../features/browse/services/priceSlice';
 
 const persistConfig={
     key:'root',
@@ -30,7 +31,8 @@ const store=configureStore({
         verify:verifyEmailSlice,
         signup:signupSlice,
         editHotelForm:EditHotelFormSlice,
-        editRoomForm:editRoomFormSlice
+        editRoomForm:editRoomFormSlice,
+        priceSlice:priceSlice
     },
     middleware:[thunk],
     middleware: getDefaultMiddleware =>

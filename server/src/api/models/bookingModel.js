@@ -62,7 +62,7 @@ const bookingSchema = new Schema(
         type: String,
         required: true,
       },
-      hotelid: {
+      hotel_id: {
         type: ObjectId,
         required: true,
       },

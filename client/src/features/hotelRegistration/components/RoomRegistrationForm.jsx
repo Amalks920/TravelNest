@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { ButtonDefault } from "../../../components/form/ButtonDefault";
 import { FormInput } from "../../../components/form/FormInput";
-import { Textarea, Select, Option } from "@material-tailwind/react";
+import { Textarea, Select, Option, Checkbox } from "@material-tailwind/react";
 import { Field, Formik } from "formik";
 import { useAddRoomMutation } from "../services/roomRegApiSlice";
 import * as Yup from "yup";
@@ -57,6 +57,7 @@ const RoomRegistrationForm = ({ isEditForm }) => {
       } = values;
       console.log(values)
 
+      
       let formData = new FormData();
 
       formData.append("roomType", roomType);
@@ -102,7 +103,7 @@ const RoomRegistrationForm = ({ isEditForm }) => {
         //   roomType: Yup.object({
         //     value: Yup.string().required(),
         //   }),
-        noOfRooms: Yup.number().required(),
+        noOfRooms: Yup.number().required('no of rooms required'),
         rate: Yup.number().required(),
         size: Yup.number().required(),
         //   bathroomType: Yup.object({
@@ -151,7 +152,7 @@ const RoomRegistrationForm = ({ isEditForm }) => {
                 !errors.bathroomType && touched.bathroomType ? true : false
               }
               as="select"
-              label="roomType"
+              label="Room Type"
             >
               <option className="font-light" value="single">single</option>
               <option value="double">double</option>
@@ -182,7 +183,7 @@ const RoomRegistrationForm = ({ isEditForm }) => {
               error={errors.amenities && touched.amenities && errors.amenities}
               success={!errors.amenities && touched.amenities ? true : false}
               name="amenities"
-              label={!errors.amenities?"amenities":errors.amenities}
+              label={!errors.amenities?"Amenities":errors.amenities}
             />
           </div>
           <div className="md:col-span-1 col-span-2">
@@ -247,6 +248,22 @@ const RoomRegistrationForm = ({ isEditForm }) => {
               }
               label={!errors?.description?"Description":errors.description}
             ></Textarea>
+          </div>
+
+          <div className="flex flex-wrap row-span-2 col-span-2 border-2 overflow-scroll gap-11 p-7 mb-10">
+              <div>
+                <Checkbox 
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.bathroomType}
+                label={'TV'}/>
+              </div>
+              <div>
+                <Checkbox label={'WIFI'}/>
+              </div>
+              <div>
+                <Checkbox label={'AC'}/>
+              </div>
           </div>
 
           <div className=" row-span-1 col-span-2">
