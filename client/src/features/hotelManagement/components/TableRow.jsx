@@ -20,10 +20,10 @@ const TableRow = ({ hotel, isLoading }) => {
         />
       )}
       <div className="grid grid-rows-[auto,auto,auto,auto] gap-3 grid-flow-col  p-4">
-        <div className=" flex justify-center items-center p-2">Hotel Name</div>
-        <div className=" flex justify-center items-center p-2">Location</div>
-        <div className=" flex justify-center items-center p-2">Description</div>
-        <div className=" flex justify-center items-center p-2">
+        <div className=" flex justify-start items-center p-2">Hotel Name</div>
+        <div className=" flex justify-start items-center p-2">Location</div>
+        <div className=" flex justify-start items-center p-2">Description</div>
+        <div className=" flex justify-start items-center p-2">
           upload images
         </div>
 

@@ -1,6 +1,7 @@
 const roomModel = require("../models/roomModel");
 const hotelModel=require('../models/hotelModel');
 const { default: mongoose } = require("mongoose");
+const { resolve } = require("path");
 
 const addRoomHelper = (data) => {
 
@@ -231,10 +232,30 @@ const getAllRoomsOfAHotelForUserHelper=(hotel_id)=>{
   })
 }
 
+const editRoomDescriptionHelper=(room_id,description)=>{
+  return new Promise(async (resolve,reject)=>{
+    try {
+      const response=await roomModel.updateOne(
+        {_id:room_id},
+        {
+          $set:{
+            'description':description
+          }
+        }
+        )
+
+        resolve(response)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
 module.exports = {
   addRoomHelper,addRoomToHotel,
   getRoomsHelper,editRoomHelper,
   groupRoomByType,findRoomsInHotelHelper,
-  changeAllRoomStatus,getAllRoomsOfAHotelForUserHelper
+  changeAllRoomStatus,getAllRoomsOfAHotelForUserHelper,
+  editRoomDescriptionHelper
 
 };

@@ -4,6 +4,7 @@ const {
   getRoomsHelper,
   editRoomHelper,
   groupRoomByType,
+  editRoomDescriptionHelper,
 } = require("../helpers/roomHelper");
 
 const { uploadImages } = require("../helpers/hotelHelper");
@@ -78,7 +79,22 @@ const getRoomsByType=async (req,res,next) => {
     }
 }
 
+const editRoomDescription=async (req,res,next)=>{
+  const room_id=req.params.room_id;
+  const description=req.body.description;
+    try {
+
+      const response=await editRoomDescriptionHelper(room_id,description)
+      
+      res.status(200).json({response})
+    } catch (error) {
+      console.log(error)
+      res.status(404).json({error})
+    }
+}
+
 module.exports = {
   addRoom,editRoom,
-  getRooms,getRoomsByType
+  getRooms,getRoomsByType,
+  editRoomDescription
 };

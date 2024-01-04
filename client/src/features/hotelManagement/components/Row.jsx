@@ -1,33 +1,26 @@
 import { PencilIcon } from "@heroicons/react/24/solid"
 import { Input } from "@material-tailwind/react"
+import { useEditRoomDescriptionMutation } from "../services/editRoomDetailsApiSlice"
+import { InputModal } from "./InputModal"
+import { useState } from "react"
+import { RoomEditInput } from "./RoomEditInput"
 
 
 const Row=({room})=>{
+  const [inputModalOpen, setInputModalOpen] = useState(false);
+  const [InputDetailsToPass, setInputDetails] = useState(null);
 
     return (
-      //   <div className="flex flex-col items-center border-2 mt-5">
-      //   <h2 className=" font-bold text-xl border-2 w-full text-center py-3">
-      //    {heading}
-      //   </h2>
+  <>
+        {inputModalOpen && (
+        <RoomEditInput
+          inputModalOpen={inputModalOpen}
+          setInputModalOpen={setInputModalOpen}
+          InputDetailsToPass={InputDetailsToPass}
+          _id={room?._id}
+        />
+      )}
 
-      //   <div className="m-8 flex gap-4 flex-grow justify-between w-[90%] ">
-
-      //       <div className="border-2 ">
-   
-      //       <p className="text-left  py-3">{text}</p>
-       
-      //     </div>
-
-      //     <div className="border-2 ">
-      //     <PencilIcon
- 
-      //       width={15}
-      //       className="cursor-pointer me-6 mt-5"
-      //     />
-      //   </div>
-
-      //   </div>
-      // </div>
       <div className="grid grid-rows-[auto,auto,auto,auto] gap-3 grid-flow-col  p-4">
       <div className=" flex justify-start items-center p-2">Description</div>
       <div className=" flex justify-start items-center p-2">Location</div>
@@ -55,15 +48,15 @@ const Row=({room})=>{
 
       <div className=" flex justify-center">
         <PencilIcon
-          // onClick={() => {
-          //   setInputModalOpen(true);
-          //   setInputDetails({
-          //     name: "hotelName",
-          //     label: "hotel name",
-          //     type: "text",
-          //     value: hotel?.hotelName,
-          //   });
-          // }}
+          onClick={() => {
+            setInputModalOpen(true);
+            setInputDetails({
+              name: "description",
+              label: "room description",
+              type: "text",
+              value: room?.description,
+            });
+          }}
           width={15}
           className="cursor-pointer me-6"
         />
@@ -116,6 +109,7 @@ const Row=({room})=>{
       </div>
       
     </div>
+  </>
     )
 }
 

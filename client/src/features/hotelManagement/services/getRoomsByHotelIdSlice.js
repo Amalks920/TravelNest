@@ -5,7 +5,8 @@ const getRoomsByHotelIdApiSlice=apiAuthSlice.injectEndpoints({
     endpoints:builder=>({
         getAllRoomsOfHotel:builder.query({
             query:(data)=>`/room/get-rooms/${data.hotel_id}`,
-            transformResponse:(response)=>response.response
+            transformResponse:(response)=>response.response,
+            providesTags:['get-rooms-of-hotel']
         })
     })
 })
