@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { ButtonDefault } from "../../../components/form/ButtonDefault";
 import { FormInput } from "../../../components/form/FormInput";
-import { Textarea, Select, Option, Checkbox } from "@material-tailwind/react";
+import { Textarea, Select, Option, Checkbox, Spinner } from "@material-tailwind/react";
 import { Field, Formik } from "formik";
 import { useAddRoomMutation } from "../services/roomRegApiSlice";
 import * as Yup from "yup";
@@ -49,6 +49,7 @@ const RoomRegistrationForm = ({ isEditForm }) => {
         roomType,
         noOfRooms,
         amenities,
+        noOfPeopleAllowed,
         rate,
         size,
         bathroomType,
@@ -56,7 +57,6 @@ const RoomRegistrationForm = ({ isEditForm }) => {
         images,
       } = values;
       console.log(values)
-
       
       let formData = new FormData();
 
@@ -64,6 +64,7 @@ const RoomRegistrationForm = ({ isEditForm }) => {
       formData.append("noOfRooms", noOfRooms);
       formData.append("amenities", amenities);
       formData.append("rate", rate);
+      formData.append('noOfPeopleAllowed',noOfPeopleAllowed)
       formData.append("size", size);
       formData.append("bathroomType", bathroomType);
       formData.append("description", description);
@@ -83,7 +84,7 @@ const RoomRegistrationForm = ({ isEditForm }) => {
   };
 
 
-  if(isLoading) return <h1>Loading...</h1>
+  if(isLoading) return <Spinner className="h-12 w-12" />
 
   return (
     // <>
@@ -97,6 +98,7 @@ const RoomRegistrationForm = ({ isEditForm }) => {
         size: !isEditForm?null:initialSize,
         bathroomType: !isEditForm?"en-suite":initialBathroomType,
         description: !isEditForm?"":initialDescription,
+        noOfPeopleAllowed:0,
         images: [],
       }}
       validationSchema={Yup.object().shape({
@@ -115,6 +117,9 @@ const RoomRegistrationForm = ({ isEditForm }) => {
           .max(300, "maximum characters allowed exceeded")
           .required('description required'),
         images: Yup.mixed().required(),
+        noOfPeopleAllowed: Yup.number()
+          .min(1,'must be greater than or equal to 1')
+          .required('no of people allowed is required')
       })}
       onSubmit={(values) => _onSave(values)}
     >
@@ -266,7 +271,7 @@ const RoomRegistrationForm = ({ isEditForm }) => {
               </div>
           </div>
 
-          <div className=" row-span-1 col-span-2">
+          <div className=" row-span-1 col-span-1">
             <FormInput
               onChange={(event) => {
                 setFieldValue("images", event.target.files);
@@ -276,6 +281,20 @@ const RoomRegistrationForm = ({ isEditForm }) => {
               multiple
               accept="image/*"
               label={!errors.images?"Images":errors.images}
+            />
+          </div>
+
+          <div className=" row-span-1 col-span-1">
+            <FormInput
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.noOfPeopleAllowed}
+              error={errors.noOfPeopleAllowed && touched.noOfPeopleAllowed && errors.noOfPeopleAllowed}
+              success={!errors.noOfPeopleAllowed && touched.noOfPeopleAllowed ? true : false}
+              name="noOfPeopleAllowed"
+              type='number'
+              
+              label={!errors.noOfPeopleAllowed?"No of People Allowed":errors?.noOfPeopleAllowed}
             />
           </div>
 

@@ -18,6 +18,9 @@ const reviewRouter=require('./src/api/routes/reviewRoute')
 const couponRouter=require('./src/api/routes/couponRoute')
 const salesRouter=require('./src/api/routes/salesRoute')
 const messageRouter=require('./src/api/routes/messageRoute')
+const paymentRouter=require('./src/api/routes/paymentRoute')
+const searchRouter=require('./src/api/routes/searchRoute')
+
 const handleError = require('./src/api/middlewares/errorHandler')
 
 
@@ -39,6 +42,8 @@ app.use('/api/review',reviewRouter)
 app.use('/api/coupon',couponRouter)
 app.use('/api/sales',salesRouter)
 app.use('/api/messages',messageRouter)
+app.use('/api/payment',paymentRouter)
+app.use('/api/search',searchRouter)
 
 app.listen(4000,async ()=>{
     console.log('server running')

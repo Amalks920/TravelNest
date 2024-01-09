@@ -46,13 +46,15 @@ const RoomSection = ({
         >
           {rooms?.map(
             (
-              { id,images, description, bathRoomType, location, rate, amenities },
+              { id,images, description, bathRoomType,hotel_id, location, rate, amenities },
               index
             ) => {
+
               return (
                 <SingleRoomComponent
                 key={id}
                   id={id}
+                  hotel_id={hotel_id}
                   images={images}
                   description={description}
                   bathRoomType={bathRoomType}

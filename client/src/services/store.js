@@ -11,6 +11,7 @@ import EditHotelFormSlice from '../features/hotelRegistration/services/editHotel
 import hotelListSlice from '../features/hotelManagement/services/hotelListSlice';
 import editRoomFormSlice from '../features/hotelRegistration/services/editRoomFormSlice';
 import priceSlice from '../features/browse/services/priceSlice';
+import searchSlice from './searchSlice';
 
 const persistConfig={
     key:'root',
@@ -32,7 +33,8 @@ const store=configureStore({
         signup:signupSlice,
         editHotelForm:EditHotelFormSlice,
         editRoomForm:editRoomFormSlice,
-        priceSlice:priceSlice
+        priceSlice:priceSlice,
+        search:searchSlice
     },
     middleware:[thunk],
     middleware: getDefaultMiddleware =>

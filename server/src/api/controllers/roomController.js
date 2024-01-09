@@ -5,13 +5,14 @@ const {
   editRoomHelper,
   groupRoomByType,
   editRoomDescriptionHelper,
+  addRoomImagesHelper,
 } = require("../helpers/roomHelper");
 
 const { uploadImages } = require("../helpers/hotelHelper");
 
 const addRoom = async (req, res, next) => {
   try {
-    console.log(req.body)
+
     const hotelImgArray = await uploadImages(req.files);
     console.log(process.env.IMAGE_BASE_URL);
     let imgBaseUrlLength = process.env.IMAGE_BASE_URL.length;
@@ -93,8 +94,32 @@ const editRoomDescription=async (req,res,next)=>{
     }
 }
 
+const addRoomImages= async (req,res,next)=>{
+  console.log(req.params)
+    const room_id=req.body.room_id;
+    try {
+  
+      console.log(req.files)
+      const roomImgArray=await uploadImages(req.files)
+        
+      let imgStringArr=[]
+      for(var i=0;i<roomImgArray.length;i++){
+        imgStringArr.push(roomImgArray[i].public_id+'.png')
+      }
+      console.log(imgStringArr)
+      const response=await addRoomImagesHelper(room_id,imgStringArr)
+   
+      res.status(200).json({response})
+    } catch (error) {
+      console.log(error)
+      res.status(404).json({error})
+    }
+  }
+
+
+
 module.exports = {
   addRoom,editRoom,
   getRooms,getRoomsByType,
-  editRoomDescription
+  editRoomDescription,addRoomImages
 };

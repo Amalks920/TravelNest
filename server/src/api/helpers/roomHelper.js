@@ -194,6 +194,7 @@ const getAllRoomsOfAHotelForUserHelper=(hotel_id)=>{
                 id: '$_id',
                 description:'$description',
                 size:'$size',
+                hotel_id:'$hotel_id',
                 amenities:'$amenities',
                 noOfRooms:'$noOfRooms',
                 bathRoomType:'$bathroomType',
@@ -251,11 +252,66 @@ const editRoomDescriptionHelper=(room_id,description)=>{
   })
 }
 
+
+const getRoomDetailsByIdHelper=(roomIds)=>{
+// roomId
+// priceRoom
+// roomType
+// noOfPeopleAllowed
+  return new Promise(async (resolve,reject)=>{
+    try {
+      const roomDetails=await roomModel.find({
+        '_id':roomIds
+      },
+      {
+        _id:1,
+        rate:1,
+        roomType:1,
+        noOfPeopleAllowed:1
+      }
+      )
+
+      resolve(roomDetails)
+    } catch (error) {
+      reject(error)
+    }
+  })
+
+
+}
+
+const addRoomImagesHelper=(room_id,imagePathArray)=>{
+    console.log(room_id)
+    console.log(imagePathArray)
+    return new Promise(async (resolve,reject)=>{
+      
+      try {
+        const response=await roomModel.updateOne(
+          {
+            _id:room_id
+          },
+          {
+              $push:{
+                images: {
+                  $each: imagePathArray,
+                }     
+              }
+          }
+        )
+        console.log(response)
+        resolve(response)
+      } catch (error) {
+        console.log(error)
+        reject(error)
+      }
+    })
+}
+
 module.exports = {
   addRoomHelper,addRoomToHotel,
   getRoomsHelper,editRoomHelper,
   groupRoomByType,findRoomsInHotelHelper,
   changeAllRoomStatus,getAllRoomsOfAHotelForUserHelper,
-  editRoomDescriptionHelper
-
+  editRoomDescriptionHelper,getRoomDetailsByIdHelper,
+  addRoomImagesHelper
 };

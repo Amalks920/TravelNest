@@ -1,4 +1,4 @@
-const { getHotelsHelper, getAHotelHelper, editHotelHelper, getAllHotelDetailsHelper, deleteHotelImageHelper, changeHotelStatusHelper, getAllHotelsForUserHelper, getAHotelForUserHelper, getAllHotelsForAdminHelper, editHotelNameHelper, editHotelLocationHelper, editHotelDescriptionHelper } = require("../helpers/hotelHelper")
+const { getHotelsHelper, getAHotelHelper, editHotelHelper, getAllHotelDetailsHelper, deleteHotelImageHelper, changeHotelStatusHelper, getAllHotelsForUserHelper, getAHotelForUserHelper, getAllHotelsForAdminHelper, editHotelNameHelper, editHotelLocationHelper, editHotelDescriptionHelper, addHotelImagesHelper } = require("../helpers/hotelHelper")
 const { saveHotelDocumentHelper } = require("../helpers/hotelHelper")
 const { uploadImages } = require("../helpers/hotelHelper")
 const { findRoomsInHotelHelper, changeAllRoomStatus, getAllRoomsOfAHotelForUserHelper } = require("../helpers/roomHelper")
@@ -154,16 +154,6 @@ const getAHotelForUser=async (req,res,next)=>{
   }
 }
 
-// const getAHotelForOwner=()=>{
-//   const hotel_id= req.params.hotel_id
-
-//   try {
-//       getAHotelForOwnerHelper()
-//   } catch (error) {
-//     res.status(404).json({error})
-//   }
-// }
-
 const editHotelName=async (req,res,next)=>{
   const hotel_id=req.params.hotel_id
   const hotelName=req.body.hotelName
@@ -206,6 +196,28 @@ try {
 }
 }
 
+const addHotelImages= async (req,res,next)=>{
+console.log(req.params)
+  const hotel_id=req.body.hotel_id;
+  try {
+
+
+    const hotelImgArray=await uploadImages(req.files)
+      
+    let imgStringArr=[]
+    for(var i=0;i<hotelImgArray.length;i++){
+      imgStringArr.push(hotelImgArray[i].public_id+'.png')
+    }
+    console.log(imgStringArr)
+    const response=await addHotelImagesHelper(hotel_id,imgStringArr)
+ 
+    res.status(200).json({response})
+  } catch (error) {
+    console.log(error)
+    res.status(404).json({error})
+  }
+}
+
 
 module.exports={
     createHotel,getAllHotels,
@@ -213,6 +225,6 @@ module.exports={
     getAllHotelDetails,deleteHotelImage,
     changeHotelStatus,getAllHotelsForAdmin,
     getAllHotelsForUser,getAHotelForUser,editHotelName,
-    editHotelLocation,editHotelDescription
+    editHotelLocation,editHotelDescription,addHotelImages
 }
 

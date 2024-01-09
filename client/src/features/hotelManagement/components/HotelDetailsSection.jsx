@@ -28,18 +28,18 @@ const HotelDetailsSection = ({ hotel_id }) => {
     <>
 
 
-      <div className=" shadow-lg">
+      <div className=" shadow-2xl">
         <h2 className="p-5 text-center text-xl border-2">Hotel Details</h2>
         <TableRow hotel={hotel} isLoading={isLoading} />
       </div>
 
-      <div className="flex flex-col items-center border-2 mt-5 shadow-xl">
+      <div className="flex flex-col items-center border-2 mt-5 shadow-2xl">
         <div className="flex">
           <h2 className=" text-xl  w-full text-center py-3">
             Hotel Images
           </h2>
         </div>
-        <div>
+        <div className="">
           <ImageContainer images={hotel?.images} hotel_id={hotel_id} />
         </div>
       </div>
