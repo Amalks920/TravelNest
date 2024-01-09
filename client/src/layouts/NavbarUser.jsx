@@ -25,12 +25,15 @@ import {
   selectToken,
 } from "../features/authentication/services/loginSlice";
 import { Link } from "react-router-dom";
+import Search from "./Search";
+import { selectIsSearchBarOpen } from "../services/searchSlice";
 
 export function NavbarUser() {
   const [openNav, setOpenNav] = React.useState(false);
   const dispatch = useDispatch();
   const role = useSelector(selectRole);
   const token = useSelector(selectToken);
+  const isSearchBarOpen=useSelector(selectIsSearchBarOpen)
 
   React.useEffect(() => {
     window.addEventListener(
@@ -54,7 +57,12 @@ export function NavbarUser() {
         >
           <h1> TravelNest</h1>
         </Typography>
-        <div className="hidden lg:block">{/* <NavList /> */}</div>
+        
+       {!isSearchBarOpen &&
+        <div className="">
+        <Search/>
+        </div>
+       } 
         <div className="hidden gap-2 lg:flex">
           {/* <Button variant="text" size="sm" color="blue-gray">
                             Log In

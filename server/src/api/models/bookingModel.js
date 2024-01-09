@@ -1,5 +1,8 @@
 
+
 const userModel=require("./userModel.js");
+const mongoose=require('mongoose')
+const ObjectId = require("mongodb").ObjectId;
 const Schema = mongoose.Schema;
 
 /**
@@ -49,7 +52,7 @@ const bookingSchema = new Schema(
         type: String,
         required: true,
       },
-      userid: {
+      userId: {
         type: ObjectId,
         required: true,
         ref: 'User', // Provide the name of the referenced model as a string
@@ -58,27 +61,43 @@ const bookingSchema = new Schema(
         type: String,
         required: true,
       },
+
+      userPhone:{
+        type:String,
+        required:true
+      },
+
+      totalNoOfRooms:{
+        type:Number,
+        required:true
+      },
+
       hotelName: {
         type: String,
         required: true,
       },
       hotel_id: {
         type: ObjectId,
+        ref:'Hotel',
         required: true,
       },
-      hotelLocation: {
-        type: String,
-        required: true,
+      roomDetails:{
+        type:Array,
+        required:true,
       },
+      // noOfRooms:{
+      //   type:Number,
+      //   required:true
+      // },
       checkIn: {
-        type: String,
+        type: Date,
       },
       checkOut: {
-        type: String,
+        type: Date,
       },
       totalDays: {
         type: Number,
-        required: true,
+        // required: true,
       },
       totalAmount: {
         type: Number,
@@ -86,11 +105,12 @@ const bookingSchema = new Schema(
       },
       discountAmount: {
         type: Number,
-        required: true,
+        // required: true,
+        default:0
       },
       status: {
         type: String,
-        required: true,
+        // required: true,
         default: "paymentDone",
       },
       guestDetails:{
@@ -99,7 +119,7 @@ const bookingSchema = new Schema(
       },
       payementType: {
         type: String,
-        required: true,
+        // required: true,
         default: "null",
       } // Remove the extra comma here
     },
@@ -109,7 +129,6 @@ const bookingSchema = new Schema(
   );
   
 
-const Booking= mongoose.model("Booking", bookingSchema);
-export default Booking
+  module.exports = mongoose.model("booking", bookingSchema);
 
 

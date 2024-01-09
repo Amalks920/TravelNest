@@ -28,7 +28,7 @@ const Images = ({ image, index,hotel_id }) => {
 
     <div
       key={index}
-      className="border-2 border-black  h-[200px] w-[300px] rounded-md"
+      className="border-2  border-black  h-[200px] w-[300px] rounded-md"
       style={{ backgroundImage: `url(${IMAGE_BASE_URL}/${image})` }}
     >
       <svg

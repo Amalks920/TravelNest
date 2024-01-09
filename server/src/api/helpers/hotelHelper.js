@@ -57,6 +57,25 @@ const getAHotelHelper = function (hotel_id) {
   });
 };
 
+const getAHotelHelperForOrder = function (hotel_id) {
+  return new Promise((resolve, reject) => {
+    try {
+
+      const hotel = hotelModel.findOne(
+        { _id: hotel_id },
+        {
+          _id:1,
+          hotelName:1
+        }
+        );
+      resolve(hotel);
+    } catch (error) {
+      console.log(error);
+      reject(error);
+    }
+  });
+};
+
 const editHotelHelper = function (data, imagePathArray) {
   const { hotelName, location, description, hotel_id } = data;
   console.log(data);
@@ -214,18 +233,6 @@ const getAHotelForUserHelper = (hotel_id) => {
   });
 };
 
-
-// const getAHotelForOwnerHelper=(hotel_id)=>{
-
-//   return new Promise(async (resolve,reject)=>{
-//     try {
-//       const response=await hotelModel.findOne({hotel})
-//     } catch (error) {
-//         reject(error)
-//     }
-//   })
-// }
-
 const editHotelNameHelper=(hotel_id,hotelName)=>{
   return new Promise(async (resolve,reject)=>{
     try {
@@ -280,6 +287,45 @@ const editHotelDescriptionHelper=(hotel_id,description)=>{
   })
 }
 
+const addHotelImagesHelper=(hotel_id,imagePathArray)=>{
+  return new Promise(async (resolve,reject)=>{
+    console.log('hotel_id')
+    try {
+      const response=await hotelModel.updateOne(
+        {
+          _id:hotel_id
+        },
+        {
+            $push:{
+              images: {
+                $each: imagePathArray,
+              }     
+            }
+        }
+      )
+      console.log('dsljklsd')
+      console.log(response)
+      resolve(response)
+    } catch (error) {
+      console.log(error)
+      reject(error)
+    }
+  })
+}
+
+const findHotelByLocationHelper=(location)=>{
+  return new Promise(async (resolve,reject)=>{
+    try {
+      const response=await hotelModel.find({location:{'$regex':`${location}`,'$options':'i'}});
+      console.log(response)
+      resolve(response)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+
 
 module.exports = {
   uploadImages,
@@ -294,5 +340,7 @@ module.exports = {
   getAHotelForUserHelper,
   getAllHotelsForAdminHelper,
   editHotelNameHelper,
-  editHotelLocationHelper,editHotelDescriptionHelper
+  editHotelLocationHelper,editHotelDescriptionHelper,
+  addHotelImagesHelper,getAHotelHelperForOrder,
+  findHotelByLocationHelper
 };

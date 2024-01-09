@@ -1,13 +1,30 @@
 import { PencilIcon } from "@heroicons/react/24/solid";
 import { InputModal } from "./InputModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Loader } from "../../../components/Loader";
 import { Input, Spinner } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
+import { useAddImagesMutation } from "../services/editHotelDetailsApiSlice";
 
 const TableRow = ({ hotel, isLoading }) => {
   const [inputModalOpen, setInputModalOpen] = useState(false);
   const [InputDetailsToPass, setInputDetails] = useState(null);
+  const [images,setImages]=useState(null)
+
+const [addImages,{isError:addImagesIsError,isLoading:addImagesIsLoading,isSuccess:addImagesIsSuccess}]=useAddImagesMutation();
+
+  // useEffect(()=>{
+  //   handleImageUpdate()
+  // },[images])
+
+  const handleImageUpdate=async (data)=>{
+    try {
+      const res=await addImages(data)
+      console.log(res)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <>
@@ -19,7 +36,7 @@ const TableRow = ({ hotel, isLoading }) => {
           _id={hotel?._id}
         />
       )}
-      <div className="grid grid-rows-[auto,auto,auto,auto] gap-3 grid-flow-col  p-4">
+      <div className="grid grid-rows-[auto,auto,auto,auto] gap-10 grid-flow-col  p-4">
         <div className=" flex justify-start items-center p-2">Hotel Name</div>
         <div className=" flex justify-start items-center p-2">Location</div>
         <div className=" flex justify-start items-center p-2">Description</div>
@@ -40,7 +57,12 @@ const TableRow = ({ hotel, isLoading }) => {
         </div>
 
         <div className="max-w-[500px] p-3 text-[0.9rem]">
-          <Input size="sm" className="w-[50%]" type="file" accept="image/*" />
+          <Input
+          onChange={(e)=>{
+            setImages(e.target.files)
+            //console.log(e.target.files)
+          }}
+           size="sm"  className="w-[50%]" type="file" accept="image/*" multiple/>
         </div>
 
         <div className=" flex justify-center">
@@ -90,12 +112,26 @@ const TableRow = ({ hotel, isLoading }) => {
         </div>
         <div className="flex justify-center">
           <svg
+
+            onClick={()=>{
+              const formData=new FormData()
+              formData.set('hotel_id',hotel?._id)
+              console.log(images)
+              for (var i = 0; i < images.length; i++) {
+                formData.append("images", images[i]);
+              }
+
+              console.log(formData)
+              handleImageUpdate(formData)
+              //  addImages(formData);
+            }}
+
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6 mt-4 -ms-5"
+            className="w-6 h-6 mt-4 -ms-5 cursor-pointer"
           >
             <path
               strokeLinecap="round"

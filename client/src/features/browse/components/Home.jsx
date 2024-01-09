@@ -1,31 +1,41 @@
+import { useSelector } from "react-redux";
 import XXLDialog from "../../../components/modals/XXLDialog";
 import useGetAllHotels from "../hooks/useGetAllHotels";
 import Cards from "./Cards";
+import { selectIsSearchBarOpen } from "../../../services/searchSlice";
+import { Button } from "@material-tailwind/react";
+import SearchSection from "./SearchSection";
 
-const Home=()=>{
+const Home = () => {
+  const isSearchBarOpen = useSelector(selectIsSearchBarOpen);
+  const { hotels, isError, isFetching, isLoading, isUninitialized, error } =
+    useGetAllHotels();
 
-    const {
-        hotels,
-        isError,
-        isFetching,
-        isLoading,
-        isUninitialized,
-        error
-    }=useGetAllHotels();
-    console.log(hotels)
-    return (
-        <div className=" flex flex-wrap xl:justify-start justify-start items-center    mt-14  gap-16">
-            {/* <div className="border-2"> */}
-        
-        {
-            hotels?.map(({_id,hotelName,price,description,images},index)=> (
-                <div key={_id} className="">
-                    <Cards hotel_id={_id} hotelName={hotelName} price={price} description={description} images={images}/>
-                </div>
-            ))
-        }
+  return (
+    <div className="flex flex-col">
+      {/* {isSearchBarOpen && (
 
-                {/* <div className="border-2">
+        <SearchSection/>
+
+      )} */}
+      <div className=" grid grid-flow-row grid-cols-1 md:grid-cols-3  w-[90vw]">
+        {/* <div className="border-2"> */}
+
+        {hotels?.map(
+          ({ _id, hotelName, price, description, images }, index) => (
+            <div key={_id} className="col-span-1">
+              <Cards
+                hotel_id={_id}
+                hotelName={hotelName}
+                price={price}
+                description={description}
+                images={images}
+              />
+            </div>
+          )
+        )}
+
+        {/* <div className="border-2">
                 <Cards/>
                 </div>
                 <div className="border-2">
@@ -37,10 +47,10 @@ const Home=()=>{
                 <div className="border-2">
                 <Cards/>
                 </div> */}
-            {/* </div> */}
-        </div>
-        
-    )
-}
+        {/* </div> */}
+      </div>
+    </div>
+  );
+};
 
 export default Home;

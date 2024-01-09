@@ -1,5 +1,5 @@
 const express = require('express');
-const { addRoom, getRooms, editRoom, getRoomsByType, editRoomDescription } = require('../controllers/roomController');
+const { addRoom, getRooms, editRoom, getRoomsByType, editRoomDescription, addRoomImages } = require('../controllers/roomController');
 const router = express.Router();
 const uploader=require('../../config/multer');
 const verifyJwt = require('../utils/verifyJwt');
@@ -184,5 +184,6 @@ router.get('/get-rooms/:hotel_id',verifyJwt,getRooms)
 
 //owner
 router.put('/edit-room-description/:room_id',verifyJwt,editRoomDescription )
+router.put('/add-images/:room_id',verifyJwt,uploader.array('images',10),addRoomImages)
 
 module.exports=router;

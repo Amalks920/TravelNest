@@ -1,14 +1,31 @@
 import { PencilIcon } from "@heroicons/react/24/solid"
 import { Input } from "@material-tailwind/react"
-import { useEditRoomDescriptionMutation } from "../services/editRoomDetailsApiSlice"
+import { useEditRoomDescriptionMutation,useAddRoomImagesMutation } from "../services/editRoomDetailsApiSlice"
 import { InputModal } from "./InputModal"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { RoomEditInput } from "./RoomEditInput"
+import { NotificationDialog } from "../../../components/modals/NotificationModal"
 
 
 const Row=({room})=>{
   const [inputModalOpen, setInputModalOpen] = useState(false);
+  const imageToBeRemoved=useRef(null)
+  const [isModalOpen,setIsModalOpen]=useState(null)
   const [InputDetailsToPass, setInputDetails] = useState(null);
+  const [roomImages,setRoomImages]=useState([])
+  const room_id=room?._id
+
+  const [addRoomImages,{isError,isLoading,isSuccess,reset,error}]=useAddRoomImagesMutation({room_id})
+
+  const handleImageUpdate=async (data)=>{
+    try {
+      const res=await addRoomImages(data)
+      console.log(res)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
 
     return (
   <>
@@ -20,6 +37,22 @@ const Row=({room})=>{
           _id={room?._id}
         />
       )}
+
+{/* <NotificationDialog
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          heading={'Do you want to delete this Image?'}
+          description={'image will be deleted from room'}
+          buttonText={'Delete'}
+          args={{room_id,imageToBeRemoved:imageToBeRemoved.current}}
+          // isBlocked={!isBlockedRef.current}
+          // user_id={userIdRef.current}
+           sendRequestHandler={addImages}
+           error = {error}
+           loading = {isLoading}
+           success = {isSuccess}
+           reset={reset}
+        /> */}
 
       <div className="grid grid-rows-[auto,auto,auto,auto] gap-3 grid-flow-col  p-4">
       <div className=" flex justify-start items-center p-2">Description</div>
@@ -43,7 +76,11 @@ const Row=({room})=>{
       </div>
 
       <div className="max-w-[500px] p-3 text-[0.9rem]">
-        <Input size="sm" className="w-[50%]" type="file" accept="image/*" />
+        <Input
+        onInput={(e)=>{
+          setRoomImages(e.target.files)
+        }}
+         size="sm" className="w-[50%]" type="file" accept="image/*" multiple/>
       </div>
 
       <div className=" flex justify-center">
@@ -93,6 +130,19 @@ const Row=({room})=>{
       </div>
       <div className="flex justify-center">
         <svg
+
+        onClick={()=>{
+          const formData=new FormData()
+          formData.set('room_id',room?._id)
+          console.log(roomImages)
+          for (var i = 0; i < roomImages.length; i++) {
+            formData.append("images", roomImages[i]);
+          }
+
+          console.log(formData)
+          handleImageUpdate(formData)
+          }}
+
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"

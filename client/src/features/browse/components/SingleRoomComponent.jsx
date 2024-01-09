@@ -3,11 +3,12 @@ import { useRef, useState } from "react";
 import { IMAGE_BASE_URL } from "../../../data/constants";
 import { RoomDetailsModal } from "./RoomDetailsModal";
 import { useDispatch, useSelector } from "react-redux";
-import { removeUnCheckedRoomId, selectCheckedRoomById, selectCheckedRooms, selectIsModalOpen, selectNoOfRooms, updateIsModalOpen, updateRoomId } from "../services/priceSlice";
+import { removeUnCheckedRoomId, selectCheckedRoomById, selectCheckedRooms, selectIsModalOpen, selectNoOfRooms, updateHotelId, updateIsModalOpen, updatePrice, updateRoomId } from "../services/priceSlice";
 import { InputModal } from "./InputModal";
 
 const SingleRoomComponent = ({
   id,
+  hotel_id,
   images,
   description,
   bathRoomType,
@@ -25,6 +26,7 @@ const SingleRoomComponent = ({
   const isRoomCheckedOrNot=useSelector((state)=>selectCheckedRoomById(state,id))
   const selectedRoom=useSelector(selectCheckedRooms)
   const dispatch=useDispatch()
+
   return (
     <>
       {/* <RoomDetailsModal
@@ -45,7 +47,9 @@ const SingleRoomComponent = ({
               if(isRoomCheckedOrNot?.id!=id){
                 console.log('sldjlsdjldsdskjdslkjsl')
                 console.log(id)
+                dispatch(updatePrice(rate))
                 dispatch(updateRoomId(id))
+                dispatch(updateHotelId(hotel_id))
                 dispatch(updateIsModalOpen(!isModalOpen))
               }else{
                 dispatch(removeUnCheckedRoomId(id))

@@ -118,6 +118,12 @@ const roomSchema = new mongoose.Schema({
     required: true,
   },
 
+  noOfPeopleAllowed:{
+    type:Number,
+    required:true,
+    default:1
+  },
+
   // Array of images associated with the hotel
   images: { type: [String], default: [] },
 

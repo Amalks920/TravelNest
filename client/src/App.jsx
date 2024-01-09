@@ -34,6 +34,7 @@ import VerifyEmailPage from './pages/VeirfyEmailPage.jsx';
 import ResetPassword from './features/authentication/components/ResetPassword.jsx';
 import ResetPasswordPage from './pages/ResetPasswordPage.jsx';
 import HotelDetailsPage from './pages/owner/HotelDetailsPage.jsx';
+import SearchPage from './pages/user/SearchPage.jsx';
 
 function App() {
   const token = useSelector(selectToken)
@@ -109,6 +110,7 @@ function App() {
        >
       <Route path="/home" element={<HomePage />} />
         <Route path="/hotel-details/:hotel_id" element={<SingleHotelPage/>} />
+        <Route path='/search-page' element={<SearchPage/>}></Route>
       </Route>
    
   </Routes>

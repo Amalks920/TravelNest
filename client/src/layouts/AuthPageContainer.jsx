@@ -7,6 +7,7 @@ import { NavbarDefault } from "./NavbarDefault";
 import { Sidebar } from "./Sidebar";
 import { Footer } from "./Footer";
 import { useChekckBlockedOrNotQuery } from "../services/checkISBlockedOrNot";
+import SearchSection from "../features/browse/components/SearchSection";
 
 
 
@@ -89,10 +90,7 @@ const AuthPageContainer = ({home}) => {
                 <Footer/>
             </footer>
             
-            </div>
-            
-            
-            
+            </div>         
                     )
     }
 

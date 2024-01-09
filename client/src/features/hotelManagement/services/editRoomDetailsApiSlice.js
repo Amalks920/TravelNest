@@ -10,9 +10,18 @@ const editRoomDetailsApiSlice=apiSlice.injectEndpoints({
                 body: data,
             }),
             invalidatesTags:['get-rooms-of-hotel']
+        }),
+        addRoomImages:builder.mutation({
+            query:(data)=>({
+                url:`/room/add-images/${data.get('room_id')}`,
+                method:'PUT',
+                body:data,
+                FormData:true
+            }),
+            invalidatesTags:['get-rooms-of-hotel']
         })
     })
 })
 
 
-export const {useEditRoomDescriptionMutation}=editRoomDetailsApiSlice;
+export const {useEditRoomDescriptionMutation,useAddRoomImagesMutation}=editRoomDetailsApiSlice;

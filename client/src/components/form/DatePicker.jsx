@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Input,
   Popover,
@@ -9,14 +9,18 @@ import { format } from "date-fns";
 import { DayPicker } from "react-day-picker";
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/24/outline";
  
-export default function DatePicker({label}) {
-  const [date, setDate] = React.useState();
+export default function DatePicker({label,date,setDate,className}) {
+  //const [date, setDate] = React.useState();
  
+  useEffect(()=>{
+    console.log(date)
+  },[date])
   return (
-    <div className="p-1">
+    <div className={`p-1`}>
       <Popover placement="bottom">
         <PopoverHandler>
           <Input
+          className={className}
             label={label}
             onChange={() => null}
             value={date ? format(date, "PPP") : ""}
@@ -24,11 +28,12 @@ export default function DatePicker({label}) {
         </PopoverHandler>
         <PopoverContent>
           <DayPicker
+            
             mode="single"
             selected={date}
             onSelect={setDate}
             showOutsideDays
-            className="border-0"
+            className=" relative z-50 shadow-2xl bg-white"
             classNames={{
               caption: "flex justify-center py-2 mb-4 relative items-center",
               caption_label: "text-sm font-medium text-gray-900",

@@ -24,6 +24,7 @@
     "otp-generator": "^4.0.1",
     "path": "^0.12.7",
     "pino": "^8.16.2",
+    "stripe": "^14.11.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0"
   },

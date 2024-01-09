@@ -36,6 +36,15 @@ const editHotelDetailsApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["single-hotel-owner"],
     }),
+
+    addImages: builder.mutation({
+      query: (data) => ({
+        url:`/hotel/add-images`,
+        method:'PUT',
+        body:data
+      }),
+      invalidatesTags: ["single-hotel-owner"],
+    })
   }),
 
 });
@@ -44,5 +53,6 @@ export const {
   useEditHotelDetailsMutation,
   useEditHotelLocationMutation,
   useEditHotelDescriptionMutation,
-  useRemoveHotelImageMutation  
+  useRemoveHotelImageMutation,
+  useAddImagesMutation
 } = editHotelDetailsApiSlice;
