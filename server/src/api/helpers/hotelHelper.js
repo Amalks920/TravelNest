@@ -313,10 +313,21 @@ const addHotelImagesHelper=(hotel_id,imagePathArray)=>{
   })
 }
 
-const findHotelByLocationHelper=(location)=>{
+const findHotelByLocationHelper=(location,collisions)=>{
+  
   return new Promise(async (resolve,reject)=>{
     try {
-      const response=await hotelModel.find({location:{'$regex':`${location}`,'$options':'i'}});
+      const response=await hotelModel.find(
+        {
+          $and:[
+            {location:{'$regex':`${location}`,'$options':'i'}}
+          ]
+        },
+        // {
+        //   _id: {$nin:collisions}
+        // }
+
+        );
       console.log(response)
       resolve(response)
     } catch (error) {
@@ -324,6 +335,16 @@ const findHotelByLocationHelper=(location)=>{
     }
   })
 }
+
+// const searchHotels=()=>{
+//   return Promise(async (resolve,reject)=>{
+//     try {
+//       const response=await room
+//     } catch (error) {
+//       reject(error)
+//     }
+//   })
+// }
 
 
 

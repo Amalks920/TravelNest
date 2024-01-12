@@ -2,28 +2,48 @@ import { Button, Input, Select, Option } from "@material-tailwind/react";
 import DatePicker from "../../../components/form/DatePicker";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { updateCheckOut, updateLocation } from "../../../services/searchSlice";
+import { updateCheckIn, updateCheckOut, updateLocation } from "../../../services/searchSlice";
 import { useDispatch } from "react-redux";
 import { Formik } from "formik";
+import { format } from "date-fns";
+import { useSearchMutation } from "../services/searchApiSlice";
+import * as yup from "yup";
 
 const SearchSection = () => {
   // const [location, setLocation] = useState("");
-  const _onSave = (values) => {
-    console.log(values);  
-  };
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [search, { isError, isLoading, isSuccess, reset }] =
+    useSearchMutation();
+
+  const _onSave = async (values) => {
+    console.log("clicked");
+    try {
+      console.log(values);
+      const response = await search(values);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleSearch = async () => {
-    
     navigate(`/search-page`);
   };
 
   return (
     <div className=" w-full   z-20  pt-14 ">
       <Formik
-        initialValues={{ checkIn: "", checkOut: "" }}
-        onSubmit={(values) => _onSave(values)}
+        initialValues={{ checkInDate: "", checkOutDate: "" }}
+        validationSchema={yup.object({
+          checkInDate: yup.date().required(),
+          checkOutDate: yup.date().required(),
+        })}
+        onSubmit={(values) => {
+          console.log("dslkdskl");
+          _onSave(values);
+        }}
       >
         {({
           values,
@@ -37,26 +57,24 @@ const SearchSection = () => {
         }) => (
           <form
             onSubmit={handleSubmit}
-            className="grid grid-rows-[100px] place-content-center  grid-cols-[25%,15%,15%,25%,auto] bg-blue-100 text-white"
+            className="grid grid-rows-[100px] place-content-center  grid-cols-[25%,15%,15%,25%,auto] bg-black text-white shadow-2xl"
           >
             <div className="flex items-center ps-16 row-span-1 col-span-1  border-white">
               <input
                 onInput={(e) => {
-                  handleSearch()
+                  handleSearch();
                   dispatch(updateLocation(e.target.value));
                 }}
-                className="border-white w-[80%] h-[40px] text-black ps-9"
+                className="border-white w-[80%] h-[40px] text-black ps-9 rounded-md"
                 placeholder="Enter Location"
               />
             </div>
             <div className="flex items-center row-span-1 col-span-1">
               <input
-
-              onInput={(e)=>{
-                  dispatch(updateCheckOut(e.target.value))
-                  handleSearch()
-              }}
-
+                onInput={(e) => {
+                  dispatch(updateCheckIn(e.target.value));
+                  handleSearch();
+                }}
                 name="checkIn"
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -64,15 +82,14 @@ const SearchSection = () => {
                 error={errors.checkIn && touched.checkIn && errors.checkIn}
                 success={!errors.checkIn && touched.checkIn ? true : false}
                 type="date"
-                className="border-white w-[80%] h-[40px] text-black ps-9"
+                className="border-white w-[80%] h-[40px] text-black ps-9 rounded-md"
                 placeholder="Check In"
               />
             </div>
             <div className="flex items-center row-span-1 col-span-1">
               <input
-
-                onInput={(e)=>{
-                  dispatch(updateCheckOut(e.target.value))
+                onInput={(e) => {
+                  dispatch(updateCheckOut(e.target.value));
                 }}
                 name="checkOut"
                 onChange={handleChange}

@@ -6,6 +6,8 @@ const {
   groupRoomByType,
   editRoomDescriptionHelper,
   addRoomImagesHelper,
+  getAllRoomsOfAHotelForUserHelper,
+  getAllRoomsOfAHotelForUserHelperByAvailabilty,
 } = require("../helpers/roomHelper");
 
 const { uploadImages } = require("../helpers/hotelHelper");
@@ -116,10 +118,23 @@ const addRoomImages= async (req,res,next)=>{
     }
   }
 
+const getRoomsForUser= async (req,res,next) => {
+  console.log('getRooms')
+  console.log(res.locals)
+  console.log('req.localssss')
+  const hotel_id=req.params.hotel_id
+  try {
+  const response=await getAllRoomsOfAHotelForUserHelperByAvailabilty(hotel_id,res.locals.existingCollisions)
+  res.status(200).json({response})
 
+  } catch (error) {
+    console.log(error)  
+  }
+}
 
 module.exports = {
   addRoom,editRoom,
   getRooms,getRoomsByType,
-  editRoomDescription,addRoomImages
+  editRoomDescription,addRoomImages,
+  getRoomsForUser
 };

@@ -1,8 +1,10 @@
 const express = require('express');
-const { addRoom, getRooms, editRoom, getRoomsByType, editRoomDescription, addRoomImages } = require('../controllers/roomController');
+const { addRoom, getRooms, editRoom, getRoomsByType, editRoomDescription, addRoomImages, getRoomsForUser } = require('../controllers/roomController');
 const router = express.Router();
 const uploader=require('../../config/multer');
 const verifyJwt = require('../utils/verifyJwt');
+const checkAvailability = require('../middlewares/checkAvailability');
+const checkAvailabilityOfRooms = require('../middlewares/checkAvailabilityOfRooms');
 /**
  * @openapi
  * paths:
@@ -180,6 +182,9 @@ router.get('/get-a-room/{room_id}',(req,res)=>{
 
 router.get('/get-rooms/:hotel_id',verifyJwt,getRooms)
 
+
+//user
+router.post('/get-all-rooms-user/:hotel_id',checkAvailabilityOfRooms,getRoomsForUser);
 
 
 //owner

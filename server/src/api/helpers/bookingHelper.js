@@ -5,8 +5,8 @@ const createBookingHelper=(data,totalPrice,checkInDate,checkOutDate,totalNoRooms
     const userDetails=data[1]
     const hotelDetails=data[2]
 
-    console.log(roomDetails)
-
+   // console.log(roomDetails)
+    console.log(hotelDetails)
     const dataToPassToDb={
         userId:userDetails._id,
         userName:userDetails.username,

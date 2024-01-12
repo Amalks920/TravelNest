@@ -3,6 +3,7 @@ const { createHotel, getAllHotels, getAHotel, editHotel, getAllHotelDetails,getA
 const router = express.Router();
 const uploader=require('../../config/multer');
 const verifyJwt = require('../utils/verifyJwt');
+const checkAvailability = require('../middlewares/checkAvailability');
 
 /**
  * @openapi
@@ -90,7 +91,7 @@ router.delete('/delete-image/:hotel_id/:img_public_id',verifyJwt,deleteHotelImag
 router.put('/change-hotel-status/:hotel_id/:status',verifyJwt,changeHotelStatus)
 
 router.get('/get-all-hotels-user',getAllHotelsForUser)
-router.get('/get-a-hotel-user/:hotel_id',getAHotelForUser)
+router.get('/get-a-hotel-user/:hotel_id',checkAvailability,getAHotelForUser)
 
 router.get('/get-a-hotel-for-owner/:hotel_id',verifyJwt,getAHotel)
 

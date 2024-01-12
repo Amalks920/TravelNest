@@ -156,7 +156,7 @@ const changeAllRoomStatus=(hotel_id,status)=>{
   })
 }
 
-const getAllRoomsOfAHotelForUserHelper=(hotel_id)=>{
+const getAllRoomsOfAHotelForUserHelper=(hotel_id,collisions)=>{
   return new Promise(async (resolve,reject)=>{
     try {
       // const response=await roomModel.find(
@@ -182,6 +182,76 @@ const getAllRoomsOfAHotelForUserHelper=(hotel_id)=>{
             $and:[
               {
                 hotel_id: new mongoose.Types.ObjectId(hotel_id),
+              },
+              // {
+              //   _id: {$nin:collisions}
+              // }
+            ]
+          }
+        },
+        {
+          $group: {
+            _id: '$roomType',
+            rooms: { $push:
+               { 
+                id: '$_id',
+                description:'$description',
+                size:'$size',
+                hotel_id:'$hotel_id',
+                amenities:'$amenities',
+                noOfRooms:'$noOfRooms',
+                bathRoomType:'$bathroomType',
+                images:'$images',
+                rate:'$rate',
+                createdAt:'$createdAt'
+              },
+               }, // Include only the fields you need
+            count: { $sum: 1 }
+          }
+        },
+        {
+          $project: {
+            _id: 1, // Exclude the _id field if you don't need it
+            roomType: '$_id',
+            // description:'$rooms.description',
+            // size:'$rooms.size',
+            // amenities:'$rooms.amenities',
+            // noOfRooms:'$rooms.noOfRooms',
+            // bathRoomType:'$rooms.bathRoomType',
+            // images:'$rooms.images',
+            // rate:'$rooms.rate',
+            // createdAt:'$rooms.createdAt',
+            rooms: 1, // Include the 'rooms' field
+            count: 1 // Include the 'count' field
+          }
+        }
+        
+       ])
+
+      resolve(response)
+    } catch (error) {
+      console.log(error)
+      reject(error)
+    }
+  })
+}
+
+
+const getAllRoomsOfAHotelForUserHelperByAvailabilty=(hotel_id,collisions)=>{
+
+  return new Promise(async (resolve,reject)=>{
+    try {
+
+      const response= await roomModel.aggregate([
+        {
+          $match:{
+           // hotel_id: new mongoose.Types.ObjectId(hotel_id),
+            $and:[
+              {
+                hotel_id: new mongoose.Types.ObjectId(hotel_id),
+              },
+              {
+                _id: {$nin:collisions}
               }
             ]
           }
@@ -307,11 +377,34 @@ const addRoomImagesHelper=(room_id,imagePathArray)=>{
     })
 }
 
+
+const searchRoomsHotel=()=>{
+  return new Promise(async (resolve,reject)=>{
+    try {
+      const response=await roomModel.aggregate([
+        {
+          $lookup:{
+            from:'hotels',
+            localField:'hotel_id',
+            foreignField:'_id',
+            as:'hotelDetails'
+          }
+        }
+      ])
+
+      resolve(response)
+    } catch (error) {
+        reject(error)
+    }
+  })
+}
+
 module.exports = {
   addRoomHelper,addRoomToHotel,
   getRoomsHelper,editRoomHelper,
   groupRoomByType,findRoomsInHotelHelper,
   changeAllRoomStatus,getAllRoomsOfAHotelForUserHelper,
   editRoomDescriptionHelper,getRoomDetailsByIdHelper,
-  addRoomImagesHelper
+  addRoomImagesHelper,getAllRoomsOfAHotelForUserHelperByAvailabilty,
+  searchRoomsHotel
 };

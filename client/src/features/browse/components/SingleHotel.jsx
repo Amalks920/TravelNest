@@ -9,12 +9,19 @@ import useGetAHotel from "../hooks/useGetAHotel";
 import { IMAGE_BASE_URL } from "../../../data/constants";
 import RoomSection from "./RoomSection";
 import PriceCard from "./PriceCard";
+import CheckInCheckOutModal from "./CheckInCheckOutModal";
+import { useSelector } from "react-redux";
+import { selectRooms } from "../services/roomsSlice";
 
 const SingleHotel = () => {
   const [size, setSize] = useState(null);
   const [imagesToPass, setImages] = useState([]);
   const [isAccordionOpen, setIsAccordionOpen] = useState(-1);
-  const [price,setPrice]=useState(0);
+  const [price, setPrice] = useState(0);
+  const roomss=useSelector(selectRooms)
+
+  console.log(roomss)
+
 
   const { hotel_id } = useParams();
   const { hotel, isError, isFetching, isLoading, isSuccess } =
@@ -25,7 +32,13 @@ const SingleHotel = () => {
   const { hotelName, images, description, amenities } = hotel?.response[0];
 
   const rooms = hotel?.response[1];
-  console.log(rooms);
+  console.log(rooms)
+
+
+
+  // const [open, setOpen] = useState(false);
+
+
   return (
     <>
       {/* <PriceCard className={''}/> */}
@@ -36,7 +49,11 @@ const SingleHotel = () => {
         imagesToDisplayOnModal={imagesToPass}
         setSize={setSize}
       />
-      
+      {/* 
+      modal for asking checkin checkout
+      */}
+      <CheckInCheckOutModal hotel_id={hotel_id} />
+
       <div className="grid grid-cols-12 grid-rows-[100px,200px,200px,auto,auto] pb-14  w-[100%] min-h-[100vh] mt-16  gap-3 px-9">
         <div className="row-span-1 col-start-2 col-span-6 border-2">
           <h2 className="font-bold mt-10 ms-5">{hotelName}</h2>
@@ -88,30 +105,30 @@ const SingleHotel = () => {
           <div className=" h-fit ">
             <h1 className="font-bold text-2xl ms-5">Choose Your Room</h1>
 
-            {!rooms && <h1>RoomsList Empty</h1> }
-            {rooms && rooms?.map((room, index) => {
-              return (
-                <div
-                  key={index}
-                  onClick={() => {
-                    setIsAccordionOpen(index);
-                  }}
-                >
-                  <RoomSection
-                  setImages={setImages}
-                  setSize={setSize}
-                    isAccordionOpen={isAccordionOpen === index}
-                    roomType={room._id}
-                    rooms={room.rooms}
-                  />
-                </div>
-              );
-            })}
+            {!roomss && <h1>RoomsList Empty</h1>}
+            {roomss &&
+              roomss?.map((room, index) => {
+                return (
+                  <div
+                    key={index}
+                    onClick={() => {
+                      setIsAccordionOpen(index);
+                    }}
+                  >
+                    <RoomSection
+                      setImages={setImages}
+                      setSize={setSize}
+                      isAccordionOpen={isAccordionOpen === index}
+                      roomType={room._id}
+                      rooms={room.rooms}
+                    />
+                  </div>
+                );
+              })}
           </div>
         </div>
         <div className="row-span-1 border-2 col-span-3  border-t-2   rounded-lg">
-
-          <PriceCard price={price} className={""} />
+          <PriceCard price={price} className={""}  />
         </div>
       </div>
     </>

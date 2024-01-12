@@ -18,13 +18,13 @@ const SearchContainer = () => {
   const [searchByLocation,{isError,isLoading,isSuccess}]=useSearchByLocationMutation({location,checkIn,checkOut})
 
   useEffect(()=>{
-
-    handleSearch()
-},[location])
+     handleSearch()
+  // if(location && !checkIn && !checkOut) handleSearch()
+},[location,checkIn,checkOut])
 
   const handleSearch=async ()=>{
     try {
-        const response=await searchByLocation({location})
+        const response=await searchByLocation({location,checkIn,checkOut})
         console.log(response)
         setData(response.data.response)
     } catch (error) {
@@ -33,13 +33,13 @@ const SearchContainer = () => {
 }
 
   return (
-    <div className="grid grid-rows-[auto] grid-cols-[25%,auto] gap-4 w-full min-h-[80vh]">
-      <div className="md:block hidden row-span-1 col-span-1 rounded-md min-h-[80vh] border-2">
+    <div className="grid grid-rows-[100vh] grid-cols-[20%,auto]  w-full min-h-[80vh] gap-[5%]">
+      <div className="md:block hidden row-span-1 col-span-1 rounded-md min-h-[80vh]  ">
        <FilterSection />
       </div>
 
 
-      <div className="row-span-1 col-span-2 md:col-span-1">
+      <div className="row-span-1 col-span-2 md:col-span-1 overflow-scroll">
         {
           data?.map((hotel,index)=>{
             console.log(hotel)

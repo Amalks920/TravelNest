@@ -59,7 +59,6 @@ const priceSlice = createSlice({
 });
 
 export default priceSlice.reducer;
-
 export const selectPrice = (state) => state.priceSlice.price;
 export const selectCheckedRooms = (state) => state.priceSlice.checkedRoomIds;
 export const selectCheckedRoomById = (state, id) => state.priceSlice.checkedRoomIds.find((el) => el.id=== id);

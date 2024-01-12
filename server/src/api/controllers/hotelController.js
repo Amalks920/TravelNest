@@ -138,6 +138,8 @@ const getAllHotelsForUser=async (req,res,next)=>{
 }
 
 const getAHotelForUser=async (req,res,next)=>{
+  console.log('req user hotel')
+  console.log(req.locals)  
   const hotel_id=req.params.hotel_id
   try {
     const hotels=await getAHotelForUserHelper(hotel_id)

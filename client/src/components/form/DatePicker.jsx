@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Input,
   Popover,
@@ -8,30 +8,61 @@ import {
 import { format } from "date-fns";
 import { DayPicker } from "react-day-picker";
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/24/outline";
- 
-export default function DatePicker({label,date,setDate,className}) {
-  //const [date, setDate] = React.useState();
- 
-  useEffect(()=>{
-    console.log(date)
-  },[date])
+import { useDispatch } from "react-redux";
+import {
+  updateCheckIn,
+  updateCheckOut,
+} from "../../features/browse/services/priceSlice";
+
+export default function DatePicker({
+  name,
+  label,
+  datePassed,
+  className,
+  min,
+  max,
+}) {
+  const [date, setDate] = React.useState(datePassed);
+  const [checkIn,setCheckIn]=useState('')
+  const [checkOut,setCheckOut]=useState('')
+  
+  const dispatch = useDispatch();
+
+  console.log("date", datePassed);
+  useEffect(() => {
+    console.log(date);
+  }, [date]);
   return (
     <div className={`p-1`}>
       <Popover placement="bottom">
         <PopoverHandler>
           <Input
-          className={className}
+            className={className}
+            // min={min}]
             label={label}
-            onChange={() => null}
-            value={date ? format(date, "PPP") : ""}
+            onChange={(e) => {
+              console.log('e.target.value')
+              // name === "checkInDate"
+              //   ? dispatch(updateCheckIn(e.target.value))
+              //   : dispatch(updateCheckOut(e.target.value));
+              name==='checkInDate'
+              ?setCheckIn(e.target.value):setCheckOut(e.target.value)
+            }}
+            value={datePassed ? format(datePassed, "PPP") : ""}
           />
         </PopoverHandler>
         <PopoverContent>
           <DayPicker
-            
             mode="single"
-            selected={date}
-            onSelect={setDate}
+            selected={datePassed}
+            onDayClick={(value)=>{
+              name === "checkInDate"
+              ? dispatch(updateCheckIn(value))
+              : dispatch(updateCheckOut(value));
+            }}
+            
+            onSelect={()=>{
+            }}
             showOutsideDays
             className=" relative z-50 shadow-2xl bg-white"
             classNames={{

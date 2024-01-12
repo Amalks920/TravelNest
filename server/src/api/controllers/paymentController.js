@@ -11,6 +11,9 @@ require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 const payment = async (req, res, next) => {
+
+  console.log('res.locals......>>>>>>')
+  console.log(res.locals)
   try {
     console.log(req.body);
     const { roomDetails, totalPrice, checkInDate, checkOutDate, hotel_id,totalNoRooms } =
@@ -37,7 +40,7 @@ const payment = async (req, res, next) => {
       totalNoRooms
     );
     console.log(response);
-    return;
+    
     const lineItems = roomDetails.map((product) => ({
       price_data: {
         currency: "INR",
