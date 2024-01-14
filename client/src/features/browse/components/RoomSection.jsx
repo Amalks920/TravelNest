@@ -17,8 +17,8 @@ const RoomSection = ({
   console.log(rooms)
   return (
     <>
-      <div className="flex flex-col  shadow-md border-2  m-4 cursor-pointer hover:shadow-2xl">
-        <div className="w-full h-[50px] pt-3 ps-3">
+      <div className="flex flex-col   border-2  m-4 cursor-pointer hover:shadow-2xl w-full">
+        <div className=" h-[50px] pt-3 ps-3">
           <h1 className="font-bold">{roomType}</h1>
 
           <svg
@@ -46,7 +46,7 @@ const RoomSection = ({
         >
           {rooms?.map(
             (
-              { id,images, description, bathRoomType,hotel_id, location, rate, amenities },
+              { id,images,size, description,roomType, bathRoomType,hotel_id, location, rate, amenities },
               index
             ) => {
 
@@ -55,7 +55,9 @@ const RoomSection = ({
                 key={id}
                   id={id}
                   hotel_id={hotel_id}
+                  roomType={roomType}
                   images={images}
+                  size={size}
                   description={description}
                   bathRoomType={bathRoomType}
                   location={location}

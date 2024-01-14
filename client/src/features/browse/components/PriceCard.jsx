@@ -61,17 +61,19 @@ const handlePayment=async (id) =>{
 
 
             <DatePicker
+            
            // min={new Date(Date.now()).toISOString().split('T')[0]}
             datePassed={selectedCheckInDate}
             setDate={setCheckInDate}
             name='checkInDate'
              label={"Check in"}  />
+             <div className="mt-4">
             <DatePicker
              datePassed={selectedCheckOutDate}
             //  setDate={setCheckOutDate}
             name='checkOutDate'
             label={"Check out"} />
-
+            </div>
             <Button onClick={async ()=>{
             //   handlePayment()
             

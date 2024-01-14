@@ -10,7 +10,9 @@ const SingleRoomComponent = ({
   id,
   hotel_id,
   images,
+  size,
   description,
+  roomType,
   bathRoomType,
   location,
   rate,
@@ -39,8 +41,32 @@ const SingleRoomComponent = ({
     
        <InputModal inputModalOpen={isModalOpen} id={id} description={description}/>
       
-      <div className="border-2 grid grid-rows-[auto,auto,auto] grid-cols-4">
-        <div className="col-span-1 border-2 flex justify-center">
+      <div className="border-2 grid grid-rows-[auto,auto,auto] grid-cols-12 m-4">
+
+      <div className="row-span-1 col-span-4 p-4 mt-3">
+        <h2 className="font-normal  mb-3">{'Family'}</h2>
+        <p>Room Size: {size}</p>
+      </div>
+
+        <div
+          onClick={() => {
+            setSize("xxl");
+            setImages(images.slice(0, 6));
+          }}
+          className=" h-fit m-1 bg-cover rounded-xl row-span-2 col-start-10 col-end-12 w-[100px]"
+          style={{ backgroundImage: `url(${IMAGE_BASE_URL}/${images[0]} )` }}
+        >
+          <div className="relative  bg-fixed  h-[100px] min-w-fit"></div>
+        </div>
+
+       <div className="col-span-8 max-w-[100%] ">    
+        </div>
+
+       <div className="col-span-6 max-w-[100%] p-4 border-y-2">  
+       <h2 className="font-bold">₹{rate}</h2>  
+        </div>
+        <div className="col-span-6  flex justify-end pe-5 border-y-2">
+          <button className="border-2 border-gray-300 text-gray-600  mx-4 mt-4 rounded-sm text-[0.8rem] px-3 h-[30px]">view more</button>
           <Checkbox 
             checked={isRoomCheckedOrNot?.id===id}
             onClick={(e) => {  
@@ -52,89 +78,14 @@ const SingleRoomComponent = ({
                 dispatch(updateHotelId(hotel_id))
                 dispatch(updateIsModalOpen(!isModalOpen))
               }else{
+                console.log('clieckked hereeee')
                 dispatch(removeUnCheckedRoomId(id))
               }
-             
-              // setChecked(!checked);
-              // checked === true ? setInputModalOpen(!inputModalOpen) : null;
             }}
           />
         </div>
 
-        <div
-          onClick={() => {
-            setSize("xxl");
-            setImages(images.slice(0, 6));
-          }}
-          className="max-w-[100%] h-fit m-1 bg-cover rounded-xl col-span-2 border-2 "
-          style={{ backgroundImage: `url(${IMAGE_BASE_URL}/${images[0]} )` }}
-        >
-          <div className="relative  bg-fixed  h-[100px] min-w-fit border-2 border-black"></div>
-        </div>
-
-        <div className="col-span-full max-w-[100%] border-2">    
-            <h2 className="text-[0.9rem] text-center m-3 font-bold">Description</h2>
-            <div className="m-3 ms-6">{description}</div>
-        </div>
-
-        <div className="col-span-1 flex max-w-[100%]  border-2">    
-          <h2 className="text-[0.9rem] w-1/2 text-center m-3 font-bold">Price</h2>
-          <div className="m-3 ms-6 flex justify-center">{rate}</div>
       </div>
-
-        <div className="col-span-3 flex max-w-[100%]  border-2">     
-          <h2 className="text-[0.9rem] w-1/2 text-center m-3 font-bold">Bathroom Type</h2>
-          <div className="m-3 ms-6 flex justify-center">{bathRoomType}</div>
-      </div>
-      </div>
-      {/* <div className="border-2 flex justify-between p-5">
-        <div className="mt-7  border-2">
-          <Checkbox
-            onClick={() => {
-              setChecked(!checked);
-              checked === true ? setInputModalOpen(!inputModalOpen) : null;
-            }}
-          />
-        </div>
-
-        <div
-          onClick={() => {
-            setSize("xxl");
-            setImages(images.slice(0, 6));
-          }}
-          className="max-w-[25%] h-full bg-cover rounded-lg  border-2"
-          style={{ backgroundImage: `url(${IMAGE_BASE_URL}/${images[0]} )` }}
-        >
-          <div className="relative  h-[100px] min-w-[400px] border-2"></div>
-        </div>
-
-        <div className="  border-2">
-          <p className="max-w-[25%]  text-center">{}</p>
-        </div>
-
-        <div className=" pt-7 border-2">
-        </div>
-
-        <div className=" pt-7 border-2">
-          <Button
-            onClick={() => {
-              setRoom({
-                images,
-                description,
-                bathRoomType,
-                location,
-                rate,
-                amenities,
-              });
-              setViewDetailsModal(!viewDetailsModal);
-            }}
-            size="sm"
-          >
-            View More
-          </Button>
-        </div>
-
-      </div> */}
     </>
   );
 };

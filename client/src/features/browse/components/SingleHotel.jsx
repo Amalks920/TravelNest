@@ -99,22 +99,26 @@ const SingleHotel = () => {
         >
         </div>
 
-        <div className="flex flex-col  row-span-2  md:col-start-2 md:col-span-7 col-span-12 shadow-md">
+        <div className="flex flex-col  row-span-2  md:col-start-2 md:col-span-7 col-span-12 shadow-md max-h-[100vh] overflow-scroll hide-scroll"
+          
+        >
           <div className=" h-fit ">
             <h2 className="text-2xl font-bold p-4"></h2>
           </div>
-          <div className=" h-fit font-medium  text-left ps-3 leading-8">
-            {description}
+          <div className=" h-fit font-medium  text-left ps-3 text-[0.9rem] leading-8">
+          <h2 className="font-bold text-xl ms-5 mb-4 ">About</h2>
+            <h2 className="w-[80%] ms-5" >{description}</h2>
           </div>
           <div className=" h-fit ">{amenities}</div>
-          <div className=" h-fit ">
-            <h1 className="font-bold text-2xl  mt-20 ms-5">Choose Your Room</h1>
+          <div className=" h-fit mt-12 ms-5">
+            <h2 className="font-bold text-xl ms-5   mb-2">Choose Your Room</h2>
 
             {!roomss && <h1>RoomsList Empty</h1>}
             {roomss &&
               roomss?.map((room, index) => {
                 return (
                   <div
+                    className="flex  items-center"
                     key={index}
                     onClick={() => {
                       setIsAccordionOpen(index);

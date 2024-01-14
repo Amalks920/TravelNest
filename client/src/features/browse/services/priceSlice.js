@@ -33,7 +33,10 @@ const priceSlice = createSlice({
       state.checkedRoomIds.push(action.payload);
     },
     removeUnCheckedRoomId: (state, action) => {
+     
+      console.log(state)
       const id = action.payload;
+      console.log(id)
       const indexToDelete = state.checkedRoomIds.findIndex((el) => el === id);
       const priceToMinus=state.checkedRoomIds[indexToDelete].price*state.checkedRoomIds[indexToDelete].noOfRooms
       state.totalPrice-=priceToMinus
