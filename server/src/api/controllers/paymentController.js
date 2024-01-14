@@ -3,7 +3,7 @@ const {
   getAHotelHelper,
   getAHotelHelperForOrder,
 } = require("../helpers/hotelHelper");
-const { getRoomDetailsByIdHelper } = require("../helpers/roomHelper");
+const { getRoomDetailsByIdHelper, decreaseRoomsCount } = require("../helpers/roomHelper");
 const { findUserByUserName } = require("../helpers/userHelper");
 const { checkout } = require("../routes/paymentRoute");
 
@@ -11,20 +11,21 @@ require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 const payment = async (req, res, next) => {
-
-  console.log('res.locals......>>>>>>')
-  console.log(res.locals)
   try {
     console.log(req.body);
-    const { roomDetails, totalPrice, checkInDate, checkOutDate, hotel_id,totalNoRooms } =
-      req.body;
+    const {
+      roomDetails,
+      totalPrice,
+      checkInDate,
+      checkOutDate,
+      hotel_id,
+      totalNoRooms,
+    } = req.body;
     const roomIds = [];
 
     roomDetails.forEach((room, index) => {
       roomIds.push(room.id);
     });
-
-
 
     const roomDetailsFromDb = await getRoomDetailsByIdHelper(roomIds);
     const findUser = await findUserByUserName(req.user);
@@ -32,15 +33,23 @@ const payment = async (req, res, next) => {
 
     const result = await Promise.all([roomDetailsFromDb, findUser, findHotel]);
 
-    const response = await createBookingHelper(
+    const booking_details = {
       result,
       totalPrice,
       checkInDate,
       checkOutDate,
-      totalNoRooms
-    );
-    console.log(response);
-    
+      totalNoRooms,
+    };
+    // const response = await createBookingHelper(
+    //   result,
+    //   totalPrice,
+    //   checkInDate,
+    //   checkOutDate,
+    //   totalNoRooms
+    // );
+    // console.log(response);
+
+
     const lineItems = roomDetails.map((product) => ({
       price_data: {
         currency: "INR",
@@ -60,6 +69,18 @@ const payment = async (req, res, next) => {
       mode: "payment",
       success_url: "http://localhost:5173",
       cancel_url: "http://localhost:5173/login",
+      metadata: {
+        booking_details: JSON.stringify({
+          result,
+          totalPrice,
+          checkInDate,
+          checkOutDate,
+          totalNoRooms,
+        }),
+        roomDetails:JSON.stringify({
+          roomDetails
+        })
+      },
     });
     res.status(200).json({ id: session.id });
   } catch (error) {
@@ -68,6 +89,42 @@ const payment = async (req, res, next) => {
   }
 };
 
+const webHookController = async (req, res, next) => {
+  try {
+    const { type, data } = req.body;
+    console.log('===oiodsioisdisiodiosdi>>>>')
+    if (type === "checkout.session.completed") {
+      
+      const bookingDetailsString = data.object.metadata.booking_details;
+      const roomDetailsString=data.object.metadata.roomDetails
+      const roomDetails=JSON.parse(roomDetailsString)
+
+      console.log('roomDetails')
+      console.log(roomDetails)
+      console.log('roomDetails')
+      const decreaseRoomCountResponse=await decreaseRoomsCount(roomDetails)
+
+      const bookingDetails = JSON.parse(bookingDetailsString);
+
+      const {result,totalPrice,checkInDate,checkOutDate,totalNoRooms}=bookingDetails;
+      const response = await createBookingHelper(
+        result,
+        totalPrice,
+        checkInDate,
+        checkOutDate, 
+        totalNoRooms
+      );
+      console.log(response);
+
+      res.status(200).json({ response });
+    }
+  } catch (error) {
+    console.log(error)
+    res.status(404).json({ error });
+  }
+};
+
 module.exports = {
   payment,
+  webHookController,
 };

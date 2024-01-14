@@ -37,7 +37,7 @@ const SingleRoomComponent = ({
 
 {console.log(id,description)}
     
-       < InputModal inputModalOpen={isModalOpen} id={id} description={description}/>
+       <InputModal inputModalOpen={isModalOpen} id={id} description={description}/>
       
       <div className="border-2 grid grid-rows-[auto,auto,auto] grid-cols-4">
         <div className="col-span-1 border-2 flex justify-center">
@@ -72,20 +72,17 @@ const SingleRoomComponent = ({
           <div className="relative  bg-fixed  h-[100px] min-w-fit border-2 border-black"></div>
         </div>
 
-        <div className="col-span-full max-w-[100%] border-2">
-          
+        <div className="col-span-full max-w-[100%] border-2">    
             <h2 className="text-[0.9rem] text-center m-3 font-bold">Description</h2>
             <div className="m-3 ms-6">{description}</div>
         </div>
 
-        <div className="col-span-1 flex max-w-[100%]  border-2">
-          
+        <div className="col-span-1 flex max-w-[100%]  border-2">    
           <h2 className="text-[0.9rem] w-1/2 text-center m-3 font-bold">Price</h2>
           <div className="m-3 ms-6 flex justify-center">{rate}</div>
       </div>
 
-        <div className="col-span-3 flex max-w-[100%]  border-2">
-          
+        <div className="col-span-3 flex max-w-[100%]  border-2">     
           <h2 className="text-[0.9rem] w-1/2 text-center m-3 font-bold">Bathroom Type</h2>
           <div className="m-3 ms-6 flex justify-center">{bathRoomType}</div>
       </div>

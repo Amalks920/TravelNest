@@ -100,10 +100,12 @@ const roomSchema = new mongoose.Schema({
     default: 0,
   },
 
-  no_of_occupied_rooms: {
+  no_of_rooms_available: {
     type: Number,
     required: true,
-    default: 0,
+    default: function () {
+      return this.noOfRooms
+    }
   },
   // Type of bathroom in the room (e.g., En-suite, Bathtub, Shower)
   bathroomType: {

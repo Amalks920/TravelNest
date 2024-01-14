@@ -67,8 +67,8 @@ try {
 
     console.log(filteredExistingCollisionIdArray)
 
-  // res.locals.existingCollisions=existingCollisions
- // next();
+   res.locals.existingCollisions=filteredExistingCollisionIdArray
+  next();
 
 } catch (error) {
 console.log(error)

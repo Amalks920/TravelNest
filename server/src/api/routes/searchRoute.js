@@ -1,11 +1,11 @@
 const express = require('express');
-const { searchController } = require('../controllers/searchController');
+const { searchController, roomSearchController } = require('../controllers/searchController');
 const checkAvailability = require('../middlewares/checkAvailability');
 const router = express.Router();
 
 
 
-router.get('/',searchController)
+router.get('/',checkAvailability,roomSearchController);
 
 
 module.exports=router;

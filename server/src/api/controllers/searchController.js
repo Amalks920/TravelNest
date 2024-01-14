@@ -1,4 +1,5 @@
-const { findHotelByLocationHelper, searchHotels } = require("../helpers/hotelHelper");
+const { findHotelByLocationHelper,searchHotels } = require("../helpers/hotelHelper");
+const { searchRoomsHotel } = require("../helpers/roomHelper");
 
 
 
@@ -20,11 +21,14 @@ const searchController= async (req,res,next)=>{
 }
 
 const roomSearchController= async (req,res,next)=>{
+    const collisions=res.locals.existingCollisions;
+    const location=req.query.location;
 
     try {
-       const response=await searchHotels()
+       const response=await searchRoomsHotel(location,collisions)
        res.status(200).json({response})
     } catch (error) {
+        console.log(error)
         res.status(404).json({error});
     }
 }

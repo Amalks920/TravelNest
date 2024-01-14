@@ -54,7 +54,10 @@ const priceSlice = createSlice({
     },
     updateCheckOut:(state,action)=>{
       state.checkOut=action.payload
-    }
+    },
+    // updateTotalNoOfRooms:(state,action)=>{
+    //   state.totalNoOfRooms=action.payload
+    // }
   },
 });
 

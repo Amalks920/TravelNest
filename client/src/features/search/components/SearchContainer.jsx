@@ -34,12 +34,12 @@ const SearchContainer = () => {
 
   return (
     <div className="grid grid-rows-[100vh] grid-cols-[20%,auto]  w-full min-h-[80vh] gap-[5%]">
-      <div className="md:block hidden row-span-1 col-span-1 rounded-md min-h-[80vh]  ">
+      <div className="lg:block hidden row-span-1 col-span-1 rounded-md min-h-[80vh]  ">
        <FilterSection />
       </div>
 
 
-      <div className="row-span-1 col-span-2 md:col-span-1 overflow-scroll">
+      <div className="row-span-1 col-span-2 lg:col-span-1 overflow-scroll">
         {
           data?.map((hotel,index)=>{
             console.log(hotel)

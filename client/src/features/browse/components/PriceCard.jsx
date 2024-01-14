@@ -28,7 +28,7 @@ console.log(checkInDate,checkOutDate)
 console.log(selectedCheckInDate,selectedCheckOutDate)
 const dispatch=useDispatch();
 const handlePayment=async (id) =>{
-    try {
+    try { 
         const stripe = await loadStripe('pk_test_51McT8uSJpQVF6jBTNlHodKtVtviDTJ5I2ApQv9ag4Nr4iwvzERcDxveeDcbIWA8TYpPIM2XqbYqSjAtlUfa7kldc00nshn8huB');  
         stripe.redirectToCheckout({
             sessionId:id
@@ -75,8 +75,8 @@ const handlePayment=async (id) =>{
             <Button onClick={async ()=>{
             //   handlePayment()
             
-            console.log('hooootttttttteeeeeelllll ----iiiiiddddddd')
-            console.log(hotel_id)
+            
+            console.log(totalNoRooms)
             const response= await  payment({roomDetails,totalPrice,checkInDate:selectedCheckInDate,checkOutDate:selectedCheckOutDate,hotel_id,totalNoRooms});
             console.log(response)
             if(isError) return console.log(error)
@@ -85,6 +85,7 @@ const handlePayment=async (id) =>{
             dispatch(updateCheckIn(checkInDate))
             dispatch(updateCheckOut(checkOutDate))
             handlePayment(response.data.id)
+            console.log(id)
             }
             
             }}

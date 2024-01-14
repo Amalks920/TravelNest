@@ -3,11 +3,12 @@ import { IMAGE_BASE_URL } from "../../../data/constants";
 import { Link } from "react-router-dom";
 
 const HotelListSection = ({ hotel }) => {
+
   return (
     <div className="">
       <div className="grid grid-flow-row grid-cols-[35%,10%,55%] mb-14 h-[300px] m-[5%]  p-2 border-2">
         <div
-          className="border-2  max-h-[300px] bg-no-repeat bg-cover rounded-sm"
+          className="col-span-1 border-2 border-black  max-h-[300px] bg-no-repeat bg-cover rounded-sm"
           style={{
             backgroundImage: `url(${IMAGE_BASE_URL}/${hotel?.images[1]})`,
           }}
@@ -26,18 +27,18 @@ const HotelListSection = ({ hotel }) => {
         </div>
         <div className="border-2 p-5 flex flex-col justify-between flex-grow-0">
           <div>
-            <h2 className="text-xl  text-[1rem]">{hotel?.hotelName}</h2>
+            <h2 className="text-xl  text-[0.5rem] md:text-[1rem]">{hotel?.hotelName}</h2>
             <p className="text-[0.9rem] mt-2 ps-1 font-light">
               {hotel?.location}
             </p>
           </div>
 
           <div className=" flex justify-end">
-            <div className="font-bold text-[0.9rem]">{"₹ " + 999}</div>
+            <div className="font-bold text-[0.9rem]">{"₹ " + hotel?.rate}</div>
           </div>
           <div className="flex justify-between">
             <div className="max-w-[200px] overflow-hidden text-[0.7rem]">
-              {hotel?.description.slice(0, 10)}
+              {hotel?.description.slice(0, 100)}
             </div>
             <div>
               <Link to={`/hotel-details/${hotel?._id}`}>

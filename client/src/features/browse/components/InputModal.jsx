@@ -75,7 +75,7 @@ export function   InputModal({ inputModalOpen, setInputModalOpen,id,description 
             color="gray"
             onClick={() => {
               console.log(id)
-              // dispatch(updateNoOfRooms(Number(noOfRooms)));
+              dispatch(updateNoOfRooms(Number(noOfRooms)));
               dispatch(insertCheckedRoomId({id:selectedRoomId,noOfRooms:noOfRooms,price:selectedPrice}))
               handleOpen()
             }}

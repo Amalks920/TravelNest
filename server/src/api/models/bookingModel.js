@@ -110,8 +110,8 @@ const bookingSchema = new Schema(
       },
       status: {
         type: String,
-        // required: true,
-        default: "paymentDone",
+        enum: ["pending", "paid"],
+        default: "paid",
       },
       guestDetails:{
         type:Array,

@@ -18,12 +18,12 @@ const Home = () => {
         <SearchSection/>
 
       )} */}
-      <div className=" grid grid-flow-row grid-cols-1 md:grid-cols-3  w-[90vw]">
+      <div className=" grid grid-flow-row grid-cols-1 md:grid-cols-4 xl:grid-cols-3  w-[90vw]">
         {/* <div className="border-2"> */}
 
         {hotels?.map(
           ({ _id, hotelName, price, description, images }, index) => (
-            <div key={_id} className="col-span-1">
+            <div key={_id} className=" col-span-2 lg:col-span-2  mb-6   xl:col-span-1">
               <Cards
                 hotel_id={_id}
                 hotelName={hotelName}

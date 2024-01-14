@@ -1,4 +1,5 @@
 const bookingModel = require("../models/bookingModel");
+const roomModel = require("../models/roomModel");
 
 const checkAvailabilityOfRooms = async (req, res, next) => {
   // const {checkIn,checkOut}=req.query
@@ -34,34 +35,45 @@ const checkAvailabilityOfRooms = async (req, res, next) => {
         },
       ],
     });
-  
+
     let existingCollisionIdArray = [];
 
     existingCollisions.forEach((booking, index) => {
       existingCollisionIdArray.push(booking?.roomDetails[0]?._id);
     });
 
-    const filteredExistingCollisionIdArray=[]
-   
+    const filteredExistingCollisionIdArray = [];
+
     filteredExistingCollisionIdArray.push(existingCollisionIdArray[0]);
-
+    console.log(filteredExistingCollisionIdArray);
     for (var i = 0; i < existingCollisionIdArray.length; i++) {
+      let isExist = filteredExistingCollisionIdArray.find(
+        (element) => element === existingCollisionIdArray[i]
+      );
 
-      let isExist=filteredExistingCollisionIdArray.find(
-        (element) => element.equals(existingCollisionIdArray[i])
-      )
-      console.log(isExist)
-      console.log('isExist')
       if (!isExist) {
         filteredExistingCollisionIdArray.push(existingCollisionIdArray[i]);
-      }else{
-        console.log('inside else condition')
       }
     }
+    console.log(filteredExistingCollisionIdArray);
 
-  
-    res.locals.existingCollisions = filteredExistingCollisionIdArray || [];
+    const arr = [];
+
+    for (var i = 0; i < filteredExistingCollisionIdArray.length; i++) {
+      const res = await roomModel.findOne({
+        $and: [
+          { _id: filteredExistingCollisionIdArray[i] },
+          { no_of_rooms_available: { $ne: 0 } },
+        ],
+      });
+
+      if (res) arr.push(filteredExistingCollisionIdArray[i]);
+
+    }
+
+    res.locals.existingCollisions = arr || [];
     next();
+    
   } catch (error) {
     console.log(error);
   }

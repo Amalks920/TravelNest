@@ -53,13 +53,13 @@ const CheckInCheckOutModal=({hotel_id})=>{
             
             </Typography> */}
             <Typography
-              className="mb-3 font-normal"
+              className="mb-3 font-bold text-center mt-3"
               variant="paragraph"
               color="gray"
             >
-              Select CheckIn CheckOut Date
+              Select CheckIn CheckOut 
             </Typography>
-            <Typography className="-mb-2" variant="h6">
+            <Typography className="-mb-2 font-normal text-[0.8rem] ms-2 mt-3" variant="h6">
                 Check In
             </Typography>
             <Input
@@ -68,8 +68,9 @@ const CheckInCheckOutModal=({hotel_id})=>{
                 dispatch(updateCheckIn(e.target.value))
             }}
             min={new Date(Date.now()).toISOString().split('T')[0]}
-             label="date" type="date" size="lg" />
-            <Typography className="-mb-2" variant="h6">
+             label="date" type="date" size="lg"  className=""/>
+
+            <Typography className="-mb-2 font-normal text-[0.8rem] ms-2 mt-3" variant="h6">
               Check Out
             </Typography>
             <Input
@@ -78,7 +79,7 @@ const CheckInCheckOutModal=({hotel_id})=>{
             }}
             min={checkInDate}
             
-             label="date" type="date" size="lg" />
+             label="date" type="date" size="lg" className="" />
 
             {/* <div className="-ml-2.5 -mt-3">
               <Checkbox label="Remember Me" />
@@ -86,7 +87,7 @@ const CheckInCheckOutModal=({hotel_id})=>{
 
           </CardBody>
           <CardFooter className="pt-0">
-            <Button variant="gradient" onClick={()=>{
+            <Button className="my-3" variant="gradient" onClick={()=>{
                 handleOpen()
                 getRooms()
             }}  fullWidth>

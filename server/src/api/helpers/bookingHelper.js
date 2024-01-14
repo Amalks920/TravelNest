@@ -1,5 +1,6 @@
 const bookingModel=require('../models/bookingModel')
 
+
 const createBookingHelper=(data,totalPrice,checkInDate,checkOutDate,totalNoRooms)=>{
     const roomDetails=data[0]
     const userDetails=data[1]
@@ -34,6 +35,21 @@ const createBookingHelper=(data,totalPrice,checkInDate,checkOutDate,totalNoRooms
 }
 
 
+const changePaymentStatus=(status)=>{
+    return new Promise( async (resolve,reject)=>{
+        try {
+          const response=await  bookingModel.updateOne(
+            {}
+            )
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+
+
+
 module.exports={
-    createBookingHelper
+    createBookingHelper,changePaymentStatus
 }
