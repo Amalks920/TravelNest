@@ -67,7 +67,7 @@ const payment = async (req, res, next) => {
       payment_method_types: ["card"],
       line_items: lineItems,
       mode: "payment",
-      success_url: "http://localhost:5173",
+      success_url: "http://localhost:5173/payment-success",
       cancel_url: "http://localhost:5173/login",
       metadata: {
         booking_details: JSON.stringify({

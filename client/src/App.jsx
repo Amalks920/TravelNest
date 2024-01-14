@@ -35,6 +35,7 @@ import ResetPassword from './features/authentication/components/ResetPassword.js
 import ResetPasswordPage from './pages/ResetPasswordPage.jsx';
 import HotelDetailsPage from './pages/owner/HotelDetailsPage.jsx';
 import SearchPage from './pages/user/SearchPage.jsx';
+import Success from './features/booking/components/Success.jsx';
 
 function App() {
   const token = useSelector(selectToken)
@@ -111,6 +112,7 @@ function App() {
       <Route path="/home" element={<HomePage />} />
         <Route path="/hotel-details/:hotel_id" element={<SingleHotelPage/>} />
         <Route path='/search-page' element={<SearchPage/>}></Route>
+        <Route path='/payment-success' element={<Success/>}></Route>
       </Route>
    
   </Routes>
