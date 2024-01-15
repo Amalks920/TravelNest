@@ -36,6 +36,9 @@ import ResetPasswordPage from './pages/ResetPasswordPage.jsx';
 import HotelDetailsPage from './pages/owner/HotelDetailsPage.jsx';
 import SearchPage from './pages/user/SearchPage.jsx';
 import Success from './features/booking/components/Success.jsx';
+import BookingsList from './features/bookingManagement/components/BookingsList.jsx';
+import BookingDetails from './features/booking/components/BookingDetails.jsx';
+import BookingsListPage from './pages/user/BookingsListPage.jsx';
 
 function App() {
   const token = useSelector(selectToken)
@@ -83,6 +86,8 @@ function App() {
         <Route path='/owner/room-list/:_id' element={<RoomList/>}></Route>
         <Route path="/owner/register-room/:hotel_id" element={<RoomRegistration isEditForm={false}/>} />
         <Route path='/owner/hotel-details/:hotel_id' element={<HotelDetailsPage/>}></Route>
+        <Route path='/owner/bookings-list/:hotel_id' element={<BookingsList/>}></Route>
+        <Route path='/owner/booking-details/:booking_id' element={<BookingDetails/>}></Route>
       </Route>
        
       </Route>
@@ -113,6 +118,7 @@ function App() {
         <Route path="/hotel-details/:hotel_id" element={<SingleHotelPage/>} />
         <Route path='/search-page' element={<SearchPage/>}></Route>
         <Route path='/payment-success' element={<Success/>}></Route>
+        <Route path='/bookings' element={<BookingsListPage/>}></Route>
       </Route>
    
   </Routes>

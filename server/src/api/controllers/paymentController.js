@@ -92,16 +92,14 @@ const payment = async (req, res, next) => {
 const webHookController = async (req, res, next) => {
   try {
     const { type, data } = req.body;
-    console.log('===oiodsioisdisiodiosdi>>>>')
+   
     if (type === "checkout.session.completed") {
       
       const bookingDetailsString = data.object.metadata.booking_details;
       const roomDetailsString=data.object.metadata.roomDetails
       const roomDetails=JSON.parse(roomDetailsString)
 
-      console.log('roomDetails')
-      console.log(roomDetails)
-      console.log('roomDetails')
+
       const decreaseRoomCountResponse=await decreaseRoomsCount(roomDetails)
 
       const bookingDetails = JSON.parse(bookingDetailsString);

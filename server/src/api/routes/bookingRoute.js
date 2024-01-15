@@ -1,4 +1,5 @@
 const express = require('express');
+const { getAllBookings } = require('../controllers/bookingController');
 const router = express.Router();
 
 
@@ -53,9 +54,7 @@ router.post('/create-booking',(req,res)=>{
  *           description: Bad request
  */
 
-router.get('/get-all-bookings',(req,res)=>{
-    res.status(200).json({})
-});
+router.get('/get-all-bookings-owner/:hotel_id',getAllBookings);
 
 /**
  * @openapi

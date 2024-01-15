@@ -27,6 +27,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addHotels } from "../services/hotelListSlice";
 import { selectUserId } from "../../authentication/services/loginSlice";
 import { useGetHotelsForAdminQuery } from "../services/HotelListAdmin";
+import { IMAGE_BASE_URL } from "../../../data/constants";
 
   const TABS = [
     {
@@ -86,20 +87,7 @@ import { useGetHotelsForAdminQuery } from "../services/HotelListAdmin";
               <Typography variant="h5" color="blue-gray">
                 Hotels list
               </Typography>
-              {/* <Typography color="gray" className="mt-1 font-normal">
-                See information about all members
-              </Typography> */}
             </div>
-
-            {/* <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-              <Button variant="outlined" size="sm">
-                view all
-              </Button>
-              <Button className="flex items-center gap-3" size="sm">
-                <HomeModernIcon strokeWidth={2} className="h-4 w-4" /> Add Hotel
-              </Button>
-            </div> */}
-
           </div>
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <Tabs value="all" className="w-full md:w-max z-0">
@@ -120,7 +108,7 @@ import { useGetHotelsForAdminQuery } from "../services/HotelListAdmin";
           </div>
         </CardHeader>
         
-        <CardBody className="overflow-scroll px-0">
+        <CardBody className="overflow-scroll px-0 border-e-2 border-l-2 border-r-2">
           <table className="mt-4 w-full min-w-max table-auto text-left">
             <thead>
               <tr>
@@ -155,12 +143,12 @@ import { useGetHotelsForAdminQuery } from "../services/HotelListAdmin";
                     <tr key={hotel_id}>
                       <td className={classes +" "+"border-r-2"} >
                         <div className="flex items-center  gap-3">
-                          <Avatar src={images[0]} alt={''} size="sm" />
+                          <Avatar src={IMAGE_BASE_URL+images[0]} alt={''} size="sm" />
                           <div className="flex flex-col">
                             <Typography
                               variant="small"
                               color="blue-gray"
-                              className="font-thin text-left "
+                              className="font-thin text-[0.8rem] text-left "
                             >
                               {hotelName}
                             </Typography>
@@ -180,7 +168,7 @@ import { useGetHotelsForAdminQuery } from "../services/HotelListAdmin";
                           <Typography
                             variant="small"
                             color="blue-gray"
-                            className="font-normal"
+                            className="font-normal text-[0.8rem] "
                           >
                             {location}
                           </Typography>
@@ -208,7 +196,7 @@ import { useGetHotelsForAdminQuery } from "../services/HotelListAdmin";
                             variant="ghost"
                             size="sm"
                             
-                            value={status==='listed' ? "Listed" :status==='delisted'? "Delisted":'Not Registered'}
+                            value={status==='listed' ? "Listed" :status==='delisted'? "Delisted":'Unregistered'}
                             color={status==='listed' ? "green" :status==='delisted'? "red":'blue-gray'}
                           />
                         </div>
@@ -245,11 +233,12 @@ import { useGetHotelsForAdminQuery } from "../services/HotelListAdmin";
                       </td>
 
                       <td className={classes}>
-                        <Tooltip content="Edit Hotel">
+                      <Link to={`/owner/bookings/${hotel_id}`} className="text-[0.56rem] text-center">View Bookings</Link>
+                        {/* <Tooltip content="Edit Hotel">
                           <IconButton variant="text">
                           <Link to={`/owner/edit-hotel/${hotel_id}`}>  <PencilIcon className="h-4 w-4" /> </Link>
                           </IconButton>
-                        </Tooltip>
+                        </Tooltip> */}
                       </td>
                     </tr>
                   );

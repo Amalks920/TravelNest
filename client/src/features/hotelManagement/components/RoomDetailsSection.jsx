@@ -1,12 +1,13 @@
 import { PencilIcon } from "@heroicons/react/24/solid";
 import useGetRoomsDetails from "../hooks/useGetRoomsDetails";
 import RoomDetailsAccordian from "./RoomDetailsAccordian";
+import { Spinner } from "@material-tailwind/react";
 
 const RoomDetailsSection = ({ hotel_id }) => {
   const { rooms, isError, isFetching, isLoading, isSuccess } =
     useGetRoomsDetails(hotel_id);
 
-     if(isLoading) return <h1>Loading....</h1>
+     if(isLoading) return <h1><Spinner className="h-12 w-12"  /></h1>
 
      
   return (

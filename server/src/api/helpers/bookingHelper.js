@@ -47,9 +47,31 @@ const changePaymentStatus=(status)=>{
     })
 }
 
+const getAllBookingsHelper=(hotel_id)=>{
+    return new Promise(async (resolve,reject)=>{
+        try {
+            const response=await bookingModel.find({hotel_id:hotel_id})
+            console.log(response)
+            resolve(response)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
 
+
+const getAllBookingsOfHelper=(user_id)=>{
+    return new Promise((resolve,reject)=>{
+        try {
+            resolve()
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
 
 
 module.exports={
-    createBookingHelper,changePaymentStatus
+    createBookingHelper,changePaymentStatus,
+    getAllBookingsHelper,getAllBookingsOfHelper
 }

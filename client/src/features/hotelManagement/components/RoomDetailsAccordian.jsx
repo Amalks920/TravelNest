@@ -6,8 +6,8 @@ const RoomDetailsAccordian=({room})=>{
 return (
 <>
 <div className="flex flex-col">
-<div className=" mt-3 h-[60px] flex items-center justify-between  shadow-xl border-2"> 
-<h1>2{roomType}</h1>
+<div className=" mt-3 h-[60px] flex items-center justify-between border-2"> 
+<h1 className="font-bold ms-4">{roomType}</h1>
 
 
 
