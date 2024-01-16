@@ -10,18 +10,21 @@ const FilterSection = () => {
             Clear All
           </h2>
         </header>
-        <div className="w-full text-left pt-10 ">
-          <h2 className="  font-bold  text-[0.8rem] text-center mb-3">Price</h2>
-          <div className="p- ">
-            <Slider
-              defaultValue={50}
-              className="text-[#08080d]"
-              barClassName="rounded-none bg-black"
-              thumbClassName="[&::-moz-range-thumb]:rounded-none [&::-webkit-slider-thumb]:rounded-none [&::-moz-range-thumb]:-mt-[4px] [&::-webkit-slider-thumb]:-mt-[4px]"
-              trackClassName="[&::-webkit-slider-runnable-track]:bg-transparent [&::-moz-range-track]:bg-transparent rounded-none !bg-[#2ec946]/10 border border-black"
-            />
+        {/* <div className="w-full text-left pt-10 ">
+          <h2 className="  font-bold  text-[1.1rem] text-left mb-3">Price</h2>
+          <div className="flex">
+            <Radio name="price-range"/>
+           <h2 className="mt-2"> ₹500 to ₹999</h2>
           </div>
-        </div>
+          <div className="flex">
+            <Radio name="price-range"/>
+           <h2 className="mt-2"> ₹100 to ₹1499</h2>
+          </div>
+          <div className="flex">
+            <Radio name="price-range"/>
+           <h2 className="mt-2"> ₹1500 to ₹1999</h2>
+          </div>
+        </div> */}
       </div>
     </div>
   );

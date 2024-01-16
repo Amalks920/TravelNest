@@ -3,7 +3,7 @@ import FilterSection from "./FilterSection";
 import HotelListSection from "./HotelListSection";
 import useGetSearchHotels from "../hooks/useGetSearchHotels";
 import { useSelector } from "react-redux";
-import { selectCheckIn, selectCheckOut, selectLocation } from "../../../services/searchSlice";
+import { selectCheckIn, selectCheckOut, selectLocation, selectRoomType } from "../../../services/searchSlice";
 import { useEffect, useState } from "react";
 import { useSearchByLocationMutation } from "../services/searchApiSlice";
 
@@ -13,6 +13,7 @@ const SearchContainer = () => {
   const location=useSelector(selectLocation)
   const checkIn=useSelector(selectCheckIn)
   const checkOut=useSelector(selectCheckOut)
+  const roomType=useSelector(selectRoomType)
   // const { searchResult,isError, isLoading, isSuccess } =
   //   useGetSearchHotels(location);
   const [searchByLocation,{isError,isLoading,isSuccess}]=useSearchByLocationMutation({location,checkIn,checkOut})
@@ -20,11 +21,11 @@ const SearchContainer = () => {
   useEffect(()=>{
      handleSearch()
   // if(location && !checkIn && !checkOut) handleSearch()
-},[location,checkIn,checkOut])
+},[location,checkIn,checkOut,roomType])
 
   const handleSearch=async ()=>{
     try {
-        const response=await searchByLocation({location,checkIn,checkOut})
+        const response=await searchByLocation({location,checkIn,checkOut,roomType})
         console.log(response)
         setData(response.data.response)
     } catch (error) {

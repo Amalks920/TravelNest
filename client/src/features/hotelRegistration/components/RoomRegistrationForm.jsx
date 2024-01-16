@@ -279,7 +279,7 @@ const RoomRegistrationForm = ({ isEditForm }) => {
               name="images"
               type={"file"}
               multiple
-              accept="image/*"
+              accept=".avif,image/* "
               label={!errors.images?"Images":errors.images}
             />
           </div>

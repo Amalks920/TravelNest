@@ -11,8 +11,8 @@ const searchController= async (req,res,next)=>{
         let location=req.query.location;
         let checkIn=req.query.checkIn || null;
         let checkOut=req.query.checkOut || null;
-
-        const response=await findHotelByLocationHelper(location,collisions)
+        const roomType=req.query.roomType || null;
+        const response=await findHotelByLocationHelper(location,collisions,roomType)
 
         res.status(200).json({response})
     } catch (error) {

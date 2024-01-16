@@ -110,7 +110,7 @@ const bookingSchema = new Schema(
       },
       status: {
         type: String,
-        enum: ["pending", "paid"],
+        enum: ["pending", "paid",'checkIn','checkOut'],
         default: "paid",
       },
       guestDetails:{

@@ -313,14 +313,15 @@ const addHotelImagesHelper=(hotel_id,imagePathArray)=>{
   })
 }
 
-const findHotelByLocationHelper=(location,collisions)=>{
+const findHotelByLocationHelper=(location,collisions,roomType)=>{
   
   return new Promise(async (resolve,reject)=>{
     try {
       const response=await hotelModel.find(
         {
           $and:[
-            {location:{'$regex':`${location}`,'$options':'i'}}
+            {location:{'$regex':`${location}`,'$options':'i'}},
+            {roomType:roomType}
           ]
         },
         // {

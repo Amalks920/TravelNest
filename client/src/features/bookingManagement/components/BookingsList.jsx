@@ -57,7 +57,7 @@ const BookingsList=()=>{
                 <div className="mb-8 flex items-center justify-between gap-8">
                   <div>
                     <Typography variant="h5" color="blue-gray">
-                      Hotels list
+                      Booking List
                     </Typography>
                   </div>
                 </div>
@@ -181,7 +181,7 @@ const BookingsList=()=>{
                                 className="font-normal"
                               >
                                {/* <Link to={`/owner/room-list/${_id}`} className="text-[0.56rem] text-center">View Rooms</Link> */}
-                               <Link to={`/owner/booking-details/${'hotel_id'}`} className="text-[0.56rem] text-center">View Details</Link>
+                               <Link to={`/owner/booking-details/${_id}`} className="text-[0.56rem] text-center">View Details</Link>
                               </Typography>
                             </td>
                           </tr>

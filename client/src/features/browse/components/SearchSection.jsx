@@ -2,7 +2,12 @@ import { Button, Input, Select, Option } from "@material-tailwind/react";
 import DatePicker from "../../../components/form/DatePicker";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { updateCheckIn, updateCheckOut, updateLocation } from "../../../services/searchSlice";
+import {
+  updateCheckIn,
+  updateCheckOut,
+  updateLocation,
+  updateRoomType,
+} from "../../../services/searchSlice";
 import { useDispatch } from "react-redux";
 import { Formik } from "formik";
 import { format } from "date-fns";
@@ -35,10 +40,11 @@ const SearchSection = () => {
   return (
     <div className=" w-full   z-20  pt-14 ">
       <Formik
-        initialValues={{ checkInDate: "", checkOutDate: "" }}
+        initialValues={{ checkInDate: "", checkOutDate: "", roomType: "" }}
         validationSchema={yup.object({
           checkInDate: yup.date().required(),
           checkOutDate: yup.date().required(),
+          // roomType:yup.string().required()
         })}
         onSubmit={(values) => {
           console.log("dslkdskl");
@@ -105,15 +111,22 @@ const SearchSection = () => {
 
             <div className="flex items-center row-span-1 col-span-1">
               <select
+                onInput={(e) => {
+                  console.log(e.target.value)
+                  dispatch(updateRoomType(e.target.value));
+                  handleSearch();
+                }}
+                onChange={handleChange}
+                value={values.roomType}
                 className="border-white w-[80%] h-[40px] text-black ps-9"
                 s
                 name="roomType"
                 id=""
               >
-                <option className="" value="">
-                  single
+                <option className="" value="double">
+                  double
                 </option>
-                <option value="">single</option>
+                <option value="single">single</option>
               </select>
             </div>
 

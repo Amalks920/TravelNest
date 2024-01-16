@@ -1,5 +1,6 @@
 const express = require('express');
-const { getAllBookings } = require('../controllers/bookingController');
+const { getAllBookings, getAllBookingsOfUser, getABookingForUser, getABookingForOwner, changeBookingStatus } = require('../controllers/bookingController');
+const verifyJwt = require('../utils/verifyJwt');
 const router = express.Router();
 
 
@@ -55,6 +56,7 @@ router.post('/create-booking',(req,res)=>{
  */
 
 router.get('/get-all-bookings-owner/:hotel_id',getAllBookings);
+
 
 /**
  * @openapi
@@ -114,5 +116,15 @@ router.get('/get-booking/{user-id}',(req,res)=>{
 router.put('/cancel-booking/{booking-id}',(req,res)=>{
     res.status(200).json({})
 })
+
+
+// user
+router.get('/get-bookings-of-user/:user_id',verifyJwt,getAllBookingsOfUser)
+router.get('/get-a-booking-for-user/:booking_id',verifyJwt,getABookingForUser)
+
+
+//owner
+router.get('/get-a-booking-for-owner/:booking_id',verifyJwt,getABookingForOwner)
+router.post('/change-status/:booking_id',verifyJwt,changeBookingStatus);
 
 module.exports=router

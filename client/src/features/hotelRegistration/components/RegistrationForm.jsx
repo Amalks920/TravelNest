@@ -236,7 +236,7 @@ const RegistrationForm = ({ isEditForm }) => {
               success={!errors.images && touched.images ? true : false}
               type={"file"}
               multiple
-              accept=".jpg, .jpeg, .png, image/*"
+              accept=".jpg, .jpeg, .png,.avif, image/*"
               label={errors.images ? "images" : errors.images}
               name="images"
             />

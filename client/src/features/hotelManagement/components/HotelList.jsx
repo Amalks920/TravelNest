@@ -90,7 +90,7 @@ import { IMAGE_BASE_URL } from "../../../data/constants";
             </div>
           </div>
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <Tabs value="all" className="w-full md:w-max z-0">
+            <Tabs value="all" className="w-full md:w-max z-0 hidden">
               <TabsHeader>
                 {TABS.map(({ label, value,className }) => (
                   <Tab key={value} className={"text-[0.8rem] w-[150px] font-bold "+className} value={value}>
@@ -233,7 +233,7 @@ import { IMAGE_BASE_URL } from "../../../data/constants";
                       </td>
 
                       <td className={classes}>
-                      <Link to={`/owner/bookings/${hotel_id}`} className="text-[0.56rem] text-center">View Bookings</Link>
+                      <Link to={`/owner/bookings-list/${hotel_id}`} className="text-[0.56rem] text-center">View Bookings</Link>
                         {/* <Tooltip content="Edit Hotel">
                           <IconButton variant="text">
                           <Link to={`/owner/edit-hotel/${hotel_id}`}>  <PencilIcon className="h-4 w-4" /> </Link>

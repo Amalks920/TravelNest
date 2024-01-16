@@ -44,7 +44,7 @@ const SingleRoomComponent = ({
       <div className="border-2 grid grid-rows-[auto,auto,auto] grid-cols-12 m-4">
 
       <div className="row-span-1 col-span-4 p-4 mt-3">
-        <h2 className="font-normal  mb-3">{'Family'}</h2>
+        {/* <h2 className="font-normal  mb-3">{'Family'}</h2> */}
         <p>Room Size: {size}</p>
       </div>
 

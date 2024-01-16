@@ -52,7 +52,7 @@ const payment = async (req, res, next) => {
 
     const lineItems = roomDetails.map((product) => ({
       price_data: {
-        currency: "INR",
+        currency: "INR",  
         product_data: {
           name: product.id,
         },
