@@ -31,11 +31,9 @@ const SingleHotel = () => {
   const rooms = hotel?.response[1];
   console.log(rooms);
 
-  // const [open, setOpen] = useState(false);
-
   return (
     <>
-      {/* <PriceCard className={''}/> */}
+ 
 
       <XXLDialog
         className="overflow-hidden sticky !w-[80vw]"
@@ -43,9 +41,7 @@ const SingleHotel = () => {
         imagesToDisplayOnModal={imagesToPass}
         setSize={setSize}
       />
-      {/* 
-      modal for asking checkin checkout
-      */}
+
       <CheckInCheckOutModal hotel_id={hotel_id} />
 
       <div className="grid grid-cols-12 grid-rows-[100px,200px,200px,auto,auto] pb-14  w-[100%] min-h-[100vh] mt-16  gap-2 px-9 shadow-2xl">
@@ -71,11 +67,7 @@ const SingleHotel = () => {
             backgroundImage: `url(${IMAGE_BASE_URL}/${rooms[0]?.rooms[0]?.images[0]} )`,
           }}
         >
-          {/* <img
-            className="w-[100%] h-[100%]"
-            src={`${IMAGE_BASE_URL}/${rooms[0].rooms[0].images[0]} `}
-            alt=""
-          /> */}
+
         </div>
         <div
           className={`row-span-1 col-span-2 border-2 shadow-md rounded-md`}

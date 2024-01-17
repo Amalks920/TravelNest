@@ -51,8 +51,9 @@ const getAllBookingsHelper=(hotel_id)=>{
     return new Promise(async (resolve,reject)=>{
         try {
             const response=await bookingModel.find({hotel_id:hotel_id})
-            console.log(response)
+
             resolve(response)
+            
         } catch (error) {
             reject(error)
         }
@@ -94,7 +95,6 @@ const getAllBookingsOfHelper=(user_id)=>{
            }
         ])
         // find({userId:user_id})
-        console.log(response)
             resolve(response)
         } catch (error) {
             reject(error)
@@ -159,7 +159,6 @@ const changeBookingStatusHelper=(booking_id,status)=>{
                     }
                 }
                 )
-                console.log(response)
             resolve(response)   
         } catch (error) {
             reject(error)

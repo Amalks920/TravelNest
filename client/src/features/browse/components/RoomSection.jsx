@@ -14,7 +14,7 @@ const RoomSection = ({
 }) => {
   const [viewDetailsModal, setViewDetailsModal] = useState(false);
   const [room, setRoom] = useState([]);
-  console.log(rooms)
+
   return (
     <>
       <div className="flex flex-col   border-2  m-4 cursor-pointer hover:shadow-2xl w-full">
