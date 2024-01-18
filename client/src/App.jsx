@@ -41,6 +41,9 @@ import BookingDetails from './features/booking/components/BookingDetails.jsx';
 import BookingsListPage from './pages/user/BookingsListPage.jsx';
 import SingleBookingDetails from './features/booking/components/SingleBookingDetails.jsx';
 import BookingDetailsPage from './pages/owner/BookingDetailsPage.jsx';
+import UserProfilePage from './pages/user/UserProfilePage.jsx';
+import UserAccount from './features/user-profile/components/UserAccount.jsx';
+import ChatPage from './pages/user/ChatPage.jsx';
 
 function App() {
   const token = useSelector(selectToken)
@@ -122,6 +125,10 @@ function App() {
         <Route path='/payment-success' element={<Success/>}></Route>
         <Route path='/bookings' element={<BookingsListPage/>}></Route>
         <Route path='/single-booking-details/:booking_id' element={<SingleBookingDetails/>}></Route>
+        <Route path='/profile-page' element={<UserProfilePage/>}></Route>
+        <Route path='/account' element={<UserAccount/>}></Route>
+        <Route path='/chat' element={<ChatPage/>}></Route>
+        
       </Route>
    
   </Routes>

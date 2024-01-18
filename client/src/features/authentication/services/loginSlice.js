@@ -4,7 +4,10 @@ import { createSlice } from "@reduxjs/toolkit";
 const authSlice=createSlice({
     name:'auth',
     initialState:{
-        user:{}
+        user:{},
+        admin:{},
+        owner:{},
+        
     },
     reducers:{
         setCredentials:(state,action)=>{
