@@ -22,7 +22,7 @@ const SingleRoomComponent = ({
   setSize,
 }) => {
   const [viewDetailsModal, setViewDetailsModal] = useState(false);
-  const [room, setRoom] = useState([]);
+  const [room,setRoom] = useState([]);
   const isModalOpen=useSelector(selectIsModalOpen)
   const noOfRooms=useSelector(selectNoOfRooms)
   const isRoomCheckedOrNot=useSelector((state)=>selectCheckedRoomById(state,id))
@@ -31,20 +31,10 @@ const SingleRoomComponent = ({
 
   return (
     <>
-      {/* <RoomDetailsModal
-        viewDetailsModal={viewDetailsModal}
-        setViewDetailsModal={setViewDetailsModal}
-        room={room}
-      /> */}
-
-{console.log(id,description)}
-    
        <InputModal inputModalOpen={isModalOpen} id={id} description={description}/>
       
       <div className="border-2 grid grid-rows-[auto,auto,auto] grid-cols-12 m-4">
-
       <div className="row-span-1 col-span-4 p-4 mt-3">
-        {/* <h2 className="font-normal  mb-3">{'Family'}</h2> */}
         <p>Room Size: {size}</p>
       </div>
 
@@ -71,14 +61,11 @@ const SingleRoomComponent = ({
             checked={isRoomCheckedOrNot?.id===id}
             onClick={(e) => {  
               if(isRoomCheckedOrNot?.id!=id){
-                console.log('sldjlsdjldsdskjdslkjsl')
-                console.log(id)
                 dispatch(updatePrice(rate))
                 dispatch(updateRoomId(id))
                 dispatch(updateHotelId(hotel_id))
                 dispatch(updateIsModalOpen(!isModalOpen))
               }else{
-                console.log('clieckked hereeee')
                 dispatch(removeUnCheckedRoomId(id))
               }
             }}

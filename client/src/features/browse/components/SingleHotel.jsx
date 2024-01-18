@@ -53,7 +53,7 @@ const SingleHotel = () => {
             setImages(images.slice(0, 6));
             setSize("xxl");
           }}
-          className="row-span-1 md:row-span-2 col-span-12 md:col-start-2 md:col-end-8 border-2 shadow-md cursor-pointer"
+          className="row-span-1 md:row-span-2 sm:row-span-2 xl:row-span-2 col-span-12 xl:col-start-2 xl:col-end-8 border-2 shadow-md cursor-pointer"
         >
           <img
             src={`${IMAGE_BASE_URL}/${images[1]} `}
@@ -62,7 +62,7 @@ const SingleHotel = () => {
           />
         </div>
         <div
-          className={`md:block grid row-span-1 col-span-2 border-2 bg-cover bg-no-repeat shadow-md rounded-md`}
+          className={` hidden  2xl:grid row-span-1 col-span-2 border-2 bg-cover bg-no-repeat shadow-md rounded-md`}
           style={{
             backgroundImage: `url(${IMAGE_BASE_URL}/${rooms[0]?.rooms[0]?.images[0]} )`,
           }}
@@ -70,21 +70,21 @@ const SingleHotel = () => {
 
         </div>
         <div
-          className={`row-span-1 col-span-2 border-2 shadow-md rounded-md`}
+          className={`hidden 2xl:block row-span-1 col-span-2 border-2 shadow-md rounded-md`}
           style={{
             backgroundImage: `url(${IMAGE_BASE_URL}/${rooms[0]?.rooms[0]?.images[0]} )`,
           }}
         >
         </div>
         <div
-          className={`row-span-1 col-start-8 col-end-10 border-2 shadow-md rounded-md`}
+          className={`hidden 2xl:block row-span-1 col-start-8 col-end-10 border-2 shadow-md rounded-md`}
           style={{
             backgroundImage: `url(${IMAGE_BASE_URL}/${rooms[0]?.rooms[0]?.images[0]} )`,
           }}
         >
         </div>
         <div
-          className={`row-span-1 col-span-2 border-2 shadow-md rounded-md`}
+          className={`hidden 2xl:block row-span-1 col-span-2 border-2 shadow-md rounded-md`}
           style={{
             backgroundImage: `url(${IMAGE_BASE_URL}/${rooms[0]?.rooms[0]?.images[0]} )`,
           }}

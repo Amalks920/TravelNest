@@ -6,6 +6,7 @@ const initialState = {
   checkIn:null,
   checkOut:null,
   noOfRooms: 0,
+  noOfDays:0,
   totalNoOfRooms:0,
   isModalOpen: false,
   room_id:null,
@@ -18,7 +19,8 @@ const priceSlice = createSlice({
   initialState,
   reducers: {
     updatePrice: (state, action) => {
-      state.price = action.payload;
+      //state.price = action.payload;
+      state.price=state.noOfDays*action.payload
     },
     updateNoOfRooms: (state, action) => {
       state.totalNoOfRooms+=action.payload
@@ -49,13 +51,19 @@ const priceSlice = createSlice({
       state.hotel_id=action.payload
     },
     updateRoomPrice:(state,action)=>{
-      state.price=action.payload
+      console.log(state.noOfDays,action.payload)
+      state.price=state.noOfDays*action.payload
     },
 
     updateCheckIn:(state,action)=>{
       state.checkIn=action.payload
     },
     updateCheckOut:(state,action)=>{
+      const oneDay = 24 * 60 * 60 * 1000;
+      const checkIn=new Date(state.checkIn)
+      const checkOut=new Date(action.payload)
+      const diffDays = Math.round(Math.abs((checkIn - checkOut) / oneDay));
+      state.noOfDays=diffDays
       state.checkOut=action.payload
     },
     // updateTotalNoOfRooms:(state,action)=>{

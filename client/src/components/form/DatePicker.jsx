@@ -6,10 +6,12 @@ import {
   PopoverContent,
 } from "@material-tailwind/react";
 import { format } from "date-fns";
-import { DayPicker } from "react-day-picker";
+import { DayPicker,isMatch } from "react-day-picker";
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/24/outline";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
+  selectCheckIn,
+  selectCheckOut,
   updateCheckIn,
   updateCheckOut,
 } from "../../features/browse/services/priceSlice";
@@ -23,31 +25,30 @@ export default function DatePicker({
   max,
 }) {
   const [date, setDate] = React.useState(datePassed);
-  const [checkIn,setCheckIn]=useState('')
-  const [checkOut,setCheckOut]=useState('')
+  // const [checkIn,setCheckIn]=useState('')
+  // const [checkOut,setCheckOut]=useState('')
+  // const [isDayDisabled,setIsDayDisabled]=useState(false)
+  const checkIn=useSelector(selectCheckIn)
+  const checkOut=useSelector(selectCheckOut)
   
   const dispatch = useDispatch();
 
-  console.log("date", datePassed);
-  useEffect(() => {
-    console.log(date);
-  }, [date]);
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  const isDateBeforeToday = (date) => {
+    const today = new Date();
+    return date <= today;
+  };
+
+
   return (
     <div className={`p-1`}>
       <Popover placement="bottom">
         <PopoverHandler>
           <Input
             className={className}
-            // min={min}]
+            min={new Date(Date.now()).toISOString().split('T')[0]}
             label={label}
-            onChange={(e) => {
-              console.log('e.target.value')
-              // name === "checkInDate"
-              //   ? dispatch(updateCheckIn(e.target.value))
-              //   : dispatch(updateCheckOut(e.target.value));
-              name==='checkInDate'
-              ?setCheckIn(e.target.value):setCheckOut(e.target.value)
-            }}
             value={datePassed ? format(datePassed, "PPP") : ""}
           />
         </PopoverHandler>
@@ -56,13 +57,17 @@ export default function DatePicker({
             mode="single"
             selected={datePassed}
             onDayClick={(value)=>{
-              name === "checkInDate"
-              ? dispatch(updateCheckIn(value))
-              : dispatch(updateCheckOut(value));
+
+              if(!isDateBeforeToday(value)){
+                name === "checkInDate"
+                ? dispatch(updateCheckIn(value))
+                : name==='checkOutDate' && value>= checkIn? dispatch(updateCheckOut(value)):null
+              }
+
             }}
             
-            onSelect={()=>{
-            }}
+
+  
             showOutsideDays
             className=" relative z-50 shadow-2xl bg-white"
             classNames={{

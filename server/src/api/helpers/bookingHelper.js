@@ -166,9 +166,27 @@ const changeBookingStatusHelper=(booking_id,status)=>{
     })
 }
 
+const cancelBookingHelper=(booking_id,status)=>{
+    return new Promise( async (resolve,reject)=>{
+        try {
+        const response=await bookingModel.updateOne(
+            {_id:booking_id},
+            {
+                $set:{
+                    status:status
+                }
+            }
+            )
+            resolve(response)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 module.exports={
     createBookingHelper,changePaymentStatus,
     getAllBookingsHelper,getAllBookingsOfHelper,
     getABookingForUserHelper,getABookingForOwnerHelper,
-    changeBookingStatusHelper
+    changeBookingStatusHelper,cancelBookingHelper
 }

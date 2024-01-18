@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Navbar,
   Collapse,
@@ -27,13 +27,15 @@ import {
 import { Link } from "react-router-dom";
 import Search from "./Search";
 import { selectIsSearchBarOpen } from "../services/searchSlice";
+import NavbarOptions from "./NavbarOptions";
 
 export function NavbarUser() {
   const [openNav, setOpenNav] = React.useState(false);
   const dispatch = useDispatch();
   const role = useSelector(selectRole);
   const token = useSelector(selectToken);
-  const isSearchBarOpen=useSelector(selectIsSearchBarOpen)
+  const isSearchBarOpen = useSelector(selectIsSearchBarOpen);
+  const [isOptionsHidden,setIsOptionsHidden]=useState(true)
 
   React.useEffect(() => {
     window.addEventListener(
@@ -57,38 +59,61 @@ export function NavbarUser() {
         >
           <h1> TravelNest</h1>
         </Typography>
-        
-       {!isSearchBarOpen &&
-        <div className="">
-        <Search/>
-        </div>
-       } 
+
+        {!isSearchBarOpen && (
+          <div className="">
+            <Search />
+          </div>
+        )}
         <div className="hidden gap-2 lg:flex">
           {/* <Button variant="text" size="sm" color="blue-gray">
                             Log In
                         </Button> */}
-{        token?  <Button
-            onClick={() => {
-              handleLogout();
-            }}
-            variant="gradient"
-            size="sm"
-          >
-            {"logout"}
-          </Button>:
+          {/* {token ? (
+            <Button
+              onClick={() => {
+                handleLogout();
+              }}
+              variant="gradient"
+              size="sm"
+            >
+              {"logout"}
+            </Button>
+          ) : (
+            <Link to={"/login"}>
+              <Button
+                onClick={() => {
+                  handleLogout();
+                }}
+                variant="gradient"
+                size="sm"
+              >
+                {"login"}
+              </Button>
+            </Link>
+          )} */}
 
-          <Link to={'/login'}>
-           <Button
-           onClick={() => {
-             handleLogout();
-           }}
-           variant="gradient"
-           size="sm"
-         >
-           {"login"}
-         </Button>
-         </Link>
-          }
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6 cursor-pointer"
+            onClick={()=>{
+              setIsOptionsHidden(!isOptionsHidden)
+            }}
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="m19.5 8.25-7.5 7.5-7.5-7.5"
+            />
+          </svg>
+
+          <div className="absolute end-1 top-16 ">
+            <NavbarOptions isOptionsHidden={isOptionsHidden}/>
+          </div>
         </div>
         <IconButton
           variant="text"
@@ -106,32 +131,34 @@ export function NavbarUser() {
       <Collapse open={openNav}>
         <NavList />
         <div className="flex w-full flex-nowrap items-center gap-2 lg:hidden">
-{       token?   <Button
-            onClick={() => {
-              handleLogout();
-            }}
-            variant="outlined"
-            size="sm"
-            color="blue-gray"
-            fullWidth
-          >
-            {"logout"}
-          </Button>:
-          <Link>
-           <Button
-           onClick={() => {
-             handleLogout();
-           }}
-           variant="outlined"
-           size="sm"
-           color="blue-gray"
-           fullWidth
-         >
-           {"login"}
-         </Button>
-         </Link>
-          }
-          
+          {token ? (
+            <Button
+              onClick={() => {
+                handleLogout();
+              }}
+              variant="outlined"
+              size="sm"
+              color="blue-gray"
+              fullWidth
+            >
+              {"logout"}
+            </Button>
+          ) : (
+            <Link>
+              <Button
+                onClick={() => {
+                  handleLogout();
+                }}
+                variant="outlined"
+                size="sm"
+                color="blue-gray"
+                fullWidth
+              >
+                {"login"}
+              </Button>
+            </Link>
+          )}
+
           {token ? (
             <Button
               onClick={() => {
@@ -144,14 +171,10 @@ export function NavbarUser() {
               {"login"}
             </Button>
           ) : (
-            <Link to={'/login'}>
-            <Button
-              variant="gradient"
-              size="sm"
-              fullWidth
-            >
-              {"logout"}
-            </Button>
+            <Link to={"/login"}>
+              <Button variant="gradient" size="sm" fullWidth>
+                {"logout"}
+              </Button>
             </Link>
           )}
         </div>
