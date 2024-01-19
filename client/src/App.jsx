@@ -44,6 +44,8 @@ import BookingDetailsPage from './pages/owner/BookingDetailsPage.jsx';
 import UserProfilePage from './pages/user/UserProfilePage.jsx';
 import UserAccount from './features/user-profile/components/UserAccount.jsx';
 import ChatPage from './pages/user/ChatPage.jsx';
+import WalletPage from './pages/user/WalletPage.jsx';
+import UserDetailsPage from './pages/user/UserDetailsPage.jsx';
 
 function App() {
   const token = useSelector(selectToken)
@@ -128,6 +130,8 @@ function App() {
         <Route path='/profile-page' element={<UserProfilePage/>}></Route>
         <Route path='/account' element={<UserAccount/>}></Route>
         <Route path='/chat' element={<ChatPage/>}></Route>
+        <Route path='/wallet' element={<WalletPage/>}></Route>
+        <Route path='/user-details' element={<UserDetailsPage/>}></Route>
         
       </Route>
    
