@@ -66,6 +66,7 @@ const SingleRoomComponent = ({
                 dispatch(updateHotelId(hotel_id))
                 dispatch(updateIsModalOpen(!isModalOpen))
               }else{
+                console.log('hiiii')
                 dispatch(removeUnCheckedRoomId(id))
               }
             }}

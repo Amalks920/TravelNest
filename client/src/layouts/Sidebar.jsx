@@ -163,6 +163,40 @@ export function Sidebar() {
           </AccordionBody>
         </Accordion>
 
+      {role==='owner'?  <Accordion
+          open={open === 5}
+          icon={
+            <ChevronDownIcon
+              strokeWidth={2.5}
+              className={`mx-auto h-4 w-4 transition-transform ${open === 3 ? "rotate-180" : ""}`}
+            />
+          }
+        >
+          <ListItem className="p-0" selected={open === 5}>
+            <AccordionHeader onClick={() => handleOpen(5)} className="border-b-0 p-3">
+              <ListItemPrefix>
+                <ShoppingBagIcon className="h-5 w-5" />
+              </ListItemPrefix>
+              <Typography color="blue-gray" className="mr-auto font-normal">
+               { 'Users'}
+              </Typography>
+            </AccordionHeader>
+          </ListItem>
+          <AccordionBody className="py-1">
+            <List className="p-0">
+              <ListItem>
+                <ListItemPrefix>
+                  <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                </ListItemPrefix>
+                <Link to={'/owner/chats'}>chats</Link>
+              </ListItem>
+            </List>
+          </AccordionBody>
+        </Accordion>:null}
+
+
+
+
         <Accordion
           open={open === 4}
           icon={

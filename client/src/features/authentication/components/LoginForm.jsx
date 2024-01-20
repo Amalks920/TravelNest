@@ -8,6 +8,7 @@ import { selectToken, setCredentials } from "../services/loginSlice";
 import { useLoginMutation } from "../../../services/apiAuthSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { Spinner } from "@material-tailwind/react";
 
 const LoginForm = ({ role }) => {
   const token = useSelector(selectToken);
@@ -49,6 +50,7 @@ const LoginForm = ({ role }) => {
     }
   };
 
+  if(isLoading)return  <Spinner/>
   return (
     <Formik
       initialValues={{ email: "", password: "" }}

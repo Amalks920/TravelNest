@@ -6,7 +6,10 @@ const swaggerDocs=require('./utils/swagger')
 const dbConnect = require('./src/config/dbConfig')
 const routes=require('./routes')
 const cors=require('cors')
+const http=require('http')
 const cookieParser=require('cookie-parser')
+const socketEvents=require('./src/api/services/socket/socket.js');
+const redisClient=require('./src/config/redisConfig.js')
 const credentials=require('./src/api/middlewares/credentials')
 const corsOptions=require('./src/config/cors/corsOption')
 const authRouter=require('./src/api/routes/authenticationRoute')
@@ -20,9 +23,25 @@ const salesRouter=require('./src/api/routes/salesRoute')
 const messageRouter=require('./src/api/routes/messageRoute')
 const paymentRouter=require('./src/api/routes/paymentRoute')
 const searchRouter=require('./src/api/routes/searchRoute')
+const { Server } = require('socket.io');
 
-const handleError = require('./src/api/middlewares/errorHandler')
+const server=http.createServer(app)
 
+const handleError = require('./src/api/middlewares/errorHandler');
+const allowedOrigins = require('./src/config/cors/allowedOrigins');
+
+
+const  io= new Server(server,{
+    cors:{
+        origin:"http://localhost:5173",
+        methods: ["GET", "POST"],
+        //allowedOrigins
+    }
+})
+
+console.log(redisClient)
+
+socketEvents(io)
 
 app.use(morgan('combined'))
 app.use(express.json());
@@ -45,7 +64,8 @@ app.use('/api/messages',messageRouter)
 app.use('/api/payment',paymentRouter)
 app.use('/api/search',searchRouter)
 
-app.listen(4000,async ()=>{
+
+server.listen(4000,async ()=>{
     console.log('server running')
      dbConnect()
       routes(app)

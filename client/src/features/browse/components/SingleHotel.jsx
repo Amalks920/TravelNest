@@ -12,6 +12,7 @@ import PriceCard from "./PriceCard";
 import CheckInCheckOutModal from "./CheckInCheckOutModal";
 import { useSelector } from "react-redux";
 import { selectRooms } from "../services/roomsSlice";
+import { selectCheckIn, selectCheckOut } from "../services/priceSlice";
 
 const SingleHotel = () => {
   const [size, setSize] = useState(null);
@@ -19,6 +20,8 @@ const SingleHotel = () => {
   const [isAccordionOpen, setIsAccordionOpen] = useState(-1);
   const [price, setPrice] = useState(0);
   const roomss = useSelector(selectRooms);
+  // const checkIn=useSelector(selectCheckIn);
+  // const checkOut=useSelector(selectCheckOut)
 
   const { hotel_id } = useParams();
   const { hotel, isError, isFetching, isLoading, isSuccess } =

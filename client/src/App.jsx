@@ -46,6 +46,7 @@ import UserAccount from './features/user-profile/components/UserAccount.jsx';
 import ChatPage from './pages/user/ChatPage.jsx';
 import WalletPage from './pages/user/WalletPage.jsx';
 import UserDetailsPage from './pages/user/UserDetailsPage.jsx';
+import OnwerChatPage from './pages/owner/OwnerChatPage.jsx';
 
 function App() {
   const token = useSelector(selectToken)
@@ -95,6 +96,8 @@ function App() {
         <Route path='/owner/hotel-details/:hotel_id' element={<HotelDetailsPage/>}></Route>
         <Route path='/owner/bookings-list/:hotel_id' element={<BookingsList/>}></Route>
         <Route path='/owner/booking-details/:booking_id' element={<BookingDetailsPage/>}></Route>
+        <Route path='/owner/chats' element={<OnwerChatPage/>}></Route>
+
       </Route>
        
       </Route>
@@ -124,6 +127,9 @@ function App() {
       <Route path="/home" element={<HomePage />} />
         <Route path="/hotel-details/:hotel_id" element={<SingleHotelPage/>} />
         <Route path='/search-page' element={<SearchPage/>}></Route>
+
+
+        <Route element={<RequireUserAuth allowedRole={'user'}/>}>
         <Route path='/payment-success' element={<Success/>}></Route>
         <Route path='/bookings' element={<BookingsListPage/>}></Route>
         <Route path='/single-booking-details/:booking_id' element={<SingleBookingDetails/>}></Route>
@@ -132,7 +138,8 @@ function App() {
         <Route path='/chat' element={<ChatPage/>}></Route>
         <Route path='/wallet' element={<WalletPage/>}></Route>
         <Route path='/user-details' element={<UserDetailsPage/>}></Route>
-        
+        </Route>
+
       </Route>
    
   </Routes>

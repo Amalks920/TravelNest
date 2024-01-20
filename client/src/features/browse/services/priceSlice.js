@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice,current } from "@reduxjs/toolkit";
 
 const initialState = {
   totalPrice:0,
@@ -11,7 +11,7 @@ const initialState = {
   isModalOpen: false,
   room_id:null,
   hotel_id:null,
-  checkedRoomIds: [],
+  checkedRoomIds:[],
 };
 
 const priceSlice = createSlice({
@@ -30,15 +30,13 @@ const priceSlice = createSlice({
       state.isModalOpen = action.payload;
     },
     insertCheckedRoomId: (state, action) => {
-      console.log(action.payload.noOfRooms)
       state.totalPrice+=action.payload.price*Number(action.payload.noOfRooms)
-      state.checkedRoomIds.push(action.payload);
+      state.checkedRoomIds=[...state.checkedRoomIds,action.payload];
+      console.log(state.checkedRoomIds)
     },
     removeUnCheckedRoomId: (state, action) => {
-     
       console.log(state)
       const id = action.payload;
-      console.log(id)
       const indexToDelete = state.checkedRoomIds.findIndex((el) => el === id);
       const priceToMinus=state.checkedRoomIds[indexToDelete].price*state.checkedRoomIds[indexToDelete].noOfRooms
       state.totalPrice-=priceToMinus
