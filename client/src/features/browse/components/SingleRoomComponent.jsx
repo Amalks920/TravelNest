@@ -26,7 +26,9 @@ const SingleRoomComponent = ({
   const isModalOpen=useSelector(selectIsModalOpen)
   const noOfRooms=useSelector(selectNoOfRooms)
   const isRoomCheckedOrNot=useSelector((state)=>selectCheckedRoomById(state,id))
-  const selectedRoom=useSelector(selectCheckedRooms)
+  const checkedRooms=useSelector(selectCheckedRooms)
+  const selectedRooms=useSelector(selectCheckedRooms)
+
   const dispatch=useDispatch()
 
   return (
@@ -66,8 +68,11 @@ const SingleRoomComponent = ({
                 dispatch(updateHotelId(hotel_id))
                 dispatch(updateIsModalOpen(!isModalOpen))
               }else{
-                console.log('hiiii')
-                dispatch(removeUnCheckedRoomId(id))
+                const indexToDelete = selectedRooms.findIndex((el) => el.id === id);
+                const priceToMinus=selectedRooms[indexToDelete].price*selectedRooms[indexToDelete].noOfRooms
+                const modifiedRoomArray=selectedRooms.toSpliced(indexToDelete, 1);
+               
+              dispatch(removeUnCheckedRoomId({modifiedRoomArray,priceToMinus}))
               }
             }}
           />

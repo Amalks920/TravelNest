@@ -10,13 +10,14 @@ import {
   Textarea,
 } from "@material-tailwind/react";
 import { useDispatch, useSelector } from "react-redux";
-import { insertCheckedRoomId, selectPrice, selectRoomId, updateIsModalOpen, updateNoOfRooms, updatePrice } from "../services/priceSlice";
+import { insertCheckedRoomId, selectCheckedRooms, selectPrice, selectRoomId, updateIsModalOpen, updateNoOfRooms, updatePrice } from "../services/priceSlice";
 
 export function   InputModal({ inputModalOpen, setInputModalOpen,id,description }) {
   console.log(id)
   const dispatch = useDispatch();
   const selectedRoomId=useSelector(selectRoomId)
   const selectedPrice=useSelector(selectPrice)
+  const selectedRooms=useSelector(selectCheckedRooms)
   const handleOpen = () => dispatch(updateIsModalOpen(!inputModalOpen));
   const [noOfRooms,setNoOfRooms]=useState(0)
 
@@ -74,9 +75,10 @@ export function   InputModal({ inputModalOpen, setInputModalOpen,id,description 
             variant="gradient"
             color="gray"
             onClick={() => {
-              console.log(id)
+              console.log(selectedRooms)
+              const modifiedRoomArray=[...selectedRooms,{id:selectedRoomId,noOfRooms:noOfRooms,price:selectedPrice}]
               dispatch(updateNoOfRooms(Number(noOfRooms)));
-              dispatch(insertCheckedRoomId({id:selectedRoomId,noOfRooms:noOfRooms,price:selectedPrice}))
+              dispatch(insertCheckedRoomId(modifiedRoomArray))
               handleOpen()
             }}
           >
