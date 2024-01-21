@@ -18,7 +18,7 @@ const RoomSection = ({
 
   return (
     <>      
-      <div className="flex flex-col   border-2  m-4 cursor-pointer hover:shadow-2xl w-full">
+      <div className="flex flex-col   border-2  m-4 ms-3 cursor-pointer hover:shadow-2xl w-full">
         <div className=" h-[50px] pt-3 ps-3">
           <h1 className="font-bold">{roomType}</h1>
 

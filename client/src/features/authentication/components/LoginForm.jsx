@@ -22,7 +22,7 @@ const LoginForm = ({ role }) => {
     try {
       values.role = role;
       const userData = await login(values).unwrap();
-      console.log(userData);
+      
       dispatch(setCredentials({ ...userData.data }));
 
       if (isSuccess) {

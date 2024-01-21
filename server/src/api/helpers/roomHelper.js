@@ -452,6 +452,26 @@ const decreaseRoomsCount = (rooms) => {
   });
 };
 
+const updateRoomNumberHelper=(room_id,noOfRooms)=>{
+  return new Promise( async (resolve,reject)=>{
+    try {
+      const response=await roomModel.updateOne(
+        {_id:room_id},
+        {
+          $set:{
+            $inc:{
+              noOfRooms:noOfRooms
+            }
+          }
+        }
+        )
+        resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  })
+}
+
 module.exports = {
   addRoomHelper,
   addRoomToHotel,
@@ -466,5 +486,5 @@ module.exports = {
   addRoomImagesHelper,
   getAllRoomsOfAHotelForUserHelperByAvailabilty,
   searchRoomsHotel,
-  decreaseRoomsCount,
+  decreaseRoomsCount,updateRoomNumberHelper
 };

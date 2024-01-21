@@ -4,15 +4,19 @@ const MailGen = require("mailgen");
 const nodemailer = require("nodemailer");
 const otpGenerator = require("otp-generator");
 const { findUserHelper } = require("../helpers/userHelper");
+const { createWalletHelper } = require("../helpers/walletHelper");
 
 const registerNewUser = async (req, res, next) => {
   try {
     const response = await signupHelper(req.body);
+    await createWalletHelper(response._id)
     res.status(200).json({ response });
   } catch (error) {
+    console.log(error.message)
     res.status(500).json({ response: error });
   }
 };
+
 
 const login = async (req, res, next) => {
   try {

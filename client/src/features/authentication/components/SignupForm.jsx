@@ -91,7 +91,7 @@ const SignupForm = ({ role }) => {
           className="grid grid-rows-7  gap-8 shadow-2xl p-10 "
         >
           <h1 className="text-2xl font-bold text-center ">{role}</h1>
-          <p className="text-red-600 border-2 text-center text-[0.8rem]">
+          <p className="text-red-600 text-center text-[0.8rem]">
             {error}
           </p>
           <div>

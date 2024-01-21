@@ -14,12 +14,13 @@ const Chat = () => {
   return (
     <div className="grid grid-cols-[25%,50%,25%] grid-rows-1 h-[83vh] -mt-32 w-full">
       <div className="row-span-1 col-span-1 border-2 flex flex-col">
-        <div className="h-[60px] border-y-2 border-r-0 flex justify-left items-center">
+        <div className="h-[60px] border-b-2  flex justify-left items-center">
           <h2 className="font-bold text-[1.3rem] ms-5">Archived</h2>
         </div>
       </div>
-      <div className="row-span-1 col-span-1 border-2 flex flex-col">
-        <div className="h-[60px] border-y-2 flex justify-between">
+
+      <div className="row-span-1 col-span-1 border-y-2 flex flex-col">
+        <div className="h-[60px] border-b-2 flex justify-between">
           <div></div>
           <button className="border-2 border-black w-[100px] m-3 rounded-full text-[0.8rem] font-bold">Hide Details</button>
         </div>

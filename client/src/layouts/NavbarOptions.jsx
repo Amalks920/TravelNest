@@ -42,8 +42,18 @@ function NavbarOptions({ isOptionsHidden }) {
     <Card className={`w-56 ${isOptionsHidden && "hidden"} border-2`}>
       <List>
         <ListItem >
-         <Link to={'/bookings'}>Profile</Link>  
+         <Link to={'/account'}>account</Link>  
           </ListItem>
+{/* 
+          <ListItem>
+          {
+            token?
+           <Link to='/login'>
+             Booking
+           </Link>:null
+          }
+        </ListItem> */}
+
         <ListItem>
           {
             token?
@@ -59,6 +69,7 @@ function NavbarOptions({ isOptionsHidden }) {
            </Link>
           }
         </ListItem>
+
       </List>
     </Card>
   );

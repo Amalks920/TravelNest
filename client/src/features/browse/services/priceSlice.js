@@ -38,9 +38,9 @@ const priceSlice = createSlice({
       const roomArray=action.payload;
       const priceToAdd=roomArray[roomArray.length-1].price;
       const noOfRoomsToAdd=roomArray[roomArray.length-1].noOfRooms;
-      state.totalPrice+=Number(priceToAdd)*Number(noOfRoomsToAdd)
-      state.checkedRoomIds=action.payload
-
+      state.totalPrice+=Number(priceToAdd)*Number(noOfRoomsToAdd);
+      state.checkedRoomIds=action.payload;
+      
     },
 
     removeUnCheckedRoomId: (state, action) => {

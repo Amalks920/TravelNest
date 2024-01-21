@@ -4,7 +4,7 @@ import { Field } from "formik";
 import { Select, Button, Spinner } from "@material-tailwind/react";
 import { FormInput } from "../../../components/form/FormInput";
 import DatePicker from "../../../components/form/DatePicker";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useGetAHotel from "../hooks/useGetAHotel";
 import { IMAGE_BASE_URL } from "../../../data/constants";
 import RoomSection from "./RoomSection";
@@ -48,8 +48,9 @@ const SingleHotel = () => {
       <CheckInCheckOutModal hotel_id={hotel_id} />
 
       <div className="grid grid-cols-12 grid-rows-[100px,200px,200px,auto,auto] pb-14  w-[100%] min-h-[100vh] mt-16  gap-2 px-9 shadow-2xl">
-        <div className="row-span-1 col-start-1 md:col-start-2 col-span-12">
+        <div className="row-span-1 col-start-1 md:col-start-2 col-span-10 ">
           <h2 className="font-bold mt-11 ms-2 text-[1rem] sm:text-2xl">{hotelName}</h2>
+          
         </div>
         <div
           onClick={() => {
@@ -94,7 +95,7 @@ const SingleHotel = () => {
         >
         </div>
 
-        <div className="flex flex-col  row-span-2  md:col-start-2 md:col-span-7 col-span-12 shadow-md max-h-[100vh] overflow-scroll hide-scroll"
+        <div className="flex flex-col  row-span-2  md:col-start-2 md:col-span-7 col-span-12 shadow-md max-h-[100vh] overflow-scroll"
           
         >
           <div className=" h-fit ">
@@ -104,9 +105,14 @@ const SingleHotel = () => {
           <h2 className="font-bold text-xl ms-5 mb-4 ">About</h2>
             <h2 className="w-[80%] ms-5" >{description}</h2>
           </div>
+          <div className=" h-fit font-medium  text-left ps-3 text-[0.9rem] leading-8 mt-8 ms-4">
+          <button className="border-2 border-black px-3  text-[0.7rem] rounded-lg me-4"><Link to={'/chat'}>CHAT WITH OWNER</Link></button>
+          </div>
+
+
           <div className=" h-fit ">{amenities}</div>
           <div className=" h-fit mt-12 ms-5">
-            <h2 className="font-bold text-xl ms-5   mb-2">Choose Your Room</h2>
+            <h2 className="font-bold text-xl ms-3   mb-2">Choose Your Room</h2>
 
             {!roomss && <h1>RoomsList Empty</h1>}
             {roomss &&

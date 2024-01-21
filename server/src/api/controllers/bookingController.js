@@ -1,4 +1,5 @@
 const { getAllBookingsHelper, getAllBookingsOfHelper, getABookingForUserHelper, getABookingForOwnerHelper, changeBookingStatusHelper, cancelBookingHelper } = require("../helpers/bookingHelper")
+const { addToWalletHelper } = require("../helpers/walletHelper")
 
 
 //owner
@@ -60,13 +61,19 @@ const cancelBookingController= async (req,res,next)=>{
     const booking_id=req.params.booking_id
     const status=req.body.status
     try {
+    
+    const addRoomsBackResponse=await updateRoomNumberHelper(booking_id)
+    const addMoneyToWalletResponse=await addToWalletHelper(user_id,amount)
     const response=await cancelBookingHelper(booking_id,status)
     
+
+
     res.status(200).json({response});
     } catch (error) {
         res.status(404).json({error})
     }
 }
+
 
 module.exports={
     getAllBookings,getAllBookingsOfUser,
