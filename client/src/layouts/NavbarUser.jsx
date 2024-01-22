@@ -17,6 +17,7 @@ import {
   Bars3Icon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
+import  {Link} from 'react-router-dom';
 import { NavList, NavListMenu } from "../components/Navbar/NavComponents";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -24,7 +25,6 @@ import {
   selectRole,
   selectToken,
 } from "../features/authentication/services/loginSlice";
-import { Link } from "react-router-dom";
 import Search from "./Search";
 import { selectIsSearchBarOpen } from "../services/searchSlice";
 import NavbarOptions from "./NavbarOptions";
@@ -36,7 +36,7 @@ export function NavbarUser() {
   const token = useSelector(selectToken);
   const isSearchBarOpen = useSelector(selectIsSearchBarOpen);
   const [isOptionsHidden,setIsOptionsHidden]=useState(true)
-
+  console.log(role)
   React.useEffect(() => {
     window.addEventListener(
       "resize",
@@ -57,7 +57,7 @@ export function NavbarUser() {
           variant="h6"
           className="mr-4 cursor-pointer py-1.5 lg:ml-2 text-2xl"
         >
-          <h1> TravelNest</h1>
+          <h1> <Link to={'/home'}>TravelNest</Link></h1>
         </Typography>
 
         {!isSearchBarOpen && (
@@ -131,7 +131,7 @@ export function NavbarUser() {
       <Collapse open={openNav}>
         <NavList />
         <div className="flex w-full flex-nowrap items-center gap-2 lg:hidden">
-          {token ? (
+          {token && role==='user' ? (
             <Button
               onClick={() => {
                 handleLogout();
@@ -159,7 +159,7 @@ export function NavbarUser() {
             </Link>
           )}
 
-          {token ? (
+          {token && role==='user' ? (
             <Button
               onClick={() => {
                 handleLogout();

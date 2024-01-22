@@ -50,7 +50,7 @@ const LoginForm = ({ role }) => {
     }
   };
 
-  if(isLoading)return  <Spinner/>
+
   return (
     <Formik
       initialValues={{ email: "", password: "" }}
@@ -127,6 +127,7 @@ const LoginForm = ({ role }) => {
           </Link>
           <div className=" -mt-5">
             <ButtonDefault
+              loading={isLoading}
               value="submit"
               type={"submit"}
               onSubmit={handleSubmit}

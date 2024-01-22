@@ -20,7 +20,10 @@ import {
   useEditHotelLocationMutation,
   useEditHotelDescriptionMutation,
 } from "../services/editHotelDetailsApiSlice";
-import { useEditRoomDescriptionMutation } from "../services/editRoomDetailsApiSlice";
+import {
+  useEditRoomDescriptionMutation,
+  useUpdateRoomNumberMutation,
+} from "../services/editRoomDetailsApiSlice";
 
 export function RoomEditInput({
   inputModalOpen,
@@ -33,6 +36,15 @@ export function RoomEditInput({
     { isError: isErrorEditDescription, isLoading: isLoadingEditDescription },
   ] = useEditRoomDescriptionMutation();
 
+  const [
+    updateRoomNumber,
+    {
+      isError: isUpdateNumberOfRoomError,
+      isLoading: isUpdateNumberOfRoomLoading,
+      isSuccess: isUpdateNumberOfRoomSuccess,
+    },
+  ] = useUpdateRoomNumberMutation();
+
   const handleOpen = () => setInputModalOpen(!inputModalOpen);
   const { name, value } = InputDetailsToPass;
   console.log(value, name);
@@ -42,12 +54,13 @@ export function RoomEditInput({
       const response =
         name === "description"
           ? await editRoomDescription(data)
-          : //   : name === "location"
-            //   ? await editHotelLocation(data)
+          : name === "noOfRooms"
+              ? await updateRoomNumber(data):
             //   : name === "description"
             //   ? await editHotelDescription(data)
             null;
       console.log(response);
+      console.log(name)
       handleOpen();
     } catch (error) {
       console.log(error);
@@ -60,11 +73,11 @@ export function RoomEditInput({
         initialValues={
           name === "description"
             ? { description: value }
-            : // : name === "location"
-              // ? { location: value }
+            :  name === "noOfRooms"
+              ? { noOfRooms: value }
               // : name === "description"
               // ? { description: value }
-              null
+              :null
         }
         validationSchema={Yup.object().shape(
           name === "description"
@@ -73,6 +86,7 @@ export function RoomEditInput({
                   .min(8, "hotelname should be 6 chars minimum")
                   .required("hotelname is required"),
               }
+        
             : null
         )}
         onSubmit={(values) => {
@@ -126,17 +140,20 @@ export function RoomEditInput({
                       name={name}
                       onChange={handleChange}
                       value={
-                        name === "location"
-                          ? values?.location
+                        name === "noOfRooms"
+                          ? values?.noOfRooms
                           : name === "hotelName"
                           ? values?.hotelName
                           : null
                       }
                       onBlur={handleBlur}
                       error={
+                        name==='description' &&
                         errors.description &&
-                        touched.description &&
-                        errors.description
+                          touched.description &&
+                          errors.description
+                      
+                      
                       }
                       success={!errors.description && touched.description}
                       width={"lg"}
@@ -181,13 +198,14 @@ export function RoomEditInput({
                         const description = values.description;
                         handleUpdate({ _id, description });
                       }
-                    //    else if (name === "hotelName") {
-                    //     const hotelName = values.hotelName;
-                    //     handleUpdate({ _id, hotelName });
-                    //   } else if (name === "location") {
-                    //     const location = values.location;
-                    //     handleUpdate({ _id, location });
-                    //   }
+                         else if (name === "noOfRooms") {
+                          const noOfRooms = values.noOfRooms;
+                          handleUpdate({ room_id:_id, noOfRooms });
+                        }
+                      // else if (name === "location") {
+                      //     const location = values.location;
+                      //     handleUpdate({ _id, location });
+                      //   }
                     }
                   }}
                   type="submit"

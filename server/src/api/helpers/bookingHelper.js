@@ -166,7 +166,7 @@ const changeBookingStatusHelper=(booking_id,status)=>{
     })
 }
 
-const cancelBookingHelper=(booking_id,status)=>{
+const cancelBookingHelper=(booking_id,status,totalNoOfRooms)=>{
     return new Promise( async (resolve,reject)=>{
         try {
         const response=await bookingModel.updateOne(

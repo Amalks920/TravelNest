@@ -10,7 +10,7 @@ const CheckAuth = ({currentRole}) => {
 
     return (
         
-        !token  || currentRole!=role? <Outlet /> : <Navigate to={role === 'user' ? '/home' : role === 'owner' ? '/owner/register-hotel' : role === 'admin' ? '/admin/home' : null} state={{ from: location }} replace />
+        !token? <Outlet /> : <Navigate to={role === 'user' ? '/home' : role === 'owner' ? '/owner/register-hotel' : role === 'admin' ? '/admin/home' : null} state={{ from: location }} replace />
 
     )
 }

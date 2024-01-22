@@ -13,17 +13,16 @@ const createWalletHelper=(user_id)=>{
 }
 
 const addToWalletHelper=(user_id,amount)=>{
+    console.log(user_id,amount)
     return new Promise( async (resolve,reject)=>{
         try {
             const response=await walletModel.updateOne(
                 {user_id},
                 {
-                    $set:{
                         $inc:{
                             amount:amount
                         }
                     }
-                }
                 )
 
                 resolve(response)
@@ -34,6 +33,19 @@ const addToWalletHelper=(user_id,amount)=>{
     })
 }
 
+
+const userWalletDetailsHelper=(user_id) => {
+    return new Promise( async (resolve,reject)=>{
+      try {
+        const response=await walletModel.findOne({user_id:user_id})
+        resolve(response)
+      } catch (error) {
+        reject(error)
+      }
+    })
+  }
+
 module.exports={
-    createWalletHelper,addToWalletHelper
+    createWalletHelper,addToWalletHelper,
+    userWalletDetailsHelper
 }

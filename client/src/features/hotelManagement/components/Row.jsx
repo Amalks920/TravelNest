@@ -1,6 +1,6 @@
 import { PencilIcon } from "@heroicons/react/24/solid"
 import { Input } from "@material-tailwind/react"
-import { useEditRoomDescriptionMutation,useAddRoomImagesMutation } from "../services/editRoomDetailsApiSlice"
+import { useEditRoomDescriptionMutation,useAddRoomImagesMutation, useUpdateRoomNumberMutation } from "../services/editRoomDetailsApiSlice"
 import { InputModal } from "./InputModal"
 import { useRef, useState } from "react"
 import { RoomEditInput } from "./RoomEditInput"
@@ -17,6 +17,7 @@ const Row=({room})=>{
 
   const [addRoomImages,{isError,isLoading,isSuccess,reset,error}]=useAddRoomImagesMutation({room_id})
 
+
   const handleImageUpdate=async (data)=>{
     try {
       const res=await addRoomImages(data)
@@ -25,6 +26,8 @@ const Row=({room})=>{
       console.log(error)
     }
   }
+
+
 
 
     return (
@@ -56,7 +59,7 @@ const Row=({room})=>{
 
       <div className="grid grid-rows-[auto,auto,auto,auto] gap-3 grid-flow-col  p-4">
       <div className=" flex justify-start items-center p-2">Description</div>
-      <div className=" flex justify-start items-center p-2">Location</div>
+      <div className=" flex justify-start items-center p-2">No of Rooms</div>
       <div className=" flex justify-start items-center p-2">Description</div>
       <div className=" flex justify-start items-center p-2">
         upload images
@@ -70,7 +73,7 @@ const Row=({room})=>{
         )} */}
        <h2 className="max-w-[500px]">{room?.description}</h2> 
       </div>
-      <div className="p-3 text-[0.9rem]">{room?.location}</div>
+      <div className="p-3 text-[0.9rem]">{room?.noOfRooms}</div>
       <div className="max-w-[500px] p-3 text-[0.9rem]">
         {''}
       </div>
@@ -98,20 +101,21 @@ const Row=({room})=>{
           className="cursor-pointer me-6"
         />
       </div>
+
       <div className="flex justify-center">
-        {/* <PencilIcon
+        <PencilIcon
           onClick={() => {
             setInputModalOpen(true);
             setInputDetails({
-              name: "location",
-              label: "Location",
-              type: "text",
-              value: hotel?.location,
+              name: "noOfRooms",
+              label: "noOfRooms",
+              type: "number",
+              value: room?.noOfRooms,
             });
           }}
           width={15}
           className="cursor-pointer me-6"
-        /> */}
+        />
       </div>
       <div className="flex justify-center">
         {/* <PencilIcon

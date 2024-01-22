@@ -24,15 +24,16 @@ const SingleHotel = () => {
   // const checkOut=useSelector(selectCheckOut)
 
   const { hotel_id } = useParams();
-  const { hotel, isError, isFetching, isLoading, isSuccess } =
+  const { hotel, isError, isFetching, isLoading, isSuccess, isUninitialized } =
     useGetAHotel(hotel_id);
 
-  if (isLoading || isFetching) return <h1><Spinner className="h-12 w-12" /></h1>;
-  console.log(hotel);
+    const isPageReady= isLoading || isFetching || isUninitialized
+
+  if (isPageReady) return <h1><Spinner className="h-12 w-12" /></h1>;
+
   const { hotelName, images, description, amenities } = hotel?.response[0];
 
   const rooms = hotel?.response[1];
-  console.log(rooms);
 
   return (
     <>
@@ -46,6 +47,7 @@ const SingleHotel = () => {
       />
 
       <CheckInCheckOutModal hotel_id={hotel_id} />
+      
 
       <div className="grid grid-cols-12 grid-rows-[100px,200px,200px,auto,auto] pb-14  w-[100%] min-h-[100vh] mt-16  gap-2 px-9 shadow-2xl">
         <div className="row-span-1 col-start-1 md:col-start-2 col-span-10 ">
@@ -137,7 +139,7 @@ const SingleHotel = () => {
               })}
           </div>
         </div>
-        <div className="row-span-1 md:block hidden border-2 col-span-3  border-t-2   rounded-lg">
+        <div className="row-span-1 md:block hidden border-2 col-span-3  border-t-2   rounded-lg ms-5">
           <PriceCard price={price} className={""} />
         </div>
       </div>

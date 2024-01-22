@@ -453,18 +453,19 @@ const decreaseRoomsCount = (rooms) => {
 };
 
 const updateRoomNumberHelper=(room_id,noOfRooms)=>{
+  console.log(room_id,noOfRooms)
+
   return new Promise( async (resolve,reject)=>{
     try {
       const response=await roomModel.updateOne(
         {_id:room_id},
         {
-          $set:{
             $inc:{
-              noOfRooms:noOfRooms
+              no_of_rooms_available:-noOfRooms
             }
-          }
         }
-        )
+        );
+        console.log(response)
         resolve(response);
     } catch (error) {
       reject(error);

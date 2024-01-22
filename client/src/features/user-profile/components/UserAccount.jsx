@@ -3,13 +3,14 @@ import { Link } from "react-router-dom";
 const UserAccount = () => {
 
   return (
-    <div className="grid grid-cols-3 grid-rows-5 gap-4 w-[80%]">
-      <div className="shadow-md col-span-3 flex justify-left items-center">
-        <h2 className="text-4xl ms-[5%]">Account</h2>
+    <div className="grid grid-cols-3 grid-rows-[50px,auto,auto,auto,auto] gap-9 w-[80%]">
+      <div className="shadow-md col-span-3 flex justify-left">
+        <h2 className="text-[1.8rem] ms-[2%] ">Account</h2>
         
       </div>
 
       <div className="col-start-1 col-end-4 md:col-end-2 row-start-2  flex flex-col justify-between  shadow-2xl text-md p-9 cursor-pointer">
+      <Link to={'/user-details'}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -31,6 +32,7 @@ const UserAccount = () => {
             Provide Your Personal Details
           </h2>
         </div>
+      </Link>
       </div>
 
       <div className="md:col-start-2 md:col-end-3 col-start-1 col-end-4 row-start-3 md:row-start-2 border-2 p-9 cursor-pointer shadow-2xl">

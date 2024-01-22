@@ -58,7 +58,7 @@ const findUserHelper = (email) => {
 //username,
 //userid
 //userphone
-const findUserByUserName = (username) => {
+const findUserByUserName =async (username) => {
   return new Promise(async (resolve, reject) => {
     try {
       const user = await userModel.findOne(
@@ -77,10 +77,23 @@ const findUserByUserName = (username) => {
   });
 };
 
+const getUserDetailsForProfileHelper =async (user_id) => {
+  return new Promise( async (resolve,reject)=>{
+    try {
+      const response=await userModel.findOne({_id:user_id})
+      resolve(response)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+
 module.exports = {
   fetchAllUsersHelper,
   blockOrUnblockUserHelper,
   checkUserBlockedOrNotHelper,
   findUserHelper,
   findUserByUserName,
+  getUserDetailsForProfileHelper
 };

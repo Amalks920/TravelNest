@@ -19,7 +19,7 @@ export function   InputModal({ inputModalOpen, setInputModalOpen,id,description 
   const selectedPrice=useSelector(selectPrice)
   const selectedRooms=useSelector(selectCheckedRooms)
   const handleOpen = () => dispatch(updateIsModalOpen(!inputModalOpen));
-  const [noOfRooms,setNoOfRooms]=useState(0)
+  const [noOfRooms,setNoOfRooms]=useState(1)
 
   return (
     <>
@@ -57,7 +57,6 @@ export function   InputModal({ inputModalOpen, setInputModalOpen,id,description 
 
               value={noOfRooms}
               onChange={(e)=>{
-                console.log(e.target.value)
                 setNoOfRooms(e.target.value)
               }}
               max={5} 

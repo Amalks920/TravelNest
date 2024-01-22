@@ -9,14 +9,18 @@ import {
 } from "@material-tailwind/react";
 import { useCancelBookingMutation } from "../services/cancelBookingApiSlice";
  
-export function BookingCancelModel({open,setOpen,booking_id}) {
+export function BookingCancelModel({open,setOpen,data}) {
  
   const [cancelBooking,{isError,isLoading,isSuccess}]=useCancelBookingMutation()
 
   const handleOpen = () => setOpen(!open);
 
   const handleSubmit= async ()=>{
-    await cancelBooking({booking_id,status:'cancelled'});
+    console.log(data)
+    await cancelBooking(data);
+
+    handleOpen()
+    console.log('hiiiiii')
   }
 
  

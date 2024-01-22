@@ -1,5 +1,5 @@
 const express = require('express');
-const { getAllUsers, blockOrUnblockUser, checkIfUserBlockedOrNot } = require('../controllers/userController');
+const { getAllUsers, blockOrUnblockUser, checkIfUserBlockedOrNot, getUserDetailsForProfile, getUserWalletDetails } = require('../controllers/userController');
 const verifyJwt = require('../utils/verifyJwt');
 const router = express.Router();
 
@@ -242,5 +242,10 @@ router.patch('/add-to-favorites',(req,res)=>{
 router.delete('/remove-from-favorites/{hotle-id}',(req,res)=>{
   res.status()
 })
+
+// user
+
+router.get('/get-user-details-for-user/:user_id',verifyJwt,getUserDetailsForProfile)
+router.get('/get-wallet-details/:user_id',verifyJwt,getUserWalletDetails);
 
 module.exports=router;
