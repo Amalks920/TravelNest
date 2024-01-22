@@ -121,7 +121,6 @@ function App() {
 
 
       <Route
-     // element={<AuthPageContainer home={true} />}
        element={<PageContainer allowedRole={'user'} />}
        >
       <Route path="/home" element={<HomePage />} />

@@ -1,15 +1,18 @@
 import { useParams } from "react-router-dom";
 import { useGetABookingDetailsForUserQuery } from "../services/getABookingDetailsApiSlice";
-import { Button, Spinner } from "@material-tailwind/react";
+import { Button, Spinner, Textarea } from "@material-tailwind/react";
 import { IMAGE_BASE_URL } from "../../../data/constants";
 import BookingCancelModel from "./BookingCancelModel";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { selectUserId } from "../../authentication/services/loginSlice";
+import ReviewModal from "./ReviewModal";
 
 const SingleBookingDetails = () => {
   const { booking_id } = useParams();
   const [open, setOpen] = useState(false);
+  const [openReviewModal,setOpenReviewModal]=useState(false);
+
   const user_id=useSelector(selectUserId)
   const [data,setData]=useState('')
 
@@ -31,6 +34,9 @@ const SingleBookingDetails = () => {
         setOpen={setOpen}
         data={data}
       />
+
+ 
+<ReviewModal openReviewModal={openReviewModal} setOpenReviewModal={setOpenReviewModal}/>
       <div className="w-[80%] mt-[2%] min-h-[100vh]">
         <h2
           className={`font-bold ${
@@ -98,7 +104,8 @@ const SingleBookingDetails = () => {
             index
           ) => {
             return (
-              <div className="grid grid-rows-[100px,auto,auto,auto] gird-cols-12  mt-12 gap-2 -ms-3 md:0 sm:ps-6 overflow-y-hidden">
+            
+              <div className="grid grid-rows-[100px,auto,auto,auto] gird-cols-12  mt-12 gap-2 -ms-3 md:0 sm:ps-6 overflow-y-hidden mb-[200px]">
                 <div className="row-span-1 col-span-12 sm:col-span-4 lg:col-span-12 md:col-span-8  flex justify-between sm:p-7  p-6">
                   <div className="">
                     <h2 className="font-normal text-[0.8rem] mb-3  md:text-[1.3rem]">
@@ -182,7 +189,7 @@ const SingleBookingDetails = () => {
                   <h2 className=" text-[0.9rem]">{userPhone}</h2>
                 </div>
 
-                <div className="row-span-1 col-span-12">
+                <div className="row-span-1 col-span-12 mt-[100px]">
                   <div className="row-span-1 col-span-12">
                     <h2 className="font-bold my-5 ms-2">Payment Details</h2>
                   </div>
@@ -191,10 +198,23 @@ const SingleBookingDetails = () => {
                     <h2 className="font-bold text-[0.9rem]">Total Amount</h2>
                     <h2 className="">₹ {totalAmount}</h2>
                   </div>
+
                   <div className="row-span-1 col-span-12 flex sm:flex-row flex-col justify-between border-2 mt-5 p-5">
                     <h2 className="font-bold text-[0.9rem]">Discount</h2>
                     <h2 className="">₹ {discountAmount}</h2>
                   </div>
+
+                  <div className="row-span-1 col-span-12 flex sm:flex-row flex-col justify-between border-2 mt-5 p-5">
+                    <h2 className="font-bold text-[0.9rem]">Write a Review</h2>
+                    <Button 
+                    onClick={()=>{
+                      setOpenReviewModal(!openReviewModal)
+                    }}
+                    size="sm" className="text-[0.6rem]">write a review</Button>
+                  </div>
+
+          
+
                 </div>
               </div>
             );
