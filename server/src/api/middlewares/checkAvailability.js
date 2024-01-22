@@ -6,14 +6,12 @@ const checkAvailability=async (req,res,next)=>{
     // const {checkIn,checkOut}=req.query
     // console.log(checkIn,checkOut)
     // console.log(req.query)
-    console.log(req.body)
-    console.log('req.body')
-    console.log(req.query)
+  
     const checkInDate=req.query.checkIn || null;
     const checkOutDate=req.query.checkout || null;
     const newCheckIn = new Date(checkInDate);
     const newCheckOut = new Date(checkOutDate);
-    console.log(newCheckIn,newCheckOut)
+
 try {
   
   const existingCollisions = await bookingModel.find({
@@ -56,16 +54,14 @@ try {
       let isExist=filteredExistingCollisionIdArray.find(
         (element) => element.equals(existingCollisionIdArray[i])
       )
-      console.log(isExist)
-      console.log('isExist')
+
       if (!isExist) {
         filteredExistingCollisionIdArray.push(existingCollisionIdArray[i]);
       }else{
-        console.log('inside else condition')
+    
       }
     }
 
-    console.log(filteredExistingCollisionIdArray)
 
    res.locals.existingCollisions=filteredExistingCollisionIdArray
   next();

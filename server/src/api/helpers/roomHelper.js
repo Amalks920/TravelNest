@@ -366,7 +366,10 @@ const addRoomImagesHelper = (room_id, imagePathArray) => {
   });
 };
 
-const searchRoomsHotel = (location, collisions) => {
+const searchRoomsHotel = (location, collisions, priceRange, roomType) => {
+  if (priceRange?.min && priceRange?.max) {
+  }
+
   return new Promise(async (resolve, reject) => {
     try {
       const response = await roomModel.aggregate([
@@ -418,6 +421,13 @@ const searchRoomsHotel = (location, collisions) => {
                   $nin: collisions,
                 },
               },
+
+              { rate: { $gte: priceRange?.min } }, // min price
+
+              { rate: { $lte: priceRange?.max } }, // max price
+
+              { roomType: roomType },
+              
             ],
           },
         },
@@ -433,7 +443,6 @@ const searchRoomsHotel = (location, collisions) => {
 const decreaseRoomsCount = (rooms) => {
   return new Promise(async (resolve, reject) => {
     try {
-
       for (var i = 0; i < rooms.roomDetails.length; i++) {
         const response = await roomModel.updateOne(
           { _id: rooms.roomDetails[i].id },
@@ -444,7 +453,7 @@ const decreaseRoomsCount = (rooms) => {
           }
         );
       }
-      
+
       resolve(true);
     } catch (error) {
       reject(error);
@@ -452,26 +461,24 @@ const decreaseRoomsCount = (rooms) => {
   });
 };
 
-const updateRoomNumberHelper=(room_id,noOfRooms)=>{
-  console.log(room_id,noOfRooms)
-
-  return new Promise( async (resolve,reject)=>{
+const updateRoomNumberHelper = (room_id, noOfRooms) => {
+  return new Promise(async (resolve, reject) => {
     try {
-      const response=await roomModel.updateOne(
-        {_id:room_id},
+      const response = await roomModel.updateOne(
+        { _id: room_id },
         {
-            $inc:{
-              no_of_rooms_available:-noOfRooms
-            }
+          $inc: {
+            no_of_rooms_available: -noOfRooms,
+          },
         }
-        );
-        console.log(response)
-        resolve(response);
+      );
+      console.log(response);
+      resolve(response);
     } catch (error) {
       reject(error);
     }
-  })
-}
+  });
+};
 
 module.exports = {
   addRoomHelper,
@@ -487,5 +494,6 @@ module.exports = {
   addRoomImagesHelper,
   getAllRoomsOfAHotelForUserHelperByAvailabilty,
   searchRoomsHotel,
-  decreaseRoomsCount,updateRoomNumberHelper
+  decreaseRoomsCount,
+  updateRoomNumberHelper,
 };

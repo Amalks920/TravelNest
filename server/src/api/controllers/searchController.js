@@ -12,7 +12,10 @@ const searchController= async (req,res,next)=>{
         let checkIn=req.query.checkIn || null;
         let checkOut=req.query.checkOut || null;
         const roomType=req.query.roomType || null;
-        const response=await findHotelByLocationHelper(location,collisions,roomType)
+        const priceRange=JSON.parse(req.query.priceRange) || null;
+    
+      
+        const response=await findHotelByLocationHelper(location,collisions,roomType,priceRange);
 
         res.status(200).json({response})
     } catch (error) {
@@ -23,9 +26,11 @@ const searchController= async (req,res,next)=>{
 const roomSearchController= async (req,res,next)=>{
     const collisions=res.locals.existingCollisions;
     const location=req.query.location;
+    const roomType=req.query.roomType || null;
+    const priceRange=req.query.priceRange?JSON.parse(req.query.priceRange):  null;
 
     try {
-       const response=await searchRoomsHotel(location,collisions)
+       const response=await searchRoomsHotel(location,collisions,priceRange,roomType)
        res.status(200).json({response})
     } catch (error) {
         console.log(error)

@@ -1,4 +1,5 @@
 import { Checkbox, Radio, Slider } from "@material-tailwind/react";
+import PriceFilter from "./PriceFilter";
 
 const FilterSection = () => {
   return (
@@ -25,6 +26,7 @@ const FilterSection = () => {
            <h2 className="mt-2"> ₹1500 to ₹1999</h2>
           </div>
         </div> */}
+        <PriceFilter/>
       </div>
     </div>
   );

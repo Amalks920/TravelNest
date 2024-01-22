@@ -2,32 +2,36 @@ import { useParams } from "react-router-dom";
 import FilterSection from "./FilterSection";
 import HotelListSection from "./HotelListSection";
 import useGetSearchHotels from "../hooks/useGetSearchHotels";
-import { useSelector } from "react-redux";
-import { selectCheckIn, selectCheckOut, selectLocation, selectRoomType } from "../../../services/searchSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCheckIn, selectCheckOut, selectLocation, selectPriceRange, selectRoomType, selectSearchResult, updateSearchResult } from "../../../services/searchSlice";
 import { useEffect, useState } from "react";
 import { useSearchByLocationMutation } from "../services/searchApiSlice";
 
 const SearchContainer = () => {
   
-  const [data,setData]=useState([])
+//console.log( useGetSearchHotels())
+  const dispatch=useDispatch()  
+  //const [data,setData]=useState([])
   const location=useSelector(selectLocation)
   const checkIn=useSelector(selectCheckIn)
   const checkOut=useSelector(selectCheckOut)
   const roomType=useSelector(selectRoomType)
-  // const { searchResult,isError, isLoading, isSuccess } =
-  //   useGetSearchHotels(location);
+  const data=useSelector(selectSearchResult)
+  const priceRange=useSelector(selectPriceRange)
+  //console.log(d)
+
   const [searchByLocation,{isError,isLoading,isSuccess}]=useSearchByLocationMutation({location,checkIn,checkOut})
 
   useEffect(()=>{
      handleSearch()
-  // if(location && !checkIn && !checkOut) handleSearch()
-},[location,checkIn,checkOut,roomType])
+},[location,checkIn,checkOut,roomType,priceRange])
 
   const handleSearch=async ()=>{
     try {
-        const response=await searchByLocation({location,checkIn,checkOut,roomType})
+        const response=await searchByLocation({location,checkIn,checkOut,roomType,priceRange})
         console.log(response)
-        setData(response.data.response)
+        dispatch(updateSearchResult(response.data.response))
+       // setData(response.data.response)
     } catch (error) {
         console.log(error)
     }
@@ -39,7 +43,7 @@ const SearchContainer = () => {
        <FilterSection />
       </div>
 
-
+    
       <div className="row-span-1 col-span-2 lg:col-span-1 overflow-scroll">
         {
           data?.map((hotel,index)=>{

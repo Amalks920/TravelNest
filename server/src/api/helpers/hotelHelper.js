@@ -313,22 +313,26 @@ const addHotelImagesHelper=(hotel_id,imagePathArray)=>{
   })
 }
 
-const findHotelByLocationHelper=(location,collisions,roomType)=>{
-  
+const findHotelByLocationHelper=(location,collisions,roomType,priceRange)=>{
+    console.log(priceRange)
+    console.log('priceRange')
   return new Promise(async (resolve,reject)=>{
     try {
       const response=await hotelModel.find(
         {
           $and:[
             {location:{'$regex':`${location}`,'$options':'i'}},
-            {roomType:roomType}
+            {roomType:roomType},
+            { 
+              $and: [
+                { price: { $gte: priceRange.min } }, // min price
+                { price: { $lte: priceRange.max } }  // max price
+              ]
+            }
           ]
         },
-        // {
-        //   _id: {$nin:collisions}
-        // }
-
         );
+
       console.log(response)
       resolve(response)
     } catch (error) {
