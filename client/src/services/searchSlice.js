@@ -35,7 +35,8 @@ const searchSlice=createSlice({
             state.searchResult=action.payload
         },
         updatePriceRange:(state,action)=>{
-            state.priceRange=JSON.stringify(action.payload);
+            console.log(action.payload)
+            state.priceRange=action.payload;
         }
     }
 

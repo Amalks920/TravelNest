@@ -1,4 +1,5 @@
 const { getAllBookingsHelper, getAllBookingsOfHelper, getABookingForUserHelper, getABookingForOwnerHelper, changeBookingStatusHelper, cancelBookingHelper } = require("../helpers/bookingHelper")
+const { getReviewDoneByUser } = require("../helpers/reviewHelper")
 const { updateRoomNumberHelper } = require("../helpers/roomHelper")
 const { addToWalletHelper } = require("../helpers/walletHelper")
 
@@ -28,9 +29,12 @@ const getAllBookingsOfUser=async (req,res,next)=>{
 
 const getABookingForUser=async (req,res,next)=>{
     const booking_id=req.params.booking_id;
+    const user_id=req.query.user_id;
+
     try {
         const response=await getABookingForUserHelper(booking_id)
-        res.status(200).json({response})
+        const reviewResponse=await getReviewDoneByUser(booking_id,user_id)
+        res.status(200).json({response,reviewResponse})
     } catch (error) {
         res.status(404).json({error})
     }
@@ -49,10 +53,11 @@ const getABookingForOwner=async (req,res,next)=>{
 const changeBookingStatus=async (req,res,next)=>{
     const booking_id=req.params.booking_id;
     const status=req.body.status
+    console.log(req.body)
     const totalNoOfRooms=req.body.totalNoOfRooms;
     try {
-        const response= await changeBookingStatusHelper(booking_id,status,totalNoOfRooms);
-
+        const response= await changeBookingStatusHelper(booking_id,status);
+        console.log(response)
         res.status(200).json({response})
     } catch (error) {
         res.status(404).json({error})

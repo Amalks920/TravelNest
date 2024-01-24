@@ -131,9 +131,9 @@ const SearchSection = () => {
             </div>
 
             <div className="flex items-center row-span-1 col-span-1">
-              <Button value={"submit"} type={"submit"} width={"sm"}>
+              {/* <Button value={"submit"} type={"submit"} width={"sm"}>
                 Update Search
-              </Button>
+              </Button> */}
               {/* <select
            className="border-white w-[80%] h-[40px] text-black ps-9"s
            name="roomType" id="">

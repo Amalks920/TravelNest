@@ -108,6 +108,7 @@ const BookingDetails = () => {
                           <option value="paid">Paid</option>
                           <option value="checkIn">CheckIn</option>
                           <option value="checkOut">CheckOut</option>
+                          <option value="cancelled">cancel</option>
                         </select>
                         <Button
                           onClick={() => {

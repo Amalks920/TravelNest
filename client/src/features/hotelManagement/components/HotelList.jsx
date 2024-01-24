@@ -47,7 +47,7 @@ import { IMAGE_BASE_URL } from "../../../data/constants";
     },
   ];
    
-  const TABLE_HEAD = ["Hotel Name","Location", "Created", "Status","","","" ];
+  const TABLE_HEAD = ["Hotel Name","Location","Status","","",""];
    
   const TABLE_ROWS = [
     {
@@ -148,7 +148,7 @@ import { IMAGE_BASE_URL } from "../../../data/constants";
                             <Typography
                               variant="small"
                               color="blue-gray"
-                              className="font-thin text-[0.8rem] text-left "
+                              className="font-thin text-[0.8rem] text-left max-w-[100px]"
                             >
                               {hotelName}
                             </Typography>
@@ -168,14 +168,14 @@ import { IMAGE_BASE_URL } from "../../../data/constants";
                           <Typography
                             variant="small"
                             color="blue-gray"
-                            className="font-normal text-[0.8rem] "
+                            className="font-normal text-[0.8rem] max-w-[100px]"
                           >
                             {location}
                           </Typography>
                         </div>
                       </td>
 
-                      <td className={classes+" "+"border-r-2"}>
+                      {/* <td className={classes+" "+"border-r-2"}>
                         <div className="flex flex-col">
                           <Typography
                             variant="small"
@@ -186,7 +186,7 @@ import { IMAGE_BASE_URL } from "../../../data/constants";
                        {createdAt}  
                           </Typography>
                         </div>
-                      </td>
+                      </td> */}
 
              
 

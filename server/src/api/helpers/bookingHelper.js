@@ -149,6 +149,7 @@ const getABookingForOwnerHelper=(booking_id)=>{
 }
 
 const changeBookingStatusHelper=(booking_id,status)=>{
+    console.log(status)
     return new Promise( async (resolve,reject)=>{
         try {
             const response=await bookingModel.updateOne(
@@ -159,6 +160,7 @@ const changeBookingStatusHelper=(booking_id,status)=>{
                     }
                 }
                 )
+                console.log(response)
             resolve(response)   
         } catch (error) {
             reject(error)
@@ -167,6 +169,7 @@ const changeBookingStatusHelper=(booking_id,status)=>{
 }
 
 const cancelBookingHelper=(booking_id,status,totalNoOfRooms)=>{
+
     return new Promise( async (resolve,reject)=>{
         try {
         const response=await bookingModel.updateOne(
@@ -176,7 +179,8 @@ const cancelBookingHelper=(booking_id,status,totalNoOfRooms)=>{
                     status:status
                 }
             }
-            )
+            );
+        
             resolve(response)
         } catch (error) {
             reject(error)

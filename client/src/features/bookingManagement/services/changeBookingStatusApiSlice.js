@@ -7,7 +7,7 @@ const changeBookingStatusApiSlice=apiSlice.injectEndpoints({
             query:(data)=>({
                 url:`/booking/change-status/${data.booking_id}`,
                 method:'POST',
-                body:data.status
+                body:data
             })
 
         })

@@ -166,8 +166,8 @@ const BookingsList=()=>{
                                   variant="ghost"
                                   size="sm"
                                   
-                                  value={status==='paid' ? "paid" :'checkout'}
-                                  color={status==='paid' ? "green" :'blue-gray'}
+                                  value={status==='paid' ? "paid" :status==='checkout'?'checkout':status==='cancelled'?'cancelled':'checkIn'}
+                                  color={status==='paid' ? "green" :status==='checkOut'?'blue-gray':'red'}
                                 />
                               </div>
                             </td>

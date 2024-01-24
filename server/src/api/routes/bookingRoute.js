@@ -113,9 +113,9 @@ router.get('/get-booking/{user-id}',(req,res)=>{
  *           description: Bad request
  */
 
-router.put('/cancel-booking/{booking-id}',(req,res)=>{
-    res.status(200).json({})
-})
+// router.put('/cancel-booking/{booking-id}',(req,res)=>{
+//     res.status(200).json({})
+// })
 
 
 // user

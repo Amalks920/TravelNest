@@ -13,6 +13,7 @@ import CheckInCheckOutModal from "./CheckInCheckOutModal";
 import { useSelector } from "react-redux";
 import { selectRooms } from "../services/roomsSlice";
 import { selectCheckIn, selectCheckOut } from "../services/priceSlice";
+import ReviewSection from "./ReviewSection";
 
 const SingleHotel = () => {
   const [size, setSize] = useState(null);
@@ -34,7 +35,7 @@ const SingleHotel = () => {
   const { hotelName, images, description, amenities } = hotel?.response[0];
 
   const rooms = hotel?.response[1];
-
+  const reviews=hotel?.response[2];
   return (
     <>
  
@@ -49,7 +50,7 @@ const SingleHotel = () => {
       <CheckInCheckOutModal hotel_id={hotel_id} />
       
 
-      <div className="grid grid-cols-12 grid-rows-[100px,200px,200px,auto,auto] pb-14  w-[100%] min-h-[100vh] mt-16  gap-2 px-9 shadow-2xl">
+      <div className="grid grid-cols-12 grid-rows-[100px,200px,200px,auto,auto,auto] pb-14  w-[100%] min-h-[100vh] mt-16  gap-2 px-9 shadow-2xl">
         <div className="row-span-1 col-start-1 md:col-start-2 col-span-10 ">
           <h2 className="font-bold mt-11 ms-2 text-[1rem] sm:text-2xl">{hotelName}</h2>
           
@@ -141,6 +142,10 @@ const SingleHotel = () => {
         </div>
         <div className="row-span-1 md:block hidden border-2 col-span-3  border-t-2   rounded-lg ms-5">
           <PriceCard price={price} className={""} />
+        </div>
+
+        <div className="row-span-2 col-span-8 border-2 flex flex-col ms-[120px] mt-11 ">         
+          <ReviewSection reviews={reviews}/>   
         </div>
       </div>
     </>

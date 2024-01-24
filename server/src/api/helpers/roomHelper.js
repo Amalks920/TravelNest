@@ -367,9 +367,7 @@ const addRoomImagesHelper = (room_id, imagePathArray) => {
 };
 
 const searchRoomsHotel = (location, collisions, priceRange, roomType) => {
-  if (priceRange?.min && priceRange?.max) {
-  }
-
+console.log(priceRange)
   return new Promise(async (resolve, reject) => {
     try {
       const response = await roomModel.aggregate([
@@ -422,12 +420,12 @@ const searchRoomsHotel = (location, collisions, priceRange, roomType) => {
                 },
               },
 
-              { rate: { $gte: priceRange?.min } }, // min price
+              { rate: { $gte: Number(priceRange?.min) || 0 } }, // min price
 
-              { rate: { $lte: priceRange?.max } }, // max price
+              { rate: { $lte: Number(priceRange?.max) || Number.MAX_SAFE_INTEGER } }, // max price
 
-              { roomType: roomType },
-              
+              // { roomType: roomType },
+
             ],
           },
         },

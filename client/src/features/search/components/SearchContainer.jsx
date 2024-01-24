@@ -28,6 +28,7 @@ const SearchContainer = () => {
 
   const handleSearch=async ()=>{
     try {
+      console.log(priceRange)
         const response=await searchByLocation({location,checkIn,checkOut,roomType,priceRange})
         console.log(response)
         dispatch(updateSearchResult(response.data.response))
@@ -47,7 +48,7 @@ const SearchContainer = () => {
       <div className="row-span-1 col-span-2 lg:col-span-1 overflow-scroll">
         {
           data?.map((hotel,index)=>{
-            console.log(hotel)
+        
             return <HotelListSection key={index}  hotel={hotel}/>
           })
         }

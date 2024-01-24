@@ -1,4 +1,7 @@
 const express=require('express');
+const { addReview, getReviewOfAHotelForUser, getReviewOfAHotelForAdmin } = require('../controllers/reviewController');
+const verifyJwt = require('../utils/verifyJwt');
+const uploader= require('../../config/multer');
 const router=express.Router();
 
 /**
@@ -31,9 +34,8 @@ const router=express.Router();
  *           description: Bad request
  */
 
-router.post('/{hotel_id}/add-review',(req,res)=>{
-    res.status(200).json({})
-})
+router.post('/add-review',verifyJwt,uploader.array('images',10),addReview);
+
 /**
  * @openapi
  * paths:
@@ -155,6 +157,10 @@ router.delete('/delete-review/{review_id}',(req,res)=>{
 router.get('/get-a-review/{review_id}',(req,res)=>{
     res.status(200).json({})
 })
+
+
+router.get('/get-review-of-hotel-user/:hotel_id',getReviewOfAHotelForUser)
+router.get('/get-hotel-reviews-for-owner/:hotel_id',verifyJwt,getReviewOfAHotelForAdmin)
 
 
 module.exports=router

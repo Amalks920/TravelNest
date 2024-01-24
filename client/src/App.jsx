@@ -47,6 +47,7 @@ import ChatPage from './pages/user/ChatPage.jsx';
 import WalletPage from './pages/user/WalletPage.jsx';
 import UserDetailsPage from './pages/user/UserDetailsPage.jsx';
 import OnwerChatPage from './pages/owner/OwnerChatPage.jsx';
+import HotelReviews from './features/hotelManagement/components/HotelReviews.jsx';
 
 function App() {
   const token = useSelector(selectToken)
@@ -97,6 +98,7 @@ function App() {
         <Route path='/owner/bookings-list/:hotel_id' element={<BookingsList/>}></Route>
         <Route path='/owner/booking-details/:booking_id' element={<BookingDetailsPage/>}></Route>
         <Route path='/owner/chats' element={<OnwerChatPage/>}></Route>
+        <Route path='/owner/review/:hotel_id' element={<HotelReviews/>}></Route>
 
       </Route>
        

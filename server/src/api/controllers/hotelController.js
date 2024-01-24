@@ -1,7 +1,9 @@
 const { getHotelsHelper, getAHotelHelper, editHotelHelper, getAllHotelDetailsHelper, deleteHotelImageHelper, changeHotelStatusHelper, getAllHotelsForUserHelper, getAHotelForUserHelper, getAllHotelsForAdminHelper, editHotelNameHelper, editHotelLocationHelper, editHotelDescriptionHelper, addHotelImagesHelper } = require("../helpers/hotelHelper")
 const { saveHotelDocumentHelper } = require("../helpers/hotelHelper")
 const { uploadImages } = require("../helpers/hotelHelper")
+const { findReviewsOfHotelByHotelIdHelper } = require("../helpers/reviewHelper")
 const { findRoomsInHotelHelper, changeAllRoomStatus, getAllRoomsOfAHotelForUserHelper } = require("../helpers/roomHelper")
+const { getReviewOfAHotelForUser } = require("./reviewController")
 require('dotenv').config()
 
 
@@ -144,9 +146,10 @@ const getAHotelForUser=async (req,res,next)=>{
   try {
     const hotels=await getAHotelForUserHelper(hotel_id)
     const rooms=await getAllRoomsOfAHotelForUserHelper(hotel_id)
+    const reviews=await findReviewsOfHotelByHotelIdHelper(hotel_id);
     console.log(rooms)
 
-    const response=await Promise.all([hotels,rooms])
+    const response=await Promise.all([hotels,rooms,reviews])
     console.log(response)
 
     res.status(200).json({response})

@@ -1,5 +1,5 @@
-const mongoose = require('mongoose'); // Erase if already required
-const ObjectId=require('mongodb').ObjectId
+const mongoose = require("mongoose"); // Erase if already required
+const ObjectId = require("mongodb").ObjectId;
 
 /**
  * @openapi
@@ -20,41 +20,43 @@ const ObjectId=require('mongodb').ObjectId
  *          type: Array
  */
 
-var userSchema = new mongoose.Schema({
-   
- 
-    hotel_id:{
-        type:ObjectId,
-        ref:'Hotel',
-        required:true
+const reviewSchema = new mongoose.Schema(
+  {
+    booking_id: {
+      type: ObjectId,
+      ref: "booking",
+      required: true,
     },
-    user_id:{
-        type:ObjectId,
-        ref:'Hotel',
-        required:true
+    user_id: {
+      type: ObjectId,
+      ref: "User",
+      required: true,
     },
-    heading:{
-        type:String,
-        required:true
+    // heading:{
+    //     type:String,
+    //     required:true
+    // },
+    description: {
+      type: String,
+      required: true,
     },
-    description:{
-        type:String,
-        required:true
+
+    rating: {
+      type: Number,
+      required: true,
     },
-    rating:{
-        type:Number,
-        required:true
+
+    images: {
+      type: Array,
+      required: true,
     },
-    images:{
-        type:Array,
-        required:true
-    },
-},
-{
-    timestamps:true
-}
+
+    created_at: { type: Date, required: true, default: Date.now },
+  },
+  {
+    timestamps: true,
+  }
 );
 
-
-const Booking= mongoose.model("Booking", bookingSchema);
-export default Booking
+const Booking = mongoose.model("Review", reviewSchema);
+module.exports = Booking;

@@ -7,36 +7,38 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { selectUserId } from "../../authentication/services/loginSlice";
 import ReviewModal from "./ReviewModal";
+import { PencilIcon } from "@heroicons/react/24/solid";
 
 const SingleBookingDetails = () => {
   const { booking_id } = useParams();
   const [open, setOpen] = useState(false);
-  const [openReviewModal,setOpenReviewModal]=useState(false);
+  const [openReviewModal, setOpenReviewModal] = useState(false);
 
-  const user_id=useSelector(selectUserId)
-  const [data,setData]=useState('')
+  const user_id = useSelector(selectUserId);
+  const [data, setData] = useState("");
 
   const {
     data: booking,
     isError,
     isLoading,
     isSuccess,
-  } = useGetABookingDetailsForUserQuery({ booking_id });
+  } = useGetABookingDetailsForUserQuery({ booking_id, user_id });
 
   if (isLoading) return <Spinner />;
   {
+    console.log(booking.reviewResponse);
     console.log(booking.response[0].status);
   }
   return (
     <>
-      <BookingCancelModel
-        open={open}
-        setOpen={setOpen}
-        data={data}
-      />
+      <BookingCancelModel open={open} setOpen={setOpen} data={data} />
 
- 
-<ReviewModal openReviewModal={openReviewModal} setOpenReviewModal={setOpenReviewModal}/>
+      <ReviewModal
+        openReviewModal={openReviewModal}
+        setOpenReviewModal={setOpenReviewModal}
+        booking_id={booking_id}
+        hotel_id={booking.response[0].hotel_id}
+      />
       <div className="w-[80%] mt-[2%] min-h-[100vh]">
         <h2
           className={`font-bold ${
@@ -61,18 +63,18 @@ const SingleBookingDetails = () => {
           >
             print
           </button>
-
-          {booking.response[0].status !== "cancelled" ? (
+          {console.log(booking.response[0].status)}
+          {booking.response[0].status !== "cancelled" && booking.response[0].status !== 'checkOut' ? (
             <button
               onClick={() => {
                 setData({
-                  user_id:user_id,
-                  booking_id:booking_id,
-                  status:'cancelled',
-                  room_id:booking.response[0].roomDetails[0]._id,
-                  totalNoOfRooms:booking.response[0].totalNoOfRooms,
-                  amount:booking.response[0].totalAmount
-                })
+                  user_id: user_id,
+                  booking_id: booking_id,
+                  status: "cancelled",
+                  room_id: booking.response[0].roomDetails[0]._id,
+                  totalNoOfRooms: booking.response[0].totalNoOfRooms,
+                  amount: booking.response[0].totalAmount,
+                });
                 // setRoomId(booking.response[0].roomDetails[0]._id)
                 // setTotalNoOfRooms(booking.response[0].totalNoOfRooms)
                 setOpen(!open);
@@ -104,7 +106,6 @@ const SingleBookingDetails = () => {
             index
           ) => {
             return (
-            
               <div className="grid grid-rows-[100px,auto,auto,auto] gird-cols-12  mt-12 gap-2 -ms-3 md:0 sm:ps-6 overflow-y-hidden mb-[200px]">
                 <div className="row-span-1 col-span-12 sm:col-span-4 lg:col-span-12 md:col-span-8  flex justify-between sm:p-7  p-6">
                   <div className="">
@@ -198,23 +199,57 @@ const SingleBookingDetails = () => {
                     <h2 className="font-bold text-[0.9rem]">Total Amount</h2>
                     <h2 className="">₹ {totalAmount}</h2>
                   </div>
-
+               
                   <div className="row-span-1 col-span-12 flex sm:flex-row flex-col justify-between border-2 mt-5 p-5">
                     <h2 className="font-bold text-[0.9rem]">Discount</h2>
                     <h2 className="">₹ {discountAmount}</h2>
                   </div>
 
-                  <div className="row-span-1 col-span-12 flex sm:flex-row flex-col justify-between border-2 mt-5 p-5">
-                    <h2 className="font-bold text-[0.9rem]">Write a Review</h2>
-                    <Button 
-                    onClick={()=>{
-                      setOpenReviewModal(!openReviewModal)
-                    }}
-                    size="sm" className="text-[0.6rem]">write a review</Button>
-                  </div>
+                 
+                  {!booking?.reviewResponse?._id ? (
+                    <div className="row-span-1 col-span-12 flex sm:flex-row flex-col justify-between border-2 mt-5 p-5">
+                      <h2 className="font-bold text-[0.9rem]">
+                        Write a Review
+                      </h2>
+                      <Button
+                        onClick={() => {
+                          setOpenReviewModal(!openReviewModal);
+                        }}
+                        size="sm"
+                        className="text-[0.6rem]"
+                      >
+                        write a review
+                      </Button>
+                    </div>
+                  ) : (
+                    <>
+                    <h2 className="font-bold mt-20 ms-2">Review</h2>
+                    <div className="row-span-1 col-span-12 flex sm:flex-col flex-col justify-between border-2 mt-5 p-5 gap-5">
 
-          
+                      <div className="flex gap-5">
+                        {
+                          booking.reviewResponse.images.map((image,index)=>{
+                            return <img src={`${IMAGE_BASE_URL+image}`}  width={150} className="rounded-md"/>
+                          })
+                        }
+                      </div>
 
+                      <div className="flex justify-between">
+                        <div>
+                          <h2 className="font-bold">Description</h2>
+                        <h2 className="text-[0.8rem]">{booking.reviewResponse.description}</h2>
+                        </div>
+                       
+
+                        <PencilIcon
+                          width={15}
+                          className="cursor-pointer me-6"
+                        />
+                      </div>
+
+                    </div>
+                    </>
+                  )}
                 </div>
               </div>
             );
