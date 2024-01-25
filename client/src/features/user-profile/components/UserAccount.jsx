@@ -35,7 +35,7 @@ const UserAccount = () => {
       </Link>
       </div>
 
-      <div className="md:col-start-2 md:col-end-3 col-start-1 col-end-4 row-start-3 md:row-start-2 border-2 p-9 cursor-pointer shadow-2xl">
+      {/* <div className="md:col-start-2 md:col-end-3 col-start-1 col-end-4 row-start-3 md:row-start-2 border-2 p-9 cursor-pointer shadow-2xl">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -57,9 +57,9 @@ const UserAccount = () => {
             See Your Wallet Balance
           </h2>
         </div>
-      </div>
+      </div> */}
 
-      <div className="md:col-start-3 md:col-end-4 col-start-1 col-end-4 row-start-4 md:row-start-2 border-2 p-9 cursor-pointer shadow-2xl">
+      <div className="md:col-start-2 md:col-end-3 col-start-1 col-end-4 row-start-4 md:row-start-2 border-2 p-9 cursor-pointer shadow-2xl">
        <Link to={'/bookings'}>
         <svg
           xmlns="http://www.w3.org/2000/svg"

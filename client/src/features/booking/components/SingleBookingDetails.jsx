@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useGetABookingDetailsForUserQuery } from "../services/getABookingDetailsApiSlice";
-import { Button, Spinner, Textarea } from "@material-tailwind/react";
+import { Button, Rating, Spinner, Textarea } from "@material-tailwind/react";
 import { IMAGE_BASE_URL } from "../../../data/constants";
 import BookingCancelModel from "./BookingCancelModel";
 import { useState } from "react";
@@ -27,7 +27,7 @@ const SingleBookingDetails = () => {
   if (isLoading) return <Spinner />;
   {
     console.log(booking.reviewResponse);
-    console.log(booking.response[0].status);
+   
   }
   return (
     <>
@@ -207,7 +207,7 @@ const SingleBookingDetails = () => {
 
                  
                   {!booking?.reviewResponse?._id ? (
-                    <div className="row-span-1 col-span-12 flex sm:flex-row flex-col justify-between border-2 mt-5 p-5">
+                    <div className={`row-span-1 col-span-12 flex sm:flex-row flex-col justify-between border-2 mt-5 p-5 ${status!='checkOut'?'hidden':null}`}>
                       <h2 className="font-bold text-[0.9rem]">
                         Write a Review
                       </h2>
@@ -223,9 +223,9 @@ const SingleBookingDetails = () => {
                     </div>
                   ) : (
                     <>
-                    <h2 className="font-bold mt-20 ms-2">Review</h2>
-                    <div className="row-span-1 col-span-12 flex sm:flex-col flex-col justify-between border-2 mt-5 p-5 gap-5">
-
+                    <h2 className={`font-bold mt-20 ms-2 ${status!='checkOut'?'hidden':null}`}>Review</h2>
+                    <div className={`row-span-1 col-span-12 flex sm:flex-col flex-col justify-between border-2 mt-5 p-5 gap-5 ${status!='checkOut'?'hidden':null}`}>
+                      <div><Rating value={booking.reviewResponse.rating} readonly/></div>
                       <div className="flex gap-5">
                         {
                           booking.reviewResponse.images.map((image,index)=>{

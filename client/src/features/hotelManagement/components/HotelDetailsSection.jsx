@@ -30,8 +30,8 @@ const HotelDetailsSection = ({ hotel_id }) => {
 
 
       <div className="">
-        <div className="flex justify-around">
-        <h2 className="p-5 text-center text-xl border-2 ms-[15%]">Hotel Details</h2>
+        <div className="flex justify-around border-2 ps-28">
+        <h2 className="p-5 text-center text-xl  ms-[15%]">Hotel Details</h2>
           <h2 className="p-5 pt-7 text-center text-blue-900 text-[0.8rem]"><Link to={`/owner/review/${hotel_id}`}>View Reviews</Link> </h2>
         </div>
         <TableRow hotel={hotel} isLoading={isLoading} />

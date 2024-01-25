@@ -58,6 +58,7 @@ const findReviewsOfHotelByHotelIdHelper = (hotel_id) => {
             created_time: "$created_at",
             description: "$description",
             images: "$images",
+            rating:'$rating'
           },
         },
       ]);

@@ -21,18 +21,18 @@ const Cards=({hotel_id,hotelName,price,description,images})=>{
         <Link to={`/hotel-details/${hotel_id}`}>    
 
 
-<div class="relative flex flex-col text-gray-700 bg-white   bg-clip-border rounded-xl w-96  shadow-2xl">
+<div class="relative flex flex-col text-gray-700 bg-white   bg-clip-border rounded-xl w-96  shadow-md">
   <div class="relative mx-4 mt-4 overflow-hidden text-gray-700 bg-white bg-clip-border rounded-xl h-96">
   {/* <div className="overlay"></div> */}
     <img
      src={IMAGE_BASE_URL+'/'+`${images[1]}`}
      // src="https://images.unsplash.com/photo-1629367494173-c78a56567877?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=927&amp;q=80"
-      alt="card-image" class="object-cover bg-black bg-gradient-to-b w-full h-full" />
+      alt="card-image" className="object-cover bg-black bg-gradient-to-b w-full h-full brightness-75" />
 
 
 <div class="p-6 relative -top-44 ">
     <div class="flex items-center justify-between mb-2">
-      <p class="block font-sans text-base antialiased font-medium leading-relaxed text-white">
+      <p class="block font-sans text-base antialiased font-bold leading-relaxed text-white ">
         {hotelName}
       </p>
       <p class="block font-sans text-base antialiased font-medium leading-relaxed text-white">
@@ -40,7 +40,7 @@ const Cards=({hotel_id,hotelName,price,description,images})=>{
       </p>
     </div>
     <p class="block font-sans text-sm antialiased font-normal leading-normal text-white opacity-75">
-      {description.slice(0,200)}
+      {description.slice(0,100)}
     </p>
   </div>
   </div>

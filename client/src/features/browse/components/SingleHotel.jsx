@@ -105,8 +105,8 @@ const SingleHotel = () => {
             <h2 className="text-2xl font-bold p-4"></h2>
           </div>
           <div className=" h-fit font-medium  text-left ps-3 text-[0.9rem] leading-8">
-          <h2 className="font-bold text-xl ms-5 mb-4 ">About</h2>
-            <h2 className="w-[80%] ms-5" >{description}</h2>
+          <h2 className="font-bold text-xl  mb-4 ">About</h2>
+            <h2 className="w-[80%]" >{description}</h2>
           </div>
           <div className=" h-fit font-medium  text-left ps-3 text-[0.9rem] leading-8 mt-8 ms-4">
           <button className="border-2 border-black px-3  text-[0.7rem] rounded-lg me-4"><Link to={'/chat'}>CHAT WITH OWNER</Link></button>
@@ -115,7 +115,7 @@ const SingleHotel = () => {
 
           <div className=" h-fit ">{amenities}</div>
           <div className=" h-fit mt-12 ms-5">
-            <h2 className="font-bold text-xl ms-3   mb-2">Choose Your Room</h2>
+            <h2 className="font-bold text-xl   mb-2">Choose Your Room</h2>
 
             {!roomss && <h1>RoomsList Empty</h1>}
             {roomss &&
@@ -144,7 +144,8 @@ const SingleHotel = () => {
           <PriceCard price={price} className={""} />
         </div>
 
-        <div className="row-span-2 col-span-8 border-2 flex flex-col ms-[120px] mt-11 ">         
+        <div className="row-span-2 col-span-8  flex flex-col ms-[120px] mt-11 ">
+        <h2 className="font-bold text-[1.2rem] pt-2 ps-5 mb-9">Reviews & Ratings</h2>         
           <ReviewSection reviews={reviews}/>   
         </div>
       </div>

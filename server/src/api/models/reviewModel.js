@@ -32,6 +32,11 @@ const reviewSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    hotel_id:{
+      type:ObjectId,
+      ref:'Hotel',
+      required:true
+    },
     // heading:{
     //     type:String,
     //     required:true

@@ -13,13 +13,8 @@ const Home = () => {
     useGetAllHotels();
 
   return (
-    <div className="flex flex-col">
-      {/* {isSearchBarOpen && (
-
-        <SearchSection/>
-
-      )} */}
-      <div className=" grid grid-flow-row grid-cols-1 md:grid-cols-4 xl:grid-cols-3  w-[90vw]">
+ 
+      <div className=" grid grid-flow-row grid-cols-1 md:grid-cols-4 xl:grid-cols-3  w-[100vw] sm:ms-[8%]">
         {isLoading || isFetching ||isUninitialized ? (
           <>
           <div
@@ -55,7 +50,7 @@ const Home = () => {
             ({ _id, hotelName, price, description, images }, index) => (
               <div
                 key={_id}
-                className=" col-span-2 lg:col-span-2  mb-6   xl:col-span-1"
+                className=" col-span-2 lg:col-span-2  mb-[50px]   xl:col-span-1"
               >
                 <Cards
                   hotel_id={_id}
@@ -69,7 +64,7 @@ const Home = () => {
           )
         )}
       </div>
-    </div>
+
   );
 };
 

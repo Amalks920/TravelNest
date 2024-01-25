@@ -21,6 +21,7 @@ const [addImages,{isError:addImagesIsError,isLoading:addImagesIsLoading,isSucces
     try {
       const res=await addImages(data)
       console.log(res)
+      setImages(null)
     } catch (error) {
       console.log(error)
     }
