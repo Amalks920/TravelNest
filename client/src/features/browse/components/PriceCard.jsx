@@ -27,7 +27,6 @@ import {
 import { useNavigate } from "react-router";
 
 const PriceCard = ({ open, setOpen }) => {
-  const price = useSelector(selectPrice);
   const selectedCheckInDate = useSelector(selectCheckIn);
   const selectedCheckOutDate = useSelector(selectCheckOut);
 
@@ -35,23 +34,18 @@ const PriceCard = ({ open, setOpen }) => {
   const roomDetails = useSelector(selectCheckedRooms);
   const hotel_id = useSelector(selectHotelId);
   const totalNoRooms = useSelector(selectTotalNumberOfRoom);
-  const roomType=useSelector(selectRoomType)
 
   const [payment, { isError, isLoading, isSuccess, error }] =
     usePaymentMutation();
 
   const [checkInDate, setCheckInDate] = useState(selectedCheckInDate);
   const [checkOutDate, setCheckOutDate] = useState(selectedCheckOutDate);
-  
 
   const role = useSelector(selectRole);
   const token = useSelector(selectToken);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-
-  console.log(roomDetails)
 
   const handlePayment = async (id) => {
     try {
@@ -85,7 +79,9 @@ const PriceCard = ({ open, setOpen }) => {
       }) => (
         <div className="grid grid-rows-[300px,100px] grid-cols-[150px,150px] mt-14 sticky m-3 top-0    rounded-lg ">
           <div className="col-span-2">
-          {isError && <p className="text-red-600 ps-5">please select dates</p>}
+            {isError && (
+              <h2 className="text-red-600 ps-5 text-[1rem]">please select</h2>
+            )}
 
             <DatePicker
               datePassed={selectedCheckInDate}
@@ -104,9 +100,6 @@ const PriceCard = ({ open, setOpen }) => {
             <Button
               onClick={async () => {
                 if (token && role === "user") {
-
-
-
                   const response = await payment({
                     roomDetails,
                     totalPrice,
@@ -116,20 +109,16 @@ const PriceCard = ({ open, setOpen }) => {
                     totalNoRooms,
                   });
                   console.log(response);
-            
-
-                  if (isSuccess) {
-                    dispatch(updateCheckIn(checkInDate));
-                    dispatch(updateCheckOut(checkOutDate));
-                    handlePayment(response.data.id);
-                  }
-
-               
+                  // if (isSuccess) {
+                  dispatch(updateCheckIn(checkInDate));
+                  dispatch(updateCheckOut(checkOutDate));
+                  handlePayment(response.data.id);
+                  // }
                 } else {
                   navigate("/login");
                 }
 
-               // if (isError) return console.log(error);
+                // if (isError) return console.log(error);
               }}
               className="w-full mt-4"
             >
@@ -137,26 +126,21 @@ const PriceCard = ({ open, setOpen }) => {
             </Button>
 
             <div className="mt-6 flex flex-col justify-between mx-3">
-
               <div className="w-full mt-6 flex  justify-between mx-3">
-              <p className="font-bold">Price</p>
-              <p className="me-3 font-bold">₹ {totalPrice}</p>
-              </div>
-              
-            {
-              roomDetails.map(({noOfRooms,price,roomType},index)=>{
-
-              
-           return    <div className="w-full mt-6  flex  justify-between mx-3">  
-              <p className="font-bold">{roomType}</p>
-              <p className="me-3 font-bold text-left">₹ {price + ' ' +'x' + ' ' + noOfRooms}</p>
+                <p className="font-bold">Price</p>
+                <p className="me-3 font-bold">₹ {totalPrice}</p>
               </div>
 
-                            })
-            }
-
-              
-
+              {roomDetails.map(({ noOfRooms, price, roomType }, index) => {
+                return (
+                  <div className="w-full mt-6  flex  justify-between mx-3">
+                    <p className="font-bold">{roomType}</p>
+                    <p className="me-3 font-bold text-left">
+                      ₹ {price + " " + "x" + " " + noOfRooms}
+                    </p>
+                  </div>
+                );
+              })}
             </div>
           </div>
           {/* <div className="col-span-2 flex flex-col gap-4">

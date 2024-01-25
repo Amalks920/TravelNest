@@ -15,7 +15,6 @@ const payment = async (req, res, next) => {
     console.log(req.body);
     const {
       roomDetails,
-      totalPrice,
       checkInDate,
       checkOutDate,
       hotel_id,
@@ -28,6 +27,18 @@ const payment = async (req, res, next) => {
     });
 
     const roomDetailsFromDb = await getRoomDetailsByIdHelper(roomIds);
+    let totalPrice = 0;
+
+    roomDetails.forEach(room => {
+      const matchingRoomType = roomDetailsFromDb.find(dbRoom => dbRoom.roomType == room.roomType);
+      
+      if (matchingRoomType) {
+        const rate = matchingRoomType.rate;
+        const noOfRooms = parseInt(room.noOfRooms); 
+        totalPrice += rate * noOfRooms;
+      }
+    });
+
     const findUser = await findUserByUserName(req.user);
     const findHotel = await getAHotelHelperForOrder(hotel_id);
 

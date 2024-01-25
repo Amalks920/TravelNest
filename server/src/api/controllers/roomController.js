@@ -120,9 +120,7 @@ const addRoomImages= async (req,res,next)=>{
   }
 
 const getRoomsForUser= async (req,res,next) => {
-  console.log('getRooms')
-  console.log(res.locals)
-  console.log('req.localssss')
+
   const hotel_id=req.params.hotel_id
   try {
   const response=await getAllRoomsOfAHotelForUserHelperByAvailabilty(hotel_id,res.locals.existingCollisions)
