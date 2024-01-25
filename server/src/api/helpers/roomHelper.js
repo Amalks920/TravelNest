@@ -261,6 +261,7 @@ const getAllRoomsOfAHotelForUserHelperByAvailabilty = (
                 amenities: "$amenities",
                 noOfRooms: "$noOfRooms",
                 bathRoomType: "$bathroomType",
+                roomType:'$roomType',
                 images: "$images",
                 rate: "$rate",
                 createdAt: "$createdAt",

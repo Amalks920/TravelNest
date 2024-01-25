@@ -45,12 +45,13 @@ const RoomSection = ({
             !isAccordionOpen ? "hidden" : ""
           }`}
         >
+          {console.log(rooms)}
           {rooms?.map(
             (
               { id,images,size, description,roomType, bathRoomType,hotel_id, location, rate, amenities },
               index
             ) => {
-
+        
               return (
                 <SingleRoomComponent
                 key={id}

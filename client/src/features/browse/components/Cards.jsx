@@ -27,7 +27,7 @@ const Cards=({hotel_id,hotelName,price,description,images})=>{
     <img
      src={IMAGE_BASE_URL+'/'+`${images[1]}`}
      // src="https://images.unsplash.com/photo-1629367494173-c78a56567877?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=927&amp;q=80"
-      alt="card-image" className="object-cover bg-black bg-gradient-to-b w-full h-full brightness-75" />
+      alt="card-image" className="object-cover bg-black bg-gradient-to-b w-full h-full brightness-95" />
 
 
 <div class="p-6 relative -top-44 ">

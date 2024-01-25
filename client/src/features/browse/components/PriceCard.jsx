@@ -11,6 +11,7 @@ import {
   selectTotalNumberOfRoom,
   selectCheckIn,
   selectCheckOut,
+  selectRoomType,
 } from "../services/priceSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { loadStripe } from "@stripe/stripe-js";
@@ -34,8 +35,11 @@ const PriceCard = ({ open, setOpen }) => {
   const roomDetails = useSelector(selectCheckedRooms);
   const hotel_id = useSelector(selectHotelId);
   const totalNoRooms = useSelector(selectTotalNumberOfRoom);
+  const roomType=useSelector(selectRoomType)
+
   const [payment, { isError, isLoading, isSuccess, error }] =
     usePaymentMutation();
+
   const [checkInDate, setCheckInDate] = useState(selectedCheckInDate);
   const [checkOutDate, setCheckOutDate] = useState(selectedCheckOutDate);
   
@@ -46,14 +50,8 @@ const PriceCard = ({ open, setOpen }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // useEffect(()=>{
-  //     const matcher1={
-  //         selectedCheckInDate,
-  //         selectedCheckOutDate
-  //       }
-  //    console.log(isMatch(new Date(Date.now()),[matcher1]))
-  //     console.log(selectedCheckInDate,selectedCheckOutDate)
-  // },[selectedCheckInDate,selectedCheckOutDate])
+
+  console.log(roomDetails)
 
   const handlePayment = async (id) => {
     try {
@@ -138,10 +136,27 @@ const PriceCard = ({ open, setOpen }) => {
               Pay Using Card
             </Button>
 
-            <div className="mt-6 flex justify-between mx-3">
-           
+            <div className="mt-6 flex flex-col justify-between mx-3">
+
+              <div className="w-full mt-6 flex  justify-between mx-3">
               <p className="font-bold">Price</p>
               <p className="me-3 font-bold">₹ {totalPrice}</p>
+              </div>
+              
+            {
+              roomDetails.map(({noOfRooms,price,roomType},index)=>{
+
+              
+           return    <div className="w-full mt-6  flex  justify-between mx-3">  
+              <p className="font-bold">{roomType}</p>
+              <p className="me-3 font-bold text-left">₹ {price + ' ' +'x' + ' ' + noOfRooms}</p>
+              </div>
+
+                            })
+            }
+
+              
+
             </div>
           </div>
           {/* <div className="col-span-2 flex flex-col gap-4">

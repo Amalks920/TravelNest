@@ -36,6 +36,7 @@ const SingleHotel = () => {
 
   const rooms = hotel?.response[1];
   const reviews=hotel?.response[2];
+  
   return (
     <>
  
