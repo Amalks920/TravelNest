@@ -48,7 +48,7 @@ const BookingsList=()=>{
 
     if(isLoading) return <Spinner/>
     
-     const bookingData=bookings.response
+     const bookingData=bookings?.response
 
     return (
 

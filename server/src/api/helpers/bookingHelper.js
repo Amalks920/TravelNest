@@ -51,6 +51,7 @@ const getAllBookingsHelper=(hotel_id)=>{
     return new Promise(async (resolve,reject)=>{
         try {
             const response=await bookingModel.find({hotel_id:hotel_id})
+            response.reverse()
 
             resolve(response)
             
