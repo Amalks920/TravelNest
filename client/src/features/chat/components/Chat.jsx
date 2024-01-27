@@ -1,13 +1,84 @@
-import { useState } from "react";
-import io from "socket.io-client";
+import { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router";
+import { selectToken, selectUserId, selectUserName } from "../../authentication/services/loginSlice";
+import socket from "../../../utils/socket";
+import { select } from "@material-tailwind/react";
+import { useNavigate } from "react-router-dom";
+import ChatMessage from "./ChatMessage";
 
-const socket = io.connect("http://localhost:4000");
 
 const Chat = () => {
     const [message,setMessage]=useState('')
+    const {hotel_id}=useParams()
+    const user_id=useSelector(selectUserId);
+    const token=useSelector(selectToken)
+    const username=useSelector(selectUserName)
+    const navigate = useNavigate()
+    const isMounted = useRef(true); // Initialize as true
+
+  //  socket.on('users',(users)=>{
+  //   users.forEach((user)=>{
+  //     console.log(user)
+  //   })
+  //  })
+      socket.on('session',({sessionID,user_id})=>{
+        socket.auth={sessionID};
+        localStorage.setItem("sessionID", sessionID);
+        socket.user_id=user_id
+
+      })
+
+      socket.on('private_message_response',(data)=>{
+        console.log(data)
+      });
+  
+
+ 
+
+    useEffect(()=>{
+  
+        const sessionID = localStorage.getItem("sessionID");
+    // Set up Socket.IO connection with token-based authentication
+    if (sessionID) {
+     
+      socket.auth = { sessionID,username };
+      socket.connect();
+    }
+
+ 
+
+    // Handle joining the room if needed
+    // socket.emit('join_room', { hotel_id: hotel_id, user_id: user_id });
+
+    return () => {
+
+      if (!isMounted.current) {
+      console.log('diconnected')
+      // Disconnect when component unmounts
+      socket.disconnect();
+      }
+    };
+
+    //  socket.emit('join_room',{hotel_id:hotel_id,user_id:user_id})
+
+
+    },[navigate]);
+
+    useEffect(() => {
+      // Set isMounted to false when the component is unmounted
+      return () => {
+        isMounted.current = false;
+      };
+    }, []);
 
     const handleMessage=()=>{
-      socket.emit('private_message',{message:message,roomId:1})
+
+      // socket.onAny((event,...args)=>{
+      //   console.log(event,args)
+      // })
+
+      socket.emit('private_message',{message:message,user_id:1})
 
     }
 
@@ -24,7 +95,11 @@ const Chat = () => {
           <div></div>
           <button className="border-2 border-black w-[100px] m-3 rounded-full text-[0.8rem] font-bold">Hide Details</button>
         </div>
-        <div className=" flex-grow border-b-2"></div>
+
+        <div className=" flex-grow border-b-2 overflow-scroll">
+          <ChatMessage/>
+        </div>
+
         <div className="m-4">
 
           <svg

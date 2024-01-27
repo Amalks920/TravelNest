@@ -136,7 +136,7 @@ function App() {
         <Route path='/single-booking-details/:booking_id' element={<SingleBookingDetails/>}></Route>
         <Route path='/profile-page' element={<UserProfilePage/>}></Route>
         <Route path='/account' element={<UserAccount/>}></Route>
-        <Route path='/chat' element={<ChatPage/>}></Route>
+        <Route path='/chat/:hotel_id' element={<ChatPage/>}></Route>
         <Route path='/wallet' element={<WalletPage/>}></Route>
         <Route path='/user-details' element={<UserDetailsPage/>}></Route>
         </Route>

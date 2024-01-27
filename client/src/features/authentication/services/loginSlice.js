@@ -44,6 +44,7 @@ const authSlice=createSlice({
 export const {setCredentials,setOwnerCredentials,setAdminCredentials,logout,logoutOwner,logoutAdmin}=authSlice.actions;
 
 export const selectToken=(state)=>state?.persistedSlice.auth?.user?.accessToken;
+export const selectUserName=(state)=>state?.persistedSlice.auth?.user?.username;
 export const selectOwnerToken=(state)=>state?.persistedSlice.auth?.owner?.accessToken;
 export const selectAdminToken=(state)=>state?.persistedSlice.auth?.admin?.accessToken;
 
