@@ -1,4 +1,6 @@
 const express=require('express')
+const verifyJwt = require('../utils/verifyJwt')
+const { getConversations, getMessages, sendMessage, getUsersChat } = require('../controllers/chatController')
 const router=express.Router()
 
 /**
@@ -34,8 +36,6 @@ const router=express.Router()
  *         400:
  *           description: Bad request
  */
-
-
 
 router.get('/get-messages/{user-id}/{owner-id}',(req,res)=>{
     res.status(200).json({})
@@ -82,6 +82,12 @@ router.post('/create-message/{user-id}',(req,res,next)=>{
 router.post('/create-chat/{user-id}/{owner-id}',(req,res)=>{
     res.status(200).json({})
 })
+
+
+router.get("/conversations/:user_id",verifyJwt, getConversations);
+router.get("/:otherUserId/:userId",getMessages);
+router.get('/:owner_id',getUsersChat)
+router.post("/", sendMessage);
 
 
 

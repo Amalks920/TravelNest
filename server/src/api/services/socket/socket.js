@@ -1,109 +1,47 @@
-const redisDb=require('../../../config/redisConfig')
-const redis=require('./redisQueries')
-const uuid = require('uuid');
-
-module.exports = (io) => {
-
-
-    io.use((socket, next) => {
-     const sessionID=socket.handshake.auth.sessionID;
-     if(sessionID){
-      redis.findSession(`session:${sessionID}`, (error, sessionData) => {
-        if (error) {
-
-          console.error('Error retrieving session from Redis:', error);
-        } else {
-         
-          if (sessionData) {
-            socket.sessionID=sessionID
-            socket.userID=sessionData.user_id
-            socket.username=sessionData.username
-            console.log('Session found in Redis:', sessionData);
-            return next()
-          } else {
-            // Session does not exist in Redis
-            console.log('Session not found in Redis');
-          }
-        }
-      });
-     }
-
-     const username=socket.handshake.auth.username;
-     console.log(username)
-     if(!username){
-      return next(new Error('invalid username'))
-     }
-
-     socket.sessionID= uuid.v4();
-     socket.user_id=username;
-     
-     next();
-      });
-
-  io.on("connection", (socket) => {
-    socket.on(`join_room`, (data) => {
-      console.log(data)
-      const { hotel_id, user_id } = data;
-      console.log(user_id)
-      socket.join(user_id);
-    });
-
-    io.on('connection',(socket)=> {
-      socket.emit('session',{
-        sessionID:socket.sessionID,
-        user_id:socket.user_id
-      })
-
-    })
+const { Server } =require("socket.io") ;
+const http =require("http") ;
+const express =require("express") ;
+const Message=require('../../models/messageModel.js')
+const Conversation=require('../../models/conversationModel.js')
 
 
-    io.on('connection',(socket)=>{
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+	cors: {
+		origin: "http://localhost:3000",
+		methods: ["GET", "POST"],
+	},
+});
 
-      socket.on("private_message", (data) => {
-        const {user_id,message}=data
-        console.log(data)
-        // socket.to(user_id).to(socket.user_id).emit('private_message',{
-        //   message,
-        //   from:socket.user_id,
-        //   user_id,
-        // })
-
-
-        // socket.emit('private_message_response', {
-        //   message: 'Private message sent successfully',
-        //   from: socket.user_id,
-        //   to:
-        
-        // });
-      });
-
-
-
-
-    });
-
-    io.on('connection',(socket)=>{
-      socket.on("disconnect", async () => {
-        const matchingSockets = await io.in(socket.userID).allSockets();
-        const isDisconnected = matchingSockets.size === 0;
-        if (isDisconnected) {
-          // notify other users
-          socket.broadcast.emit("user disconnected", socket.userID);
-          // update the connection status of the session
-          redis.saveSession(socket.sessionID, {
-            userID: socket.userID,
-            username: socket.username,
-            connected: false,
-          });
-        }
-      });
-    })
-
-
-    socket.onAny((event, ...args) => {
-        console.log(event, args);
-      });
-
-    socket.on("disconnect", (e) => {});
-  });
+ const getRecipientSocketId = (recipientId) => {
+	return userSocketMap[recipientId];
 };
+
+const userSocketMap = {}; // userId: socketId
+
+io.on("connection", (socket) => {
+	console.log("user connected", socket.id);
+	const userId = socket.handshake.query.userId;
+
+	if (userId != "undefined") userSocketMap[userId] = socket.id;
+	io.emit("getOnlineUsers", Object.keys(userSocketMap));
+
+	socket.on("markMessagesAsSeen", async ({ conversationId, userId }) => {
+		try {
+			await Message.updateMany({ conversationId: conversationId, seen: false }, { $set: { seen: true } });
+			await Conversation.updateOne({ _id: conversationId }, { $set: { "lastMessage.seen": true } });
+			io.to(userSocketMap[userId]).emit("messagesSeen", { conversationId });
+		} catch (error) {
+			console.log(error);
+		}
+	});
+
+	socket.on("disconnect", () => {
+		console.log("user disconnected");
+		delete userSocketMap[userId];
+		io.emit("getOnlineUsers", Object.keys(userSocketMap));
+	});
+});
+
+module.exports= { io, server, app,getRecipientSocketId };

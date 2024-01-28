@@ -32,7 +32,7 @@ const SingleHotel = () => {
 
   if (isPageReady) return <h1><Spinner className="h-12 w-12" /></h1>;
 
-  const { hotelName, images, description, amenities } = hotel?.response[0];
+  const { hotelName, images, description, amenities,owner_id } = hotel?.response[0];
 
   const rooms = hotel?.response[1];
   const reviews=hotel?.response[2];
@@ -110,7 +110,7 @@ const SingleHotel = () => {
             <h2 className="w-[80%]" >{description}</h2>
           </div>
           <div className=" h-fit font-medium  text-left ps-3 text-[0.9rem] leading-8 mt-8 ms-4">
-          <button className="border-2 border-black px-3  text-[0.7rem] rounded-lg me-4"><Link to={`/chat/${hotel_id}`}>chat with user</Link></button>
+          <button className="border-2 border-black px-3  text-[0.7rem] rounded-lg me-4"><Link to={`/chat/${owner_id}`}>chat with user</Link></button>
           </div>
 
 

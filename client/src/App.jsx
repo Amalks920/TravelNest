@@ -98,6 +98,7 @@ function App() {
         <Route path='/owner/bookings-list/:hotel_id' element={<BookingsList/>}></Route>
         <Route path='/owner/booking-details/:booking_id' element={<BookingDetailsPage/>}></Route>
         <Route path='/owner/chats' element={<OnwerChatPage/>}></Route>
+        
         <Route path='/owner/review/:hotel_id' element={<HotelReviews/>}></Route>
 
       </Route>
@@ -136,7 +137,7 @@ function App() {
         <Route path='/single-booking-details/:booking_id' element={<SingleBookingDetails/>}></Route>
         <Route path='/profile-page' element={<UserProfilePage/>}></Route>
         <Route path='/account' element={<UserAccount/>}></Route>
-        <Route path='/chat/:hotel_id' element={<ChatPage/>}></Route>
+        <Route path='/chat/:owner_id' element={<ChatPage/>}></Route>
         <Route path='/wallet' element={<WalletPage/>}></Route>
         <Route path='/user-details' element={<UserDetailsPage/>}></Route>
         </Route>

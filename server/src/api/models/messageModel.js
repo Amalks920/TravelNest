@@ -1,5 +1,4 @@
-const mongoose=require('mongoose')
-
+const mongoose = require("mongoose");
 
 /**
  * @openapi
@@ -23,21 +22,24 @@ const mongoose=require('mongoose')
  *          default: 4938484884842988
  */
 
-const messageModel=mongoose.Schema({
-    user_id:{
-        type:ObjectId,
-        required:true
+const messageModel = mongoose.Schema(
+  {
+    conversationId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Conversation",
     },
-    message:{
-        type:String,
-        required:true
+    sender: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    text: String,
+    seen: {
+      type: Boolean,
+      default: false,
     },
-    chat:{
-        type:ObjectId,
-        required:true,
-        ref:'chat'
-    }
-})
+    img: {
+      type: String,
+      default: "",
+    },
+  },
+  { timestamps: true }
+);
 
-
-module.exports=mongoose.Model('Message',messageModel)
+module.exports = mongoose.model("Message", messageModel);

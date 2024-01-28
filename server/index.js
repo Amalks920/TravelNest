@@ -1,5 +1,5 @@
-const express=require('express')
-const app=express()
+ const express=require('express')
+// const app=express()
 const morgan=require('morgan')
 const session = require('express-session');
 const swaggerDocs=require('./utils/swagger')
@@ -20,28 +20,29 @@ const roomRouter=require('./src/api/routes/roomRoute')
 const reviewRouter=require('./src/api/routes/reviewRoute')
 const couponRouter=require('./src/api/routes/couponRoute')
 const salesRouter=require('./src/api/routes/salesRoute')
-const messageRouter=require('./src/api/routes/messageRoute')
+const chatRouter=require('./src/api/routes/chatRoute.js')
 const paymentRouter=require('./src/api/routes/paymentRoute')
 const searchRouter=require('./src/api/routes/searchRoute')
-const { Server } = require('socket.io');
+//const { Server } = require('socket.io');
+const { app, server } =require( "./src/api/services/socket/socket.js");
 
-const server=http.createServer(app)
+//const server=http.createServer(app)
 
 const handleError = require('./src/api/middlewares/errorHandler');
 const allowedOrigins = require('./src/config/cors/allowedOrigins');
 
 
-const  io= new Server(server,{
-    cors:{
-        origin:"http://localhost:5173",
-        methods: ["GET", "POST"],
-        //allowedOrigins
-    }
-})
+// const  io= new Server(server,{
+//     cors:{
+//         origin:"http://localhost:5173",
+//         methods: ["GET", "POST"],
+//         //allowedOrigins
+//     }
+// })
 
 console.log(redisClient)
 
-socketEvents(io)
+// socketEvents(io)
 
 app.use(morgan('combined'))
 app.use(express.json());
@@ -60,7 +61,7 @@ app.use('/api/room',roomRouter)
 app.use('/api/review',reviewRouter)
 app.use('/api/coupon',couponRouter)
 app.use('/api/sales',salesRouter)
-app.use('/api/messages',messageRouter)
+app.use('/api/chat',chatRouter)
 app.use('/api/payment',paymentRouter)
 app.use('/api/search',searchRouter)
 
