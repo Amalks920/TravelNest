@@ -4,6 +4,8 @@ import { apiSlice } from './apiSlice';
 import loginSlice from '../features/authentication/services/loginSlice';
 import { persistReducer,persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import socketIOReduxMiddleware from 'socket.io-redux';
+import io from 'socket.io-client';
 
 import {thunk} from 'redux-thunk';
 import verifyEmailSlice from '../features/authentication/services/verifyEmailSlice';
@@ -13,6 +15,8 @@ import editRoomFormSlice from '../features/hotelRegistration/services/editRoomFo
 import priceSlice from '../features/browse/services/priceSlice';
 import searchSlice from './searchSlice';
 import roomsSlice from '../features/browse/services/roomsSlice';
+
+// const socket = io.connect('http://localhost:4000');
 
 const persistConfig={
     key:'root',
@@ -42,6 +46,7 @@ const store=configureStore({
     middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(apiSlice.middleware),
 devTools: true
+
 })
 
 export const persistor=persistStore(store);

@@ -1,10 +1,11 @@
 import Chat from "../../features/chat/components/Chat";
 
 
-const OwnerChatPage=()=>{
-
+const OwnerChatPage=({socket})=>{
+    console.log('hhhhh')
+console.log(socket)
     return (
-        <Chat/>
+        <Chat socket={socket}/>
     )
 }
 

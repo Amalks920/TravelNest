@@ -18,7 +18,7 @@ import UserRoutes from './utils/routes/UserRoutes';
 import OwnerRoutes from './utils/routes/OwnerRoutes';
 import { checkAuth } from './utils/checkAuth';
 import { useSelector } from 'react-redux';
-import { selectRole, selectToken } from './features/authentication/services/loginSlice';
+import { selectRole, selectToken, selectUserId } from './features/authentication/services/loginSlice';
 import path from 'path';
 import RequireOwnerAuth from './features/authentication/components/RequireOwnerAuth';
 import CheckAuth from './features/authentication/components/CheckAuth';
@@ -48,13 +48,37 @@ import WalletPage from './pages/user/WalletPage.jsx';
 import UserDetailsPage from './pages/user/UserDetailsPage.jsx';
 import OnwerChatPage from './pages/owner/OwnerChatPage.jsx';
 import HotelReviews from './features/hotelManagement/components/HotelReviews.jsx';
+import { useEffect, useState } from 'react';
+import io from 'socket.io-client'
 
 function App() {
   const token = useSelector(selectToken)
   const role = useSelector(selectRole)
+  const user_id=useSelector(selectUserId)
 
+	const [socket, setSocket] = useState(null);
+	const [onlineUsers, setOnlineUsers] = useState([]);
 
+  useEffect(()=>{
+    const socket = io("http://localhost:4000", {
+			query: {
+				userId: user_id,
+			},
+		});
 
+    setSocket(socket);
+
+    socket.on("getOnlineUsers", (users) => {
+			setOnlineUsers(users);
+      console.log(users)
+		});
+  
+    return () =>{
+      console.log('disconnected')
+       return socket && socket.close();
+      }
+  },[user_id])
+  console.log(socket)
   return (
     <Routes>
     <Route path="/" element={<AuthPageContainer />}>
@@ -97,7 +121,7 @@ function App() {
         <Route path='/owner/hotel-details/:hotel_id' element={<HotelDetailsPage/>}></Route>
         <Route path='/owner/bookings-list/:hotel_id' element={<BookingsList/>}></Route>
         <Route path='/owner/booking-details/:booking_id' element={<BookingDetailsPage/>}></Route>
-        <Route path='/owner/chats' element={<OnwerChatPage/>}></Route>
+        <Route path='/owner/chats' element={<OnwerChatPage socket={socket} />} ></Route>
         
         <Route path='/owner/review/:hotel_id' element={<HotelReviews/>}></Route>
 
@@ -137,7 +161,7 @@ function App() {
         <Route path='/single-booking-details/:booking_id' element={<SingleBookingDetails/>}></Route>
         <Route path='/profile-page' element={<UserProfilePage/>}></Route>
         <Route path='/account' element={<UserAccount/>}></Route>
-        <Route path='/chat/:owner_id' element={<ChatPage/>}></Route>
+        <Route path='/chat/:owner_id' element={<ChatPage socket={socket}/>}></Route>
         <Route path='/wallet' element={<WalletPage/>}></Route>
         <Route path='/user-details' element={<UserDetailsPage/>}></Route>
         </Route>

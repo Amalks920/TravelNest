@@ -2,6 +2,8 @@ const { chatHelper } = require('../helpers/chatHelper');
 const Conversation=require('../models/conversationModel');
 const Message=require('../models/messageModel')
 
+const {getRecipientSocketId,io}=require('../services/socket/socket')
+
 
 async function sendMessage(req, res) {
 	try {
@@ -48,10 +50,10 @@ async function sendMessage(req, res) {
 			}),
 		]);
 
-		// const recipientSocketId = getRecipientSocketId(recipientId);
-		// if (recipientSocketId) {
-		// 	io.to(recipientSocketId).emit("newMessage", newMessage);
-		// }
+		const recipientSocketId = getRecipientSocketId(recipientId);
+		if (recipientSocketId) {
+			io.to(recipientSocketId).emit("newMessage", newMessage);
+		}
 
 		res.status(201).json(newMessage);
 	} catch (error) {

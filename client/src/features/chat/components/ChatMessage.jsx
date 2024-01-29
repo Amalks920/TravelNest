@@ -1,17 +1,23 @@
 import { useSelector } from "react-redux";
 import { useGetMessagesQuery } from "../services/chatApiSlice";
 import { selectRole, selectUserId } from "../../authentication/services/loginSlice";
+import { useEffect } from "react";
 
 
-const ChatMessage=({recipient_id})=>{
+const ChatMessage=({recipient_id,socket})=>{
 
   const user_id=useSelector(selectUserId)
   const role=useSelector(selectRole)
 
     const {data:messages,isError,isFetching,isLoading,isSuccess,refetch}=useGetMessagesQuery({recipient_id,user_id})
+  console.log(socket)
 
-    console.log(messages)
-    console.log('messagees')
+    // useEffect(()=>{
+      socket?.on('newMessage',(message)=>{
+        refetch()
+      // })
+    })
+
     return (
         <div className="flex flex-col mx-[10%] mt-[50px] min-h-full">
           <div className="grid grid-flow-row grid-cols-[50px,auto]" >
