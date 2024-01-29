@@ -15,6 +15,7 @@ import editRoomFormSlice from '../features/hotelRegistration/services/editRoomFo
 import priceSlice from '../features/browse/services/priceSlice';
 import searchSlice from './searchSlice';
 import roomsSlice from '../features/browse/services/roomsSlice';
+import walletCheckOutSlice from '../features/walletPayment/service/walletCheckOutSlice';
 
 // const socket = io.connect('http://localhost:4000');
 
@@ -26,6 +27,7 @@ const persistConfig={
 const rootReducer=combineReducers({
     auth:loginSlice,
     hotels:hotelListSlice,
+    checkout:walletCheckOutSlice
 })
 
 const persistedAuthReducer=persistReducer(persistConfig,rootReducer);

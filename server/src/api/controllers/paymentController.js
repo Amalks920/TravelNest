@@ -3,7 +3,10 @@ const {
   getAHotelHelper,
   getAHotelHelperForOrder,
 } = require("../helpers/hotelHelper");
-const { getRoomDetailsByIdHelper, decreaseRoomsCount } = require("../helpers/roomHelper");
+const {
+  getRoomDetailsByIdHelper,
+  decreaseRoomsCount,
+} = require("../helpers/roomHelper");
 const { findUserByUserName } = require("../helpers/userHelper");
 const { checkout } = require("../routes/paymentRoute");
 
@@ -13,13 +16,8 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET);
 const payment = async (req, res, next) => {
   try {
     console.log(req.body);
-    const {
-      roomDetails,
-      checkInDate,
-      checkOutDate,
-      hotel_id,
-      totalNoRooms,
-    } = req.body;
+    const { roomDetails, checkInDate, checkOutDate, hotel_id, totalNoRooms } =
+      req.body;
     const roomIds = [];
 
     roomDetails.forEach((room, index) => {
@@ -29,12 +27,14 @@ const payment = async (req, res, next) => {
     const roomDetailsFromDb = await getRoomDetailsByIdHelper(roomIds);
     let totalPrice = 0;
 
-    roomDetails.forEach(room => {
-      const matchingRoomType = roomDetailsFromDb.find(dbRoom => dbRoom.roomType == room.roomType);
-      
+    roomDetails.forEach((room) => {
+      const matchingRoomType = roomDetailsFromDb.find(
+        (dbRoom) => dbRoom.roomType == room.roomType
+      );
+
       if (matchingRoomType) {
         const rate = matchingRoomType.rate;
-        const noOfRooms = parseInt(room.noOfRooms); 
+        const noOfRooms = parseInt(room.noOfRooms);
         totalPrice += rate * noOfRooms;
       }
     });
@@ -60,10 +60,9 @@ const payment = async (req, res, next) => {
     // );
     // console.log(response);
 
-
     const lineItems = roomDetails.map((product) => ({
       price_data: {
-        currency: "INR",  
+        currency: "INR",
         product_data: {
           name: product.id,
         },
@@ -88,9 +87,9 @@ const payment = async (req, res, next) => {
           checkOutDate,
           totalNoRooms,
         }),
-        roomDetails:JSON.stringify({
-          roomDetails
-        })
+        roomDetails: JSON.stringify({
+          roomDetails,
+        }),
       },
     });
     res.status(200).json({ id: session.id });
@@ -100,27 +99,84 @@ const payment = async (req, res, next) => {
   }
 };
 
+const payUsingWallet = async (req, res, next) => {
+  try {
+    console.log(req.body);
+    let { roomDetails, checkInDate, checkOutDate, hotel_id, totalNoRooms } =
+      req.body;
+    const roomIds = [];
+
+    roomDetails.forEach((room, index) => {
+      roomIds.push(room.id);
+    });
+
+    const roomDetailsFromDb = await getRoomDetailsByIdHelper(roomIds);
+    let totalPrice = 0;
+
+    roomDetails.forEach((room) => {
+      const matchingRoomType = roomDetailsFromDb.find(
+        (dbRoom) => dbRoom.roomType == room.roomType
+      );
+
+      if (matchingRoomType) {
+        const rate = matchingRoomType.rate;
+        const noOfRooms = parseInt(room.noOfRooms);
+        totalPrice += rate * noOfRooms;
+      }
+    });
+
+    const findUser = await findUserByUserName(req.user);
+    const findHotel = await getAHotelHelperForOrder(hotel_id);
+
+    const result = await Promise.all([roomDetailsFromDb, findUser, findHotel]);
+
+    // const booking_details = {
+    //   result,
+    //   totalPrice,
+    //   checkInDate,
+    //   checkOutDate,
+    //   totalNoRooms,
+    // };
+
+    const room={roomDetails}
+      roomDetails=room;
+    const decreaseRoomCountResponse = await decreaseRoomsCount(roomDetails);
+
+    const response = await createBookingHelper(
+      result,
+      totalPrice,
+      checkInDate,
+      checkOutDate,
+      totalNoRooms
+    );
+
+    res.status(200).json({});
+  } catch (error) {
+    console.log(error)
+    res.status(404).json({ error });
+  }
+};
+
 const webHookController = async (req, res, next) => {
   try {
     const { type, data } = req.body;
-   
+
     if (type === "checkout.session.completed") {
-      
       const bookingDetailsString = data.object.metadata.booking_details;
-      const roomDetailsString=data.object.metadata.roomDetails
-      const roomDetails=JSON.parse(roomDetailsString)
+      const roomDetailsString = data.object.metadata.roomDetails;
+      const roomDetails = JSON.parse(roomDetailsString);
 
-
-      const decreaseRoomCountResponse=await decreaseRoomsCount(roomDetails)
+      const decreaseRoomCountResponse = await decreaseRoomsCount(roomDetails);
 
       const bookingDetails = JSON.parse(bookingDetailsString);
 
-      const {result,totalPrice,checkInDate,checkOutDate,totalNoRooms}=bookingDetails;
+      const { result, totalPrice, checkInDate, checkOutDate, totalNoRooms } =
+        bookingDetails;
       const response = await createBookingHelper(
         result,
         totalPrice,
         checkInDate,
-        checkOutDate, 
+        checkOutDate,
         totalNoRooms
       );
       console.log(response);
@@ -128,7 +184,7 @@ const webHookController = async (req, res, next) => {
       res.status(200).json({ response });
     }
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(404).json({ error });
   }
 };
@@ -136,4 +192,5 @@ const webHookController = async (req, res, next) => {
 module.exports = {
   payment,
   webHookController,
+  payUsingWallet,
 };

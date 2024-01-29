@@ -25,6 +25,8 @@ import {
   selectToken,
 } from "../../authentication/services/loginSlice";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
+import { updateCheckOutDetails } from "../../walletPayment/service/walletCheckOutSlice";
 
 const PriceCard = ({ open, setOpen }) => {
   const selectedCheckInDate = useSelector(selectCheckIn);
@@ -77,7 +79,7 @@ const PriceCard = ({ open, setOpen }) => {
         handleSubmit,
         isSubmitting,
       }) => (
-        <div className="grid grid-rows-[300px,100px] grid-cols-[150px,150px] mt-14 sticky m-3 top-0    rounded-lg ">
+        <div className="grid grid-rows-[300px,100px] grid-cols-[auto,auto] mt-14 sticky m-3 top-0 w-full   rounded-lg ">
           <div className="col-span-2">
             {isError && (
               <h2 className="text-red-600 ps-5 text-[1rem]">please select</h2>
@@ -97,6 +99,7 @@ const PriceCard = ({ open, setOpen }) => {
                 label={"Check out"}
               />
             </div>
+
             <Button
               onClick={async () => {
                 if (token && role === "user") {
@@ -124,7 +127,23 @@ const PriceCard = ({ open, setOpen }) => {
             >
               Pay Using Card
             </Button>
-
+            <h2
+              onClick={() => {
+                dispatch(
+                  updateCheckOutDetails({
+                    checkInDate: selectedCheckInDate,
+                    checkOutDate: selectedCheckOutDate,
+                    roomDetails:roomDetails,
+                    totalPrice:totalPrice,
+                    totalNoRooms:totalNoRooms,
+                    hotel_id:hotel_id
+                  })
+                );
+              }}
+              className="text-center mt-2 text-[0.9rem] text-red-500 cursor-pointer capitalize"
+            >
+              <Link to={"/wallet-payment-page"}>other payment options</Link>
+            </h2>
             <div className="mt-6 flex flex-col justify-between mx-3">
               <div className="w-full mt-6 flex  justify-between mx-3">
                 <p className="font-bold">Price</p>

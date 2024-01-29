@@ -141,7 +141,7 @@ const SingleHotel = () => {
               })}
           </div>
         </div>
-        <div className="row-span-1 md:block hidden border-2 col-span-3  border-t-2   rounded-lg ms-5">
+        <div className="row-span-1 md:flex md:justify-center hidden border-2 col-span-3  border-t-2   rounded-lg">
           <PriceCard price={price} className={""} />
         </div>
 

@@ -5,7 +5,7 @@ const useGetAHotel=(hotel_id)=>{
     console.log(hotel_id)
 const {data:hotel,isError,isFetching,isLoading,isSuccess,isUninitialized}=useGetAHotelForUserQuery({hotel_id})
 
-console.log(hotel)
+
 
 return {
     hotel,
