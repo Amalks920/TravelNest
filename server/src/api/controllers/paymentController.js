@@ -1,4 +1,5 @@
 const { createBookingHelper } = require("../helpers/bookingHelper");
+const mongoose=require('mongoose')
 const {
   getAHotelHelper,
   getAHotelHelperForOrder,
@@ -101,7 +102,7 @@ const payment = async (req, res, next) => {
 
 const payUsingWallet = async (req, res, next) => {
   try {
-    console.log(req.body);
+   
     let { roomDetails, checkInDate, checkOutDate, hotel_id, totalNoRooms } =
       req.body;
     const roomIds = [];
@@ -112,6 +113,7 @@ const payUsingWallet = async (req, res, next) => {
 
     const roomDetailsFromDb = await getRoomDetailsByIdHelper(roomIds);
     let totalPrice = 0;
+    let noOfRooms=0
 
     roomDetails.forEach((room) => {
       const matchingRoomType = roomDetailsFromDb.find(
@@ -120,7 +122,8 @@ const payUsingWallet = async (req, res, next) => {
 
       if (matchingRoomType) {
         const rate = matchingRoomType.rate;
-        const noOfRooms = parseInt(room.noOfRooms);
+         noOfRooms = parseInt(room.noOfRooms);
+        
         totalPrice += rate * noOfRooms;
       }
     });
@@ -141,13 +144,33 @@ const payUsingWallet = async (req, res, next) => {
     const room={roomDetails}
       roomDetails=room;
     const decreaseRoomCountResponse = await decreaseRoomsCount(roomDetails);
+    console.log(result[0])
+    console.log('result[0]')
+    let roomRes=result[0]
+
+    console.log(roomDetails)
+    console.log('rooom deeetails')
+
+    for(var i=0;i<roomRes.length;i++){
+ 
+      for(var j=0;j<roomDetails.roomDetails.length;j++){
+        console.log(roomRes[i]._id, new mongoose.Types.ObjectId(roomDetails.roomDetails[j].id))
+        if(roomRes[i]._id.equals(roomDetails.roomDetails[j].id)){
+          
+          roomRes[i].noOfRooms=roomDetails.roomDetails[j].noOfRooms
+        }
+      }
+    }
+
+    result[0]=roomRes
 
     const response = await createBookingHelper(
       result,
       totalPrice,
       checkInDate,
       checkOutDate,
-      totalNoRooms
+      totalNoRooms,
+      roomDetails
     );
 
     res.status(200).json({});

@@ -1,7 +1,7 @@
 import { apiSlice } from "../../../services/apiSlice";
 
 
-const changeBookingStatusApiSlice=apiSlice.injectEndpoints({
+const   changeBookingStatusApiSlice=apiSlice.injectEndpoints({
     endpoints:builder=>({
         changeBookingStatus:builder.mutation({
             query:(data)=>({

@@ -1,4 +1,4 @@
-const { getAllBookingsHelper, getAllBookingsOfHelper, getABookingForUserHelper, getABookingForOwnerHelper, changeBookingStatusHelper, cancelBookingHelper } = require("../helpers/bookingHelper")
+const { getAllBookingsHelper, getAllBookingsOfHelper, getABookingForUserHelper, getABookingForOwnerHelper, changeBookingStatusHelper, cancelBookingHelper, findABookingHelper, updateNoOfRoomsHelper } = require("../helpers/bookingHelper")
 const { getReviewDoneByUser } = require("../helpers/reviewHelper")
 const { updateRoomNumberHelper } = require("../helpers/roomHelper")
 const { addToWalletHelper } = require("../helpers/walletHelper")
@@ -65,21 +65,27 @@ const changeBookingStatus=async (req,res,next)=>{
 }
 
 const cancelBookingController= async (req,res,next)=>{
-    const booking_id=req.params.booking_id
-    const room_id=req.body.room_id;
-    const user_id=req.body.user_id;
-    const amount=req.body.amount;
-    const status=req.body.status;
-    const totalNoOfRooms=req.body.totalNoOfRooms;
-
+   
+     const booking_id=req.params.booking_id
+    // const room_id=req.body.room_id;
+    // const user_id=req.body.user_id;
+    // const amount=req.body.amount;
+     const status=req.body.status;
+    // const totalNoOfRooms=req.body.totalNoOfRooms;
+    console.log(req.body)
+    console.log(booking_id)
     try {
-    
-    const addRoomsBackResponse=await updateRoomNumberHelper(room_id,totalNoOfRooms)
-    const addMoneyToWalletResponse=await addToWalletHelper(user_id,amount)
-    const response=await cancelBookingHelper(booking_id,status);
+       const response=await findABookingHelper(booking_id)
+       const {roomDetails,totalAmount,discountAmount,totalNoOfRooms,userId}=response
+       console.log(response)
+      
+       const addRoomsBackToResponse=await updateNoOfRoomsHelper(roomDetails)
+    // const addRoomsBackResponse=await updateRoomNumberHelper(room_id,totalNoOfRooms)
+     const addMoneyToWalletResponse=await addToWalletHelper(userId,totalAmount)
+     const cancelBookingResponse=await cancelBookingHelper(booking_id,status);
 
 
-    res.status(200).json({response});
+    res.status(200).json({cancelBookingResponse});
     } catch (error) {
         console.log(error)
         res.status(404).json({error})

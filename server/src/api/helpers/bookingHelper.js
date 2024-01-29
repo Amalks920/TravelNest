@@ -1,7 +1,10 @@
 const bookingModel=require('../models/bookingModel')
+const roomModel=require('../models/roomModel')
+
 const mongoose=require('mongoose')
 
-const createBookingHelper=(data,totalPrice,checkInDate,checkOutDate,totalNoRooms)=>{
+const createBookingHelper=(data,totalPrice,checkInDate,checkOutDate,totalNoRooms,roomInfo)=>{
+
     const roomDetails=data[0]
     const userDetails=data[1]
     const hotelDetails=data[2]
@@ -32,6 +35,18 @@ const createBookingHelper=(data,totalPrice,checkInDate,checkOutDate,totalNoRooms
             reject(error)
         }
     })
+}
+
+const findABookingHelper=(booking_id)=>{
+    return new Promise(async(resolve,reject)=>{
+        try {
+        const response=await bookingModel.findOne({_id:booking_id})
+        resolve(response) 
+        } catch (error) {
+            reject(error)
+        }
+    })
+
 }
 
 
@@ -189,9 +204,30 @@ const cancelBookingHelper=(booking_id,status,totalNoOfRooms)=>{
     })
 }
 
+const updateNoOfRoomsHelper=(roomDetails)=>{
+    return new Promise(async (resolve,reject)=>{
+        console.log(roomDetails)
+        console.log('roooooooooooooooooooooooooooooooo')
+        try {
+            for (const room of roomDetails) {
+                const { _id, noOfRooms } = room;
+                const filter = { _id: _id };
+                const updateDoc = { $inc: { no_of_rooms_available: noOfRooms } };
+                const result = await roomModel.updateOne(filter, updateDoc);
+                console.log(result)
+               // console.log(`Document with ID ${id} updated successfully`);
+               resolve(result)
+            } 
+        } catch (error) {
+           reject(error) 
+        }
+    })
+}
+
 module.exports={
     createBookingHelper,changePaymentStatus,
     getAllBookingsHelper,getAllBookingsOfHelper,
     getABookingForUserHelper,getABookingForOwnerHelper,
-    changeBookingStatusHelper,cancelBookingHelper
+    changeBookingStatusHelper,cancelBookingHelper,findABookingHelper,
+    updateNoOfRoomsHelper
 }

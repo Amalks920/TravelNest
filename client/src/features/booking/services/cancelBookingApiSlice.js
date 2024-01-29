@@ -10,7 +10,9 @@ const cancelBookingApiSlice=apiSlice.injectEndpoints({
                 url:`/booking/cancel-booking/${data.booking_id}`,
                 method:'POST',
                 body:{status:data.status,totalNoOfRooms:data.totalNoOfRooms,
-                    room_id:data.room_id,user_id:data.user_id,amount:data.amount}
+                    user_id:data.user_id,amount:data.amount,
+                    roomDetails:data.roomDetails
+                }
             }),
             invalidatesTags:['single-booking-details']
         })

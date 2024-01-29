@@ -4,6 +4,7 @@ import { Button, Option, Select, Spinner } from "@material-tailwind/react";
 import { useRef, useState } from "react";
 import { useChangeBookingStatusMutation } from "../services/changeBookingStatusApiSlice";
 import { Formik } from "formik";
+import { useCancelBookingMutation } from "../../booking/services/cancelBookingApiSlice";
 
 const BookingDetails = () => {
   const { booking_id } = useParams();
@@ -24,16 +25,31 @@ const BookingDetails = () => {
     },
   ] = useChangeBookingStatusMutation();
 
+  const [cancelBooking,{isError:isErrorCancelBooking,isLoadingCancelBooking,isSuccessCancelBooking}]=useCancelBookingMutation()
+
   if (isLoading) return <Spinner />;
 
-  console.log(bookings);
+  const {userId,roomDetails,totalNoOfRooms,totalAmount}=bookings.response[0];
 
   const handleSubmit = async (values) => {
-    console.log("valuessss", values);
-    await changeBookingStatus({
-      status: values.status,
-      booking_id: booking_id,
-    });
+    console.log(roomDetails)
+    if(values.status==='cancelled'){
+      console.log('cancelllll')
+        await cancelBooking({
+                  user_id: userId,
+                  booking_id: booking_id,
+                  status: "cancelled",
+                  roomDetails: roomDetails,
+                  totalNoOfRooms: totalNoOfRooms,
+                  amount: totalAmount
+        })
+    }else{
+      await changeBookingStatus({
+        status: values.status,
+        booking_id: booking_id,
+      });
+    }
+
   };
 
   // const handleSubmit = async () => {
@@ -58,30 +74,30 @@ const BookingDetails = () => {
         ) => {
           return (
             <>
-              {console.log(roomDetails)}
+       
               <div className="row-span-1 col-span-1 border-2 flex flex-col p-5 gap-3">
                 <h2 className=" text-[1rem]">Primary Guest</h2>
-                <h2 className="font-bold  text-[1.1rem]">{userName}</h2>
+                <h2 className="font-bold  text-[0.9rem]">{userName}</h2>
               </div>
               <div className="row-span-1 col-span-1 border-2 flex flex-col p-5 gap-3">
                 <h2 className=" text-[1rem]">Check In</h2>
-                <h2 className="font-bold  text-[1.1rem]">{checkIn}</h2>
+                <h2 className="font-bold  text-[0.9rem]">{checkIn}</h2>
               </div>
               <div className="row-span-1 col-span-1 border-2 flex flex-col p-5 gap-3">
                 <h2 className=" text-[1rem]">Check Out</h2>
-                <h2 className="font-bold  text-[1.1rem]">{checkOut}</h2>
+                <h2 className="font-bold  text-[0.9rem]">{checkOut}</h2>
               </div>
               <div className="row-span-1 col-span-1 border-2 flex flex-col p-5 gap-3">
                 <h2 className=" text-[1rem]">Email</h2>
-                <h2 className="font-bold  text-[1.1rem]">{userEmail}</h2>
+                <h2 className="font-bold  text-[0.9rem]">{userEmail}</h2>
               </div>
               <div className="row-span-1 col-span-1 border-2 flex flex-col p-5 gap-3">
                 <h2 className=" text-[1rem]">Phone</h2>
-                <h2 className="font-bold  text-[1.1rem]">{userPhone}</h2>
+                <h2 className="font-bold  text-[0.9rem]">{userPhone}</h2>
               </div>
               <div className="row-span-1 col-span-1 border-2 flex flex-col  p-5 gap-3">
                 <h2 className=" text-[1rem]">status</h2>
-                <div className="w-72">
+                <div className="w-96">
                   <Formik
                     initialValues={{
                       status: status,
@@ -99,26 +115,29 @@ const BookingDetails = () => {
                       isSubmitting,
                     }) => (
                       <>
+                      <div className="flex col-span-2">
                         <select
+                          className="w-[200px] h-[30px] ps-2 me-2 rounded-lg"
                           onChange={handleChange}
                           label="Change Status"
                           name="status"
                           value={values.status}
                         >
-                          <option value="paid">Paid</option>
-                          <option value="checkIn">CheckIn</option>
-                          <option value="checkOut">CheckOut</option>
-                          <option value="cancelled">cancel</option>
+                          <option className={`${status==='paid'||'cancelled'?'hidden':null}`} value="paid">Paid</option>
+                          <option className={`${status==='checkIn' ||'cancelled' ?'hidden':null}`} value="checkIn">CheckIn</option>
+                          <option className={`${status==='checkOut'||'cancelled'?'hidden':null}`} value="checkOut">CheckOut</option>
+                          <option className={`${status==='cancelled'?'hidden':null}`} value="cancelled">cancel</option>
                         </select>
                         <Button
                           onClick={() => {
                             handleSubmit();
                           }}
                           size="sm"
-                          className="ms-28 mt-5"
+                          className="ms-28 mt-5 me-2 relative -left-28 bottom-5 "
                         >
                           submit
                         </Button>
+                        </div>
                       </>
                     )}
                   </Formik>
