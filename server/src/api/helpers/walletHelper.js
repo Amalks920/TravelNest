@@ -1,3 +1,4 @@
+const walletModel = require("../models/walletModel");
 const { Wallet, WalletHistory } = require("../models/walletModel");
 
 const createWalletHelper = (user_id) => {
@@ -77,10 +78,22 @@ const updateWalletHistoryHelper = async ({_id,amount,type}) => {
   }
 };
 
+const getWalletHistoryHelper=async (wallet_id)=>{
+    try {
+       const response=await WalletHistory.find({wallet_id:wallet_id})
+       console.log(response)
+       console.log('lsdjflds')
+       return response
+    } catch (error) {
+        return error
+    }
+}
+
 module.exports = {
   createWalletHelper,
   addToWalletHelper,
   userWalletDetailsHelper,
   updateWalletAmountHelper,
   updateWalletHistoryHelper,
+  getWalletHistoryHelper
 };

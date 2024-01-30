@@ -51,6 +51,7 @@ import HotelReviews from './features/hotelManagement/components/HotelReviews.jsx
 import { useEffect, useState } from 'react';
 import io from 'socket.io-client'
 import WalletPaymentPage from './pages/user/WalletPaymentPage.jsx';
+import WalletHistoryPage from './pages/user/WalletHistoryPage.jsx';
 
 function App() {
   const token = useSelector(selectToken)
@@ -164,6 +165,7 @@ function App() {
         <Route path='/account' element={<UserAccount/>}></Route>
         <Route path='/chat/:owner_id' element={<ChatPage socket={socket}/>}></Route>
         <Route path='/wallet' element={<WalletPage/>}></Route>
+        <Route path='/wallet-history/:wallet_id' element={<WalletHistoryPage/>}></Route>
         <Route path='/user-details' element={<UserDetailsPage/>}></Route>
         <Route path='/wallet-payment-page' element={<WalletPaymentPage/>}></Route>
         </Route>

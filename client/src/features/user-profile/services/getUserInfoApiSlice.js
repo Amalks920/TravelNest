@@ -8,10 +8,13 @@ const getUserInfoApiSlice=apiSlice.injectEndpoints({
         }),
         getWalletDetails:builder.query({
             query:(data)=>`/user/get-wallet-details/${data.user_id}`
+        }),
+        getWalletHistory:builder.query({
+            query:(data)=>`/wallet/get-wallet-history/${data.wallet_id}`
         })
     })
 })
 
 
 
-export const {useGetUserInfoForUserQuery,useGetWalletDetailsQuery}=getUserInfoApiSlice;
+export const {useGetUserInfoForUserQuery,useGetWalletDetailsQuery,useGetWalletHistoryQuery}=getUserInfoApiSlice;
