@@ -23,6 +23,7 @@ const salesRouter=require('./src/api/routes/salesRoute')
 const chatRouter=require('./src/api/routes/chatRoute.js')
 const paymentRouter=require('./src/api/routes/paymentRoute')
 const searchRouter=require('./src/api/routes/searchRoute')
+const walletRouter=require('./src/api/routes/walletRoute.js')
 //const { Server } = require('socket.io');
 const { app, server } =require( "./src/api/services/socket/socket.js");
 
@@ -64,6 +65,7 @@ app.use('/api/sales',salesRouter)
 app.use('/api/chat',chatRouter)
 app.use('/api/payment',paymentRouter)
 app.use('/api/search',searchRouter)
+app.use('/api/wallet',walletRouter)
 
 
 server.listen(4000,async ()=>{

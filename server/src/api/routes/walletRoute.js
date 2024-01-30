@@ -1,4 +1,5 @@
 const express=require('express')
+const { updateWalletAmount } = require('../controllers/paymentController')
 const router=express.Router()
 
 
@@ -30,5 +31,8 @@ const router=express.Router()
 router.patch('/update-wallet/{amount}',(req,res)=>{
     res.status(200).json({})
 })
+
+
+router.post('/update-wallet-amount',updateWalletAmount)
 
 module.exports=router;

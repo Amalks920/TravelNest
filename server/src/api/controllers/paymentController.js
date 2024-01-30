@@ -10,6 +10,7 @@ const {
 } = require("../helpers/roomHelper");
 const { findUserByUserName } = require("../helpers/userHelper");
 const { checkout } = require("../routes/paymentRoute");
+const { updateWalletAmountHelper, updateWalletHistoryHelper } = require("../helpers/walletHelper");
 
 require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
@@ -133,14 +134,6 @@ const payUsingWallet = async (req, res, next) => {
 
     const result = await Promise.all([roomDetailsFromDb, findUser, findHotel]);
 
-    // const booking_details = {
-    //   result,
-    //   totalPrice,
-    //   checkInDate,
-    //   checkOutDate,
-    //   totalNoRooms,
-    // };
-
     const room={roomDetails}
       roomDetails=room;
     const decreaseRoomCountResponse = await decreaseRoomsCount(roomDetails);
@@ -172,6 +165,8 @@ const payUsingWallet = async (req, res, next) => {
       totalNoRooms,
       roomDetails
     );
+
+    await updateWalletAmountHelper({ user_id:findUser._id, amount:totalPrice,type:'withdrawal' })
 
     res.status(200).json({});
   } catch (error) {
@@ -212,8 +207,22 @@ const webHookController = async (req, res, next) => {
   }
 };
 
+const updateWalletAmount= async (req,res) => {
+  try {
+    const response=await updateWalletAmountHelper(req.body)
+    // console.log(response)
+    // const {_id,user_id,amount}=response;
+    // const walletHistoryResponse=await updateWalletHistoryHelper(_id,amount,'withdrawal')
+    console.log(response)
+    res.status(200).json({response})
+  } catch (error) {
+    res.status(200).json({error})
+  }
+}
+
 module.exports = {
   payment,
   webHookController,
   payUsingWallet,
+  updateWalletAmount
 };
