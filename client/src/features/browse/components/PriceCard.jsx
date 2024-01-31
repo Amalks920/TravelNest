@@ -90,6 +90,7 @@ const PriceCard = ({ open, setOpen }) => {
               setDate={setCheckInDate}
               name="checkInDate"
               label={"Check in"}
+              
             />
             <div className="mt-4">
               <DatePicker
@@ -142,7 +143,8 @@ const PriceCard = ({ open, setOpen }) => {
               }}
               className="text-center mt-2 text-[0.9rem] text-red-500 cursor-pointer capitalize"
             >
-              <Link to={"/wallet-payment-page"}>other payment options</Link>
+              {roomDetails?.length!==0 &&
+                <Link to={"/wallet-payment-page"}>other payment options</Link>}
             </h2>
             <div className="mt-6 flex flex-col justify-between mx-3">
               <div className="w-full mt-6 flex  justify-between mx-3">

@@ -1,12 +1,14 @@
 import { useState } from "react"
 import { useSendMessageMutation } from "../services/chatApiSlice"
+import { useSelector } from "react-redux"
+import { selectRole } from "../../authentication/services/loginSlice"
 
 
 const MessageInput=({recipientId,senderId})=>{
     const [message,setMessage]=useState('')
       // sendMessage ot backend
       const [sendMessage,{isError,isLoading,isSuccess}]=useSendMessageMutation()
-
+      const role=useSelector(selectRole)
     const handleMessage= async ()=>{
         setMessage('')
         console.log(recipientId,senderId,message)
@@ -25,7 +27,7 @@ const MessageInput=({recipientId,senderId})=>{
             viewBox="0 0 24 24"
             stroke-width="1.5" 
             stroke="currentColor"
-            className={`w-7 h-7 relative left-[90%] top-11 cursor-pointer ${message.length===0?'hidden':'block'}`}
+            className={`w-7 h-7 relative ${role==='user'?'left-[90%]':'left-[80%]'} top-11 cursor-pointer ${message.length===0?'hidden':'block'}`}
             onClick={(e)=>{
               handleMessage()
             }}
@@ -39,7 +41,7 @@ const MessageInput=({recipientId,senderId})=>{
           }}
             value={message}
             type="text"
-            className="border-2  w-full h-[60px] rounded-full ps-7 text-sm"
+            className={`border-2   rounded-full ps-7 text-sm ${role==='owner'?'w-[75%] h-[55px] ms-[10%]':'w-full h-[60px] '}`}
             placeholder="type message here"
           />
 </>

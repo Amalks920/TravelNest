@@ -66,7 +66,7 @@ const getWalletHistory=async (req,res,next)=>{
     try {
         
     const response=await getWalletHistoryHelper(wallet_id)
-    console.log('sdlkskldjkjdkldfklk')
+
     res.status(200).json({response});
     } catch (error) {
         res.status(500).json({error})

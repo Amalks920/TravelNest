@@ -9,10 +9,12 @@ import {
 } from "@material-tailwind/react";
  
 export function RoomDetailsModal({viewDetailsModal,setViewDetailsModal,room}) {
+  
+  console.log(room)
 
  
   const handleOpen = () => setViewDetailsModal(!viewDetailsModal);
-    console.log(room)
+    
   return (
     <>
       {/* <Button onClick={handleOpen}>Long Dialog</Button> */}
@@ -23,18 +25,18 @@ export function RoomDetailsModal({viewDetailsModal,setViewDetailsModal,room}) {
            <div>
             <h2 className="font-bold text-xl">Description</h2>
             <h1>
-              {room.description}
+             
             </h1>
             <h2 className="mt-3">Price</h2>
             
-            <h1>{room.rate}</h1>
+           
            </div>
             <h2 className="mt-3">bathroom type</h2>
             
-            <h1>{room.bathRoomType}</h1>
+          
             <h2 className="mt-3">Amenities</h2>
             
-            <h1>{room.amenities}</h1>
+         
           </Typography>
         </DialogBody>
         <DialogFooter className="space-x-2">

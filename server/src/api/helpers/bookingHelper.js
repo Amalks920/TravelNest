@@ -205,6 +205,7 @@ const cancelBookingHelper=(booking_id,status,totalNoOfRooms)=>{
 }
 
 const updateNoOfRoomsHelper=(roomDetails)=>{
+    console.log(roomDetails)
     return new Promise(async (resolve,reject)=>{
         console.log(roomDetails)
         console.log('roooooooooooooooooooooooooooooooo')

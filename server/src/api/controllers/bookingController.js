@@ -1,7 +1,7 @@
 const { getAllBookingsHelper, getAllBookingsOfHelper, getABookingForUserHelper, getABookingForOwnerHelper, changeBookingStatusHelper, cancelBookingHelper, findABookingHelper, updateNoOfRoomsHelper } = require("../helpers/bookingHelper")
 const { getReviewDoneByUser } = require("../helpers/reviewHelper")
 const { updateRoomNumberHelper } = require("../helpers/roomHelper")
-const { addToWalletHelper } = require("../helpers/walletHelper")
+const { addToWalletHelper, updateWalletAmountHelper } = require("../helpers/walletHelper")
 
 
 //owner
@@ -81,7 +81,7 @@ const cancelBookingController= async (req,res,next)=>{
       
        const addRoomsBackToResponse=await updateNoOfRoomsHelper(roomDetails)
     // const addRoomsBackResponse=await updateRoomNumberHelper(room_id,totalNoOfRooms)
-     const addMoneyToWalletResponse=await addToWalletHelper(userId,totalAmount)
+     const addMoneyToWalletResponse=await updateWalletAmountHelper({user_id:userId,amount:totalAmount,type:'deposit'})
      const cancelBookingResponse=await cancelBookingHelper(booking_id,status);
 
 

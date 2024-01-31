@@ -156,7 +156,8 @@ const payUsingWallet = async (req, res, next) => {
     }
 
     result[0]=roomRes
-
+ 
+    
     const response = await createBookingHelper(
       result,
       totalPrice,
@@ -166,7 +167,7 @@ const payUsingWallet = async (req, res, next) => {
       roomDetails
     );
 
-    await updateWalletAmountHelper({ user_id:findUser._id, amount:totalPrice,type:'withdrawal' })
+    await updateWalletAmountHelper({ user_id:findUser._id, amount:-totalPrice,type:'withdrawal' })
 
     res.status(200).json({});
   } catch (error) {
@@ -178,7 +179,7 @@ const payUsingWallet = async (req, res, next) => {
 const webHookController = async (req, res, next) => {
   try {
     const { type, data } = req.body;
-
+    console.log('{type,.datraladsjldsfjlkskjldsfkjldkjfkj}')
     if (type === "checkout.session.completed") {
       const bookingDetailsString = data.object.metadata.booking_details;
       const roomDetailsString = data.object.metadata.roomDetails;
@@ -190,6 +191,25 @@ const webHookController = async (req, res, next) => {
 
       const { result, totalPrice, checkInDate, checkOutDate, totalNoRooms } =
         bookingDetails;
+
+        let roomRes=result[0]
+
+        for(var i=0;i<roomRes.length;i++){
+ 
+          for(var j=0;j<roomDetails.roomDetails.length;j++){
+            console.log(roomRes[i]._id, new mongoose.Types.ObjectId(roomDetails.roomDetails[j].id))
+            if( new mongoose.Types.ObjectId(roomRes[i]._id).equals(roomDetails.roomDetails[j].id)){
+              
+              roomRes[i].noOfRooms=Number(roomDetails.roomDetails[j].noOfRooms)
+            }
+          }
+        }
+    
+        result[0]=roomRes
+        console.log(result)
+       
+
+
       const response = await createBookingHelper(
         result,
         totalPrice,

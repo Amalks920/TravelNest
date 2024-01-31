@@ -42,8 +42,8 @@ const Chat = ({socket}) => {
         
       </div>
 
-      <div className="row-span-1 col-span-1 border-y-2 flex flex-col">
-        <div className={`${role==='user'?'h-[100px]':'h-[60px]'} border-b-2 flex justify-between`}>
+      <div className={`row-span-1 ${role==='owner'?'col-span-2':'col-span-1'} border-y-2 flex flex-col`}>
+        <div className={`${role==='user'?'h-[60px]':'h-[60px]'} border-b-2 flex justify-between`}>
           <div></div>
            <button className={`border-2 border-black w-[100px] m-4 rounded-full text-[0.8rem] font-bold `}>Hide Details</button> 
         </div>
@@ -58,7 +58,7 @@ const Chat = ({socket}) => {
 
       </div>
 
-      <div className="row-span-1 col-span-1 border-2 flex flex-col">
+      <div className={`row-span-1 col-span-1 border-2 flex flex-col ${role==='owner'?'hidden':null}`}>
         <div className="h-[60px] border-2"></div>
       </div>
     </div>

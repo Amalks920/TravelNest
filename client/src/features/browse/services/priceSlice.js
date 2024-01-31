@@ -83,7 +83,7 @@ const priceSlice = createSlice({
       const oneDay = 24 * 60 * 60 * 1000;
       const checkIn=new Date(state.checkIn)
       const checkOut=new Date(action.payload)
-      const diffDays = Math.round(Math.abs((checkIn - checkOut) / oneDay));
+      const diffDays = Math.round(Math.abs((checkIn - checkOut) / oneDay))+1;
       state.noOfDays=diffDays
       state.checkOut=action.payload
     },

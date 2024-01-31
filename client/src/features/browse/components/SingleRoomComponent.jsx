@@ -17,6 +17,7 @@ import {
 } from "../services/priceSlice";
 
 import { InputModal } from "./InputModal";
+import { set } from "date-fns";
 
 const SingleRoomComponent = ({
   id,
@@ -52,7 +53,10 @@ const SingleRoomComponent = ({
         id={id}
         description={description}
       />
-
+      <RoomDetailsModal viewDetailsModal={viewDetailsModal} setViewDetailsModal={setViewDetailsModal} 
+      room={
+        room
+    }/>
       <div className="border-2 grid grid-rows-[auto,auto,auto] grid-cols-12 m-4">
         <div className="row-span-1 col-span-4 p-4 mt-3">
           <p>Room Size: {size}</p>
@@ -76,7 +80,28 @@ const SingleRoomComponent = ({
         </div>
 
         <div className="col-span-6  flex justify-end pe-5 border-y-2">
-          <button className="border-2 border-gray-300 text-gray-600  mx-4 mt-4 rounded-sm text-[0.8rem] px-3 h-[30px]">
+          <button 
+          onClick={()=>{
+            setViewDetailsModal(!viewDetailsModal)
+            setRoom(
+              {
+                id,
+                hotel_id,
+                images,
+                size,
+                description,
+                roomType,
+                bathRoomType,
+                location,
+                rate,
+                amenities,
+                index,
+                setImages,
+                setSize,
+              }
+            )
+          }}
+           className="border-2 border-gray-300 text-gray-600  mx-4 mt-4 rounded-sm text-[0.8rem] px-3 h-[30px]">
             view more
           </button>
           <Checkbox

@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useGetSingleBookingForOwnerQuery } from "../services/getSingleBookingApiSlice";
 import { Button, Option, Select, Spinner } from "@material-tailwind/react";
 import { useRef, useState } from "react";
@@ -8,6 +8,7 @@ import { useCancelBookingMutation } from "../../booking/services/cancelBookingAp
 
 const BookingDetails = () => {
   const { booking_id } = useParams();
+  const navigate=useNavigate()
 
   const {
     data: bookings,
@@ -15,7 +16,7 @@ const BookingDetails = () => {
     isLoading,
     isSuccess,
   } = useGetSingleBookingForOwnerQuery({ booking_id });
-
+    
   const [
     changeBookingStatus,
     {
@@ -28,13 +29,12 @@ const BookingDetails = () => {
   const [cancelBooking,{isError:isErrorCancelBooking,isLoadingCancelBooking,isSuccessCancelBooking}]=useCancelBookingMutation()
 
   if (isLoading) return <Spinner />;
-
+  console.log(bookings.response[0].hotel_id)
   const {userId,roomDetails,totalNoOfRooms,totalAmount}=bookings.response[0];
 
   const handleSubmit = async (values) => {
     console.log(roomDetails)
     if(values.status==='cancelled'){
-      console.log('cancelllll')
         await cancelBooking({
                   user_id: userId,
                   booking_id: booking_id,
@@ -50,6 +50,7 @@ const BookingDetails = () => {
       });
     }
 
+      navigate(`/owner/bookings-list/${bookings.response[0].hotel_id}`)
   };
 
   // const handleSubmit = async () => {
@@ -74,7 +75,6 @@ const BookingDetails = () => {
         ) => {
           return (
             <>
-       
               <div className="row-span-1 col-span-1 border-2 flex flex-col p-5 gap-3">
                 <h2 className=" text-[1rem]">Primary Guest</h2>
                 <h2 className="font-bold  text-[0.9rem]">{userName}</h2>

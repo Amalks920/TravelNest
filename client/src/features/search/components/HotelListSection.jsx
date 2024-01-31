@@ -8,7 +8,7 @@ const HotelListSection = ({ hotel }) => {
     <div className="">
       <div className="grid grid-flow-row grid-cols-[35%,10%,55%] mb-14 h-[300px] m-[5%]  p-2 border-2">
         <div
-          className="col-span-1 border-2 border-black  max-h-[300px] bg-no-repeat bg-cover rounded-sm"
+          className="col-span-1  max-h-[300px] bg-no-repeat bg-cover rounded-sm"
           style={{
             backgroundImage: `url(${IMAGE_BASE_URL}/${hotel?.images[1]})`,
           }}

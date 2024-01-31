@@ -44,6 +44,8 @@ const userWalletDetailsHelper = (user_id) => {
 };
 
 const updateWalletAmountHelper = async (data) => {
+  console.log(data)
+  console.log('data data data data')
   const { user_id, amount,type } = data;
   try {
     const response = await Wallet.findOneAndUpdate(
@@ -81,8 +83,6 @@ const updateWalletHistoryHelper = async ({_id,amount,type}) => {
 const getWalletHistoryHelper=async (wallet_id)=>{
     try {
        const response=await WalletHistory.find({wallet_id:wallet_id})
-       console.log(response)
-       console.log('lsdjflds')
        return response
     } catch (error) {
         return error

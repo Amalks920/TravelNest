@@ -185,6 +185,7 @@ router.get('/get-rooms/:hotel_id',verifyJwt,getRooms)
 
 //user
 router.post('/get-all-rooms-user/:hotel_id',checkAvailabilityOfRooms,getRoomsForUser);
+router.get('/get-avg-rating-of-room',verifyJwt,)
 
 
 //owner

@@ -21,8 +21,6 @@ const SingleHotel = () => {
   const [isAccordionOpen, setIsAccordionOpen] = useState(-1);
   const [price, setPrice] = useState(0);
   const roomss = useSelector(selectRooms);
-  // const checkIn=useSelector(selectCheckIn);
-  // const checkOut=useSelector(selectCheckOut)
 
   const { hotel_id } = useParams();
   const { hotel, isError, isFetching, isLoading, isSuccess, isUninitialized } =

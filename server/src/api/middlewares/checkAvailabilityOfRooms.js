@@ -2,11 +2,7 @@ const bookingModel = require("../models/bookingModel");
 const roomModel = require("../models/roomModel");
 
 const checkAvailabilityOfRooms = async (req, res, next) => {
-  // const {checkIn,checkOut}=req.query
-  // console.log(checkIn,checkOut)
-  // console.log(req.query)
-  console.log(req.body);
-  console.log("req.body");
+
   const checkInDate = req.body.checkInDate || null;
   const checkOutDate = req.body.checkOutDate || null;
   const newCheckIn = new Date(checkInDate);
@@ -20,6 +16,7 @@ const checkAvailabilityOfRooms = async (req, res, next) => {
             { checkIn: { $lt: newCheckIn } },
             { checkOut: { $gt: newCheckIn } },
           ],
+          
         },
         {
           $and: [

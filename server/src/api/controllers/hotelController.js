@@ -1,4 +1,4 @@
-const { getHotelsHelper, getAHotelHelper, editHotelHelper, getAllHotelDetailsHelper, deleteHotelImageHelper, changeHotelStatusHelper, getAllHotelsForUserHelper, getAHotelForUserHelper, getAllHotelsForAdminHelper, editHotelNameHelper, editHotelLocationHelper, editHotelDescriptionHelper, addHotelImagesHelper } = require("../helpers/hotelHelper")
+const { getHotelsHelper, getAHotelHelper, editHotelHelper, getAllHotelDetailsHelper, deleteHotelImageHelper, changeHotelStatusHelper, getAllHotelsForUserHelper, getAHotelForUserHelper, getAllHotelsForAdminHelper, editHotelNameHelper, editHotelLocationHelper, editHotelDescriptionHelper, addHotelImagesHelper, getRatingOfAHotelHelper } = require("../helpers/hotelHelper")
 const { saveHotelDocumentHelper } = require("../helpers/hotelHelper")
 const { uploadImages } = require("../helpers/hotelHelper")
 const { findReviewsOfHotelByHotelIdHelper } = require("../helpers/reviewHelper")
@@ -223,6 +223,17 @@ console.log(req.params)
   }
 }
 
+const getRatingOfAHotel = async (req,res)=>{
+  const hotel_id=req.params.hotel_id
+  try {
+    const response=await getRatingOfAHotelHelper(hotel_id) 
+    res.status(200).json({response})
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({error});
+  }
+}
+
 
 module.exports={
     createHotel,getAllHotels,
@@ -230,6 +241,7 @@ module.exports={
     getAllHotelDetails,deleteHotelImage,
     changeHotelStatus,getAllHotelsForAdmin,
     getAllHotelsForUser,getAHotelForUser,editHotelName,
-    editHotelLocation,editHotelDescription,addHotelImages
+    editHotelLocation,editHotelDescription,addHotelImages,
+    getRatingOfAHotel
 }
 

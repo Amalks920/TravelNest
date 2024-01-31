@@ -46,6 +46,7 @@ export default function DatePicker({
       <Popover placement="bottom">
         <PopoverHandler>
           <Input
+            readOnly={true}
             className={className}
             min={new Date(Date.now()).toISOString().split('T')[0]}
             label={label}
@@ -54,6 +55,7 @@ export default function DatePicker({
         </PopoverHandler>
         <PopoverContent>
           <DayPicker
+          
             mode="single"
             selected={datePassed}
             onDayClick={(value)=>{

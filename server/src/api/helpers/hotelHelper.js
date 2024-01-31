@@ -1,6 +1,7 @@
 const { resolve } = require("path");
 const cloudinary = require("../../config/cloudinary");
 const hotelModel = require("../models/hotelModel");
+const roomModel=require('../models/roomModel')
 const mongoose = require("mongoose");
 
 const uploadImages = (files) => {
@@ -341,15 +342,31 @@ const findHotelByLocationHelper=(location,collisions,roomType,priceRange)=>{
   })
 }
 
-// const searchHotels=()=>{
-//   return Promise(async (resolve,reject)=>{
-//     try {
-//       const response=await room
-//     } catch (error) {
-//       reject(error)
-//     }
-//   })
-// }
+const getRatingOfAHotelHelper=async (hotel_id)=>{
+  try {
+    const response=await roomModel.aggregate([
+      {
+        $match: { hotel_id: hotel_id } // Optionally match specific hotel_id if needed
+      },
+      {
+        $group:{
+        _id:'$hotel_id',
+        
+         rooms:{$push:'$$ROOT'}
+        }
+      },
+      {
+        
+      }
+    ])
+
+    console.log(response)
+    return response
+  } catch (error) {
+    console.log(error)
+    return error
+  }
+}
 
 
 
@@ -368,5 +385,6 @@ module.exports = {
   editHotelNameHelper,
   editHotelLocationHelper,editHotelDescriptionHelper,
   addHotelImagesHelper,getAHotelHelperForOrder,
-  findHotelByLocationHelper
+  findHotelByLocationHelper,
+  getRatingOfAHotelHelper
 };

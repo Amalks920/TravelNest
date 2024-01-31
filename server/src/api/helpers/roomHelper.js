@@ -479,6 +479,14 @@ const updateRoomNumberHelper = (room_id, noOfRooms) => {
   });
 };
 
+const getAvgReviewOfARoomHelper=async (room_id)=>{
+  try {
+   
+  } catch (error) {
+    return error
+  }
+}
+
 module.exports = {
   addRoomHelper,
   addRoomToHotel,
@@ -495,4 +503,5 @@ module.exports = {
   searchRoomsHotel,
   decreaseRoomsCount,
   updateRoomNumberHelper,
+  getAvgReviewOfARoomHelper
 };

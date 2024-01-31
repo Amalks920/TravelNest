@@ -9,8 +9,11 @@ import {
     Card,
     Typography,
   } from "@material-tailwind/react";
+
    
    function ChatList({username,text}) {
+
+  
     return (
       <Card className="w-[100%]">
         <List>

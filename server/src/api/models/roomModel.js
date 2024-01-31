@@ -139,6 +139,11 @@ const roomSchema = new mongoose.Schema({
     default:'not-registered'
   },
 
+  rating:{
+    type: Number,
+    default:0
+  },
+
   // Timestamp for when the room was created
   // timestamps: { type: Date, default: Date.now },
   created_at: { type: Date, required: true, default: Date.now },
