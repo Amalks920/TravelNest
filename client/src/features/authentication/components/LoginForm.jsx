@@ -9,6 +9,7 @@ import { useLoginMutation } from "../../../services/apiAuthSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { Spinner } from "@material-tailwind/react";
+import GoogleAuth from "../../../pages/GoogleAuth";
 
 const LoginForm = ({ role }) => {
   const token = useSelector(selectToken);
@@ -92,7 +93,8 @@ const LoginForm = ({ role }) => {
           </div>
 
           <div className="border-2 flex items-center justify-center">
-            <Auth text={"SIGNIN WITH GOOGLE"} />
+            {/* <Auth text={"SIGNIN WITH GOOGLE"} /> */}
+            <GoogleAuth role={role}/>
           </div>
           <div>
             <FormInput
