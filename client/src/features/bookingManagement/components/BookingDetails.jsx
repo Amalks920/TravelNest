@@ -75,28 +75,28 @@ const BookingDetails = () => {
         ) => {
           return (
             <>
-              <div className="row-span-1 col-span-1 border-2 flex flex-col p-5 gap-3">
-                <h2 className=" text-[1rem]">Primary Guest</h2>
-                <h2 className="font-bold  text-[0.9rem]">{userName}</h2>
+              <div className="row-span-1 lg:col-span-1 col-span-full xl:col-span-1  border-2 flex flex-col p-5 gap-3">
+                <h2 className=" text-[1rem] font-bold font-body">Primary Guest</h2>
+                <h2 className="  text-[0.9rem]">{userName}</h2>
               </div>
-              <div className="row-span-1 col-span-1 border-2 flex flex-col p-5 gap-3">
-                <h2 className=" text-[1rem]">Check In</h2>
-                <h2 className="font-bold  text-[0.9rem]">{checkIn}</h2>
+              <div className="row-span-1 lg:col-span-1 col-span-full xl:col-span-1 border-2 flex flex-col p-5 gap-3">
+                <h2 className=" text-[1rem] font-bold font-body">Check In</h2>
+                <h2 className="  text-[0.9rem]">{checkIn}</h2>
               </div>
-              <div className="row-span-1 col-span-1 border-2 flex flex-col p-5 gap-3">
-                <h2 className=" text-[1rem]">Check Out</h2>
-                <h2 className="font-bold  text-[0.9rem]">{checkOut}</h2>
+              <div className="row-span-1 lg:col-span-1 col-span-full xl:col-span-1 border-2 flex flex-col p-5 gap-3">
+                <h2 className=" text-[1rem] font-bold font-body">Check Out</h2>
+                <h2 className="  text-[0.9rem]">{checkOut}</h2>
               </div>
-              <div className="row-span-1 col-span-1 border-2 flex flex-col p-5 gap-3">
-                <h2 className=" text-[1rem]">Email</h2>
-                <h2 className="font-bold  text-[0.9rem]">{userEmail}</h2>
+              <div className="row-span-1 lg:col-span-1 col-span-full xl:col-span-1 border-2 flex flex-col p-5 gap-3">
+                <h2 className=" text-[1rem] font-bold font-body">Email</h2>
+                <h2 className=" text-[0.9rem]">{userEmail}</h2>
               </div>
-              <div className="row-span-1 col-span-1 border-2 flex flex-col p-5 gap-3">
-                <h2 className=" text-[1rem]">Phone</h2>
-                <h2 className="font-bold  text-[0.9rem]">{userPhone}</h2>
+              <div className="row-span-1 lg:col-span-1 col-span-full xl:col-span-1 border-2 flex flex-col p-5 gap-3">
+                <h2 className=" text-[1rem] font-bold font-body">Phone</h2>
+                <h2 className="  text-[0.9rem]">{userPhone}</h2>
               </div>
-              <div className="row-span-1 col-span-1 border-2 flex flex-col  p-5 gap-3">
-                <h2 className=" text-[1rem]">status</h2>
+              <div className="row-span-1 xl:col-span-2 col-span-full border-2 flex flex-col   p-5 gap-3">
+                <h2 className=" text-[1rem] font-bold font-body">status</h2>
                 <div className="w-96">
                   <Formik
                     initialValues={{
@@ -115,7 +115,7 @@ const BookingDetails = () => {
                       isSubmitting,
                     }) => (
                       <>
-                      <div className="flex col-span-2">
+                      <div className="flex col-span-3">
                         <select
                           className="w-[200px] h-[30px] ps-2 me-2 rounded-lg"
                           onChange={handleChange}
@@ -144,7 +144,7 @@ const BookingDetails = () => {
                 </div>
               </div>
               <div className="row-span-1 col-span-4 mt-16">
-                <h2 className="ms-5">Room Details</h2>
+              
               </div>
 
 
@@ -153,23 +153,23 @@ const BookingDetails = () => {
 
 
             return  <>            
-                  <div className="row-span-1  p-5 flex -mt-10  gap-36 col-span-full">
+                  <div className="row-span-1  p-5 flex md:flex-row flex-col -mt-10  md:gap-36 gap-8 col-span-full border-2">
                     <div className="">
-                    <h2 className="mb-6">Room Type
+                    <h2 className="mb-6 font-bold font-body">Room Type
                     </h2>
-                    <h2 className="font-bold capitalize">{room.roomType}</h2>
+                    <h2 className=" capitalize">{room.roomType}</h2>
                     </div>
 
                     <div className="">
-                    <h2 className="mb-6">Price
+                    <h2 className="mb-6 font-bold font-body">Price
                     </h2>
-                    <h2 className="font-bold capitalize">{room.rate}</h2>  
+                    <h2 className="capitalize">{room.rate}</h2>  
                     </div>
 
                     <div className="">
-                    <h2 className="mb-6">No Of People Allowed
+                    <h2 className="mb-6 font-bold font-body">No Of People Allowed
                     </h2>
-                    <h2 className="font-bold capitalize">{room.noOfPeopleAllowed}</h2>  
+                    <h2 className=" capitalize">{room.noOfPeopleAllowed}</h2>  
                     </div>
 
                   </div>

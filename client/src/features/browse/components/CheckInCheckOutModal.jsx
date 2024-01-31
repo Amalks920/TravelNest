@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Dialog,
@@ -29,6 +29,10 @@ const CheckInCheckOutModal = ({ hotel_id }) => {
   const [getAllRoomsInHotel, { isError, isLoading, isSuccess, reset }] =
     useGetAllRoomsInHotelMutation();
 
+
+    useEffect(()=>{
+        getRooms()
+    },[checkInDate,checkOutDate])
   const getRooms = async () => {
     try {
       const response = await getAllRoomsInHotel({
@@ -42,6 +46,8 @@ const CheckInCheckOutModal = ({ hotel_id }) => {
       console.log(error);
     }
   };
+
+
 
   return (
     <>

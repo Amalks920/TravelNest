@@ -108,7 +108,7 @@ const SingleHotel = () => {
             <h2 className="w-[80%]" >{description}</h2>
           </div>
           <div className=" h-fit font-medium  text-left ps-3 text-[0.9rem] leading-8 mt-8 ms-4">
-          <button className="border-2 border-black px-3  text-[0.7rem] rounded-lg me-4"><Link to={`/chat/${owner_id}`}>chat with user</Link></button>
+          <button className="border-2 border-black px-3  text-[0.7rem] rounded-lg me-4 hover:transform hover:scale-105 transition-transform duration-300 ease-in-out"><Link to={`/chat/${owner_id}`}>chat with user</Link></button>
           </div>
 
 

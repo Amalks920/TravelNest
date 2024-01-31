@@ -60,7 +60,7 @@ const checkAvailabilityOfRooms = async (req, res, next) => {
       const res = await roomModel.findOne({
         $and: [
           { _id: filteredExistingCollisionIdArray[i] },
-          { no_of_rooms_available: { $ne: 0 } },
+          { no_of_rooms_available: { $eq: 0 } },
         ],
       });
 
