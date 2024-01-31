@@ -1,4 +1,4 @@
-const { getAllBookingsHelper, getAllBookingsOfHelper, getABookingForUserHelper, getABookingForOwnerHelper, changeBookingStatusHelper, cancelBookingHelper, findABookingHelper, updateNoOfRoomsHelper } = require("../helpers/bookingHelper")
+const { getAllBookingsHelper, getAllBookingsOfHelper, getABookingForUserHelper, getABookingForOwnerHelper, changeBookingStatusHelper, cancelBookingHelper, findABookingHelper, updateNoOfRoomsHelper, getUserBookingDocumentLengthHelper } = require("../helpers/bookingHelper")
 const { getReviewDoneByUser } = require("../helpers/reviewHelper")
 const { updateRoomNumberHelper } = require("../helpers/roomHelper")
 const { addToWalletHelper, updateWalletAmountHelper } = require("../helpers/walletHelper")
@@ -18,12 +18,23 @@ const getAllBookings=async (req,res,next)=>{
 //user
 const getAllBookingsOfUser=async (req,res,next)=>{
     const user_id=req.params.user_id
+    const pageNumber=req.params.pageNumber
     try {
-        const response=await getAllBookingsOfHelper(user_id)
+        const response=await getAllBookingsOfHelper(user_id,pageNumber)
         res.status(200).json({response})
     } catch (error) {
         console.log(error)
         res.status(404).json({error})
+    }
+}
+
+const getUserBookingDocumentLength=async (req,res)=>{
+    const user_id=req.params.user_id;
+    try {
+      const response=await getUserBookingDocumentLengthHelper(user_id)
+      res.status(200).json({response})
+    } catch (error) {
+       res.status(500).json({error}) 
     }
 }
 
@@ -96,5 +107,6 @@ const cancelBookingController= async (req,res,next)=>{
 module.exports={
     getAllBookings,getAllBookingsOfUser,
     getABookingForUser,getABookingForOwner,
-    changeBookingStatus,cancelBookingController
+    changeBookingStatus,cancelBookingController,
+    getUserBookingDocumentLength
 }

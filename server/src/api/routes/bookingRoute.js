@@ -1,5 +1,5 @@
 const express = require('express');
-const { getAllBookings, getAllBookingsOfUser, getABookingForUser, getABookingForOwner, changeBookingStatus, cancelBookingController } = require('../controllers/bookingController');
+const { getAllBookings, getAllBookingsOfUser, getABookingForUser, getABookingForOwner, changeBookingStatus, cancelBookingController, getUserBookingDocumentLength } = require('../controllers/bookingController');
 const verifyJwt = require('../utils/verifyJwt');
 const router = express.Router();
 
@@ -119,7 +119,9 @@ router.get('/get-booking/{user-id}',(req,res)=>{
 
 
 // user
-router.get('/get-bookings-of-user/:user_id',verifyJwt,getAllBookingsOfUser)
+router.get('/get-bookings-of-user/:user_id/:pageNumber',verifyJwt,getAllBookingsOfUser)
+router.get('/get-bookings-of-user-length/:user_id',verifyJwt,getUserBookingDocumentLength)
+
 router.get('/get-a-booking-for-user/:booking_id',verifyJwt,getABookingForUser)
 
 router.post('/cancel-booking/:booking_id',verifyJwt,cancelBookingController)

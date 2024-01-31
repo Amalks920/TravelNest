@@ -77,8 +77,8 @@ const getAllBookingsHelper=(hotel_id)=>{
 }
 
 
-const getAllBookingsOfHelper=(user_id)=>{
-    return new Promise(async (resolve,reject)=>{
+const getAllBookingsOfHelper=async(user_id,pageNumber)=>{
+    // return new Promise(async (resolve,reject)=>{
         try {
             console.log(user_id)
         const response=await bookingModel.aggregate([
@@ -108,14 +108,31 @@ const getAllBookingsOfHelper=(user_id)=>{
                 status:1,
                 totalNoOfRooms:1
             }
+           },
+           {
+            $skip:(pageNumber-1)*3
+           },
+           {
+            $limit:pageNumber*3
            }
         ])
         // find({userId:user_id})
-            resolve(response)
+            return response
         } catch (error) {
-            reject(error)
+            throw error
         }
-    })
+    // })
+}
+
+const getUserBookingDocumentLengthHelper=async (user_id)=>{
+    try {
+    const response=await bookingModel.find({userId:user_id})
+    console.log(response.length)
+    console.log('response')
+    return response.length    
+    } catch (error) {
+        throw error
+    }
 }
 
 const getABookingForUserHelper=(booking_id)=>{
@@ -230,5 +247,5 @@ module.exports={
     getAllBookingsHelper,getAllBookingsOfHelper,
     getABookingForUserHelper,getABookingForOwnerHelper,
     changeBookingStatusHelper,cancelBookingHelper,findABookingHelper,
-    updateNoOfRoomsHelper
+    updateNoOfRoomsHelper,getUserBookingDocumentLengthHelper
 }

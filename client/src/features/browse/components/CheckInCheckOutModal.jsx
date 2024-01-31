@@ -33,6 +33,7 @@ const CheckInCheckOutModal = ({ hotel_id }) => {
     useEffect(()=>{
         getRooms()
     },[checkInDate,checkOutDate])
+
   const getRooms = async () => {
     try {
       const response = await getAllRoomsInHotel({
@@ -51,7 +52,6 @@ const CheckInCheckOutModal = ({ hotel_id }) => {
 
   return (
     <>
-      {/* <Button onClick={handleOpen}>Sign In</Button> */}
       <Dialog
         size="xs"
         open={open}
@@ -59,11 +59,7 @@ const CheckInCheckOutModal = ({ hotel_id }) => {
         className="bg-transparent shadow-none"
       >
         <Card className="mx-auto w-full max-w-[24rem]">
-          <CardBody className="flex flex-col gap-4">
-            {/* <Typography className="absolute border-2 w-full" variant="h6" color="blue-gray">
-
-            </Typography> */}
-     
+          <CardBody className="flex flex-col gap-4">     
             <Typography
               className=" font-normal text-center mt-3  flex gap-12 "
               variant="paragraph"
@@ -96,7 +92,7 @@ const CheckInCheckOutModal = ({ hotel_id }) => {
             </Typography>
             <Input
               onInput={(e) => {
-                console.log(e.target.value);
+         
                 dispatch(updateCheckIn(e.target.value));
               }}
               min={new Date(Date.now()).toISOString().split("T")[0]}
