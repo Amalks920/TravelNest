@@ -69,7 +69,7 @@ const googleSignIn = async (req, res) => {
     const email=payload.email
 
 
-    const response=googleLoginHelper(email,role);
+    const response=await googleLoginHelper(email,role);
     res.status(200).json(response);
   } catch (error) {
     console.log(error)
