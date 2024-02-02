@@ -45,7 +45,7 @@ const Chat = ({socket}) => {
       <div className={`row-span-1 ${role==='owner'?'col-span-2':'col-span-1'} border-y-2 flex flex-col`}>
         <div className={`${role==='user'?'h-[60px]':'h-[60px]'} border-b-2 flex justify-between`}>
           <div></div>
-           <button className={`border-2 border-black w-[100px] m-4 rounded-full text-[0.8rem] font-bold `}>Hide Details</button> 
+           <button className={`border-2 border-black w-[100px] m-4 rounded-full text-[0.8rem] font-bold hidden`}>Hide Details</button> 
         </div>
 
         <div className=" flex-grow border-b-2 overflow-scroll">

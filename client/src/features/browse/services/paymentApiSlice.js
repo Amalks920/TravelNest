@@ -9,10 +9,13 @@ const paymentApiSlice=apiSlice.injectEndpoints({
                 method: "POST",
                 body: data,       
             })
+        }),
+        getWalletAmount:builder.query({
+            query:(data)=>`/wallet/wallet-amount/${data.user_id}`
         })
     })
 })
 
 
-export const {usePaymentMutation}=paymentApiSlice
+export const {usePaymentMutation,useGetWalletAmountQuery}=paymentApiSlice
 

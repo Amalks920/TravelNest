@@ -89,11 +89,23 @@ const getWalletHistoryHelper=async (wallet_id)=>{
     }
 }
 
+const getWalletAmountHelper=async (user_id)=>{
+  try {
+    console.log('ressponse')
+    const response=await Wallet.find({user_id});
+    console.log(response);
+    return response
+  } catch (error) {
+     throw  error
+  }
+}
+
 module.exports = {
   createWalletHelper,
   addToWalletHelper,
   userWalletDetailsHelper,
   updateWalletAmountHelper,
   updateWalletHistoryHelper,
-  getWalletHistoryHelper
+  getWalletHistoryHelper,
+  getWalletAmountHelper
 };

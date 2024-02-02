@@ -41,12 +41,12 @@ const MessageInput=({recipientId,senderId})=>{
           }}
             value={message}
             type="text"
-            className={`border-2   rounded-full ps-7 text-sm ${role==='owner'?'w-[75%] h-[55px] ms-[10%]':'w-full h-[60px] '}`}
+            className={`border-2 border-black rounded-full ps-7 text-sm ${role==='owner'?'w-[75%] h-[55px] ms-[10%]':'w-full h-[60px] '}`}
             placeholder="type message here"
           />
 </>
     )
-}
+}  
 
 
 export default MessageInput;

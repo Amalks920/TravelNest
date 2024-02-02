@@ -123,9 +123,11 @@ const BookingDetails = () => {
                           name="status"
                           value={values.status}
                         >
+                          {console.log(status)}
+                          {console.log('status')}
                           <option className={`${status==='paid'||'cancelled'?'hidden':null}`} value="paid">Paid</option>
-                          <option className={`${status==='checkIn' ||'cancelled' ?'hidden':null}`} value="checkIn">CheckIn</option>
-                          <option className={`${status==='checkOut'||'cancelled'?'hidden':null}`} value="checkOut">CheckOut</option>
+                          <option className={`${status==='checkIn'  ?'hidden':status==='cancelled'?'hidden':null}`} value="checkIn">CheckIn</option>
+                          <option className={`${status==='checkOut'?'hidden':status==='cancelled'?'hidden':null}`} value="checkOut">CheckOut</option>
                           <option className={`${status==='cancelled'?'hidden':null}`} value="cancelled">cancel</option>
                         </select>
                         <Button
@@ -153,20 +155,20 @@ const BookingDetails = () => {
 
 
             return  <>            
-                  <div className="row-span-1  p-5 flex md:flex-row flex-col -mt-10  md:gap-36 gap-8 col-span-full border-2">
-                    <div className="">
+                  <div className="row-span-1  p-5 flex md:flex-row flex-col -mt-10  md:gap-36 gap-8 col-span-full">
+                    <div className=" h-[100px] mt-5">
                     <h2 className="mb-6 font-bold font-body">Room Type
                     </h2>
                     <h2 className=" capitalize">{room.roomType}</h2>
                     </div>
 
-                    <div className="">
+                    <div className=" h-[100px] mt-5">
                     <h2 className="mb-6 font-bold font-body">Price
                     </h2>
                     <h2 className="capitalize">{room.rate}</h2>  
                     </div>
 
-                    <div className="">
+                    <div className=" h-[100px] mt-5">
                     <h2 className="mb-6 font-bold font-body">No Of People Allowed
                     </h2>
                     <h2 className=" capitalize">{room.noOfPeopleAllowed}</h2>  

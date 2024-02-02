@@ -16,13 +16,14 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { loadStripe } from "@stripe/stripe-js";
 import useHandlePayment from "../hooks/useHandlePayment";
-import { usePaymentMutation } from "../services/paymentApiSlice";
+import { useGetWalletAmountQuery, usePaymentMutation } from "../services/paymentApiSlice";
 import { useEffect, useState } from "react";
 import { Formik } from "formik";
 import { isMatch } from "react-day-picker";
 import {
   selectRole,
   selectToken,
+  selectUserId,
 } from "../../authentication/services/loginSlice";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
@@ -36,9 +37,15 @@ const PriceCard = ({ open, setOpen }) => {
   const roomDetails = useSelector(selectCheckedRooms);
   const hotel_id = useSelector(selectHotelId);
   const totalNoRooms = useSelector(selectTotalNumberOfRoom);
+  const user_id=useSelector(selectUserId)
 
   const [payment, { isError, isLoading, isSuccess, error }] =
     usePaymentMutation();
+
+const {data:wallet,isSuccess:isSuccessWallet}=useGetWalletAmountQuery({user_id})
+
+console.log(wallet)
+console.log('walllllettttt===========>')
 
   const [checkInDate, setCheckInDate] = useState(selectedCheckInDate);
   const [checkOutDate, setCheckOutDate] = useState(selectedCheckOutDate);
@@ -143,8 +150,12 @@ const PriceCard = ({ open, setOpen }) => {
               }}
               className="text-center mt-2 text-[0.9rem] text-red-500 cursor-pointer capitalize"
             >
-              {roomDetails?.length!==0 &&
-                <Link to={"/wallet-payment-page"}>other payment options</Link>}
+              {console.log(wallet?.response[0]?.amount,totalPrice)}
+              {roomDetails?.length!==0  && wallet?.response[0]?.amount>totalPrice  ?
+                <Link to={"/wallet-payment-page"}>other payment options</Link>:null
+                
+           
+                }
             </h2>
             <div className="mt-6 flex flex-col justify-between mx-3">
               <div className="w-full mt-6 flex  justify-between mx-3">

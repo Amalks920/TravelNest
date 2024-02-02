@@ -10,7 +10,7 @@ const {
 } = require("../helpers/roomHelper");
 const { findUserByUserName } = require("../helpers/userHelper");
 const { checkout } = require("../routes/paymentRoute");
-const { updateWalletAmountHelper, updateWalletHistoryHelper } = require("../helpers/walletHelper");
+const { updateWalletAmountHelper, updateWalletHistoryHelper, getWalletAmountHelper } = require("../helpers/walletHelper");
 
 require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
@@ -240,9 +240,21 @@ const updateWalletAmount= async (req,res) => {
   }
 }
 
+const getWalletAmount=async (req,res) =>{
+  const user_id=req.params.user_id
+    try {
+      const response=await getWalletAmountHelper(user_id)
+
+      res.status(200).json({response})
+    } catch (error) {
+      res.status(500).json({error})
+    }
+}
+
 module.exports = {
   payment,
   webHookController,
   payUsingWallet,
-  updateWalletAmount
+  updateWalletAmount,
+  getWalletAmount
 };

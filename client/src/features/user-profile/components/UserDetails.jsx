@@ -116,8 +116,8 @@ return (
   <div className=" w-full min-h-[100vh] flex flex-col items-center justify-start pt-[100px] flex-grow">
        <div className=" w-[50%] h-[400px] flex flex-col">
           <div className="flex  w-full h-1/4 bg-gray-900 rounded-md ">
-            <div className="w-1/3">
-              <div className="w-[110px] h-[110px]  shadow-2xl  rounded-full top-4  left-9 relative bg-white"></div>
+            <div className="w-1/3 h-[100px]">
+              {/* <div className="w-[110px] h-[110px]  shadow-2xl  rounded-full top-4  left-9 relative bg-white"></div> */}
             </div>
          
             <div className=" flex-grow">
@@ -134,15 +134,16 @@ return (
               {/* <div className="flex justify-between me-16 mb-5"> */}
                 <div className="col-span-1 row-span-1"><h2>Email</h2></div>
                 <div className="col-span-1 row-span-1"><h2>{userInfo?.email}</h2></div>
-                <div className="col-span-1 row-span-1"> <PencilIcon width={17} className="cursor-pointer me-6 ms-5" /></div>
+                <div className="col-span-1 row-span-1"> 
+                <PencilIcon width={17} className="hidden cursor-pointer me-6 ms-5" /></div>
 
                 <div className="col-span-1 row-span-1"><h2>Phone</h2></div>
                 <div className="col-span-1 row-span-1"><h2>{userInfo?.phone}</h2></div>
-                <div className="col-span-1 row-span-1"> <PencilIcon width={17} className="cursor-pointer me-6 ms-5" /></div>
+                <div className="col-span-1 row-span-1"> <PencilIcon width={17} className="hidden cursor-pointer me-6 ms-5" /></div>
 
                 <div className="col-span-1 row-span-1"><h2>Username</h2></div>
                 <div className="col-span-1 row-span-1"><h2>{userInfo?.username}</h2></div>
-                <div className="col-span-1 row-span-1"> <PencilIcon width={17} className="cursor-pointer me-6 ms-5" /></div>      
+                <div className="col-span-1 row-span-1"> <PencilIcon width={17} className="hidden cursor-pointer me-6 ms-5" /></div>      
 
                 
                 <div className="col-span-1 row-span-1"><h2>Wallet Balance</h2></div>

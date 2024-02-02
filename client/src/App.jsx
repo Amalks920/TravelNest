@@ -95,15 +95,6 @@ function App() {
 
       </Route>
 
-      {/* <Route
-     // element={<AuthPageContainer home={true} />}
-       element={<RequireUserAuth allowedRole={'user'} />}
-       >
-      <Route path="/home" element={<HomePage />} />
-        <Route path="/hotel-details/:hotel_id" element={<SingleHotelPage/>} />
-      </Route> */}
-
-
       <Route path='/owner' >
       <Route element={<CheckAuth currentRole={'owner'}/>} >
         <Route path="/owner/login" element={<Login />} />

@@ -1,5 +1,5 @@
 const express=require('express')
-const { updateWalletAmount } = require('../controllers/paymentController')
+const { updateWalletAmount, getWalletAmount } = require('../controllers/paymentController')
 const { getWalletHistory } = require('../controllers/userController')
 const router=express.Router()
 
@@ -37,5 +37,5 @@ router.patch('/update-wallet/{amount}',(req,res)=>{
 router.post('/update-wallet-amount',updateWalletAmount)
 
 router.get('/get-wallet-history/:wallet_id',getWalletHistory);
-
+router.get('/wallet-amount/:user_id',getWalletAmount);
 module.exports=router;

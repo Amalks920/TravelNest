@@ -27,12 +27,12 @@ const ChatMessage=({recipient_id,socket})=>{
   // const time = updatedAt?.toISOString()?.split('T')[1]?.split('.')[0]; 
 return <>
       
-          <div className={`col-span-1 ${user_id!==sender._id?'bg-blue-gray-50':'bg-red-400 text-white'} mb-3 rounded-s-lg`}></div>      
-            <div className={`col-span-1 p-3   ${user_id!==sender._id?'bg-blue-gray-50':'bg-red-400 text-white'} mb-3 rounded-e-lg`}>
-              <h2 className={`text-center ${role==='owner'?'text-[0.7rem]':'text-[1.2rem]'}`}>Jan 23,2023</h2>
-              <h2 className={`font-bold  p-1 capitalize ${role==='owner'?'text-[0.9rem]':'text-[1.2rem]'}`}>{sender.username} <span className="text-[0.6rem] font-extralight">{updatedAt}</span></h2>
+          <div className={`col-span-1 ${user_id!==sender._id?'bg-blue-gray-50':'bg-gray-300 '} mb-3 rounded-s-lg`}></div>      
+            <div className={`col-span-1 p-3   ${user_id!==sender._id?'bg-blue-gray-50':'bg-gray-300 '} mb-3 rounded-e-lg`}>
+              <h2 className={`text-center ${role==='owner'?'text-[0.7rem]':'text-[0.8rem]'}`}>{updatedAt}</h2>
+              <h2 className={`font-bold  p-1 capitalize ${role==='owner'?'text-[0.9rem]':'text-[1.2rem]'}`}>{sender.username} <span className="text-[0.6rem] font-extralight"></span></h2>
               <h2 className={` p-1 ${role==='owner'?'text-[0.8rem]':'text-[1.1rem]'}`}>{text}</h2>
-              <h2 className="text-[0.7rem] p-1">Read By</h2>
+              {/* <h2 className="text-[0.7rem] p-1">Read By</h2> */}
             </div>
             </>
             })

@@ -71,7 +71,7 @@ const BookingsList=()=>{
                       ))}
                     </TabsHeader>
                   </Tabs> */}
-                  <div className="w-full md:w-72">
+                  <div className="w-full md:w-72 hidden">
                     <Input
                       label="Search"
                       icon={<MagnifyingGlassIcon className="h-5 w-5" />}
@@ -166,8 +166,8 @@ const BookingsList=()=>{
                                   variant="ghost"
                                   size="sm"
                                   
-                                  value={status==='paid' ? "paid" :status==='checkout'?'checkout':status==='cancelled'?'cancelled':'checkIn'}
-                                  color={status==='paid' ? "green" :status==='checkOut'?'blue-gray':'red'}
+                                  value={status==='paid' ? "paid" :status==='checkOut'?'checkout':status==='cancelled'?'cancelled':'checkIn'}
+                                  color={status==='paid' ? "green" :status==='checkOut'?'blue-gray':status==='checkIn'?'blue':'red'}
                                 />
                               </div>
                             </td>
@@ -191,7 +191,7 @@ const BookingsList=()=>{
                   </tbody>
                 </table>
               </CardBody>
-              <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
+              <CardFooter className=" items-center justify-between border-t border-blue-gray-50 p-4 hidden">
                 <Typography variant="small" color="blue-gray" className="font-normal">
                   Page 1 of 10
                 </Typography>

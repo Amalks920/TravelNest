@@ -41,7 +41,7 @@ const SingleRoomComponent = ({
   const isRoomCheckedOrNot = useSelector((state) =>
     selectCheckedRoomById(state, id)
   );
- // const checkedRooms = useSelector(selectCheckedRooms);
+
   const selectedRooms = useSelector(selectCheckedRooms);
 
   const dispatch = useDispatch();

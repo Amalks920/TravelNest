@@ -13,8 +13,7 @@ const RoomSection = ({
   setSize,
 }) => {
 
-  // const [viewDetailsModal, setViewDetailsModal] = useState(false);
-  // const [room, setRoom] = useState([]);
+
 
   return (
     <>      
