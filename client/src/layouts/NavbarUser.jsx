@@ -49,7 +49,7 @@ export function NavbarUser() {
   }
 
   return (
-    <Navbar className="fixed max-w-[100vw] rounded-none mb-1 px-4 py-2  z-10">
+    <Navbar className="fixed max-w-[100vw] rounded-none  px-4 py-2  z-10">
       <div className="flex items-center justify-between text-blue-gray-900">
         <Typography
           as="a"
@@ -57,7 +57,7 @@ export function NavbarUser() {
           variant="h6"
           className="mr-4 cursor-pointer py-1.5 lg:ml-2 text-2xl"
         >
-          <h1> <Link to={'/home'}>TravelNest</Link></h1>
+          <h1 className="font-extrabold text-[1.5rem]"> <Link to={'/home'} >TravelNest</Link></h1>
         </Typography>
 
         {!isSearchBarOpen && (
@@ -66,32 +66,7 @@ export function NavbarUser() {
           </div>
         )}
         <div className="hidden gap-2 lg:flex">
-          {/* <Button variant="text" size="sm" color="blue-gray">
-                            Log In
-                        </Button> */}
-          {/* {token ? (
-            <Button
-              onClick={() => {
-                handleLogout();
-              }}
-              variant="gradient"
-              size="sm"
-            >
-              {"logout"}
-            </Button>
-          ) : (
-            <Link to={"/login"}>
-              <Button
-                onClick={() => {
-                  handleLogout();
-                }}
-                variant="gradient"
-                size="sm"
-              >
-                {"login"}
-              </Button>
-            </Link>
-          )} */}
+ 
 
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -179,6 +154,7 @@ export function NavbarUser() {
           )}
         </div>
       </Collapse>
+
     </Navbar>
   );
 }

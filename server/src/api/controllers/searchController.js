@@ -35,11 +35,10 @@ const searchController = async (req, res, next) => {
 
 const roomSearchController = async (req, res, next) => {
   const collisions = res.locals.existingCollisions;
-  const location = req.query.location;
+  const location = req.query.search;
   const roomType = req.query.roomType || null;
-  //   const priceRange = req.query.priceRange
-  //     ? JSON.parse(req.query.priceRange)
-  //     : null;
+
+
   const min = req.query.priceMin || null;
   const max = req.query.priceMax || null;
   const priceRange = {

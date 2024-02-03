@@ -29,7 +29,7 @@ const SingleHotel = () => {
     const isPageReady= isLoading || isFetching || isUninitialized
 
   if (isPageReady) return <h1><Spinner className="h-12 w-12" /></h1>;
-
+  console.log(hotel)
   const { hotelName, images, description, amenities,owner_id } = hotel?.response[0];
 
   const rooms = hotel?.response[1];

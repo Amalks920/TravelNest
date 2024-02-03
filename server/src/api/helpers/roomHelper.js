@@ -367,10 +367,11 @@ const addRoomImagesHelper = (room_id, imagePathArray) => {
   });
 };
 
-const searchRoomsHotel = (location, collisions, priceRange, roomType) => {
+const searchRoomsHotel = async (location, collisions, priceRange, roomType) => {
 console.log(priceRange)
-  return new Promise(async (resolve, reject) => {
+  // return new Promise(async (resolve, reject) => {
     try {
+      console.log(location,roomType)
       const response = await roomModel.aggregate([
         {
           $lookup: {
@@ -431,12 +432,14 @@ console.log(priceRange)
           },
         },
       ]);
-      console.log(response);
-      resolve(response);
+      console.log(response)
+      return response
+     // resolve(response);
     } catch (error) {
-      reject(error);
+      return error
+     
     }
-  });
+  // });
 };
 
 const decreaseRoomsCount = (rooms) => {

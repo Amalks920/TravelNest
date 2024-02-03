@@ -11,21 +11,6 @@ const FilterSection = () => {
             Clear All
           </h2>
         </header>
-        {/* <div className="w-full text-left pt-10 ">
-          <h2 className="  font-bold  text-[1.1rem] text-left mb-3">Price</h2>
-          <div className="flex">
-            <Radio name="price-range"/>
-           <h2 className="mt-2"> ₹500 to ₹999</h2>
-          </div>
-          <div className="flex">
-            <Radio name="price-range"/>
-           <h2 className="mt-2"> ₹100 to ₹1499</h2>
-          </div>
-          <div className="flex">
-            <Radio name="price-range"/>
-           <h2 className="mt-2"> ₹1500 to ₹1999</h2>
-          </div>
-        </div> */}
         <PriceFilter/>
       </div>
     </div>

@@ -45,7 +45,7 @@ const PriceCard = ({ open, setOpen }) => {
 const {data:wallet,isSuccess:isSuccessWallet}=useGetWalletAmountQuery({user_id})
 
 console.log(wallet)
-console.log('walllllettttt===========>')
+
 
   const [checkInDate, setCheckInDate] = useState(selectedCheckInDate);
   const [checkOutDate, setCheckOutDate] = useState(selectedCheckOutDate);

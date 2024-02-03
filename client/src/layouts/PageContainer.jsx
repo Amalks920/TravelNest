@@ -7,15 +7,22 @@ import { selectToken } from "../features/authentication/services/loginSlice";
 import { NavbarUser } from "./NavbarUser";
 import SearchSection from "../features/browse/components/SearchSection";
 import { selectIsSearchBarOpen } from "../services/searchSlice";
+import { useState } from "react";
 
 const PageContainer = () => {
 
+
+
+
   const isSearchSectionOpen=useSelector(selectIsSearchBarOpen)
   return (
-    <div className={`grid grid-rows-[30px,${isSearchSectionOpen && '30px'},auto,auto] grid-cols-[49%,49%] gap-2  min-h-screen`}>
+    <div className={`grid grid-rows-[30px,auto,${isSearchSectionOpen && '30px'},auto,auto] grid-cols-[49%,49%] gap-2  min-h-screen`}>
       <header className="col-span-2 row-span-1">
         <NavbarUser />
+
       </header>
+
+
 
 { isSearchSectionOpen && <div className=" col-span-2 w-full row-span-1  fixed z-20 border-2 " >
         <SearchSection/>
