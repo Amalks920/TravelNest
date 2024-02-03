@@ -60,18 +60,19 @@ const changePaymentStatus=(status)=>{
     })
 }
 
-const getAllBookingsHelper=(hotel_id)=>{
-    return new Promise(async (resolve,reject)=>{
+const getAllBookingsHelper= async (hotel_id,pageNumber)=>{
+ console.log(pageNumber)
         try {
-            const response=await bookingModel.find({hotel_id:hotel_id})
+            const response=await bookingModel.find({hotel_id:hotel_id}).skip((pageNumber-1)*4).limit(pageNumber*4)
             response.reverse()
-
-            resolve(response)
+            console.log(response)
+            console.log('responsee')
+            return response
             
         } catch (error) {
-            reject(error)
+            return error
         }
-    })
+  
 }
 
 
@@ -222,8 +223,7 @@ const cancelBookingHelper=(booking_id,status,totalNoOfRooms)=>{
 const updateNoOfRoomsHelper=(roomDetails)=>{
     console.log(roomDetails)
     return new Promise(async (resolve,reject)=>{
-        console.log(roomDetails)
-        console.log('roooooooooooooooooooooooooooooooo')
+
         try {
             for (const room of roomDetails) {
                 const { _id, noOfRooms } = room;
@@ -240,10 +240,22 @@ const updateNoOfRoomsHelper=(roomDetails)=>{
     })
 }
 
+
+const getAllBookingsLengthHelper=async (hotel_id)=>{
+    try {
+    const response=await bookingModel.find({hotel_id:hotel_id})
+
+    return response.length; 
+    } catch (error) {
+        return error
+    }
+}
+
 module.exports={
     createBookingHelper,changePaymentStatus,
     getAllBookingsHelper,getAllBookingsOfHelper,
     getABookingForUserHelper,getABookingForOwnerHelper,
     changeBookingStatusHelper,cancelBookingHelper,findABookingHelper,
-    updateNoOfRoomsHelper,getUserBookingDocumentLengthHelper
+    updateNoOfRoomsHelper,getUserBookingDocumentLengthHelper,
+    getAllBookingsLengthHelper
 }

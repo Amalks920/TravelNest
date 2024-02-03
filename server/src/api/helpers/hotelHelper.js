@@ -35,16 +35,23 @@ const saveHotelDocumentHelper = function (data) {
   });
 };
 
-const getHotelsHelper = function (id = null) {
-  return new Promise(async (resolve, reject) => {
+const getHotelsHelper = async function (id = null,pageNumber) {
     try {
-      const hotels = await hotelModel.find({owner_id:id});
-      resolve(hotels);
+      const hotels = await hotelModel.find({owner_id:id}).skip((pageNumber-1)*3).limit(pageNumber*3);
+      return hotels;
     } catch (error) {
-      reject(error);
+      return error;
     }
-  });
 };
+
+const getAllHotelsLengthHelper=async (userId)=>{
+  try {
+    const response=await hotelModel.find({owner_id:userId});
+    return response.length;
+  } catch (error) {
+    return error
+  }
+}
 
 const getAHotelHelper = function (hotel_id) {
   return new Promise((resolve, reject) => {
@@ -385,5 +392,6 @@ module.exports = {
   editHotelLocationHelper,editHotelDescriptionHelper,
   addHotelImagesHelper,getAHotelHelperForOrder,
   findHotelByLocationHelper,
-  getRatingOfAHotelHelper
+  getRatingOfAHotelHelper,
+  getAllHotelsLengthHelper
 };

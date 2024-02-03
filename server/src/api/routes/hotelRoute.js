@@ -1,5 +1,5 @@
 const express = require('express');
-const { createHotel, getAllHotels, getAHotel, editHotel, getAllHotelDetails,getAHotelForUser,deleteHotelImage, changeHotelStatus, getAllHotelsForUser, getAllHotelsForAdmin, editHotelDetail, editHotelName, editHotelLocation, editHotelDescription, addHotelImages, getRatingOfAHotel } = require('../controllers/hotelController');
+const { createHotel, getAllHotels, getAHotel, editHotel, getAllHotelDetails,getAHotelForUser,deleteHotelImage, changeHotelStatus, getAllHotelsForUser, getAllHotelsForAdmin, editHotelDetail, editHotelName, editHotelLocation, editHotelDescription, addHotelImages, getRatingOfAHotel, getAllHotelsLength } = require('../controllers/hotelController');
 const router = express.Router();
 const uploader=require('../../config/multer');
 const verifyJwt = require('../utils/verifyJwt');
@@ -27,6 +27,8 @@ const checkAvailability = require('../middlewares/checkAvailability');
  */
 
 router.get('/get-all-hotels/:userId',verifyJwt,getAllHotels)
+
+router.get('/get-all-hotels-length/:user_id',getAllHotelsLength)
 
 router.get('/get-all-hotels-admin',verifyJwt,getAllHotelsForAdmin)
 /**

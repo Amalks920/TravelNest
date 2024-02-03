@@ -1,5 +1,5 @@
 const express = require('express');
-const { getAllBookings, getAllBookingsOfUser, getABookingForUser, getABookingForOwner, changeBookingStatus, cancelBookingController, getUserBookingDocumentLength } = require('../controllers/bookingController');
+const { getAllBookings, getAllBookingsOfUser, getABookingForUser, getABookingForOwner, changeBookingStatus, cancelBookingController, getUserBookingDocumentLength, getAllBookingsLength } = require('../controllers/bookingController');
 const verifyJwt = require('../utils/verifyJwt');
 const router = express.Router();
 
@@ -55,7 +55,8 @@ router.post('/create-booking',(req,res)=>{
  *           description: Bad request
  */
 
-router.get('/get-all-bookings-owner/:hotel_id',getAllBookings);
+router.get('/get-all-bookings-owner/:hotel_id',verifyJwt,getAllBookings);
+router.get('/get-all-bookings-length-owner/:hotel_id',verifyJwt,getAllBookingsLength);
 
 
 /**
