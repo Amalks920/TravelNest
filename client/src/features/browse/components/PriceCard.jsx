@@ -179,7 +179,7 @@ console.log(wallet)
             <h1 className="ms-3 font-bold">Wallet Balance :</h1>
               <Button className="w-full">Pay using Wallet</Button>
           </div> */}
-        </div>
+          </div>
       )}
     </Formik>
   );

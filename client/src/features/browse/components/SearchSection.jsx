@@ -14,6 +14,7 @@ import { Formik } from "formik";
 import { format } from "date-fns";
 import { useSearchMutation } from "../services/searchApiSlice";
 import * as yup from "yup";
+import { IMAGE_BASE_URL } from "../../../data/constants";
 
 const SearchSection = () => {
   const navigate = useNavigate();
@@ -47,8 +48,8 @@ const SearchSection = () => {
   };
 
   return (
-    <div className=" w-full   z-20  pt-14 ">
-      <div className="grid grid-rows-[100px] place-content-center  grid-cols-[25%,15%,15%,25%,auto] bg-black text-white shadow-2xl">
+    <div className=" w-full   z-20  pt-14 " >
+      <div className="grid grid-rows-[100px] place-content-center  grid-cols-[25%,15%,15%,25%,auto] bg-black text-white shadow-2xl rounded-md" style={{backgroundImage:`url(https://assets.oyoroomscdn.com/cmsMedia/115d178d-ef59-4212-a6ed-953eb4ce8241.jpg)`}}>
         <div className="flex items-center ps-16 row-span-1 col-span-1  border-white">
           <input
             onInput={(e) => {
