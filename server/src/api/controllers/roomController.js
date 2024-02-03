@@ -9,6 +9,7 @@ const {
   getAllRoomsOfAHotelForUserHelper,
   getAllRoomsOfAHotelForUserHelperByAvailabilty,
   getAvgReviewOfARoomHelper,
+  getARoomHelper,
 } = require("../helpers/roomHelper");
 
 
@@ -142,9 +143,19 @@ const getAvgReviewOfRoom= async (req,res)=>{
   }
 }
 
+const getARoomForUser=async (req,res)=>{
+  const room_id=req.params.room_id;
+try {
+  const response=await getARoomHelper(room_id)
+  res.status(200).json({response})
+} catch (error) {
+  res.status(500).json({error})
+}  
+}
 module.exports = {
   addRoom,editRoom,
   getRooms,getRoomsByType,
   editRoomDescription,addRoomImages,
-  getRoomsForUser,getAvgReviewOfRoom
+  getRoomsForUser,getAvgReviewOfRoom,
+  getARoomForUser
 };

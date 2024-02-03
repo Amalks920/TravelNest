@@ -14,31 +14,59 @@ import { useSelector } from "react-redux";
 import { selectRooms } from "../services/roomsSlice";
 import { selectCheckIn, selectCheckOut } from "../services/priceSlice";
 import ReviewSection from "./ReviewSection";
+import { RoomDetailsModal } from "./RoomDetailsModal";
 
 const SingleHotel = () => {
   const [size, setSize] = useState(null);
   const [imagesToPass, setImages] = useState([]);
   const [isAccordionOpen, setIsAccordionOpen] = useState(-1);
   const [price, setPrice] = useState(0);
+  const [viewDetailsModal, setViewDetailsModal] = useState(false);
+
   const roomss = useSelector(selectRooms);
 
-  const { hotel_id } = useParams();
-  const { hotel, isError, isFetching, isLoading, isSuccess, isUninitialized } =
-    useGetAHotel(hotel_id);
+  const { hotel_id, room_id } = useParams();
+  const {
+    hotel,
+    isError,
+    isFetching,
+    isLoading,
+    isSuccess,
+    isUninitialized,
+    room,
+    isErrorRoom,
+    isFetchingRoom,
+    isLoadingRoom,
+    isSuccessRoom,
+    isUninitializedRoom,
+  } = useGetAHotel(hotel_id, room_id);
 
-    const isPageReady= isLoading || isFetching || isUninitialized
+  const isPageReady =
+    isLoading ||
+    isFetching ||
+    isUninitialized ||
+    isLoadingRoom ||
+    isFetchingRoom ||
+    isUninitializedRoom;
 
-  if (isPageReady) return <h1><Spinner className="h-12 w-12" /></h1>;
-  console.log(hotel)
-  const { hotelName, images, description, amenities,owner_id } = hotel?.response[0];
+  if (isPageReady)
+    return (
+      <h1>
+        <Spinner className="h-12 w-12" />
+      </h1>
+    );
 
+  const { hotelName, images, description, amenities, owner_id } =
+    hotel?.response[0];
+
+  console.log(owner_id);
+  const singleRoom = room.response[0];
+  console.log(singleRoom);
   const rooms = hotel?.response[1];
-  const reviews=hotel?.response[2];
-  
+  const reviews = hotel?.response[2];
+
   return (
     <>
- 
-
       <XXLDialog
         className="overflow-hidden sticky !w-[80vw]"
         size={size}
@@ -46,13 +74,16 @@ const SingleHotel = () => {
         setSize={setSize}
       />
 
+    <RoomDetailsModal viewDetailsModal={viewDetailsModal} setViewDetailsModal={setViewDetailsModal} room={singleRoom} />
+
+
       <CheckInCheckOutModal hotel_id={hotel_id} />
-      
 
       <div className="grid grid-cols-12 grid-rows-[100px,200px,200px,auto,auto,auto] pb-14  w-[100%] min-h-[100vh] mt-16  gap-2 px-9 shadow-2xl">
         <div className="row-span-1 col-start-1 md:col-start-2 col-span-10 ">
-          <h2 className="font-bold mt-11 ms-2 text-[1rem] sm:text-2xl">{hotelName}</h2>
-          
+          <h2 className="font-bold mt-11 ms-2 text-[1rem] sm:text-2xl">
+            {hotelName}
+          </h2>
         </div>
         <div
           onClick={() => {
@@ -70,53 +101,81 @@ const SingleHotel = () => {
         <div
           className={` hidden  2xl:grid row-span-1 col-span-2 border-2 bg-cover bg-no-repeat shadow-md rounded-md`}
           style={{
-            backgroundImage: `url(${IMAGE_BASE_URL}/${rooms[0]?.rooms[0]?.images[0]} )`,
+            backgroundImage: `url(${IMAGE_BASE_URL}/${singleRoom.images[0]} )`,
           }}
-        >
-
-        </div>
+        ></div>
         <div
           className={`hidden 2xl:block row-span-1 col-span-2 border-2 shadow-md rounded-md`}
           style={{
-            backgroundImage: `url(${IMAGE_BASE_URL}/${rooms[0]?.rooms[0]?.images[0]} )`,
+            backgroundImage: `url(${IMAGE_BASE_URL}/${singleRoom.images[1]} )`,
           }}
-        >
-        </div>
+        ></div>
         <div
           className={`hidden 2xl:block row-span-1 col-start-8 col-end-10 border-2 shadow-md rounded-md`}
           style={{
-            backgroundImage: `url(${IMAGE_BASE_URL}/${rooms[0]?.rooms[0]?.images[0]} )`,
+            backgroundImage: `url(${IMAGE_BASE_URL}/${singleRoom.images[2]} )`,
           }}
-        >
-        </div>
+        ></div>
         <div
           className={`hidden 2xl:block row-span-1 col-span-2 border-2 shadow-md rounded-md`}
           style={{
-            backgroundImage: `url(${IMAGE_BASE_URL}/${rooms[0]?.rooms[0]?.images[0]} )`,
+            backgroundImage: `url(${IMAGE_BASE_URL}/${singleRoom.images[3]} )`,
           }}
-        >
-        </div>
+        ></div>
 
-        <div className="flex flex-col  row-span-2  md:col-start-2 md:col-span-7 col-span-12 shadow-md max-h-[100vh] overflow-scroll"
-          
-        >
+        <div className="flex flex-col  row-span-2  md:col-start-2 md:col-span-7 col-span-12 shadow-md max-h-[100vh] overflow-scroll">
           <div className=" h-fit ">
             <h2 className="text-2xl font-bold p-4"></h2>
           </div>
           <div className=" h-fit font-medium  text-left ps-3 text-[0.9rem] leading-8">
-          <h2 className="font-bold text-xl  mb-4 ">About</h2>
-            <h2 className="w-[80%]" >{description}</h2>
+            <h2 className="font-bold text-xl  mb-4 ">About</h2>
+            <h2 className="w-[80%]">{description}</h2>
           </div>
           <div className=" h-fit font-medium  text-left ps-3 text-[0.9rem] leading-8 mt-8 ms-4">
-          <button className="border-2 border-black px-3  text-[0.7rem] rounded-lg me-4 hover:transform hover:scale-105 transition-transform duration-300 ease-in-out"><Link to={`/chat/${owner_id}`}>chat with user</Link></button>
+            <button className="border-2 border-black px-3  text-[0.7rem] rounded-lg me-4 hover:transform hover:scale-105 transition-transform duration-300 ease-in-out">
+              <Link to={`/chat/${owner_id}`}>chat with user</Link>
+            </button>
           </div>
 
-
           <div className=" h-fit ">{amenities}</div>
-          <div className=" h-fit mt-12 ms-5">
+          <div className=" h-fit mt-12">
             <h2 className="font-bold text-xl   mb-2">Choose Your Room</h2>
 
-            {!roomss && <h1>RoomsList Empty</h1>}
+            <div className=" shadow-xl mt-[40px] border-2 rounded-lg">
+              <div className="flex justify-between flex-grow h-[200px] p-5">
+                <div className="flex flex-col gap-4">
+                  <h2 className="font-bold capitalize text-[1.4rem]">
+                    {singleRoom.roomType}
+                  </h2>
+                  <h2 className="">Room size: {singleRoom.size}</h2>
+                </div>
+
+                <div
+                  className=" h-[80%] w-[30%] rounded-md bg-cover "
+                  style={{
+                    backgroundImage: `url(${
+                      IMAGE_BASE_URL + singleRoom.images[0]
+                    })`,
+                  }}
+                ></div>
+              </div>
+
+              <div className="flex justify-between p-5  border-2">
+                <h2 className="font-bold text-[1.2rem]">
+                  {" "}
+                  ₹ {singleRoom.rate}
+                </h2>
+                <button
+                onClick={()=>{
+                  setViewDetailsModal(!viewDetailsModal)
+                }}
+                 className="border-2 border-gray-500 text-[0.8rem] text-gray-400 uppercase px-4 py-2 font-extralight">
+                  selected
+                </button>
+              </div>
+            </div>
+
+            {/*  {!roomss && <h1>RoomsList Empty</h1>}
             {roomss &&
               roomss?.map((room, index) => {
                 return (
@@ -136,16 +195,18 @@ const SingleHotel = () => {
                     />
                   </div>
                 );
-              })}
+              })} */}
           </div>
         </div>
         <div className="row-span-1 md:flex md:justify-center hidden border-2 col-span-3  border-t-2   rounded-lg">
-          <PriceCard price={price} className={""} />
+          <PriceCard price={price} hotel_id={hotel_id} rate={singleRoom.rate} roomType={singleRoom.roomType} room_id={room_id} className={""} />
         </div>
 
         <div className="row-span-2 col-span-8  flex flex-col ms-[120px] mt-11 ">
-        <h2 className="font-bold text-[1.2rem] pt-2 ps-5 mb-9">Reviews & Ratings</h2>         
-          <ReviewSection reviews={reviews}/>   
+          <h2 className="font-bold text-[1.2rem] pt-2 ps-5 mb-9">
+            Reviews & Ratings
+          </h2>
+          <ReviewSection reviews={reviews} />
         </div>
       </div>
     </>

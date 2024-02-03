@@ -179,7 +179,6 @@ const payUsingWallet = async (req, res, next) => {
 const webHookController = async (req, res, next) => {
   try {
     const { type, data } = req.body;
-    console.log('{type,.datraladsjldsfjlkskjldsfkjldkjfkj}')
     if (type === "checkout.session.completed") {
       const bookingDetailsString = data.object.metadata.booking_details;
       const roomDetailsString = data.object.metadata.roomDetails;
@@ -208,7 +207,6 @@ const webHookController = async (req, res, next) => {
         result[0]=roomRes
         console.log(result)
        
-
 
       const response = await createBookingHelper(
         result,

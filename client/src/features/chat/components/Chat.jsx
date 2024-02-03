@@ -20,7 +20,7 @@ const Chat = ({socket}) => {
     const [recipientId,setRecipientId]=useState(null);
     
 
-
+console.log(owner_id,user_id)
 
 
     const handleMessage=()=>{

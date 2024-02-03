@@ -442,6 +442,17 @@ console.log(priceRange)
   // });
 };
 
+const getARoomHelper= async (room_id)=>{
+  try {
+    console.log(room_id)
+    console.log('room_id room_id room_id')
+    const response=await roomModel.find({_id:room_id})
+    return response
+  } catch (error) {
+      return error
+  }
+}
+
 const decreaseRoomsCount = (rooms) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -506,5 +517,6 @@ module.exports = {
   searchRoomsHotel,
   decreaseRoomsCount,
   updateRoomNumberHelper,
-  getAvgReviewOfARoomHelper
+  getAvgReviewOfARoomHelper,
+  getARoomHelper
 };
