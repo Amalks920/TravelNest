@@ -6,10 +6,16 @@ const getAHotelForUserApiSlice=apiSlice.injectEndpoints({
     endpoints:builder=>({
        getAHotelForUser:builder.query({
         query:(data)=>`/hotel/get-a-hotel-user/${data.hotel_id}`
+       }),
+       getARoomForUser:builder.query({
+        query:(data)=>{
+            console.log(data)
+        return `/room//get-a-room/${data?.room_id}`
+        }
        })
     })
 })
 
 
 
-export const {useGetAHotelForUserQuery}=getAHotelForUserApiSlice;
+export const {useGetAHotelForUserQuery,useGetARoomForUserQuery}=getAHotelForUserApiSlice;

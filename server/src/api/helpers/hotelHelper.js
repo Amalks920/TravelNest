@@ -290,7 +290,6 @@ const editHotelDescriptionHelper=(hotel_id,description)=>{
 
 const addHotelImagesHelper=(hotel_id,imagePathArray)=>{
   return new Promise(async (resolve,reject)=>{
-    console.log('hotel_id')
     try {
       const response=await hotelModel.updateOne(
         {
@@ -304,7 +303,7 @@ const addHotelImagesHelper=(hotel_id,imagePathArray)=>{
             }
         }
       )
-      console.log('dsljklsd')
+
       console.log(response)
       resolve(response)
     } catch (error) {

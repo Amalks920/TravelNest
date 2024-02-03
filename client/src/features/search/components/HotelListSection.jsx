@@ -41,7 +41,7 @@ const HotelListSection = ({ hotel }) => {
               {hotel?.description.slice(0, 100)}
             </div>
             <div>
-              <Link to={`/hotel-details/${hotel?.hotel_id}`}>
+              <Link to={`/hotel-details/${hotel?.hotel_id}/${hotel?._id}`}>
                 <Button
                   size="sm"
                   className="bg-white border-2 border-gray-600 px-4 py-2 text-gray-500 font-light text-[0.6rem]"

@@ -144,7 +144,7 @@ function App() {
        element={<PageContainer allowedRole={'user'} />}
        >
       <Route path="/home" element={<HomePage />} />
-        <Route path="/hotel-details/:hotel_id" element={<SingleHotelPage/>} />
+        <Route path="/hotel-details/:hotel_id/:room_id" element={<SingleHotelPage/>} />
         <Route path='/search-page' element={<SearchPage/>}></Route>
 
 

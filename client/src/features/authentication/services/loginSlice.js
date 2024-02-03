@@ -49,7 +49,7 @@ export const selectOwnerToken=(state)=>state?.persistedSlice.auth?.owner?.access
 export const selectAdminToken=(state)=>state?.persistedSlice.auth?.admin?.accessToken;
 
 export const selectRole=(state)=>state?.persistedSlice.auth?.user?.role;
-export const selectUserId=(state)=>state?.persistedSlice.auth.user.user_id;
+export const selectUserId=(state)=>state?.persistedSlice.auth.user.user_id || state?.persistedSlice.auth.user._id ;
 export const selectOwnerId=(state)=>state?.persistedSlice.auth.owner.user_id;
 export const selectAdminId=(state)=>state?.persistedSlice.auth.admin.user_id;
 
