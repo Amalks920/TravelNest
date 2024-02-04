@@ -1,10 +1,10 @@
 const userModel = require("../models/userModel");
 
-const fetchAllUsersHelper = () => {
+const fetchAllUsersHelper = (pageNumber) => {
   return new Promise(async (resolve, reject) => {
     try {
       const allUsers = await userModel
-        .find({ role: { $ne: "admin" } })
+        .find({ role: { $ne: "admin" } }).skip((pageNumber-1)*4).limit(4)
         .select("username email phone isBlocked role timestamps");
 
       resolve(allUsers);
@@ -13,6 +13,18 @@ const fetchAllUsersHelper = () => {
     }
   });
 };
+
+const getAllUsersLengthHelper= async ()=>{
+  try {
+    const allUsers = await userModel
+    .find({ role: { $ne: "admin" } })
+    console.log(allUsers.length)
+    return allUsers.length;
+  } catch (error) {
+    throw error
+  }
+
+}
 
 const blockOrUnblockUserHelper = (user_id, isBlocked) => {
   return new Promise(async (resolve, reject) => {
@@ -95,5 +107,6 @@ module.exports = {
   checkUserBlockedOrNotHelper,
   findUserHelper,
   findUserByUserName,
-  getUserDetailsForProfileHelper
+  getUserDetailsForProfileHelper,
+  getAllUsersLengthHelper
 };

@@ -4,15 +4,18 @@ import { apiSlice } from "../../../services/apiSlice";
 export const getAllUsersApiSlice=apiSlice.injectEndpoints({
         endpoints:builder=>({
             getAllUser:builder.query({
-                query:()=> '/user/get-all-users',
+                query:(data)=> `/user/get-all-users?pageNumber=${data.pageNumber}`,
                 providesTags: ['Users'],
                transformResponse:(response,meta,args)=>response.response 
+            }),
+            getAllUsersLength:builder.query({
+                query:()=>`/user/get-all-users-length`
             })
         })
 })
 
 
-export const {useGetAllUserQuery}=getAllUsersApiSlice;
+export const {useGetAllUserQuery,useGetAllUsersLengthQuery}=getAllUsersApiSlice;
 
 
 

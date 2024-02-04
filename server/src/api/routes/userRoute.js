@@ -1,5 +1,5 @@
 const express = require('express');
-const { getAllUsers, blockOrUnblockUser, checkIfUserBlockedOrNot, getUserDetailsForProfile, getUserWalletDetails } = require('../controllers/userController');
+const { getAllUsers, blockOrUnblockUser, checkIfUserBlockedOrNot, getUserDetailsForProfile, getUserWalletDetails, getAllUsersLength } = require('../controllers/userController');
 const verifyJwt = require('../utils/verifyJwt');
 const router = express.Router();
 
@@ -150,7 +150,9 @@ router.put('/block-or-unblock-user/:user_id',verifyJwt,blockOrUnblockUser)
    *        description: Bad request
    */
 
-router.get('/get-all-users',getAllUsers)
+router.get('/get-all-users',verifyJwt,getAllUsers)
+
+router.get('/get-all-users-length',getAllUsersLength)
 
 /**
  * @openapi

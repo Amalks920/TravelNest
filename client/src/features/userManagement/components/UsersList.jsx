@@ -19,8 +19,9 @@ import {
   Avatar,
   IconButton,
   Tooltip,
+  Spinner,
 } from "@material-tailwind/react";
-import { useGetAllUserQuery } from "../services/getAllUsersApiSlice";
+import { useGetAllUserQuery, useGetAllUsersLengthQuery } from "../services/getAllUsersApiSlice";
 import { Link } from "react-router-dom";
 import { NotificationDialog } from "../../../components/modals/NotificationModal";
 import { useEffect, useRef, useState } from "react";
@@ -48,7 +49,7 @@ const TABLE_HEAD = [
   "EMIAL",
   "PHONE",
   "STATUS",
-  "ROLE", 
+  "ROLE",
   "",
 ];
 
@@ -101,34 +102,41 @@ const TABLE_ROWS = [
 ];
 
 export function UsersList() {
-  
+  const [pageNumber, setPageNumber] = useState(1);
+
   const {
     data: users,
     isError,
     isFetching,
     isLoading,
-    isSuccess
-  } = useGetAllUserQuery();
+    isSuccess,
+  } = useGetAllUserQuery({ pageNumber });
 
-  console.log(users);
+
+
+  const {data:usersLength}=useGetAllUsersLengthQuery()
+
+  console.log(usersLength)
+
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const isBlockedRef=useRef(false)
-  const userIdRef=useRef(null)
+  const isBlockedRef = useRef(false);
+  const userIdRef = useRef(null);
 
   const [
     blockOrUnblockUser,
     {
-      isError:blockUserIsError,
-      isLoading:blockUserIsLoading,
-      isSuccess:blockUserIsSuccess,
-      isFetching:blockUserIsFetching,
-      reset:blockUserReset
+      isError: blockUserIsError,
+      isLoading: blockUserIsLoading,
+      isSuccess: blockUserIsSuccess,
+      isFetching: blockUserIsFetching,
+      reset: blockUserReset,
     },
   ] = useBlockOrUnblockUserMutation();
 
 
-  if(isLoading) return <h1>Loading...</h1>
-  
+
+  if (isLoading) return <Spinner />;
+
   return (
     <>
       <NotificationDialog
@@ -136,15 +144,17 @@ export function UsersList() {
         setIsModalOpen={setIsModalOpen}
         // isBlocked={!isBlockedRef.current}
         // user_id={userIdRef.current}
-        args={{isBlocked:!isBlockedRef.current,user_id:userIdRef.current}}
+        args={{ isBlocked: !isBlockedRef.current, user_id: userIdRef.current }}
         sendRequestHandler={blockOrUnblockUser}
-         error = {blockUserIsError}
-         loading = {blockUserIsLoading}
-         success = {blockUserIsSuccess}
-         reset={blockUserReset}
-         heading={'Do you need to block this user ?'}
-         description={'user will be blocked and they could not able to login to their account after blocking.'}
-         buttonText={'block'}
+        error={blockUserIsError}
+        loading={blockUserIsLoading}
+        success={blockUserIsSuccess}
+        reset={blockUserReset}
+        heading={"Do you need to block this user ?"}
+        description={
+          "user will be blocked and they could not able to login to their account after blocking."
+        }
+        buttonText={"block"}
       />
       <Card className="h-full w-full p-16">
         <CardHeader floated={false} shadow={false} className="rounded-none">
@@ -319,10 +329,10 @@ export function UsersList() {
                         {/* <PencilIcon className="h-4 w-4" /> */}
                         <Button
                           onClick={() => {
-                            console.log('hello====>===>')
+                            console.log("hello====>===>");
                             setIsModalOpen(true);
-                            isBlockedRef.current=isBlocked
-                            userIdRef.current=_id
+                            isBlockedRef.current = isBlocked;
+                            userIdRef.current = _id;
                           }}
                           size="sm"
                           variant="outlined"
@@ -340,13 +350,26 @@ export function UsersList() {
         </CardBody>
         <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
           <Typography variant="small" color="blue-gray" className="font-normal">
-            Page 1 of 10
+            Page {pageNumber} of {Math.ceil(usersLength?.response/4)}
           </Typography>
           <div className="flex gap-2">
-            <Button variant="outlined" size="sm">
+            <Button
+              onClick={() => {
+                if (pageNumber > 1) setPageNumber(pageNumber - 1);
+              }}
+              variant="outlined"
+              size="sm"
+            >
               Previous
             </Button>
-            <Button variant="outlined" size="sm">
+            <Button
+              onClick={() => {
+                if (pageNumber < Math.ceil(usersLength?.response / 4))
+                  setPageNumber(pageNumber + 1);
+              }}
+              variant="outlined"
+              size="sm"
+            >
               Next
             </Button>
           </div>
