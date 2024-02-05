@@ -324,6 +324,7 @@ const findHotelByLocationHelper=(location,collisions,roomType,priceRange)=>{
     console.log(priceRange)
     console.log('priceRange')
   return new Promise(async (resolve,reject)=>{
+    console.log('roomType=======>>>>>'+roomType)
     try {
       const response=await hotelModel.find(
         {

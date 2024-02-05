@@ -27,7 +27,10 @@ const HotelListSection = ({ hotel }) => {
         </div>
         <div className="border-2 p-5 flex flex-col justify-between flex-grow-0">
           <div>
+            <div className="flex justify-between">
             <h2 className="text-xl  text-[0.5rem] md:text-[1rem]">{hotel?.hotelName}</h2>
+            <h2 className="font-bold capitalize">{hotel?.roomType}</h2>
+            </div>
             <p className="text-[0.9rem] mt-2 ps-1 font-light">
               {hotel?.location}
             </p>

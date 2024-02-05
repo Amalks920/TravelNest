@@ -18,25 +18,11 @@ const SearchContainer = () => {
   const roomType=useSelector(selectRoomType)
   const data=useSelector(selectSearchResult)
   const priceRange=useSelector(selectPriceRange)
-  //console.log(d)
+
 
   const [searchByLocation,{isError,isLoading,isSuccess}]=useSearchByLocationMutation({location,checkIn,checkOut})
 
-//   useEffect(()=>{
-//      handleSearch()
-// },[location,checkIn,checkOut,roomType,priceRange])
 
-//   const handleSearch=async ()=>{
-//     try {
-//       console.log(priceRange)
-//         const response=await searchByLocation({location,checkIn,checkOut,roomType,priceRange})
-//         console.log(response)
-//         dispatch(updateSearchResult(response.data.response))
-//        // setData(response.data.response)
-//     } catch (error) {
-//         console.log(error)
-//     }
-// }
 
   return (
     <div className="grid grid-rows-[100vh] grid-cols-[20%,auto]  w-full min-h-[80vh] gap-[5%]">

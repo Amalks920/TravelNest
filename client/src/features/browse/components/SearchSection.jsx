@@ -43,9 +43,7 @@ const SearchSection = () => {
     }
   };
 
-  const handleSelectChange = (e) => {
-    console.log(e);
-  };
+
 
   return (
     <div className=" w-full   z-20  pt-14 " >
@@ -87,11 +85,8 @@ const SearchSection = () => {
 
         <div className="flex items-center row-span-1 col-span-1">
           <select
-            onChange={handleSelectChange}
-            // onInput={(e) => {
-            //   console.log(e.target.dispatchEvent);
-            //   dispatch(updateRoomType(e.target.value));
-            // }}
+            value={roomType}
+            onChange={(e)=>setRoomType(e.target.value)}
             className="border-white w-[80%] h-[40px] text-black ps-9 rounded-md cursor-pointer"
             name="roomType"
           >

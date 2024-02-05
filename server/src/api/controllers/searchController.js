@@ -7,7 +7,6 @@ const { searchRoomsHotel } = require("../helpers/roomHelper");
 const searchController = async (req, res, next) => {
   try {
     const collisions = res.locals.existingCollisions;
-    console.log(req.query);
     let location = req.query.location;
     let checkIn = req.query.checkIn || null;
     let checkOut = req.query.checkOut || null;
@@ -18,7 +17,6 @@ const searchController = async (req, res, next) => {
       min,
       max,
     };
-    // const priceRange=JSON?.parse(req.query.priceRange) || null;
 
     const response = await findHotelByLocationHelper(
       location,
@@ -46,6 +44,8 @@ const roomSearchController = async (req, res, next) => {
     max,
   };
 
+
+
   try {
     const response = await searchRoomsHotel(
       location,
@@ -53,6 +53,7 @@ const roomSearchController = async (req, res, next) => {
       priceRange,
       roomType
     );
+    console.log(response)
     res.status(200).json({ response });
   } catch (error) {
     console.log(error);

@@ -8,6 +8,8 @@ const SearchSectionHome = () => {
   const [checkIn, setCheckInDate] = useState(null);
   const [checkOut, setCheckOutDate] = useState(null);
   const [searchString, setSearchString] = useState(null);
+  const [roomType,setRoomType]=useState(null);
+
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -15,7 +17,7 @@ const SearchSectionHome = () => {
     useSearchMutation();
 
 const handleSubmit=async () => {
-    const searchResult=await search({location:searchString, checkIn: checkIn, checkOut: checkOut, roomType: ""})
+    const searchResult=await search({location:searchString, checkIn: checkIn, checkOut: checkOut, roomType: roomType})
     console.log(searchResult)
     dispatch(updateSearchResult(searchResult.data.response))
     handleSearch()
@@ -72,6 +74,8 @@ const handleSubmit=async () => {
         />
         {/* <input className="ps-3 text-[1.1rem] capitalize1 focus:border-2 border-black" /> */}
         <select
+          value={roomType}
+          onChange={e => setRoomType(e.target.value)} 
           className="ps-2 pe-3 text-[1.1rem] bg-white capitalize font-extralight"
           name=""
           id=""
