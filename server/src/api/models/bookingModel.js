@@ -85,10 +85,19 @@ const bookingSchema = new Schema(
       ref: "Hotel",
       required: true,
     },
-    roomDetails: {
-      type: Array,
-      required: true,
-    },
+    roomDetails: 
+[ {     noOfPeopleAllowed:Number,
+      _id:{
+        type:ObjectId,
+        ref:'Room',
+      },
+      roomType:String,
+      rate:Number,
+      noOfRooms:Number
+}]
+      // type: Array,
+      // required: true,
+    ,
     // noOfRooms:{
     //   type:Number,
     //   required:true

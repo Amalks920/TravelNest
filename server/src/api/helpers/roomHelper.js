@@ -368,7 +368,8 @@ const addRoomImagesHelper = (room_id, imagePathArray) => {
 };
 
 const searchRoomsHotel = async (location, collisions, priceRange, roomType) => {
-
+  console.log(collisions)
+  console.log('collisionnns')
     try {
    
       const response = await roomModel.aggregate([

@@ -33,6 +33,8 @@ const searchController = async (req, res, next) => {
 
 const roomSearchController = async (req, res, next) => {
   const collisions = res.locals.existingCollisions;
+  console.log('collision contriooler')
+  console.log(collisions)
   const location = req.query.search; 
   const roomType = req.query.roomType || null;
 
