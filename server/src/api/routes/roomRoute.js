@@ -1,5 +1,5 @@
 const express = require('express');
-const { addRoom, getRooms, editRoom, getRoomsByType, editRoomDescription, addRoomImages, getRoomsForUser, getARoomForUser } = require('../controllers/roomController');
+const { addRoom, getRooms, editRoom, getRoomsByType, editRoomDescription, addRoomImages, getRoomsForUser, getARoomForUser, checkAvailabilityOfRoom } = require('../controllers/roomController');
 const router = express.Router();
 const uploader=require('../../config/multer');
 const verifyJwt = require('../utils/verifyJwt');
@@ -148,7 +148,7 @@ router.delete('/delete-room/{hotel-id}/{room-id}',(req,res)=>{
  *           description: Bad request
  */
 
-router.get('/get-a-room/:room_id',getARoomForUser)
+router.get('/get-a-room/:room_id',checkAvailability,getARoomForUser)
 
 /**
  * @openapi
@@ -180,10 +180,12 @@ router.get('/get-a-room/:room_id',getARoomForUser)
 
 router.get('/get-rooms/:hotel_id',verifyJwt,getRooms)
 
+router.get('/check-availability-of-room/:room_id',checkAvailability,checkAvailabilityOfRoom)
+
 
 //user
 router.post('/get-all-rooms-user/:hotel_id',checkAvailabilityOfRooms,getRoomsForUser);
-router.get('/get-avg-rating-of-room',verifyJwt,)
+router.get('/get-avg-rating-of-room/',verifyJwt,)
 
 
 //owner

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import React from "react";
 import XXLDialog from "../../../components/modals/XXLDialog";
 import { Field } from "formik";
 import { Select, Button, Spinner } from "@material-tailwind/react";
@@ -15,6 +16,7 @@ import { selectRooms } from "../services/roomsSlice";
 import { selectCheckIn, selectCheckOut } from "../services/priceSlice";
 import ReviewSection from "./ReviewSection";
 import { RoomDetailsModal } from "./RoomDetailsModal";
+import { useGetAHotelForUserQuery } from "../services/getAHotelForUserApiSlice";
 
 const SingleHotel = () => {
   const [size, setSize] = useState(null);
@@ -22,10 +24,16 @@ const SingleHotel = () => {
   const [isAccordionOpen, setIsAccordionOpen] = useState(-1);
   const [price, setPrice] = useState(0);
   const [viewDetailsModal, setViewDetailsModal] = useState(false);
-
+  // const checkInDate=useSelector(selectCheckIn)
+  // const checkOutDate=useSelector(selectCheckOut)
   const roomss = useSelector(selectRooms);
 
-  const { hotel_id, room_id } = useParams();
+  const { hotel_id, room_id,checkIn,checkOut } = useParams();
+
+
+
+
+
   const {
     hotel,
     isError,
@@ -44,7 +52,7 @@ const SingleHotel = () => {
   const isPageReady =
     isLoading ||
     isFetching ||
-    isUninitialized ||
+    isUninitialized 
     isLoadingRoom ||
     isFetchingRoom ||
     isUninitializedRoom;
@@ -57,11 +65,12 @@ const SingleHotel = () => {
     );
 
   const { hotelName, images, description, amenities, owner_id } =
-    hotel?.response[0];
+    hotel?.response[0]
 
-  console.log(owner_id);
-  const singleRoom = room.response[0];
-  console.log(singleRoom);
+  const singleRoom = room?.response[0];
+  const totalAvailableRoom=room?.totalAvailableRoom;
+
+  
   const rooms = hotel?.response[1];
   const reviews = hotel?.response[2];
 
@@ -77,7 +86,7 @@ const SingleHotel = () => {
     <RoomDetailsModal viewDetailsModal={viewDetailsModal} setViewDetailsModal={setViewDetailsModal} room={singleRoom} />
 
 
-      <CheckInCheckOutModal hotel_id={hotel_id} />
+      <CheckInCheckOutModal room_id={room_id} checkIn={checkIn} checkOut={checkOut} rate={singleRoom?.rate}/>
 
       <div className="grid grid-cols-12 grid-rows-[100px,200px,200px,auto,auto,auto] pb-14  w-[100%] min-h-[100vh] mt-16  gap-2 px-9 shadow-2xl">
         <div className="row-span-1 col-start-1 md:col-start-2 col-span-10 ">
@@ -101,25 +110,25 @@ const SingleHotel = () => {
         <div
           className={` hidden  2xl:grid row-span-1 col-span-2 border-2 bg-cover bg-no-repeat shadow-md rounded-md`}
           style={{
-            backgroundImage: `url(${IMAGE_BASE_URL}/${singleRoom.images[0]} )`,
+            backgroundImage: `url(${IMAGE_BASE_URL}/${singleRoom?.images[0]} )`,
           }}
         ></div>
         <div
           className={`hidden 2xl:block row-span-1 col-span-2 border-2 shadow-md rounded-md`}
           style={{
-            backgroundImage: `url(${IMAGE_BASE_URL}/${singleRoom.images[1]} )`,
+            backgroundImage: `url(${IMAGE_BASE_URL}/${singleRoom?.images[1]} )`,
           }}
         ></div>
         <div
           className={`hidden 2xl:block row-span-1 col-start-8 col-end-10 border-2 shadow-md rounded-md`}
           style={{
-            backgroundImage: `url(${IMAGE_BASE_URL}/${singleRoom.images[2]} )`,
+            backgroundImage: `url(${IMAGE_BASE_URL}/${singleRoom?.images[2]} )`,
           }}
         ></div>
         <div
           className={`hidden 2xl:block row-span-1 col-span-2 border-2 shadow-md rounded-md`}
           style={{
-            backgroundImage: `url(${IMAGE_BASE_URL}/${singleRoom.images[3]} )`,
+            backgroundImage: `url(${IMAGE_BASE_URL}/${singleRoom?.images[3]} )`,
           }}
         ></div>
 
@@ -145,16 +154,16 @@ const SingleHotel = () => {
               <div className="flex justify-between flex-grow h-[200px] p-5">
                 <div className="flex flex-col gap-4">
                   <h2 className="font-bold capitalize text-[1.4rem]">
-                    {singleRoom.roomType}
+                    {singleRoom?.roomType}
                   </h2>
-                  <h2 className="">Room size: {singleRoom.size}</h2>
+                  <h2 className="">Room size: {singleRoom?.size}</h2>
                 </div>
 
                 <div
                   className=" h-[80%] w-[30%] rounded-md bg-cover "
                   style={{
                     backgroundImage: `url(${
-                      IMAGE_BASE_URL + singleRoom.images[0]
+                      IMAGE_BASE_URL + singleRoom?.images[0]
                     })`,
                   }}
                 ></div>
@@ -163,7 +172,7 @@ const SingleHotel = () => {
               <div className="flex justify-between p-5  border-2">
                 <h2 className="font-bold text-[1.2rem]">
                   {" "}
-                  ₹ {singleRoom.rate}
+                  ₹ {singleRoom?.rate}
                 </h2>
                 <button
                 onClick={()=>{
@@ -199,7 +208,7 @@ const SingleHotel = () => {
           </div>
         </div>
         <div className="row-span-1 md:flex md:justify-center hidden border-2 col-span-3  border-t-2   rounded-lg">
-          <PriceCard price={price} hotel_id={hotel_id} rate={singleRoom.rate} roomType={singleRoom.roomType} room_id={room_id} className={""} />
+          <PriceCard price={price} hotel_id={hotel_id} rate={singleRoom?.rate} roomType={singleRoom?.roomType} room_id={room_id} totalAvailableRooms={totalAvailableRoom} className={""} />
         </div>
 
         <div className="row-span-2 col-span-8  flex flex-col ms-[120px] mt-11 ">

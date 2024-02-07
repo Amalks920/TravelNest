@@ -10,7 +10,7 @@ const getAHotelForUserApiSlice=apiSlice.injectEndpoints({
        getARoomForUser:builder.query({
         query:(data)=>{
             console.log(data)
-        return `/room//get-a-room/${data?.room_id}`
+        return `/room/get-a-room/${data?.room_id}?checkIn=${data.checkIn}&checkOut=${data.checkOut}`
         }
        })
     })

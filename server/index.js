@@ -9,7 +9,7 @@ const cors=require('cors')
 const http=require('http')
 const cookieParser=require('cookie-parser')
 const socketEvents=require('./src/api/services/socket/socket.js');
-const redisClient=require('./src/config/redisConfig.js')
+//const redisClient=require('./src/config/redisConfig.js')
 const credentials=require('./src/api/middlewares/credentials')
 const corsOptions=require('./src/config/cors/corsOption')
 const authRouter=require('./src/api/routes/authenticationRoute')
@@ -41,7 +41,7 @@ const allowedOrigins = require('./src/config/cors/allowedOrigins');
 //     }
 // })
 
-console.log(redisClient)
+//console.log(redisClient)
 
 // socketEvents(io)
 

@@ -2,6 +2,7 @@ const roomModel = require("../models/roomModel");
 const hotelModel = require("../models/hotelModel");
 const { default: mongoose } = require("mongoose");
 const { resolve } = require("path");
+const bookingModel = require("../models/bookingModel");
 
 const addRoomHelper = (data) => {
   return new Promise(async (resolve, reject) => {
@@ -441,13 +442,63 @@ const searchRoomsHotel = async (location, collisions, priceRange, roomType) => {
 
 const getARoomHelper= async (room_id)=>{
   try {
-    console.log(room_id)
-    console.log('room_id room_id room_id')
     const response=await roomModel.find({_id:room_id})
+
     return response
   } catch (error) {
       return error
   }
+}
+
+const findNoOfRoomsAvailableHelper=async (room_id,newCheckIn,newCheckOut) => {
+try {
+  console.log(room_id)
+  const response = await bookingModel.aggregate([
+
+    {
+      $match: {
+        $or: [
+          {
+            $and: [
+              { checkIn: { $lt: newCheckIn } },
+              { checkOut: { $gt: newCheckIn } },
+            ],
+          },
+          {
+            $and: [
+              { checkIn: { $lt: newCheckOut } },
+              { checkOut: { $gt: newCheckOut } },
+            ],
+          },
+          {
+            $and: [
+              { checkIn: { $gte: newCheckIn } },
+              { checkOut: { $lte: newCheckOut } },
+            ],
+          },
+        ],
+      },
+    },
+    {
+      $match:{
+        "roomDetails.0._id":new mongoose.Types.ObjectId(room_id)
+      }
+    }
+  ]);
+
+ const totalNoOfRooms= response?.reduce((acc,curr)=>{
+  console.log(curr)
+    return acc+Number(curr?.roomDetails[0]?.noOfRooms || 0)
+  },0)
+
+  const roomRes=await roomModel.find({_id:room_id});
+  console.log(roomRes)
+  console.log('roomRes')
+  console.log(roomRes[0]?.noOfRooms - totalNoOfRooms)
+  return roomRes[0]?.noOfRooms-totalNoOfRooms
+} catch (error) {
+  throw error
+}
 }
 
 const decreaseRoomsCount = (rooms) => {
@@ -515,5 +566,6 @@ module.exports = {
   decreaseRoomsCount,
   updateRoomNumberHelper,
   getAvgReviewOfARoomHelper,
-  getARoomHelper
+  getARoomHelper,
+  findNoOfRoomsAvailableHelper
 };

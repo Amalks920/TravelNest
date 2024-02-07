@@ -1,9 +1,15 @@
 import { Button } from "@material-tailwind/react";
 import { IMAGE_BASE_URL } from "../../../data/constants";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectCheckOut,selectCheckIn } from "../../../services/searchSlice";
 
 const HotelListSection = ({ hotel }) => {
-  {console.log(hotel)}
+  const checkIn=useSelector(selectCheckIn)
+  const checkOut=useSelector(selectCheckOut)
+  console.log(checkIn,checkOut)
+  console.log('checkIn','checkOut')
+
   return (
     <div className="">
       <div className="grid grid-flow-row grid-cols-[35%,10%,55%] mb-14 h-[300px] m-[5%]  p-2 border-2">
@@ -44,7 +50,7 @@ const HotelListSection = ({ hotel }) => {
               {hotel?.description.slice(0, 100)}
             </div>
             <div>
-              <Link to={`/hotel-details/${hotel?.hotel_id}/${hotel?._id}`}>
+              <Link to={`/hotel-details/${hotel?.hotel_id}/${hotel?._id}/${checkIn}/${checkOut}`}>
                 <Button
                   size="sm"
                   className="bg-white border-2 border-gray-600 px-4 py-2 text-gray-500 font-light text-[0.6rem]"

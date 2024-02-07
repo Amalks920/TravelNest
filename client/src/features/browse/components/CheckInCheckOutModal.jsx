@@ -16,33 +16,43 @@ import {
   selectCheckOut,
   updateCheckIn,
   updateCheckOut,
+  updateNoOfAvailableRooms,
+  updatePrice,
 } from "../services/priceSlice";
 import { useGetAllRoomsInHotelMutation } from "../services/getAllHotelsApiSlice";
+import { useCheckAvailabilityOfRoomMutation } from "../services/checkAvailabilityApiSlice";
 import { updateRooms } from "../services/roomsSlice";
 
-const CheckInCheckOutModal = ({ hotel_id }) => {
+const CheckInCheckOutModal = ({ room_id,checkIn,checkOut,rate }) => {
   const [open, setOpen] = useState(true);
   const handleOpen = () => setOpen((cur) => !cur);
   const checkInDate = useSelector(selectCheckIn);
   const checkOutDate = useSelector(selectCheckOut);
   const dispatch = useDispatch();
-  const [getAllRoomsInHotel, { isError, isLoading, isSuccess, reset }] =
-    useGetAllRoomsInHotelMutation();
 
 
-    useEffect(()=>{
-        getRooms()
-    },[checkInDate,checkOutDate])
+   const [checkAvailabilityOfRoom, { isError, isLoading, isSuccess, reset }] =
+     useCheckAvailabilityOfRoomMutation();
 
-  const getRooms = async () => {
+
+    // useEffect(()=>{
+    //     getRooms()
+    // },[checkInDate,checkOutDate])
+
+  const checkAvailabilityOfRooms = async () => {
+    
     try {
-      const response = await getAllRoomsInHotel({
-        hotel_id,
-        checkInDate,
-        checkOutDate,
-      });
-      console.log(response.data.response);
-      dispatch(updateRooms(response.data.response));
+       console.log(checkInDate,checkOutDate)
+      const response=await checkAvailabilityOfRoom({room_id,checkIn:checkInDate,checkOut:checkOutDate})
+      console.log(response.data.totalAvailableRoom)
+      dispatch(updateNoOfAvailableRooms(response.data.totalAvailableRoom || 0))
+      // const response = await getAllRoomsInHotel({
+      //   hotel_id,
+      //   checkInDate,
+      //   checkOutDate,
+      // });
+      // console.log(response.data.response);
+      // dispatch(updateRooms(response.data.response));
     } catch (error) {
       console.log(error);
     }
@@ -96,6 +106,7 @@ const CheckInCheckOutModal = ({ hotel_id }) => {
                 dispatch(updateCheckIn(e.target.value));
               }}
               min={new Date(Date.now()).toISOString().split("T")[0]}
+              value={checkInDate?checkInDate:checkIn}
               label="date"
               type="date"
               size="lg"
@@ -114,6 +125,7 @@ const CheckInCheckOutModal = ({ hotel_id }) => {
                 dispatch(updateCheckOut(e.target.value));
               }}
               min={checkInDate}
+              value={checkOutDate?checkOutDate:checkOut}
               label="date"
               type="date"
               size="lg"
@@ -131,7 +143,8 @@ const CheckInCheckOutModal = ({ hotel_id }) => {
               variant="gradient"
               onClick={() => {
                 handleOpen();
-                getRooms();
+                dispatch(updatePrice(Number(rate)))
+               checkAvailabilityOfRooms()
               }}
               fullWidth
             >

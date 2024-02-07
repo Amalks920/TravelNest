@@ -3,13 +3,15 @@ import DatePicker from "../../../components/form/DatePicker";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
+  selectIsSearchBarOpen,
   updateCheckIn,
   updateCheckOut,
+  updateIsSearchBarOpen,
   updateLocation,
   updateRoomType,
   updateSearchResult,
 } from "../../../services/searchSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Formik } from "formik";
 import { format } from "date-fns";
 import { useSearchMutation } from "../services/searchApiSlice";
@@ -19,6 +21,7 @@ import { IMAGE_BASE_URL } from "../../../data/constants";
 const SearchSection = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const isSearchBarOpen=useSelector(selectIsSearchBarOpen)
   const [checkIn, setCheckInDate] = useState(null);
   const [checkOut, setCheckOutDate] = useState(null);
   const [searchString, setSearchString] = useState(null);
@@ -114,8 +117,17 @@ const SearchSection = () => {
           >
             update search
           </button>
+          <button
+          onClick={
+            ()=>{
+              dispatch(updateIsSearchBarOpen(!isSearchBarOpen))
+            }
+          }
+           className="text-red-600 ms-4 cursor-pointer">close</button>
         </div>
+    
       </div>
+      
     </div>
   );
 };

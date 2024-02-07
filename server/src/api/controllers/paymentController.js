@@ -18,7 +18,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET);
 const payment = async (req, res, next) => {
   try {
     console.log(req.body);
-    const { roomDetails, checkInDate, checkOutDate, hotel_id, totalNoRooms } =
+    const { roomDetails, checkInDate, checkOutDate, hotel_id, totalNoRooms, noOfDays } =
       req.body;
     const roomIds = [];
 
@@ -37,7 +37,7 @@ const payment = async (req, res, next) => {
       if (matchingRoomType) {
         const rate = matchingRoomType.rate;
         const noOfRooms = parseInt(room.noOfRooms);
-        totalPrice += rate * noOfRooms;
+        totalPrice += rate * noOfRooms* Number(noOfDays);
       }
     });
 

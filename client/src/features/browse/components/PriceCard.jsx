@@ -9,12 +9,17 @@ import {
   updateCheckOut,
   selectHotelId,
   selectTotalNumberOfRoom,
-  selectCheckIn,
-  selectCheckOut,
+  // selectCheckIn,
+  // selectCheckOut,
   selectRoomType,
   updateNoOfRooms,
   updatePrice,
+  selectAvailableRoom,
+  selectNoOfDays,
 } from "../services/priceSlice";
+
+//import { selectCheckIn,selectCheckOut } from "../../../services/searchSlice";
+import { selectCheckIn,selectCheckOut } from "../services/priceSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { loadStripe } from "@stripe/stripe-js";
 import useHandlePayment from "../hooks/useHandlePayment";
@@ -34,13 +39,16 @@ import { updateCheckOutDetails } from "../../walletPayment/service/walletCheckOu
 const PriceCard = ({ rate ,roomType,hotel_id,room_id}) => {
   const selectedCheckInDate = useSelector(selectCheckIn);
   const selectedCheckOutDate = useSelector(selectCheckOut);
+  const totalAvailableRooms = useSelector(selectAvailableRoom)
 
   const totalPrice = useSelector(selectTotalPrice);
   const price = useSelector(selectPrice);
   const roomDetails = useSelector(selectCheckedRooms);
  // const hotel_id = useSelector(selectHotelId);
   const totalNoRooms = useSelector(selectTotalNumberOfRoom);
+  const noOfDays=useSelector(selectNoOfDays)
   const user_id=useSelector(selectUserId)
+  const noOfAvailableRoom=useSelector(selectAvailableRoom);
 
   const [payment, { isError, isLoading, isSuccess, error }] =
     usePaymentMutation();
@@ -48,11 +56,11 @@ const PriceCard = ({ rate ,roomType,hotel_id,room_id}) => {
 const {data:wallet,isSuccess:isSuccessWallet}=useGetWalletAmountQuery({user_id})
 
 console.log(wallet)
-
+console.log(price)
 
   const [checkInDate, setCheckInDate] = useState(selectedCheckInDate);
   const [checkOutDate, setCheckOutDate] = useState(selectedCheckOutDate);
-  const [noOfRooms, setNoOfRooms] = useState('');
+  const [noOfRooms, setNoOfRooms] = useState(1);
   const role = useSelector(selectRole);
   const token = useSelector(selectToken);
 
@@ -64,9 +72,7 @@ console.log(wallet)
     dispatch(updatePrice(rate*Number(noOfRooms)))
   },[noOfRooms])
 
-  // useEffect(()=>{
-  //   dispatch(updateNoOfRooms(Number(noOfRooms)));
-  // },[noOfRooms])
+
 
   const handlePayment = async (id) => {
     try {
@@ -129,11 +135,11 @@ console.log(wallet)
               onChange={e => setNoOfRooms(e.target.value)} 
               className="bg-white w-full h-[40px] px-3 border-[1.3px] border-gray-400 rounded-lg">
               <option value="" disabled>0</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
+              <option value="1" disabled={totalAvailableRooms<1}>1</option>
+              <option value="2" disabled={totalAvailableRooms<2} >2</option>
+              <option value="3" disabled={totalAvailableRooms<3}>3</option>
+              <option value="4" disabled={totalAvailableRooms<4}>4</option>
+              <option value="5" disabled={totalAvailableRooms<5}>5</option>
              </select>
 
             </div>
@@ -150,7 +156,8 @@ console.log(wallet)
                     checkInDate: selectedCheckInDate,
                     checkOutDate: selectedCheckOutDate,
                     hotel_id,
-                    totalNoRooms:noOfRooms
+                    totalNoRooms:noOfRooms,
+                    noOfDays:noOfDays
                   });
                   console.log(response);
                   console.log('respooonnnnnseee')
@@ -202,7 +209,8 @@ console.log(wallet)
                   <div className="w-full mt-6  flex  justify-between mx-3">
                     <p className="font-bold">{roomType}</p>
                     <p className="me-3 font-bold text-left">
-                      ₹ {price + " " + "x" + " " + noOfRooms}
+                      
+                      ₹ {Number(price) + " " + "x" + " " + Number(noOfRooms)}
                     </p>
                   </div>
                 );

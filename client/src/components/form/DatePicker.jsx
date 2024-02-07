@@ -49,6 +49,7 @@ export default function DatePicker({
             readOnly={true}
             className={className}
             min={new Date(Date.now()).toISOString().split('T')[0]}
+            max={new Date(Date.now()).toISOString().split('T')[0]}
             label={label}
             value={datePassed ? format(datePassed, "PPP") : ""}
           />

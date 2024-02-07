@@ -13,6 +13,7 @@ const initialState = {
   room_id:null,
   hotel_id:null,
   checkedRoomIds:[],
+  noOfAvailableRooms:0
 };
 
 const priceSlice = createSlice({
@@ -22,8 +23,10 @@ const priceSlice = createSlice({
 
     updatePrice: (state, action) => {
       //state.price = action.payload;
+      console.log(state.price,action.payload,'action.payload',)
       state.price=Number(state.noOfDays)*Number(action.payload);
     },
+
 
     updateNoOfRooms: (state, action) => {
       state.totalNoOfRooms+=action.payload
@@ -60,6 +63,10 @@ const priceSlice = createSlice({
 
     updateRoomId:(state,action)=>{
         state.room_id=action.payload
+    },
+
+    updateNoOfAvailableRooms:(state,action)=>{
+      state.noOfAvailableRooms=action.payload;
     },
 
     updateHotelId:(state,action)=>{
@@ -104,6 +111,8 @@ export const selectCheckOut= (state) =>state.priceSlice.checkOut
 export const selectHotelId= (state) =>state.priceSlice.hotel_id
 export const selectTotalNumberOfRoom= (state) =>state.priceSlice.totalNoOfRooms
 export const selectRoomType= (state) =>state.priceSlice.roomType
+export const selectAvailableRoom=(state) => state.priceSlice.noOfAvailableRooms
+export const selectNoOfDays=(state) => state.priceSlice.noOfDays
 
 export const {
   updateIsModalOpen,
@@ -113,5 +122,5 @@ export const {
   removeUnCheckedRoomId,
   updateRoomId,updateCheckIn,
   updateCheckOut,updateHotelId,
-  updateRoomType
+  updateRoomType,updateNoOfAvailableRooms
 } = priceSlice.actions;

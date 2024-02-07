@@ -10,9 +10,9 @@ const {
   getAllRoomsOfAHotelForUserHelperByAvailabilty,
   getAvgReviewOfARoomHelper,
   getARoomHelper,
+  findNoOfRoomsAvailableHelper,
 } = require("../helpers/roomHelper");
-
-
+const mongoose=require('mongoose');
 const { uploadImages } = require("../helpers/hotelHelper");
 
 const addRoom = async (req, res, next) => {
@@ -145,17 +145,73 @@ const getAvgReviewOfRoom= async (req,res)=>{
 
 const getARoomForUser=async (req,res)=>{
   const room_id=req.params.room_id;
+  const checkInDate = req.query.checkIn || null;
+  const checkOutDate = req.query.checkOut || null;
+  const newCheckIn = new Date(checkInDate);
+  const newCheckOut = new Date(checkOutDate);
+  // console.log('res.lcoales') 
+  // console.log(res.locals.collisions)
+  // console.log('res.lcoales') 
+  // const findRoom=res.locals.collisions.filter((el,index)=>{
+  //   console.log(el.room_id,room_id)
+  //  // return el.room_id.equals(new mongoose.Types.ObjectId(room_id))
+  // })
+  // console.log(findRoom)
+  // console.log('this is find room')
+  // const totalAvailableRoom=findRoom[0].no_of_rooms_available-findRoom[0].no_of_rooms_unavailabe_for_the_time_period
+
+
 try {
+
+  console.log('get a roommmm')
+  const totalNoOfRoomsAvailable=await findNoOfRoomsAvailableHelper(room_id,newCheckIn,newCheckOut)
+
+  // const noOfRoomsAvailable=await findNoOfRoomsAvailableHelper(room_id)
   const response=await getARoomHelper(room_id)
-  res.status(200).json({response})
+  res.status(200).json({response,totalAvailableRoom:totalNoOfRoomsAvailable})
 } catch (error) {
+  console.log(error)
   res.status(500).json({error})
 }  
+}
+
+const checkAvailabilityOfRoom=async (req,res)=>{
+  const room_id=req.params.room_id || null;
+  const checkInDate = req.query.checkIn || null;
+  const checkOutDate = req.query.checkOut || null;
+  console.log(checkInDate,checkOutDate,'checkIn unparsed')
+  const newCheckIn = new Date(checkInDate);
+  const newCheckOut = new Date(checkOutDate);
+console.log(newCheckIn,newCheckOut,'checkIndate','checkoutdate')
+
+  try {
+    // const room_id=req.params.room_id;
+    // console.log('res.lcoales') 
+    // console.log(room_id)
+    // console.log(res.locals)
+    // console.log(res.locals.collisions)
+    // console.log('res.lcoales') 
+    // const findRoom=res.locals.collisions.filter((el,index)=>{
+    //   return el.room_id.equals(new mongoose.Types.ObjectId(room_id))
+    // })
+    // console.log(findRoom)
+    // console.log('this is find room')
+    // const totalAvailableRoom=findRoom[0].no_of_rooms_available-findRoom[0].no_of_rooms_unavailabe_for_the_time_period
+    const totalNoOfRoomsAvailable=await findNoOfRoomsAvailableHelper(room_id,newCheckIn,newCheckOut)
+
+
+
+    res.status(200).json({totalAvailableRoom:totalNoOfRoomsAvailable})
+  //const response =await findNoOfRoomsAvailableHelper(room_id)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({error})
+  }
 }
 module.exports = {
   addRoom,editRoom,
   getRooms,getRoomsByType,
   editRoomDescription,addRoomImages,
   getRoomsForUser,getAvgReviewOfRoom,
-  getARoomForUser
+  getARoomForUser,checkAvailabilityOfRoom
 };

@@ -1,15 +1,19 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useSearchMutation } from "../services/searchApiSlice";
-import { updateCheckIn, updateCheckOut, updateLocation, updateSearchResult } from "../../../services/searchSlice";
+import { selectRoomType } from "../../../services/searchSlice";
+// import { updateCheckIn,updateCheckOut } from "../services/priceSlice";
+import { updateCheckIn,updateCheckOut,updateLocation, updateSearchResult,updateRoomType } from "../../../services/searchSlice";
 
 const SearchSectionHome = () => {
   const [checkIn, setCheckInDate] = useState(null);
   const [checkOut, setCheckOutDate] = useState(null);
   const [searchString, setSearchString] = useState(null);
-  const [roomType,setRoomType]=useState(null);
+ // const [roomType,setRoomType]=useState(null);
 
+  //selectors
+  const roomType=useSelector(selectRoomType)
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -27,9 +31,9 @@ const handleSubmit=async () => {
     navigate(`/search-page`);
   };
 
-  console.log(checkIn);
-  console.log(checkOut);
-  console.log(searchString);
+  // console.log(checkIn);
+  // console.log(checkOut);
+  // console.log(searchString);
 
   const getYesterdayDateString = () => {
     const yesterday = new Date();
@@ -56,7 +60,7 @@ const handleSubmit=async () => {
         />
         <input
           onChange={(e) => {
-            updateCheckIn(e.target.value)
+            dispatch(updateCheckIn(e.target.value))
             setCheckInDate(e.target.value);
           }}
           type="date"
@@ -65,7 +69,7 @@ const handleSubmit=async () => {
         />
         <input
           onChange={(e) => {
-            updateCheckOut(e.target.value)
+            dispatch(updateCheckOut(e.target.value))
             setCheckOutDate(e.target.value);
           }}
           type="date"
@@ -75,7 +79,9 @@ const handleSubmit=async () => {
         {/* <input className="ps-3 text-[1.1rem] capitalize1 focus:border-2 border-black" /> */}
         <select
           value={roomType}
-          onChange={e => setRoomType(e.target.value)} 
+          onChange={e => {
+            dispatch(updateRoomType(e.target.value))
+          }} 
           className="ps-2 pe-3 text-[1.1rem] bg-white capitalize font-extralight"
           name=""
           id=""
