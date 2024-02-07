@@ -113,7 +113,7 @@ console.log(price)
               <h2 className="text-red-600 ps-5 text-[1rem]">please select</h2>
             )}
 
-            <DatePicker
+            <Input
               datePassed={selectedCheckInDate}
               setDate={setCheckInDate}
               name="checkInDate"
@@ -122,7 +122,7 @@ console.log(price)
               
             />
             <div className="mt-4">
-              <DatePicker
+              <Input
                 datePassed={selectedCheckOutDate}
                 //  setDate={setCheckOutDate}
                 name="checkOutDate"
