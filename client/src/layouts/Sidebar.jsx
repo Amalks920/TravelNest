@@ -137,7 +137,7 @@ export function Sidebar() {
                 <ListItemPrefix>
                   <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                 </ListItemPrefix>
-                <Link to={'/owner/chats'}>All bookings</Link>
+                <Link to={'/owner/all-bookings'}>All bookings</Link>
               </ListItem>
             </List>
           </AccordionBody>

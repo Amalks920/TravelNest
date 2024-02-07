@@ -1,4 +1,4 @@
-const { getAllBookingsHelper, getAllBookingsOfHelper, getABookingForUserHelper, getABookingForOwnerHelper, changeBookingStatusHelper, cancelBookingHelper, findABookingHelper, updateNoOfRoomsHelper, getUserBookingDocumentLengthHelper, getAllBookingsLengthHelper } = require("../helpers/bookingHelper")
+const { getAllBookingsHelper, getAllBookingsOfHelper, getABookingForUserHelper, getABookingForOwnerHelper, changeBookingStatusHelper, cancelBookingHelper, findABookingHelper, updateNoOfRoomsHelper, getUserBookingDocumentLengthHelper, getAllBookingsLengthHelper, getAllHotelBookingsHelper, getAllHotelBookingsLengthHelper } = require("../helpers/bookingHelper")
 const { getReviewDoneByUser } = require("../helpers/reviewHelper")
 const { updateRoomNumberHelper } = require("../helpers/roomHelper")
 const { addToWalletHelper, updateWalletAmountHelper } = require("../helpers/walletHelper")
@@ -39,6 +39,29 @@ const getAllBookingsOfUser=async (req,res,next)=>{
         res.status(404).json({error})
     }
 }
+
+const getAllHotelBookings=async (req,res)=>{
+    const pageNumber=req.query.pageNumber
+
+    try {
+        const response=await getAllHotelBookingsHelper(pageNumber)
+        res.status(200).json({response})
+    } catch (error) {
+        res.status(500).json({error})
+    }
+}
+
+const getAllHotelBookingsLength=async (req,res)=>{
+
+    try {
+
+        const response=await getAllHotelBookingsLengthHelper()
+        res.status(200).json({response})
+    } catch (error) {
+        res.status(500).json({error});
+    }
+}
+
 
 const getUserBookingDocumentLength=async (req,res)=>{
     const user_id=req.params.user_id;
@@ -120,5 +143,6 @@ module.exports={
     getAllBookings,getAllBookingsOfUser,
     getABookingForUser,getABookingForOwner,
     changeBookingStatus,cancelBookingController,
-    getUserBookingDocumentLength,getAllBookingsLength
+    getUserBookingDocumentLength,getAllBookingsLength,
+    getAllHotelBookings,getAllHotelBookingsLength
 }

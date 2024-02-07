@@ -72,7 +72,23 @@ const getAllBookingsHelper= async (hotel_id,pageNumber)=>{
         } catch (error) {
             return error
         }
-  
+}
+
+const getAllHotelBookingsHelper=async (pageNumber)=>{
+    try {
+        const response=await bookingModel.find({}).skip((pageNumber-1)*4).limit(4)
+        return response
+    } catch (error) {
+        throw error
+    }
+}
+const getAllHotelBookingsLengthHelper=async (pageNumber)=>{
+    try {
+        const response=(await bookingModel.find({})).length
+        return response
+    } catch (error) {
+        throw error
+    }
 }
 
 
@@ -86,6 +102,11 @@ const getAllBookingsOfHelper=async(user_id,pageNumber)=>{
                 userId:new mongoose.Types.ObjectId(user_id)
             }
            },
+           {
+            $sort: {
+              _id: -1
+            }
+          },
            {
             $lookup:{
                 from:'hotels',
@@ -257,5 +278,7 @@ module.exports={
     getABookingForUserHelper,getABookingForOwnerHelper,
     changeBookingStatusHelper,cancelBookingHelper,findABookingHelper,
     updateNoOfRoomsHelper,getUserBookingDocumentLengthHelper,
-    getAllBookingsLengthHelper
+    getAllBookingsLengthHelper,getAllHotelBookingsHelper,
+     getAllHotelBookingsLengthHelper
+
 }

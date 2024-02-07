@@ -27,6 +27,8 @@ import {
   import {
     useGetAllBookingsLengthQuery,
     useGetAllBookingsQuery,
+    useGetAllHotelBookingsLengthQuery,
+    useGetAllHotelBookingsQuery,
   } from "../services/getAllBookingsApiSlice";
   import { Link, useParams } from "react-router-dom";
   import { useState } from "react";
@@ -44,16 +46,19 @@ import {
   ];
   
   const AllBookings = () => {
-    const { hotel_id } = useParams();
     const [pageNumber, setPageNumber] = useState(1);
     const {
       data: bookings,
       isError,
       isLoading,
       isSuccess,
-    } = useGetAllBookingsQuery({ hotel_id,pageNumber });
+    } = useGetAllHotelBookingsQuery({pageNumber});
+
+    const {data:bookingLength}=useGetAllHotelBookingsLengthQuery()
+
+    console.log(bookingLength)
   
-    const { data: length } = useGetAllBookingsLengthQuery({ hotel_id });
+    // const { data: length } = useGetAllBookingsLengthQuery();
   
     if (isLoading) return <Spinner />;
   
@@ -65,20 +70,12 @@ import {
           <div className="mb-8 flex items-center justify-between gap-8">
             <div>
               <Typography variant="h5" color="blue-gray">
-                Booking List
+                All Bookings List
               </Typography>
             </div>
           </div>
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            {/* <Tabs value="all" className="w-full md:w-max z-0">
-                      <TabsHeader>
-                        {TABS.map(({ label, value,className }) => (
-                          <Tab key={value} className={"text-[0.8rem] w-[150px] font-bold "+className} value={value}>
-                            &nbsp;&nbsp;{label}&nbsp;&nbsp;
-                          </Tab>
-                        ))}
-                      </TabsHeader>
-                    </Tabs> */}
+
             <div className="w-full md:w-72 hidden">
               <Input
                 label="Search"
@@ -213,7 +210,7 @@ import {
         </CardBody>
         <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4 ">
           <Typography variant="small" color="blue-gray" className="font-bold ">
-            Page {pageNumber} of {Math.ceil(length?.response/4)}
+            Page {pageNumber} of {Math.ceil(bookingLength?.response/4)}
           </Typography>
           <div className="flex gap-2">
             <Button
@@ -227,7 +224,7 @@ import {
             </Button>
             <Button
               onClick={() => {
-                if(pageNumber<Math.ceil(length.response/4)) setPageNumber(pageNumber+1);
+                if(pageNumber<Math.ceil(bookingLength.response/4)) setPageNumber(pageNumber+1);
               }}
               variant="outlined"
               size="sm"

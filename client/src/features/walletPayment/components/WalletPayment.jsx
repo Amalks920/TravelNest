@@ -10,7 +10,8 @@ import { useNavigate } from "react-router-dom";
 
 const WalletPayment=()=>{
     const checkoutDetails=useSelector(selectCheckOutDetails);
-    const {checkInDate,checkOutDate,hotel_id,roomDetails,totalNoRooms,totalPrice}=checkoutDetails
+    const {checkInDate,checkOutDate,hotel_id,roomDetails,totalNoRooms,totalPrice,noOfDays}=checkoutDetails
+    console.log(checkoutDetails)
     const navigate=useNavigate()
     const [payUsingWallet,{isError,isLoading,isSuccess}]=usePayUsingWalletMutation();
 
@@ -22,7 +23,7 @@ const WalletPayment=()=>{
         <PaymentDetails hotel_id={hotel_id} checkInDate={checkInDate} checkOutDate={checkOutDate} totalNoRooms={totalNoRooms} roomDetails={roomDetails}/>
     </div>
 
-    <div className="lg:col-start-4 col-span-full lg:col-end-6  lg:row-start-1 row-start-3 lg:row-end-2 row-end-4 border-2">
+    {/* <div className="lg:col-start-4 col-span-full lg:col-end-6  lg:row-start-1 row-start-3 lg:row-end-2 row-end-4 border-2">
         <h2 className="font-bold m-5 text-[1.1rem]">Payment Options</h2>
         <div>
             <div className="flex ms-2">
@@ -34,11 +35,11 @@ const WalletPayment=()=>{
             </div>
 
         </div>
-    </div>
+    </div> */}
 
-    <div className="lg:col-start-4  col-span-full lg:col-end-6 lg:row-start-2 row-start-4 row-end-4 rounded-md">
+    <div className="lg:col-start-4 col-span-full lg:col-end-6  lg:row-start-1 row-start-3 lg:row-end-2 row-end-4 border-2">
         <div className="border-2  shadow-md p-5">
-           <h2 className="font-bold pb-5  text-left text-[1.1rem]">Price Breakup</h2> 
+           <h2 className="font-bold pb-5  text-left text-[1rem]">Price Breakup</h2> 
 {      roomDetails.map(({roomType,price,noOfRooms},index)=>{
  return <div className="flex pb-2 justify-between">
  <h2 className=" text-[0.9rem] capitalize">{noOfRooms} Rooms  x Days x {price} rs</h2>
@@ -48,27 +49,28 @@ const WalletPayment=()=>{
             }
         
         <div className="flex justify-between">
-            <h2 className="font-bold pt-5">Discount Amount :</h2>
+            <h2 className=" pt-5 text-[0.9rem]">Discount Amount :</h2>
             <h2 className="font-bold pt-5">0 RS</h2>
         </div>
         <div className="flex justify-between">
-            <h2 className="font-bold pt-5">Total Price :</h2>
+            <h2 className=" pt-5 text-[0.9rem]">Total Price :</h2>
             <h2 className="font-bold pt-5">₹ {totalPrice}</h2>
         </div>
 
 
         </div>
     </div>
-    <div className="lg:col-start-5  col-span-full lg:col-end-6 lg:row-start-4 row-start-5 row-end-6 rounded-md">
-            <Button onClick={async ()=>{
-
+    <div className="lg:col-start-4  col-span-full lg:col-end-6 lg:row-start-2 row-start-5 row-end-4 rounded-md">
+            <Button className="ms-[240px]" onClick={async ()=>{
+                   {console.log(roomDetails)}
                 await payUsingWallet({
                     totalPrice,
                     checkInDate: checkInDate,
                     checkOutDate: checkOutDate,
                     hotel_id,
                     totalNoRooms,
-                    roomDetails
+                    roomDetails,
+                    noOfDays
                 })
                               
             }}>Confirm Booking</Button>

@@ -1,5 +1,5 @@
 const express = require('express');
-const { getAllBookings, getAllBookingsOfUser, getABookingForUser, getABookingForOwner, changeBookingStatus, cancelBookingController, getUserBookingDocumentLength, getAllBookingsLength } = require('../controllers/bookingController');
+const { getAllBookings, getAllBookingsOfUser, getABookingForUser, getABookingForOwner, changeBookingStatus, cancelBookingController, getUserBookingDocumentLength, getAllBookingsLength, getAllHotelBookings, getAllHotelBookingsLength } = require('../controllers/bookingController');
 const verifyJwt = require('../utils/verifyJwt');
 const router = express.Router();
 
@@ -130,6 +130,8 @@ router.post('/cancel-booking/:booking_id',verifyJwt,cancelBookingController)
 //owner
 router.get('/get-a-booking-for-owner/:booking_id',verifyJwt,getABookingForOwner)
 router.post('/change-status/:booking_id',verifyJwt,changeBookingStatus);
+router.get('/get-all-hotel-bookings',verifyJwt,getAllHotelBookings)
+router.get('/get-all-hotel-bookings-length',verifyJwt,getAllHotelBookingsLength)
 
 
 module.exports=router

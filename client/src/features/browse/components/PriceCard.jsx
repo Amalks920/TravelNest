@@ -43,12 +43,13 @@ const PriceCard = ({ rate ,roomType,hotel_id,room_id,open,setOpen}) => {
 
   const totalPrice = useSelector(selectTotalPrice);
   const price = useSelector(selectPrice);
-  const roomDetails = useSelector(selectCheckedRooms);
+ // const roomDetails = useSelector(selectCheckedRooms);
  // const hotel_id = useSelector(selectHotelId);
   const totalNoRooms = useSelector(selectTotalNumberOfRoom);
   const noOfDays=useSelector(selectNoOfDays)
   const user_id=useSelector(selectUserId)
   const noOfAvailableRoom=useSelector(selectAvailableRoom);
+
 
   const [payment, { isError, isLoading, isSuccess, error }] =
     usePaymentMutation();
@@ -66,6 +67,10 @@ console.log(price)
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+
+  console.log(room_id,roomType,noOfRooms,price)
+  const roomDetails=[{id:room_id,roomType:roomType,noOfRooms:noOfRooms,price:price}]
 
   
   useEffect(()=>{
@@ -149,7 +154,11 @@ console.log(price)
             <div className="mt-4 px-1">
              <select
               value={noOfRooms} 
-              onChange={e => setNoOfRooms(e.target.value)} 
+              onChange={e => {
+                setNoOfRooms(e.target.value)
+                dispatch(updateNoOfRooms(e.target.value))
+              }
+              } 
               className="bg-white w-full h-[40px] px-3 border-[1.3px] border-gray-400 rounded-lg">
               <option value="" disabled>0</option>
               <option value="1" disabled={totalAvailableRooms<1}>1</option>
@@ -165,7 +174,7 @@ console.log(price)
               onClick={async () => {
                 if (token && role === "user") {
                 
-                  const roomDetails=[{id:room_id,roomType:roomType,noOfRooms:noOfRooms,price:price}]
+                  
                    console.log(roomDetails)
                   const response = await payment({
                     roomDetails,
@@ -194,23 +203,27 @@ console.log(price)
               Pay Using Card
             </Button>
             <h2
+            
               onClick={() => {
+             
                 dispatch(
                   updateCheckOutDetails({
                     checkInDate: selectedCheckInDate,
                     checkOutDate: selectedCheckOutDate,
                     roomDetails:roomDetails,
-                    totalPrice:totalPrice,
-                    totalNoRooms:totalNoRooms,
-                    hotel_id:hotel_id
+                    totalPrice:price,
+                    totalNoRooms:noOfRooms,
+                    hotel_id:hotel_id,
+                    noOfDays:noOfDays
                   })
                 );
               }}
-              className="text-center mt-2 text-[0.9rem] text-red-500 cursor-pointer capitalize"
+              className="text-center mt-2 text-[0.9rem] text-black cursor-pointer capitalize"
+        
             >
               {console.log(wallet?.response[0]?.amount,totalPrice)}
-              {roomDetails?.length!==0  && wallet?.response[0]?.amount>totalPrice  ?
-                <Link to={"/wallet-payment-page"}>other payment options</Link>:null
+              { wallet?.response[0]?.amount>price  ?
+                <Link to={"/wallet-payment-page"}>Pay Using Wallet</Link>:null
                 
            
                 }

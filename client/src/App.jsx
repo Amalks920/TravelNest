@@ -52,6 +52,7 @@ import { useEffect, useState } from 'react';
 import io from 'socket.io-client'
 import WalletPaymentPage from './pages/user/WalletPaymentPage.jsx';
 import WalletHistoryPage from './pages/user/WalletHistoryPage.jsx';
+import AllBookingsPage from './pages/owner/AllBookingsPage.jsx';
 
 function App() {
   const token = useSelector(selectToken)
@@ -115,6 +116,7 @@ function App() {
         <Route path='/owner/bookings-list/:hotel_id' element={<BookingsList/>}></Route>
         <Route path='/owner/booking-details/:booking_id' element={<BookingDetailsPage/>}></Route>
         <Route path='/owner/chats' element={<OnwerChatPage socket={socket} />} ></Route>
+        <Route path='/owner/all-bookings' element={<AllBookingsPage/>} ></Route>
         
         <Route path='/owner/review/:hotel_id' element={<HotelReviews/>}></Route>
 
