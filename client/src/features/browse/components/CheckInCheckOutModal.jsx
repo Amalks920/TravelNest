@@ -23,8 +23,8 @@ import { useGetAllRoomsInHotelMutation } from "../services/getAllHotelsApiSlice"
 import { useCheckAvailabilityOfRoomMutation } from "../services/checkAvailabilityApiSlice";
 import { updateRooms } from "../services/roomsSlice";
 
-const CheckInCheckOutModal = ({ room_id,checkIn,checkOut,rate }) => {
-  const [open, setOpen] = useState(true);
+const CheckInCheckOutModal = ({ room_id,checkIn,checkOut,rate,open,setOpen }) => {
+  
   const handleOpen = () => setOpen((cur) => !cur);
   const checkInDate = useSelector(selectCheckIn);
   const checkOutDate = useSelector(selectCheckOut);

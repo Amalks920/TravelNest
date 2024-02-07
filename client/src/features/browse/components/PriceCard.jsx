@@ -36,7 +36,7 @@ import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { updateCheckOutDetails } from "../../walletPayment/service/walletCheckOutSlice";
 
-const PriceCard = ({ rate ,roomType,hotel_id,room_id}) => {
+const PriceCard = ({ rate ,roomType,hotel_id,room_id,open,setOpen}) => {
   const selectedCheckInDate = useSelector(selectCheckIn);
   const selectedCheckOutDate = useSelector(selectCheckOut);
   const totalAvailableRooms = useSelector(selectAvailableRoom)
@@ -114,21 +114,38 @@ console.log(price)
             )}
 
             <Input
+            onClick={()=>{
+              setOpen(!open)
+            }}
+            type="date"
+            value={selectedCheckInDate}
               datePassed={selectedCheckInDate}
               setDate={setCheckInDate}
               name="checkInDate"
               label={"Check in"}
               
-              
+              readOnly   
             />
+
             <div className="mt-4">
               <Input
+                onClick={()=>{
+                    setOpen(!open)
+                }}
+              type="date"
+              value={selectedCheckOutDate}
                 datePassed={selectedCheckOutDate}
                 //  setDate={setCheckOutDate}
                 name="checkOutDate"
                 label={"Check out"}
+                readOnly
               />
+              
             </div>
+            {/* <div className="mt-4 flex  justify-center mb-[40px]">
+            <button className="border-2 p-1 px-6  border-gray-400">edit checkout</button>
+            </div> */}
+            
             <div className="mt-4 px-1">
              <select
               value={noOfRooms} 

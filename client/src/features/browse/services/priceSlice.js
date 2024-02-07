@@ -84,6 +84,17 @@ const priceSlice = createSlice({
 
     updateCheckIn:(state,action)=>{
       state.checkIn=action.payload
+
+      if(state.checkOut){
+        const oneDay = 24 * 60 * 60 * 1000;
+        const checkOut=new Date(state.checkOut)
+        const checkIn=new Date(action.payload)
+        const diffDays = Math.round(Math.abs((checkIn - checkOut) / oneDay))+1;
+        state.noOfDays=diffDays
+        state.checkIn=action.payload
+
+        state.price=Number(state.noOfDays)*Number(state.price)*Number(state.noOfRooms);
+      }
     },
 
     updateCheckOut:(state,action)=>{
@@ -93,6 +104,7 @@ const priceSlice = createSlice({
       const diffDays = Math.round(Math.abs((checkIn - checkOut) / oneDay))+1;
       state.noOfDays=diffDays
       state.checkOut=action.payload
+      state.price=Number(state.noOfDays)*Number(state.price)*Number(state.noOfRooms);
     },
 
   },

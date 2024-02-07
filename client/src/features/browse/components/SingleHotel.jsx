@@ -30,7 +30,7 @@ const SingleHotel = () => {
 
   const { hotel_id, room_id,checkIn,checkOut } = useParams();
 
-
+  const [open, setOpen] = useState(true);
 
 
 
@@ -86,7 +86,7 @@ const SingleHotel = () => {
     <RoomDetailsModal viewDetailsModal={viewDetailsModal} setViewDetailsModal={setViewDetailsModal} room={singleRoom} />
 
 
-      <CheckInCheckOutModal room_id={room_id} checkIn={checkIn} checkOut={checkOut} rate={singleRoom?.rate}/>
+      <CheckInCheckOutModal room_id={room_id} checkIn={checkIn} checkOut={checkOut} rate={singleRoom?.rate} open={open} setOpen={setOpen}/>
 
       <div className="grid grid-cols-12 grid-rows-[100px,200px,200px,auto,auto,auto] pb-14  w-[100%] min-h-[100vh] mt-16  gap-2 px-9 shadow-2xl">
         <div className="row-span-1 col-start-1 md:col-start-2 col-span-10 ">
@@ -208,7 +208,7 @@ const SingleHotel = () => {
           </div>
         </div>
         <div className="row-span-1 md:flex md:justify-center hidden border-2 col-span-3  border-t-2   rounded-lg">
-          <PriceCard price={price} hotel_id={hotel_id} rate={singleRoom?.rate} roomType={singleRoom?.roomType} room_id={room_id} totalAvailableRooms={totalAvailableRoom} className={""} />
+          <PriceCard price={price} hotel_id={hotel_id} rate={singleRoom?.rate} roomType={singleRoom?.roomType} room_id={room_id} totalAvailableRooms={totalAvailableRoom} open={open} setOpen={setOpen}/>
         </div>
 
         <div className="row-span-2 col-span-8  flex flex-col ms-[120px] mt-11 ">
