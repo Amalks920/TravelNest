@@ -13,10 +13,13 @@ const getAllHotelsApiSlice=apiSlice.injectEndpoints({
                 method:'POST',
                 body:data
             })
+        }),
+        getAllHotelLocation:builder.query({
+            query:()=>`/room/get-all-rooms-by-location`
         })
     })
 })
 
 
 
-export const {useGetAllHotelQuery,useGetAllRoomsInHotelMutation}=getAllHotelsApiSlice
+export const {useGetAllHotelQuery,useGetAllRoomsInHotelMutation,useGetAllHotelLocationQuery}=getAllHotelsApiSlice

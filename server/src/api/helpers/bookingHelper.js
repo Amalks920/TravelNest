@@ -133,7 +133,7 @@ const getAllBookingsOfHelper=async(user_id,pageNumber)=>{
             $skip:(pageNumber-1)*3
            },
            {
-            $limit:pageNumber*3
+            $limit:3
            }
         ])
         // find({userId:user_id})

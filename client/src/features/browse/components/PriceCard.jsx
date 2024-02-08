@@ -234,7 +234,7 @@ console.log(price)
                 <p className="me-3 font-bold">₹ {price}</p>
               </div>
 
-              {roomDetails.map(({ noOfRooms, price, roomType }, index) => {
+              {/* {roomDetails.map(({ noOfRooms, price, roomType }, index) => {
                 return (
                   <div className="w-full mt-6  flex  justify-between mx-3">
                     <p className="font-bold">{roomType}</p>
@@ -244,7 +244,7 @@ console.log(price)
                     </p>
                   </div>
                 );
-              })}
+              })} */}
             </div>
           </div>
 

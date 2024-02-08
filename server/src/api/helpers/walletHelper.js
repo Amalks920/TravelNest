@@ -1,5 +1,6 @@
 const walletModel = require("../models/walletModel");
 const { Wallet, WalletHistory } = require("../models/walletModel");
+const mongoose=require('mongoose')
 
 const createWalletHelper = (user_id) => {
   return new Promise(async (resolve, reject) => {
@@ -80,13 +81,40 @@ const updateWalletHistoryHelper = async ({_id,amount,type}) => {
   }
 };
 
-const getWalletHistoryHelper=async (wallet_id)=>{
+const getWalletHistoryHelper=async (wallet_id,pageNumber)=>{
     try {
-       const response=await WalletHistory.find({wallet_id:wallet_id})
+      const response = await WalletHistory.aggregate([
+        {
+          $match: {
+            wallet_id:new mongoose.Types.ObjectId(wallet_id)
+          }
+        },
+        {
+          $sort: { _id: -1 } // Assuming _id field is used for sorting, replace it with your relevant field
+        },
+        {
+          $skip: (pageNumber-1) * 7
+        },
+        {
+          $limit:7
+        }
+      ]);
+      
+       
+       //find({wallet_id:wallet_id}).skip(pageNumber*4).limit(4)
        return response
     } catch (error) {
         return error
     }
+}
+
+const getWalletHistoryLengthHelper=async (wallet_id)=>{
+  try {
+    const response=await WalletHistory.find({wallet_id:wallet_id})
+    return response.length;
+  } catch (error) {
+    return error
+  }
 }
 
 const getWalletAmountHelper=async (user_id)=>{
@@ -107,5 +135,6 @@ module.exports = {
   updateWalletAmountHelper,
   updateWalletHistoryHelper,
   getWalletHistoryHelper,
-  getWalletAmountHelper
+  getWalletAmountHelper,
+  getWalletHistoryLengthHelper
 };

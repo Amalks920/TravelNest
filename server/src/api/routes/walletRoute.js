@@ -1,6 +1,7 @@
 const express=require('express')
 const { updateWalletAmount, getWalletAmount } = require('../controllers/paymentController')
-const { getWalletHistory } = require('../controllers/userController')
+const { getWalletHistory, getWalletHistoryLength } = require('../controllers/userController')
+const verifyJwt = require('../utils/verifyJwt')
 const router=express.Router()
 
 
@@ -36,6 +37,7 @@ router.patch('/update-wallet/{amount}',(req,res)=>{
 
 router.post('/update-wallet-amount',updateWalletAmount)
 
-router.get('/get-wallet-history/:wallet_id',getWalletHistory);
+router.get('/get-wallet-history/:wallet_id/:pageNumber',verifyJwt, getWalletHistory);
+router.get('/get-wallet-history-length/wallet_id',getWalletHistoryLength)
 router.get('/wallet-amount/:user_id',getWalletAmount);
 module.exports=router;

@@ -4,6 +4,7 @@ const router = express.Router();
 const uploader=require('../../config/multer');
 const verifyJwt = require('../utils/verifyJwt');
 const checkAvailability = require('../middlewares/checkAvailability');
+const verifyOwnerJwt = require('../middlewares/verifyOwnerJwt');
 
 /**
  * @openapi
@@ -26,11 +27,11 @@ const checkAvailability = require('../middlewares/checkAvailability');
  *           description: Bad request
  */
 
-router.get('/get-all-hotels/:userId',verifyJwt,getAllHotels)
+router.get('/get-all-hotels/:userId',verifyOwnerJwt,getAllHotels)
 
 router.get('/get-all-hotels-length/:user_id',getAllHotelsLength)
 
-router.get('/get-all-hotels-admin',verifyJwt,getAllHotelsForAdmin)
+router.get('/get-all-hotels-admin',getAllHotelsForAdmin)
 /**
  * @openapi
  * paths:
@@ -103,10 +104,10 @@ router.get('/get-a-hotel-for-owner/:hotel_id',verifyJwt,getAHotel)
   })
 
 //owner 
-router.put('/edit-hotel-details/:hotel_id',verifyJwt,editHotelName)
-router.put('/add-images',verifyJwt,uploader.array('images',10),addHotelImages)
-router.put('/edit-hotel-location/:hotel_id',verifyJwt,editHotelLocation)
-router.put('/edit-hotel-description/:hotel_id',verifyJwt,editHotelDescription)
+router.put('/edit-hotel-details/:hotel_id',verifyOwnerJwt,editHotelName)
+router.put('/add-images',verifyOwnerJwt,uploader.array('images',10),addHotelImages)
+router.put('/edit-hotel-location/:hotel_id',verifyOwnerJwt,editHotelLocation)
+router.put('/edit-hotel-description/:hotel_id',verifyOwnerJwt,editHotelDescription)
   
 
 /**

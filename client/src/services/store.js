@@ -28,7 +28,7 @@ const rootReducer=combineReducers({
     auth:loginSlice,
     hotels:hotelListSlice,
     checkout:walletCheckOutSlice,
-    search:searchSlice,
+  
 })
 
 const persistedAuthReducer=persistReducer(persistConfig,rootReducer);
@@ -42,7 +42,8 @@ const store=configureStore({
         editHotelForm:EditHotelFormSlice,
         editRoomForm:editRoomFormSlice,
         priceSlice:priceSlice,
-        roomsInHotel:roomsSlice
+        roomsInHotel:roomsSlice,
+        search:searchSlice,
     },
     middleware:[thunk],
     middleware: getDefaultMiddleware =>

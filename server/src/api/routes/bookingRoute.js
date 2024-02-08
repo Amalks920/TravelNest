@@ -1,6 +1,7 @@
 const express = require('express');
 const { getAllBookings, getAllBookingsOfUser, getABookingForUser, getABookingForOwner, changeBookingStatus, cancelBookingController, getUserBookingDocumentLength, getAllBookingsLength, getAllHotelBookings, getAllHotelBookingsLength } = require('../controllers/bookingController');
 const verifyJwt = require('../utils/verifyJwt');
+const verifyOwnerJwt = require('../middlewares/verifyOwnerJwt');
 const router = express.Router();
 
 
@@ -128,10 +129,10 @@ router.get('/get-a-booking-for-user/:booking_id',verifyJwt,getABookingForUser)
 router.post('/cancel-booking/:booking_id',verifyJwt,cancelBookingController)
 
 //owner
-router.get('/get-a-booking-for-owner/:booking_id',verifyJwt,getABookingForOwner)
+router.get('/get-a-booking-for-owner/:booking_id',verifyOwnerJwt,getABookingForOwner)
 router.post('/change-status/:booking_id',verifyJwt,changeBookingStatus);
-router.get('/get-all-hotel-bookings',verifyJwt,getAllHotelBookings)
-router.get('/get-all-hotel-bookings-length',verifyJwt,getAllHotelBookingsLength)
+router.get('/get-all-hotel-bookings',verifyOwnerJwt,getAllHotelBookings)
+router.get('/get-all-hotel-bookings-length',verifyOwnerJwt,getAllHotelBookingsLength)
 
 
 module.exports=router

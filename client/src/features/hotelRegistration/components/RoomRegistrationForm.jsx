@@ -255,7 +255,7 @@ const RoomRegistrationForm = ({ isEditForm }) => {
             ></Textarea>
           </div>
 
-          <div className="flex flex-wrap row-span-2 col-span-2 border-2 overflow-scroll gap-11 p-7 mb-10">
+          <div className=" flex-wrap row-span-2 col-span-2 border-2 overflow-scroll gap-11 p-7 mb-10 hidden">
               <div>
                 <Checkbox 
                 onChange={handleChange}

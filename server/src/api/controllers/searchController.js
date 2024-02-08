@@ -41,8 +41,8 @@ const roomSearchController = async (req, res, next) => {
   const roomType = req.query.roomType || null;
 
 
-  const min = req.query.priceMin || null;
-  const max = req.query.priceMax || null;
+  const min = req.query.min || null;
+  const max = req.query.max || null;
   const priceRange = {
     min,
     max,

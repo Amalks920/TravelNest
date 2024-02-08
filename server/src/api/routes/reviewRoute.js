@@ -2,6 +2,7 @@ const express=require('express');
 const { addReview, getReviewOfAHotelForUser, getReviewOfAHotelForAdmin } = require('../controllers/reviewController');
 const verifyJwt = require('../utils/verifyJwt');
 const uploader= require('../../config/multer');
+const verifyOwnerJwt = require('../middlewares/verifyOwnerJwt');
 const router=express.Router();
 
 /**
@@ -160,7 +161,7 @@ router.get('/get-a-review/{review_id}',(req,res)=>{
 
 
 router.get('/get-review-of-hotel-user/:hotel_id',getReviewOfAHotelForUser)
-router.get('/get-hotel-reviews-for-owner/:hotel_id',verifyJwt,getReviewOfAHotelForAdmin)
+router.get('/get-hotel-reviews-for-owner/:hotel_id',verifyOwnerJwt,getReviewOfAHotelForAdmin)
 
 
 module.exports=router

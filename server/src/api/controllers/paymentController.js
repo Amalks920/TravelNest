@@ -37,9 +37,14 @@ const payment = async (req, res, next) => {
       if (matchingRoomType) {
         const rate = matchingRoomType.rate;
         const noOfRooms = parseInt(room.noOfRooms);
-        totalPrice += rate * noOfRooms* Number(noOfDays);
+        totalPrice += rate* Number(noOfDays)*noOfRooms;
       }
     });
+
+    roomDetails.price=totalPrice;
+
+    console.log(totalPrice)
+    console.log('totalPrice')
 
     const findUser = await findUserByUserName(req.user);
     const findHotel = await getAHotelHelperForOrder(hotel_id);
@@ -70,7 +75,7 @@ const payment = async (req, res, next) => {
         },
         unit_amount: product.price * 100,
       },
-      quantity: product.noOfRooms,
+      quantity: 1,
     }));
 
     console.log(lineItems);
@@ -104,7 +109,7 @@ const payment = async (req, res, next) => {
 const payUsingWallet = async (req, res, next) => {
   try {
    
-    let { roomDetails, checkInDate, checkOutDate, hotel_id, totalNoRooms } =
+    let { roomDetails, checkInDate, checkOutDate, hotel_id, totalNoRooms,noOfDays } =
       req.body;
 
       console.log(roomDetails)
@@ -131,7 +136,7 @@ const payUsingWallet = async (req, res, next) => {
         const rate = matchingRoomType.rate;
          noOfRooms = parseInt(room.noOfRooms);
         
-        totalPrice += Number(rate) * Number(noOfRooms);
+        totalPrice += Number(rate) * Number(noOfRooms)*Number(noOfDays);
       }
     });
 

@@ -36,13 +36,13 @@ const WalletPayment=()=>{
 
         </div>
     </div> */}
-
+{console.log(roomDetails)}
     <div className="lg:col-start-4 col-span-full lg:col-end-6  lg:row-start-1 row-start-3 lg:row-end-2 row-end-4 border-2">
         <div className="border-2  shadow-md p-5">
            <h2 className="font-bold pb-5  text-left text-[1rem]">Price Breakup</h2> 
 {      roomDetails.map(({roomType,price,noOfRooms},index)=>{
  return <div className="flex pb-2 justify-between">
- <h2 className=" text-[0.9rem] capitalize">{noOfRooms} Rooms  x Days x {price} rs</h2>
+ <h2 className=" text-[0.9rem] capitalize">{noOfRooms} Rooms  x {noOfDays} Days x {price} rs</h2>
 </div>
 
 })     

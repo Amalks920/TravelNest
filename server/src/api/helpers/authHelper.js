@@ -64,7 +64,7 @@ const googleLoginHelper = async function ( email,role ) {
 
             if (!foundUser) return reject('user not found')
 
-            if (foundUser.isBlocked === true) reject('user is blocked')
+            if (foundUser.isBlocked === true) throw ('user is blocked')
             console.log(foundUser)
             // if (await foundUser.isPasswordMatched(password)) {
 
@@ -91,7 +91,8 @@ const googleLoginHelper = async function ( email,role ) {
 
 
         } catch (error) {
-            return error
+
+            throw error
         }
     // })
 }

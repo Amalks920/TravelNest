@@ -1,16 +1,25 @@
 import { useParams } from "react-router-dom";
-import { useGetWalletHistoryQuery } from "../services/getUserInfoApiSlice";
+import { useGetWalletHistoryLengthQuery, useGetWalletHistoryQuery } from "../services/getUserInfoApiSlice";
+import { useState } from "react";
+import { Spinner } from "@material-tailwind/react";
+import Pagination from "../../../layouts/Pagination";
 
 
 const WalletHistory = () => {
 
 const {wallet_id}=useParams()
+const [pageNumber,setPageNumber]=useState(1)
 console.log(wallet_id)
 
-const {data:walletHistory,isError,isFetching,isLoading,isSuccess}=useGetWalletHistoryQuery({wallet_id})
-console.log(walletHistory)
+const {data:walletHistory,isError,isFetching,isLoading,isSuccess}=useGetWalletHistoryQuery({wallet_id,pageNumber})
 
+const {data:walletHistoryLength}=useGetWalletHistoryLengthQuery({wallet_id})
+
+console.log(walletHistory)
+  if(isFetching || isLoading) return <Spinner/>
   return (
+
+<>
 <div className="relative flex flex-col w-full h-full overflow-scroll text-gray-700 bg-white shadow-md bg-clip-border rounded-xl sm:w-1/2 lg:w-[60%]">
     <h1 className="text-center font-bold text-[1.2rem] pb-5 uppercase">Wallet History</h1>
   <table className="w-full text-left table-auto min-w-max">
@@ -66,8 +75,10 @@ console.log(walletHistory)
      
     </tbody>
   </table>
-</div>
 
+</div>
+{/* <Pagination setPageNumber={setPageNumber} length={walletHistoryLength?.response} maxDocumentInAPage={7} pageNumber={pageNumber} /> */}
+</>
   )
 };
 

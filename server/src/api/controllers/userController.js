@@ -1,5 +1,5 @@
 const { fetchAllUsersHelper, blockOrUnblockUserHelper, checkUserBlockedOrNotHelper, getUserDetailsForProfileHelper, getAllUsersLengthHelper } = require("../helpers/userHelper")
-const { userWalletDetailsHelper, getWalletHistoryHelper } = require("../helpers/walletHelper")
+const { userWalletDetailsHelper, getWalletHistoryHelper, getWalletHistoryLengthHelper } = require("../helpers/walletHelper")
 
 
 const getAllUsers=async (req,res,next)=>{
@@ -72,12 +72,24 @@ const getUserWalletDetails= async (req,res,next)=>{
 
 const getWalletHistory=async (req,res,next)=>{
     const wallet_id=req.params.wallet_id;
-
+    const pageNumber=req.params.pageNumber;
     try {
         
-    const response=await getWalletHistoryHelper(wallet_id)
+    const response=await getWalletHistoryHelper(wallet_id,pageNumber)
 
     res.status(200).json({response});
+    } catch (error) {
+        res.status(500).json({error})
+    }
+}
+
+
+const getWalletHistoryLength=async (req,res)=>{
+    const wallet_id=req.params.wallet_id
+
+    try {
+      const response=await getWalletHistoryLengthHelper(wallet_id)
+      res.status(200).json({response})
     } catch (error) {
         res.status(500).json({error})
     }
@@ -87,5 +99,5 @@ const getWalletHistory=async (req,res,next)=>{
 module.exports={
     getAllUsers,blockOrUnblockUser,
     checkIfUserBlockedOrNot,getUserDetailsForProfile,getUserWalletDetails,
-    getWalletHistory,getAllUsersLength
+    getWalletHistory,getAllUsersLength,getWalletHistoryLength
 }

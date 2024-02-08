@@ -19,7 +19,8 @@ return (
 onSuccess={async credentialResponse => {
 
     const response=await googleSignin({credentialResponse,role})
-
+    console.log(response)
+    console.log('response google auth');
     dispatch(setCredentials({ ...response.data.foundUser,accessToken:response.data.accessToken }));
     
     navigate(

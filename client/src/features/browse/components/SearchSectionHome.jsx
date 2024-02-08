@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useSearchMutation } from "../services/searchApiSlice";
-import { selectRoomType } from "../../../services/searchSlice";
+import { selectRoomType, updateAllDetails } from "../../../services/searchSlice";
 // import { updateCheckIn,updateCheckOut } from "../services/priceSlice";
 import { updateCheckIn,updateCheckOut,updateLocation, updateSearchResult,updateRoomType } from "../../../services/searchSlice";
 
@@ -20,10 +20,12 @@ const SearchSectionHome = () => {
   const [search, { isError, isLoading, isSuccess, reset }] =
     useSearchMutation();
 
-const handleSubmit=async () => {
+const handleSubmit=async () => { 
     const searchResult=await search({location:searchString, checkIn: checkIn, checkOut: checkOut, roomType: roomType})
     console.log(searchResult)
     dispatch(updateSearchResult(searchResult.data.response))
+
+    dispatch(updateAllDetails({location:searchString, checkIn: checkIn, checkOut: checkOut, roomType: roomType}))
     handleSearch()
 }
 
@@ -65,6 +67,7 @@ const handleSubmit=async () => {
           }}
           type="date"
           min={getYesterdayDateString()}
+          max={checkOut}
           className="ps-3 text-[1.1rem] focus:border-2 border-black"
         />
         <input
@@ -73,7 +76,7 @@ const handleSubmit=async () => {
             setCheckOutDate(e.target.value);
           }}
           type="date"
-          min={checkIn}
+          min={ checkIn || getYesterdayDateString()}
           className="ps-3 text-[1.1rem]  focus:border-2 border-black"
         />
         {/* <input className="ps-3 text-[1.1rem] capitalize1 focus:border-2 border-black" /> */}

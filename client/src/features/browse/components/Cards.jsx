@@ -14,14 +14,15 @@ import ToggleIcon from "../../../components/ToggleIcon";
 import ToggleIconLeft from "../../../components/ToggleIconLeft";
 import { IMAGE_BASE_URL } from "../../../data/constants";
 
-const Cards=({hotel_id,hotelName,price,description,images})=>{
+const Cards=({_id,images})=>{
 
   console.log(images)
             return (
-        <Link to={`/hotel-details/${hotel_id}`}>    
+        // <Link to={`/hotel-details/${hotel_id}`}>    
 
 
-<div class="relative flex flex-col text-gray-700 bg-white   bg-clip-border rounded-xl w-96  shadow-md">
+<div
+ class="relative flex flex-col text-gray-700 bg-white   bg-clip-border rounded-xl w-96  shadow-md">
   <div class="relative mx-4 mt-4 overflow-hidden text-gray-700 bg-white bg-clip-border rounded-xl h-96">
   {/* <div className="overlay"></div> */}
     <img
@@ -32,15 +33,15 @@ const Cards=({hotel_id,hotelName,price,description,images})=>{
 
 <div class="p-6 relative -top-44 ">
     <div class="flex items-center justify-between mb-2">
-      <p class="block font-sans text-base antialiased font-bold leading-relaxed text-white ">
-        {hotelName}
+      <p class="block font-sans text-base antialiased font-bold leading-relaxed text-white text-[1.4rem] uppercase">
+        {_id}
       </p>
       <p class="block font-sans text-base antialiased font-medium leading-relaxed text-white">
-        {price}
+      
       </p>
     </div>
     <p class="block font-sans text-sm antialiased font-normal leading-normal text-white opacity-75">
-      {description.slice(0,100)}
+   
     </p>
   </div>
   </div>
@@ -66,7 +67,7 @@ const Cards=({hotel_id,hotelName,price,description,images})=>{
     </button>
   </div> */}
 </div>
-    </Link>  
+    // </Link>  
             );
 }
 
