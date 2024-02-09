@@ -1,17 +1,17 @@
 const userModel = require("../models/userModel");
 
-const fetchAllUsersHelper = (pageNumber) => {
-  return new Promise(async (resolve, reject) => {
+const fetchAllUsersHelper = async (pageNumber) => {
+  // return new Promise(async (resolve, reject) => {
     try {
       const allUsers = await userModel
-        .find({ role: { $ne: "admin" } }).skip((pageNumber-1)*4).limit(4)
+        .find({ role: { $ne: "admin" } }).sort({_id:-1}).skip((pageNumber-1)*4).limit(4)
         .select("username email phone isBlocked role timestamps");
 
-      resolve(allUsers);
+      return allUsers
     } catch (error) {
-      reject(error);
+      throw error
     }
-  });
+  // });
 };
 
 const getAllUsersLengthHelper= async ()=>{

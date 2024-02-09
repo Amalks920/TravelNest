@@ -19,17 +19,37 @@ import {
   updateNoOfAvailableRooms,
   updatePrice,
 } from "../services/priceSlice";
+
+
+
 import { useGetAllRoomsInHotelMutation } from "../services/getAllHotelsApiSlice";
 import { useCheckAvailabilityOfRoomMutation } from "../services/checkAvailabilityApiSlice";
 import { updateRooms } from "../services/roomsSlice";
+
+import {selectCheckIn as searchCheckIn,selectCheckOut as searchCheckOut} from "../../../services/searchSlice";
 
 const CheckInCheckOutModal = ({ room_id,checkIn,checkOut,rate,open,setOpen }) => {
   
   const handleOpen = () => setOpen((cur) => !cur);
   const checkInDate = useSelector(selectCheckIn);
   const checkOutDate = useSelector(selectCheckOut);
+  const checkInSearch=useSelector(searchCheckIn)
+  const checkOutSearch=useSelector(searchCheckOut)
   const dispatch = useDispatch();
 
+  const getYesterdayDateString = () => {
+    const yesterday = new Date();
+    const year = yesterday.getFullYear();
+    const month = String(yesterday.getMonth() + 1).padStart(2, "0");
+    const day = String(yesterday.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+
+  useEffect(()=>{
+    dispatch(updateCheckIn(checkInSearch))
+    dispatch(updateCheckOut(checkOutSearch))
+  },[])
 
    const [checkAvailabilityOfRoom, { isError, isLoading, isSuccess, reset }] =
      useCheckAvailabilityOfRoomMutation();
@@ -105,7 +125,8 @@ const CheckInCheckOutModal = ({ room_id,checkIn,checkOut,rate,open,setOpen }) =>
          
                 dispatch(updateCheckIn(e.target.value));
               }}
-              min={new Date(Date.now()).toISOString().split("T")[0]}
+              min={getYesterdayDateString()}
+              max={checkOutDate?checkOutDate:checkOut}
               value={checkInDate?checkInDate:checkIn}
               label="date"
               type="date"
@@ -124,7 +145,7 @@ const CheckInCheckOutModal = ({ room_id,checkIn,checkOut,rate,open,setOpen }) =>
               onInput={(e) => {
                 dispatch(updateCheckOut(e.target.value));
               }}
-              min={checkInDate}
+              min={checkIn || getYesterdayDateString()}
               value={checkOutDate?checkOutDate:checkOut}
               label="date"
               type="date"

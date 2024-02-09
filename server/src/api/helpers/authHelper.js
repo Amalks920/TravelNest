@@ -4,26 +4,26 @@ const jwt = require('jsonwebtoken');
 const { findOne } = require("../models/hotelModel");
 require('dotenv').config();
 
-const signupHelper = function (data) {
-    return new Promise(async (resolve, reject) => {
+const signupHelper = async function (data) {
+    // return new Promise(async (resolve, reject) => {
         try {
             const response = await userModel.create(data)
-            resolve(response)
+            return response
         } catch (error) {
-            reject(error)
+            throw error
         }
-    })
+    // })
 }
 
-const loginHelper = function ({ email, password, role }) {
-    return new Promise(async (resolve, reject) => {
+const loginHelper = async  function ({ email, password, role }) {
+    // return new Promise(async (resolve, reject) => {
         try {
 
             const foundUser = await userModel.findOne({ email: email, role: role })
 
-            if (!foundUser) return reject('user not found')
+            if (!foundUser)   throw Error('user not found')
 
-            if (foundUser.isBlocked === true) reject('user is blocked')
+            if (foundUser.isBlocked === true) throw Error('user is blocked')
             console.log(foundUser)
             if (await foundUser.isPasswordMatched(password)) {
 
@@ -43,16 +43,16 @@ const loginHelper = function ({ email, password, role }) {
                     { email: email },
                     { $set: { refreshToken: refreshToken } }
                 )
-                resolve({ foundUser, accessToken })
+                return { foundUser, accessToken }
             }else{
-                return reject('password is incorrect')
+                throw Error('password is incorrect')
             }
 
 
         } catch (error) {
-            reject(error)
+           throw error
         }
-    })
+    // })
 }
 
 const googleLoginHelper = async function ( email,role ) {

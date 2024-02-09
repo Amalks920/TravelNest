@@ -19,8 +19,9 @@ const registerNewUser = async (req, res, next) => {
     await createWalletHelper(response._id);
     res.status(200).json({ response });
   } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ response: error });
+   // console.log(error.message);
+    console.log(error.code)
+    res.status(500).json({success:false, error: 'internal server error' });
   }
 };
 
@@ -50,6 +51,7 @@ const login = async (req, res, next) => {
 
     res.status(200).json({ data });
   } catch (error) {
+    console.log(error.message)
     res.status(404).json({ message: error.message });
   }
 };

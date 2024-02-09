@@ -24,8 +24,10 @@ const SingleHotel = () => {
   const [isAccordionOpen, setIsAccordionOpen] = useState(-1);
   const [price, setPrice] = useState(0);
   const [viewDetailsModal, setViewDetailsModal] = useState(false);
+
   // const checkInDate=useSelector(selectCheckIn)
   // const checkOutDate=useSelector(selectCheckOut)
+
   const roomss = useSelector(selectRooms);
 
   const { hotel_id, room_id,checkIn,checkOut } = useParams();
@@ -178,8 +180,8 @@ const SingleHotel = () => {
                 onClick={()=>{
                   setViewDetailsModal(!viewDetailsModal)
                 }}
-                 className="border-2 border-gray-500 text-[0.8rem] text-gray-400 uppercase px-4 py-2 font-extralight">
-                  selected
+                 className="border-2 border-gray-500 text-[0.8rem] text-black  uppercase px-4 py-2 font-extralight ">
+                  view more
                 </button>
               </div>
             </div>

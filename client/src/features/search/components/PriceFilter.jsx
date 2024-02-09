@@ -51,15 +51,15 @@ const PriceFilter = () => {
           <Radio
             className="w-4 h-4"
             onInput={() => {
-              dispatch(updatePriceRange({ min: 500, max: 999 }));
-              handleSearch()
+              dispatch(updatePriceRange({ min: 500, max: 1999 }));
+              // handleSearch()
             }}
             name="price-range"
             size={"sm"}
           />
         </div>
-        <h2 className="mt-3  flex justify-between w-[50%] text-[1rem] ">
-          <span>₹500</span> - <span>₹999</span>
+        <h2 className="mt-3  flex justify-between w-[50%] text-[0.9rem] ">
+          <span>₹500</span> - <span>₹1999</span>
         </h2>
       </div>
       <div className="flex  justify-left gap-5   ">
@@ -67,37 +67,107 @@ const PriceFilter = () => {
           <Radio
           className="w-4 h-4"
             onInput={() => {
-              dispatch(updatePriceRange({ min: 1000, max: 1499 })) 
+              dispatch(updatePriceRange({ min: 2000, max: 3499 })) 
               
             }}
-            onChange={()=>{
-              handleSearch()
-            }}
+            // onChange={()=>{
+            //   handleSearch()
+            // }}
             name="price-range"
-            value={{ min: 500, max: 999 }}
+            value={{ min: 3000, max: 1499 }}
             size={"sm"}
           />
         </div>
-        <h2 className="mt-3  flex justify-between w-[50%] text-[1rem] ">
-          <span>₹1000</span> - <span>₹1499</span>
+        <h2 className="mt-3  flex justify-between w-[50%] text-[0.9rem]  ">
+          <span>₹2000</span> - <span>₹3499</span>
         </h2>
       </div>
+
       <div className="flex  justify-left gap-5 ">
         <div>
           <Radio
           className="w-4 h-4"
             onInput={() => {
-              dispatch(updatePriceRange({ min: 1500, max: 1999 }));
-              handleSearch()
+              dispatch(updatePriceRange({ min: 3500, max: 4999 }));
+              // handleSearch()
             }}
             name="price-range"
             size={"sm"}
           />
         </div>
-        <h2 className="mt-3  flex justify-between w-[50%] text-[1rem] ">
-          <span>₹1500</span> - <span>₹1999</span>
+        <h2 className="mt-3  flex justify-between w-[50%] text-[0.9rem]  ">
+          <span>₹3500</span> - <span>₹4999</span>
         </h2>
       </div>
+
+      <div className="flex  justify-left gap-5 ">
+        <div>
+          <Radio
+          className="w-4 h-4"
+            onInput={() => {
+              dispatch(updatePriceRange({ min: 5000, max: 6499 }));
+              // handleSearch()
+            }}
+            name="price-range"
+            size={"sm"}
+          />
+        </div>
+        <h2 className="mt-3  flex justify-between w-[50%] text-[0.9rem]  ">
+          <span>₹5000</span> - <span>₹6499</span>
+        </h2>
+      </div>
+
+      <div className="flex  justify-left gap-5 ">
+        <div>
+          <Radio
+          className="w-4 h-4"
+            onInput={() => {
+              dispatch(updatePriceRange({ min: 6500, max: 7499 }));
+              // handleSearch()
+            }}
+            name="price-range"
+            size={"sm"}
+          />
+        </div>
+        <h2 className="mt-3  flex justify-between w-[50%] text-[0.9rem]  ">
+          <span>₹6500</span> - <span>₹7499</span>
+        </h2>
+      </div>
+
+      <div className="flex  justify-left gap-5 ">
+        <div>
+          <Radio
+          className="w-4 h-4"
+            onInput={() => {
+              dispatch(updatePriceRange({ min: 7500, max: 8499 }));
+              // handleSearch()
+            }}
+            name="price-range"
+            size={"sm"}
+          />
+        </div>
+        <h2 className="mt-3  flex justify-between w-[50%] text-[0.9rem]  ">
+          <span>₹7500</span> - <span>₹8499</span>
+        </h2>
+      </div>
+
+      <div className="flex  justify-left gap-5 ">
+        <div>
+          <Radio
+          className="w-4 h-4"
+            onInput={() => {
+              dispatch(updatePriceRange({ min: 8500, max: 9499 }));
+              // handleSearch()
+            }}
+            name="price-range"
+            size={"sm"}
+          />
+        </div>
+        <h2 className="mt-3  flex justify-between w-[50%] text-[0.9rem]  ">
+          <span>₹8500</span> - <span>₹9499</span>
+        </h2>
+      </div>
+
     </div>
     </>
   );

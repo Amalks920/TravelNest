@@ -1,10 +1,11 @@
 const express = require('express');
-const { createHotel, getAllHotels, getAHotel, editHotel, getAllHotelDetails,getAHotelForUser,deleteHotelImage, changeHotelStatus, getAllHotelsForUser, getAllHotelsForAdmin, editHotelDetail, editHotelName, editHotelLocation, editHotelDescription, addHotelImages, getRatingOfAHotel, getAllHotelsLength } = require('../controllers/hotelController');
+const { createHotel, getAllHotels, getAHotel, editHotel, getAllHotelDetails,getAHotelForUser,deleteHotelImage, changeHotelStatus, getAllHotelsForUser, getAllHotelsForAdmin, editHotelDetail, editHotelName, editHotelLocation, editHotelDescription, addHotelImages, getRatingOfAHotel, getAllHotelsLength, getAllHotelForAdminLength } = require('../controllers/hotelController');
 const router = express.Router();
 const uploader=require('../../config/multer');
 const verifyJwt = require('../utils/verifyJwt');
 const checkAvailability = require('../middlewares/checkAvailability');
 const verifyOwnerJwt = require('../middlewares/verifyOwnerJwt');
+const verifyAdminJwt = require('../middlewares/verifyAdminJwt');
 
 /**
  * @openapi
@@ -31,7 +32,12 @@ router.get('/get-all-hotels/:userId',verifyOwnerJwt,getAllHotels)
 
 router.get('/get-all-hotels-length/:user_id',getAllHotelsLength)
 
-router.get('/get-all-hotels-admin',getAllHotelsForAdmin)
+
+//admin
+router.get('/get-all-hotels-admin/:pageNumber',verifyAdminJwt,getAllHotelsForAdmin)
+router.get('/get-all-hotels-admin-length',getAllHotelForAdminLength)
+
+
 /**
  * @openapi
  * paths:

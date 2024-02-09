@@ -2,15 +2,15 @@ const walletModel = require("../models/walletModel");
 const { Wallet, WalletHistory } = require("../models/walletModel");
 const mongoose=require('mongoose')
 
-const createWalletHelper = (user_id) => {
-  return new Promise(async (resolve, reject) => {
+const createWalletHelper = async (user_id) => {
+ 
     try {
-      const response = await walletModel.create({ user_id: user_id });
-      resolve(response);
+      const response = await Wallet.create({ user_id: user_id });
+      return response
     } catch (error) {
-      reject(error);
+      throw new Error('something went wrong')
     }
-  });
+
 };
 
 const addToWalletHelper = (user_id, amount) => {

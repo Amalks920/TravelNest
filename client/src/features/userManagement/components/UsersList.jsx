@@ -44,7 +44,6 @@ const TABS = [
 
 const TABLE_HEAD = [
   "SL NO",
-  "ID",
   "USERNAME",
   "EMIAL",
   "PHONE",
@@ -171,13 +170,13 @@ export function UsersList() {
               {/* <Button variant="outlined" size="sm">
               view all
             </Button> */}
-              <Button className="flex items-center gap-3" size="sm">
+              {/* <Button className="flex items-center gap-3" size="sm">
                 <HomeModernIcon strokeWidth={2} className="h-4 w-4" /> Add Hotel
-              </Button>
+              </Button> */}
             </div>
           </div>
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <Tabs value="all" className="w-full md:w-max z-0">
+            {/* <Tabs value="all" className="w-full md:w-max z-0">
               <TabsHeader>
                 {TABS.map(({ label, value }) => (
                   <Tab
@@ -189,13 +188,13 @@ export function UsersList() {
                   </Tab>
                 ))}
               </TabsHeader>
-            </Tabs>
-            <div className="w-full md:w-72">
+            </Tabs> */}
+            {/* <div className="w-full md:w-72">
               <Input
                 label="Search"
                 icon={<MagnifyingGlassIcon className="h-5 w-5" />}
               />
-            </div>
+            </div> */}
           </div>
         </CardHeader>
 
@@ -237,7 +236,7 @@ export function UsersList() {
                     <tr key={_id}>
                       <td className={classes + " " + "border-r-2"}>
                         <div className="flex items-center  gap-3">
-                          <Avatar src={""} alt={""} size="sm" />
+                       
                           <div className="flex flex-col">
                             <Typography
                               variant="small"
@@ -249,7 +248,8 @@ export function UsersList() {
                           </div>
                         </div>
                       </td>
-                      <td className={classes + " " + "border-r-2"}>
+
+                      {/* <td className={classes + " " + "border-r-2"}>
                         <div className="flex flex-col">
                           <Typography
                             variant="small"
@@ -259,7 +259,7 @@ export function UsersList() {
                             {_id}
                           </Typography>
                         </div>
-                      </td>
+                      </td> */}
 
                       <td className={classes + " " + "border-r-2"}>
                         <div className="flex flex-col">
@@ -319,7 +319,7 @@ export function UsersList() {
                         >
                           <Link
                             to={`/admin/user-details/${_id}`}
-                            className="text-[0.56rem] text-center"
+                            className="text-[0.9rem] text-center"
                           >
                             {role}
                           </Link>

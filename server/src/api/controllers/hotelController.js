@@ -1,4 +1,4 @@
-const { getHotelsHelper, getAHotelHelper, editHotelHelper, getAllHotelDetailsHelper, deleteHotelImageHelper, changeHotelStatusHelper, getAllHotelsForUserHelper, getAHotelForUserHelper, getAllHotelsForAdminHelper, editHotelNameHelper, editHotelLocationHelper, editHotelDescriptionHelper, addHotelImagesHelper, getRatingOfAHotelHelper, getAllHotelsLengthHelper } = require("../helpers/hotelHelper")
+const { getHotelsHelper, getAHotelHelper, editHotelHelper, getAllHotelDetailsHelper, deleteHotelImageHelper, changeHotelStatusHelper, getAllHotelsForUserHelper, getAHotelForUserHelper, getAllHotelsForAdminHelper, editHotelNameHelper, editHotelLocationHelper, editHotelDescriptionHelper, addHotelImagesHelper, getRatingOfAHotelHelper, getAllHotelsLengthHelper, getAllHotelForAdminLengthHelper } = require("../helpers/hotelHelper")
 const { saveHotelDocumentHelper } = require("../helpers/hotelHelper")
 const { uploadImages } = require("../helpers/hotelHelper")
 const { findReviewsOfHotelByHotelIdHelper } = require("../helpers/reviewHelper")
@@ -59,12 +59,24 @@ const getAllHotelsLength=async (req,res)=>{
 }
 
 const getAllHotelsForAdmin= async (req,res,next)=>{
+
+  const pageNumber=req.params.pageNumber
 try {
-  const response=await getAllHotelsForAdminHelper()
+  const response=await getAllHotelsForAdminHelper(pageNumber)
   res.status(200).json({response})
 } catch (error) {
+  console.log(error)
   res.status(404).json({error})
 }
+}
+
+const getAllHotelForAdminLength= async (req,res)=>{
+  try {
+    const response=await getAllHotelForAdminLengthHelper()
+    res.status(200).json({response})
+  } catch (error) {
+    res.status(500).json({error})
+  }
 }
 
 const getAHotel=async (req,res,next)=>{
@@ -253,6 +265,6 @@ module.exports={
     changeHotelStatus,getAllHotelsForAdmin,
     getAllHotelsForUser,getAHotelForUser,editHotelName,
     editHotelLocation,editHotelDescription,addHotelImages,
-    getRatingOfAHotel,getAllHotelsLength
+    getRatingOfAHotel,getAllHotelsLength,getAllHotelForAdminLength
 }
 

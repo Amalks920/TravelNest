@@ -7,6 +7,7 @@ import {
   CardHeader,
   Chip,
   Input,
+  Spinner,
   Tab,
   Tabs,
   TabsHeader,
@@ -18,8 +19,13 @@ import {
   HomeModernIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/solid";
+import { format } from "date-fns";
 import { Link } from "react-router-dom";
-import { useGetHotelsForAdminQuery } from "../../hotelManagement/services/HotelListAdmin";
+import {
+  useGetHotelsForAdminLengthQuery,
+  useGetHotelsForAdminQuery,
+} from "../../hotelManagement/services/HotelListAdmin";
+import { useState } from "react";
 
 const TABS = [
   {
@@ -49,14 +55,12 @@ const TABLE_ROWS = [
 ];
 
 const TABLE_HEAD = [
-  "Id",
+  "SL NO",
   "Hotel Name",
   "Location",
-  "Description",
   "Registered At",
   "Status",
   "",
-
 ];
 
 const HotelList = () => {
@@ -68,33 +72,38 @@ const HotelList = () => {
   //   isSuccess,
   // } = useGetHotelsQuery();
 
-    const {
-      data:hotels,
-      isError,
-      isFetching,
-      isLoading,
-      isSuccess,
-    }=useGetHotelsForAdminQuery()
-  
+  const [pageNumber, setPageNumber] = useState(1);
 
-  if(isLoading) return <h1>Loading...</h1>
+  const {
+    data: hotels,
+    isError,
+    isFetching,
+    isLoading,
+    isSuccess,
+  } = useGetHotelsForAdminQuery({ pageNumber });
 
-  if(!hotels) return <h1>Err</h1>
+  const { data: hotelsLength } = useGetHotelsForAdminLengthQuery();
+
+  if (isLoading) return <Spinner />;
+
+  if (!hotels) return <h1>Err</h1>;
   return (
     <Card className="h-full w-full p-16">
       <CardHeader floated={false} shadow={false} className="rounded-none">
         <div className="mb-8 flex items-center justify-between gap-8">
           <div>
-            <Typography variant="h5" color="blue-gray"></Typography>
+            <Typography variant="h5" color="blue-gray">
+              Hotels
+            </Typography>
           </div>
-          <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
+          {/* <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
             <Button className="flex items-center gap-3" size="sm">
               <HomeModernIcon strokeWidth={2} className="h-4 w-4" /> Add Hotel
             </Button>
-          </div>
+          </div> */}
         </div>
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-          <Tabs value="all" className="w-full md:w-max z-0">
+          {/* <Tabs value="all" className="w-full md:w-max z-0">
             <TabsHeader>
               {TABS.map(({ label, value }) => (
                 <Tab
@@ -106,13 +115,13 @@ const HotelList = () => {
                 </Tab>
               ))}
             </TabsHeader>
-          </Tabs>
-          <div className="w-full md:w-72">
+          </Tabs> */}
+          {/* <div className="w-full md:w-72">
             <Input
               label="Search"
               icon={<MagnifyingGlassIcon className="h-5 w-5" />}
             />
-          </div>
+          </div> */}
         </div>
       </CardHeader>
 
@@ -167,13 +176,12 @@ const HotelList = () => {
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {_id}
+                          {index + 1}
                         </Typography>
                       </div>
                     </td>
                     <td className={classes + " " + "border-r-2"}>
                       <div className="flex items-center  gap-3">
-                        <Avatar src={""} alt={""} size="sm" />
                         <div className="flex flex-col">
                           <Typography
                             variant="small"
@@ -191,7 +199,7 @@ const HotelList = () => {
                         <Typography
                           variant="small"
                           color="blue-gray"
-                          className="font-normal"
+                          className="font-normal w-[50px]"
                         >
                           {location}
                         </Typography>
@@ -203,21 +211,11 @@ const HotelList = () => {
                         <Typography
                           variant="small"
                           color="blue-gray"
-                          className="font-normal max-w-[500px] break-words"
-                        >
-                          {description.slice(1,200)}
-                        </Typography>
-                      </div>
-                    </td>
-
-                    <td className={classes + " " + "border-r-2"}>
-                      <div className="flex flex-col">
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
                           className="font-normal"
                         >
-                          {created_at}
+                          {format(created_at, "yyyy-MM-dd HH:mm:ss", {
+                            timeZone: "Asia/Kolkata",
+                          })}
                         </Typography>
                       </div>
                     </td>
@@ -268,13 +266,26 @@ const HotelList = () => {
       </CardBody>
       <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
         <Typography variant="small" color="blue-gray" className="font-normal">
-          Page 1 of 10
+          Page {pageNumber} of {Math.ceil(hotelsLength?.response/4)}
         </Typography>
         <div className="flex gap-2">
-          <Button variant="outlined" size="sm">
+          <Button
+            onClick={() => {
+              if (pageNumber > 1) setPageNumber(pageNumber - 1);
+            }}
+            variant="outlined"
+            size="sm"
+          >
             Previous
           </Button>
-          <Button variant="outlined" size="sm">
+          <Button
+            onClick={() => {
+              if (pageNumber < Math.ceil(hotelsLength?.response / 4))
+                setPageNumber(pageNumber + 1);
+            }}
+            variant="outlined"
+            size="sm"
+          >
             Next
           </Button>
         </div>

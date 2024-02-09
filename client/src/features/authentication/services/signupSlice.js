@@ -19,15 +19,6 @@ export const createUser=createAsyncThunk('signup/createUser',async  (data)=>{
 })
 
 
-// export const extendedApiSlice=apiSlice.injectEndpoints({
-//     endpoints:builder=>{
-//         builder.query({
-//             query:()=>'/signup'
-//         })
-//     }
-// })
-
-
 
 
 const signupSlice=createSlice({
@@ -49,6 +40,7 @@ const signupSlice=createSlice({
         state.status='succeeded'
     })
     .addCase(createUser.rejected,(state,action)=>{
+        console.log(action)
         state.status='failed',
         state.error=action.error.message
     })

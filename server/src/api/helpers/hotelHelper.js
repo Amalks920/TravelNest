@@ -162,15 +162,24 @@ const getAllHotelDetailsHelper = (hotel_id) => {
   });
 };
 
-const getAllHotelsForAdminHelper=()=>{
-  return new Promise(async (resolve,reject)=>{
+const getAllHotelsForAdminHelper=async (pageNumber)=>{
+  // return new Promise(async (resolve,reject)=>{
     try {
-      const response = await hotelModel.find({})
-      resolve(response)
+      const response = await hotelModel.find({}).sort({ _id: -1 }).skip((pageNumber - 1) * 4).limit(4);
+      return response
     } catch (error) {
-        reject(error)
+       throw error
     }
-  })
+  // })
+}
+
+const getAllHotelForAdminLengthHelper= async ()=>{
+  try {
+    const response = await hotelModel.find({})
+    return response.length
+  } catch (error) {
+    throw error
+  }
 }
 
 const deleteHotelImageHelper = (hotel_id, img_public_id) => {
@@ -394,5 +403,6 @@ module.exports = {
   addHotelImagesHelper,getAHotelHelperForOrder,
   findHotelByLocationHelper,
   getRatingOfAHotelHelper,
-  getAllHotelsLengthHelper
+  getAllHotelsLengthHelper,
+  getAllHotelForAdminLengthHelper
 };

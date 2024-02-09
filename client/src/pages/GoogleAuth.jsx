@@ -13,8 +13,8 @@ const navigate=useNavigate()
 const [googleSignin,{isError,isLoading,isSuccess,isUninitialized}]=useGoogleSignInMutation()
 
 return (
-   
-<GoogleOAuthProvider clientId={'645023873338-gn2npci9erdpl5hvs9fsuuh6pa6v1grm.apps.googleusercontent.com'}>
+
+<GoogleOAuthProvider  clientId={'645023873338-gn2npci9erdpl5hvs9fsuuh6pa6v1grm.apps.googleusercontent.com'}>
 <GoogleLogin
 onSuccess={async credentialResponse => {
 
@@ -40,6 +40,7 @@ console.log('Login Failed');
 }}
 />
 </GoogleOAuthProvider>
+ 
 );
 };
 

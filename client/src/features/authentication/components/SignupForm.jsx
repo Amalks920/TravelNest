@@ -13,6 +13,7 @@ import {
   selectData,
   createUser,
 } from "../services/signupSlice";
+import { Spinner } from "@material-tailwind/react";
 
 const SignupForm = ({ role }) => {
   const error = useSelector(getSignupError);
@@ -27,7 +28,7 @@ const SignupForm = ({ role }) => {
   };
 
   if (status === "pending") {
-    return <h1>Loading.....</h1>;
+    return <Spinner/>
   } else if (status === "succeeded") {
     navigate(
       role === "user"
@@ -88,17 +89,19 @@ const SignupForm = ({ role }) => {
       }) => (
         <form
           onSubmit={handleSubmit}
-          className="grid grid-rows-7  gap-8 shadow-2xl p-10 "
+          className="grid grid-rows-7   gap-8 shadow-2xl p-10 w-[27%] rounded-md"
         >
-          <h1 className="text-2xl font-bold text-center ">{role}</h1>
-          <p className="text-red-600 text-center text-[0.8rem]">
+          <h2 className="grid-row-1 text-[2rem] font-bold text-center 
+         bg-black 
+         bg-clip-text
+          "> TravelNest</h2>
+
+        {error &&  <p className="text-red-600 text-center text-[0.8rem]">
             {error}
-          </p>
-          <div>
-            <Auth text={"SIGNIN WITH GOOGLE"} />
-          </div>
-          <div className="w-80">
+          </p>}
+          <div >
             <FormInput
+            className={'rounded-none'}
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.username}
@@ -112,6 +115,7 @@ const SignupForm = ({ role }) => {
 
           <div>
             <FormInput
+            className={'rounded-none'}
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.email}
@@ -125,6 +129,7 @@ const SignupForm = ({ role }) => {
 
           <div>
             <FormInput
+            className={'rounded-none'}
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.phone}
@@ -138,6 +143,7 @@ const SignupForm = ({ role }) => {
 
           <div>
             <FormInput
+            className={'rounded-none '}
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.password}
@@ -151,6 +157,7 @@ const SignupForm = ({ role }) => {
 
           <div>
             <FormInput
+            className={'rounded-none border-blue-400'}
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.repassword}
@@ -167,12 +174,13 @@ const SignupForm = ({ role }) => {
           </div>
 
           <Link to={"/login"}>
-            <p className="font-medium text-sm text-blue-900">
+            <p className="font-medium text-sm text-black">
               Already Have an Account?
             </p>
           </Link>
           <div>
             <ButtonDefault
+            className=' h-[50px] rounded-md w-[100%] bg-black'
               type={"submit"}
               onSubmit={handleSubmit}
               value={"submit"}

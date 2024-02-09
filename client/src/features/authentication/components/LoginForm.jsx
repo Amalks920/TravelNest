@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { Spinner } from "@material-tailwind/react";
 import GoogleAuth from "../../../pages/GoogleAuth";
+import Toast from "../../../layouts/Toast";
 
 const LoginForm = ({ role }) => {
   const token = useSelector(selectToken);
@@ -47,7 +48,7 @@ const LoginForm = ({ role }) => {
     } catch (error) {
       console.log("error");
       console.log(error);
-      setErr(error?.data?.error || "network error");
+      setErr(error?.data?.message || "login failed");
     }
   };
 
@@ -81,22 +82,25 @@ const LoginForm = ({ role }) => {
       }) => (
         <form
           onSubmit={handleSubmit}
-          className="grid grid-rows-8 gap-8 shadow-2xl  p-10 border-t-2 border-t-gray-100 rounded-3xl"
+          className="grid grid-rows-8 gap-8 shadow-2xl  p-10 border-t-2 border-t-gray-100 rounded-3xl h-[52%] pb-[9%]"
         >
+
+
+          <div className="flex justify-center ">
+            {/* <Auth  text={"SIGNIN WITH GOOGLE"} /> */}
+            <GoogleAuth role={role}/>
+          </div>
+
           <div className="row-span-1">
             {/* <h1 className="text-2xl">TravelNest</h1> */}
-            <p className="text-center">{role}</p>
-            <p className="text-red-700  text-sm text-center text-[0.8rem]  w-full">
-              {err}
-            </p>
+            {/* <h2 className="text-center text-[2rem]">{'TravelNest'}</h2> */}
+{ err &&           <h2 className="text-red-700 capitalize text-sm text-center text-[0.8rem]  w-full">
+              <Toast message={err}/>
+            </h2>}
             {console.log(errors)}
           </div>
 
-          <div className="border-2 flex items-center justify-center">
-            {/* <Auth text={"SIGNIN WITH GOOGLE"} /> */}
-            <GoogleAuth role={role}/>
-          </div>
-          <div>
+          <div className="w-72">
             <FormInput
               label={!errors.email ? "Email" : errors.email}
               name={"email"}
@@ -122,11 +126,27 @@ const LoginForm = ({ role }) => {
             />
           </div>
 
+          <div className="flex justify-between">
           <Link to={role === "user" ? "/signup" : "/owner/signup"}>
-            <p className="  font-light -mt-5 text-blue-500 text-[0.8rem]">
-              Don't Have an Account?
+            <p className="  font-light -mt-5 text-black text-[0.8rem]">
+              Signup?
             </p>
           </Link>
+          <Link
+            to={
+              role === "user"
+                ? "/verify-email"
+                : role === "owner"
+                ? "/owner/verify-email"
+                : "/admin/verify-email"
+            }
+            className="-mt-5"
+          >
+            <p className="font-medium text-black text-[0.8rem]">
+              Forgot Password?
+            </p>
+          </Link>
+          </div>
           <div className=" -mt-5">
             <ButtonDefault
               loading={isLoading}
@@ -136,20 +156,7 @@ const LoginForm = ({ role }) => {
               disabled={isSubmitting}
             />
           </div>
-          <Link
-            to={
-              role === "user"
-                ? "/verify-email"
-                : role === "owner"
-                ? "/owner/verify-email"
-                : "/admin/verify-email"
-            }
-            className="relative bottom-6 left-20"
-          >
-            <p className="font-medium text-blue-500 text-[0.8rem]">
-              Forgot Password?
-            </p>
-          </Link>
+
         </form>
       )}
     </Formik>

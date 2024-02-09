@@ -20,10 +20,8 @@ const saltRounds = 10;
  *          default: amalks
  *        email:
  *          type: string
- *          default: amalks@example.com
  *        password:
  *          type: string
- *          default: stringPassword123
  *    CreateUserResponse:
  *      type: object
  *      properties:

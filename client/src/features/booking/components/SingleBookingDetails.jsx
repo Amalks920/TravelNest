@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { selectUserId } from "../../authentication/services/loginSlice";
 import ReviewModal from "./ReviewModal";
 import { PencilIcon } from "@heroicons/react/24/solid";
+import { format } from "date-fns";
 
 const SingleBookingDetails = () => {
   const { booking_id } = useParams();
@@ -106,6 +107,7 @@ const SingleBookingDetails = () => {
             index
           ) => {
             return (
+             
               <div className="grid grid-rows-[100px,auto,auto,auto] gird-cols-12  mt-12 gap-2 -ms-3 md:0 sm:ps-6 overflow-y-hidden mb-[200px]">
                 <div className="row-span-1 col-span-12 sm:col-span-4 lg:col-span-12 md:col-span-8  flex justify-between sm:p-7  p-6">
                   <div className="">
@@ -115,6 +117,7 @@ const SingleBookingDetails = () => {
                     <h2 className="mt-2 md:text-[0.8rem] text-[0.6rem]">
                       {_id}
                     </h2>
+                   
                   </div>
                   <div>
                     <h2 className="sm:text-[1rem] text-[0.7rem]">
@@ -133,8 +136,8 @@ const SingleBookingDetails = () => {
                       {hotel_details.location}
                     </h2>
 
-                    <div className="mt-10 col-span-12">
-                      <h2 className="  mb-1 sm:text-[1.2rem] text-[0.9rem] ">
+                    <div className="mt-10 col-span-12 mb-[30px]">
+                      <h2 className="  mb-1 sm:text-[1.2rem] text-[0.9rem] leading-10">
                         Hotel Description
                       </h2>
                       <h2 className="sm:text-[0.9rem] text-[0.7rem]  leading-relaxed mt-4 sm:w-full w-[70vw] line-clamp-3   ">
@@ -159,17 +162,25 @@ const SingleBookingDetails = () => {
 
                 <div className="row-span-1 sm:col-span-3 col-span-full p-7">
                   <h2 className="mb-3">CheckIn</h2>
-                  <h2 className=" text-[0.9rem]">{checkIn}</h2>
+                  <h2 className=" text-[0.9rem]">
+                  {format(checkIn, "yyyy-MM-dd HH:mm:ss", {
+                    timeZone: "Asia/Kolkata",
+                  })}
+                  </h2>
                 </div>
 
                 <div className="row-span-1 sm:col-span-3 col-span-full p-7  ">
                   <h2 className="mb-3">CheckOut</h2>
-                  <h2 className=" text-[0.9rem]">{checkOut}</h2>
+                  <h2 className=" text-[0.9rem]">
+                  {format(checkOut, "yyyy-MM-dd HH:mm:ss", {
+                    timeZone: "Asia/Kolkata",
+                  })}
+                  </h2>
                 </div>
 
-                <div className="row-span-1 sm:col-span-3 col-span-full p-7 flex  border-r-2">
+                {/* <div className="row-span-1 sm:col-span-3 col-span-full p-7 flex  border-r-2">
                   <h2 className="mb-3 text-[0.9rem]">1 Day</h2>
-                </div>
+                </div> */}
 
                 <div className="row-span-1 sm:col-span-3 col-span-full p-7 border-l-2 border-b-2">
                   <h2 className="mb-3">user email</h2>
@@ -182,13 +193,18 @@ const SingleBookingDetails = () => {
                 </div>
 
                 <div className="row-span-1 sm:col-span-3 col-span-full p-7  border-b-2 ">
-                  <h2 className="mb-3">user phone</h2>
-                  <h2 className=" text-[0.9rem]">{userPhone}</h2>
+                  <h2 className="mb-3">Room Type</h2>
+                  <h2 className=" text-[0.9rem]">{roomDetails[0]?.roomType}</h2>
                 </div>
-                <div className="row-span-1 sm:col-span-3 col-span-full p-7  border-b-2 border-r-2">
-                  <h2 className="mb-3">user phone</h2>
-                  <h2 className=" text-[0.9rem]">{userPhone}</h2>
+                <div className="row-span-1 sm:col-span-3 col-span-full p-7  border-b-2 ">
+                  <h2 className="mb-3">No Of Room</h2>
+                  <h2 className=" text-[0.9rem]">{roomDetails[0]?.noOfRooms}</h2>
                 </div>
+                <div className="row-span-1 sm:col-span-3 col-span-full p-7  border-b-2 ">
+                  <h2 className="mb-3">Rate Per Room</h2>
+                  <h2 className=" text-[0.9rem]">{roomDetails[0]?.rate}</h2>
+                </div>
+          
 
                 <div className="row-span-1 col-span-12 mt-[100px]">
                   <div className="row-span-1 col-span-12">

@@ -461,7 +461,7 @@ console.log(priceRange,roomType)
       },
     },
     {
-      $match:(roomType=='null')?matchQuery2:matchQuery
+      $match:matchQuery
     },
   ]
 

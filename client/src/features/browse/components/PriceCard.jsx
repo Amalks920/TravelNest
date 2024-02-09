@@ -113,7 +113,7 @@ console.log(price)
           <div className="col-span-2 p-2">
             <h2 className="p-3 font-bold text-[1.6rem]">₹ {rate}</h2>
           </div>
-          <div className="col-span-2">
+          <div className="col-span-2 mt-5">
             {isError && (
               <h2 className="text-red-600 ps-5 text-[1rem]">please select</h2>
             )}
@@ -132,7 +132,7 @@ console.log(price)
               readOnly   
             />
 
-            <div className="mt-4">
+            <div className="mt-9">
               <Input
                 onClick={()=>{
                     setOpen(!open)
@@ -152,7 +152,9 @@ console.log(price)
             </div> */}
             
             <div className="mt-4 px-1">
+              <label htmlFor="noOfRooms " className="capitalize font-bold text-[0.8rem]">select no of rooms</label>
              <select
+             name='noOfRooms'
               value={noOfRooms} 
               onChange={e => {
                 setNoOfRooms(e.target.value)
@@ -168,9 +170,10 @@ console.log(price)
               <option value="5" disabled={totalAvailableRooms<5}>5</option>
              </select>
 
-            </div>
+            </div >
 
             <Button
+             
               onClick={async () => {
                 if (token && role === "user") {
                 
@@ -198,7 +201,7 @@ console.log(price)
 
                 // if (isError) return console.log(error);
               }}
-              className="w-full mt-4"
+              className="w-full mt-8"
             >
               Pay Using Card
             </Button>
@@ -230,8 +233,8 @@ console.log(price)
             </h2>
             <div className="mt-6 flex flex-col justify-between mx-3">
               <div className="w-full mt-6 flex  justify-between mx-3">
-                <p className="font-bold">Price</p>
-                <p className="me-3 font-bold">₹ {price}</p>
+                <h2 className="font-bold">Price</h2>
+                <h2 className="me-3 font-bold">₹ {price}</h2>
               </div>
 
               {/* {roomDetails.map(({ noOfRooms, price, roomType }, index) => {
