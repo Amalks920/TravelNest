@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { setCredentials } from '../features/authentication/services/loginSlice';
 import { useNavigate } from 'react-router';
 
-const GoogleAuth = ({role}) => {
+const GoogleAuth = ({role,setErr}) => {
 
 const dispatch=useDispatch()
 const navigate=useNavigate()
@@ -20,6 +20,10 @@ onSuccess={async credentialResponse => {
 
     const response=await googleSignin({credentialResponse,role})
     console.log(response)
+
+    if(response.error){
+        setErr(response.error.data.error)
+    } 
     console.log('response google auth');
     dispatch(setCredentials({ ...response.data.foundUser,accessToken:response.data.accessToken }));
     

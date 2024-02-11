@@ -9,18 +9,18 @@ const Search = () => {
     
 
   return (
-    <div className="hidden  md:grid grid-flow-row grid-cols-[40%,30%,30%] min-w-[300px]  border-2 rounded-full my-2">
+    <div className="hidden  md:grid grid-flow-row grid-cols-[40%,30%,30%] min-w-[300px]  border-2 rounded-full -mt-2">
       
-     <div className=" col-span-1 text-center flex justify-center items-center border-r-2 text-[0.8rem]">Location</div>
-     <div className=" col-span-1 text-center flex justify-center items-center border-r-2 text-[0.8rem]">Room type</div>
-     <div className="col-span-1 text-center py-1 ms-8">
+     <div className=" col-span-1 text-center flex justify-center items-center border-r-2 text-[0.8rem] font-bold">Location</div>
+     <div className=" col-span-1 text-center flex justify-center items-center border-r-2 text-[0.8rem] font-bold">Room type</div>
+     <div className="col-span-1 text-center  ms-8">
         <Button
         onClick={()=>{
             dispatch(updateIsSearchBarOpen(!isSearchBarOpen))
         }}
     
         size="sm"
-        className="rounded-full w-[40px] h-[40px] text-center bg-gray-700 "
+        className="rounded-full w-[40px] h-[40px] m-1 text-center bg-gray-700 "
       >
                 <svg
           xmlns="http://www.w3.org/2000/svg"

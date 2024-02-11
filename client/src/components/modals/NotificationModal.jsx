@@ -72,8 +72,10 @@ export function NotificationDialog({ isModalOpen, setIsModalOpen,isBlocked,user_
 
             Cancel
           </Button>
+          {console.log(isBlocked)}
+          {console.log(args)}
           <Button variant="gradient" color="red" onClick={()=>{sendRequestHandler(args)}}>
-           {buttonText}
+           {!args.isBlocked?'unblock':'block'}
           </Button>
         </DialogFooter>
       </Dialog>

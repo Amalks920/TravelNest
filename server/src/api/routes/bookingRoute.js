@@ -56,8 +56,8 @@ router.post('/create-booking',(req,res)=>{
  *           description: Bad request
  */
 
-router.get('/get-all-bookings-owner/:hotel_id',verifyJwt,getAllBookings);
-router.get('/get-all-bookings-length-owner/:hotel_id',verifyJwt,getAllBookingsLength);
+router.get('/get-all-bookings-owner/:hotel_id',verifyOwnerJwt,getAllBookings);
+router.get('/get-all-bookings-length-owner/:hotel_id',verifyOwnerJwt,getAllBookingsLength);
 
 
 /**
@@ -130,7 +130,7 @@ router.post('/cancel-booking/:booking_id',verifyJwt,cancelBookingController)
 
 //owner
 router.get('/get-a-booking-for-owner/:booking_id',verifyOwnerJwt,getABookingForOwner)
-router.post('/change-status/:booking_id',verifyJwt,changeBookingStatus);
+router.post('/change-status/:booking_id',verifyOwnerJwt,changeBookingStatus);
 router.get('/get-all-hotel-bookings',verifyOwnerJwt,getAllHotelBookings)
 router.get('/get-all-hotel-bookings-length',verifyOwnerJwt,getAllHotelBookingsLength)
 

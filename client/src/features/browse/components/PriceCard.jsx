@@ -114,9 +114,9 @@ console.log(price)
             <h2 className="p-3 font-bold text-[1.6rem]">₹ {rate}</h2>
           </div>
           <div className="col-span-2 mt-5">
-            {isError && (
+            {/* {isError && (
               <h2 className="text-red-600 ps-5 text-[1rem]">please select</h2>
-            )}
+            )} */}
 
             <Input
             onClick={()=>{

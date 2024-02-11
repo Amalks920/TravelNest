@@ -24,6 +24,7 @@ import {
   logout,
   selectRole,
   selectToken,
+  selectUserName,
 } from "../features/authentication/services/loginSlice";
 import Search from "./Search";
 import { selectIsSearchBarOpen } from "../services/searchSlice";
@@ -36,7 +37,7 @@ export function NavbarUser() {
   const token = useSelector(selectToken);
   const isSearchBarOpen = useSelector(selectIsSearchBarOpen);
   const [isOptionsHidden,setIsOptionsHidden]=useState(true)
-  console.log(role)
+  const userName=useSelector(selectUserName)
   React.useEffect(() => {
     window.addEventListener(
       "resize",
@@ -49,13 +50,13 @@ export function NavbarUser() {
   }
 
   return (
-    <Navbar className="fixed max-w-[100vw] rounded-none  px-4 py-2  z-10">
+    <Navbar className="fixed max-w-[100vw] h-[70px] rounded-none z-10">
       <div className="flex items-center justify-between text-blue-gray-900">
         <Typography
           as="a"
           href="#"
           variant="h6"
-          className="mr-4 cursor-pointer py-1.5 lg:ml-2 text-2xl"
+          className="mr-4 cursor-pointer  lg:ml-2 text-2xl"
         >
           <h1 className="font-extrabold text-[1.5rem]"> <Link to={'/home'} >TravelNest</Link></h1>
         </Typography>
@@ -65,9 +66,11 @@ export function NavbarUser() {
             <Search />
           </div>
         )}
-        <div className="hidden gap-2 lg:flex">
- 
 
+        
+        <div className="hidden gap-2 lg:flex">
+
+            {userName && <h2 className="absolute right-[70px] font-bold">Hi, {userName}</h2>}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -103,6 +106,7 @@ export function NavbarUser() {
           )}
         </IconButton>
       </div>
+
       <Collapse open={openNav}>
         <NavList />
         <div className="flex w-full flex-nowrap items-center gap-2 lg:hidden">

@@ -42,7 +42,7 @@ const AuthPageContainer = ({home}) => {
             </header>
             
             
-            <nav class="lg:col-span-1 lg:row-span-2 -mt-2 border-2  hidden lg:block">
+            <nav class="lg:col-span-1 lg:row-span-2 -mt-7 border-2  hidden lg:block">
                 <Sidebar/>
             </nav>
             

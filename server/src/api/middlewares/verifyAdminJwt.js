@@ -19,7 +19,7 @@ const verifyAdminJwt = (req, res, next) => {
             try {
                 req.user = decoded.username; 
 
-                const response = await userModel.find({ role: 'admin', username:decoded.username },);
+                const response = await userModel.find({ role: 'admin', username:decoded.username,isBlocked:false },);
                 
                 if(response) next();
 

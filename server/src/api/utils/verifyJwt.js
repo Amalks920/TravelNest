@@ -17,7 +17,7 @@ const verifyJwt = (req, res, next) => {
       try {
         console.log(decoded.username);
         const response = await userModel.findOne({
-          $and: [{ username: decoded.username }, { isBlocked: false }],
+          $and: [{ username: decoded.username }, { isBlocked: false },{role:'user'}],
         });
         console.log(response);
         console.log("aba");

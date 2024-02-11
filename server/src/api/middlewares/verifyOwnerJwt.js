@@ -19,7 +19,7 @@ const verifyOwnerJwt = (req, res, next) => {
             try {
                 req.user = decoded.username; 
 
-                const response = await userModel.find({ role: 'owner', username:decoded.username },);
+                const response = await userModel.find({ role: 'owner', username:decoded.username,isBlocked:false },);
                 
                 if(response) next();
 

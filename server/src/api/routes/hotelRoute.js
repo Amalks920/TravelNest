@@ -93,7 +93,7 @@ router.get('/get-hotels-group-by-location',(req,res)=>{
 
 router.get(`/get-a-hotel/:hotel-id`,verifyJwt,getAHotel)
 
-router.get('/get-all-hotel-details/:hotel_id',verifyJwt,getAllHotelDetails)
+router.get('/get-all-hotel-details/:hotel_id',verifyAdminJwt,getAllHotelDetails)
 
 router.delete('/delete-image/:hotel_id/:img_public_id',verifyJwt,deleteHotelImage)
 

@@ -88,7 +88,7 @@ const LoginForm = ({ role }) => {
 
           <div className="flex justify-center ">
             {/* <Auth  text={"SIGNIN WITH GOOGLE"} /> */}
-            <GoogleAuth role={role}/>
+            <GoogleAuth role={role} setErr={setErr}/>
           </div>
 
           <div className="row-span-1">

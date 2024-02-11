@@ -1,6 +1,7 @@
 const express = require('express');
 const { getAllUsers, blockOrUnblockUser, checkIfUserBlockedOrNot, getUserDetailsForProfile, getUserWalletDetails, getAllUsersLength, editUserName, editEmail } = require('../controllers/userController');
 const verifyJwt = require('../utils/verifyJwt');
+const verifyAdminJwt = require('../middlewares/verifyAdminJwt');
 const router = express.Router();
 
 /**
@@ -98,7 +99,7 @@ router.delete(`/delete-user/{user-id}`,(req,res)=>{
  */
 
 
-router.put('/block-or-unblock-user/:user_id',verifyJwt,blockOrUnblockUser)
+router.put('/block-or-unblock-user/:user_id',verifyAdminJwt,blockOrUnblockUser)
 
 
 /**
@@ -149,10 +150,11 @@ router.put('/block-or-unblock-user/:user_id',verifyJwt,blockOrUnblockUser)
    *      400:
    *        description: Bad request
    */
-
-router.get('/get-all-users',verifyJwt,getAllUsers)
+//admin
+router.get('/get-all-users',verifyAdminJwt,getAllUsers)
 
 router.get('/get-all-users-length',getAllUsersLength)
+
 
 /**
  * @openapi
