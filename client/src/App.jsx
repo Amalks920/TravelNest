@@ -53,6 +53,7 @@ import io from 'socket.io-client'
 import WalletPaymentPage from './pages/user/WalletPaymentPage.jsx';
 import WalletHistoryPage from './pages/user/WalletHistoryPage.jsx';
 import AllBookingsPage from './pages/owner/AllBookingsPage.jsx';
+import SalesReportPage from './pages/admin/SalesReportPage.jsx';
 
 function App() {
   const token = useSelector(selectToken)
@@ -136,6 +137,7 @@ function App() {
             <Route path='/admin/home' element={<UsersList/>}></Route>
             <Route path='/admin/hotel-details/:_id' element={<DetailsPage/>} > </Route>
             <Route path='/admin/hotel-list' element={<AdminHotelListPage/>} > </Route>
+            <Route path='/admin/sales-report' element={<SalesReportPage/>} > </Route>
           </Route>
       </Route>
        
