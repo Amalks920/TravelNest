@@ -208,6 +208,7 @@ var userSchema = new mongoose.Schema({
         maxLength: 50,
         pattern: /^[a-zA-Z ]+$/,
         lowercase:true,
+        unique:true,
         message: 'Name must be at least 3 characters long and contain only letters and spaces',
     },
     

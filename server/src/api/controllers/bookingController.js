@@ -31,8 +31,14 @@ const getAllBookingsLength=async (req,res)=>{
 const getAllBookingsOfUser=async (req,res,next)=>{
     const user_id=req.params.user_id
     const pageNumber=req.params.pageNumber
+    console.log('user_id,pageNumber')
+    console.log(user_id,pageNumber)
+    console.log('user_id,pageNumber')
     try {
         const response=await getAllBookingsOfHelper(user_id,pageNumber)
+        console.log('all bookings response')
+        console.log(response)
+        console.log('all bookings response')
         res.status(200).json({response})
     } catch (error) {
         console.log(error)

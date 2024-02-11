@@ -71,6 +71,7 @@ const findUserHelper = (email) => {
 //userid
 //userphone
 const findUserByUserName =async (username) => {
+  console.log(username,'is username unique')
   return new Promise(async (resolve, reject) => {
     try {
       const user = await userModel.findOne(
@@ -100,6 +101,49 @@ const getUserDetailsForProfileHelper =async (user_id) => {
   })
 }
 
+const editUserNameHelper= async (user_id,userName) =>{
+  try {
+
+    const findIfUserNameAlredyExists=await userModel.findOne({username:userName})
+    if(!findIfUserNameAlredyExists){
+console.log(userName)
+    const response=await userModel.updateOne(
+      {_id:user_id},
+      {
+        $set:{
+          username:userName
+        }
+      }
+    )
+
+    console.log(response)
+    return response
+
+  }else{
+    throw 'username already exists'
+  }
+
+  } catch (error) {
+    throw error
+  }
+}
+
+const editEmailHelper= async (email,user_id) => {
+  try {
+    const response=await userModel.updateOne(
+      {_id:user_id},
+      {
+        $set:{
+          email:email
+        }
+      }
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
 
 module.exports = {
   fetchAllUsersHelper,
@@ -108,5 +152,7 @@ module.exports = {
   findUserHelper,
   findUserByUserName,
   getUserDetailsForProfileHelper,
-  getAllUsersLengthHelper
+  getAllUsersLengthHelper,
+  editUserNameHelper,
+  editEmailHelper
 };

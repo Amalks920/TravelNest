@@ -104,7 +104,7 @@ const SingleHotel = () => {
           className="row-span-1 md:row-span-2 sm:row-span-2 xl:row-span-2 col-span-12 xl:col-start-2 xl:col-end-8 border-2 shadow-md cursor-pointer"
         >
           <img
-            src={`${IMAGE_BASE_URL}/${images[1]} `}
+            src={`${IMAGE_BASE_URL}/${images[2]} `}
             className="w-full h-full rounded-md"
             alt=""
           />
@@ -130,7 +130,7 @@ const SingleHotel = () => {
         <div
           className={`hidden 2xl:block row-span-1 col-span-2 border-2 shadow-md rounded-md`}
           style={{
-            backgroundImage: `url(${IMAGE_BASE_URL}/${singleRoom?.images[3]} )`,
+            backgroundImage: `url(${IMAGE_BASE_URL}/${singleRoom?.images[0]} )`,
           }}
         ></div>
 

@@ -174,7 +174,8 @@ const verifyEmail = async (req, res, next) => {
       res.status(404).json({ message: "user not found" });
     }
   } catch (error) {
-    res.status(404).json({ error });
+    console.log(error)
+    res.status(500).json({ error });
   }
 };
 

@@ -46,6 +46,17 @@ const CheckInCheckOutModal = ({ room_id,checkIn,checkOut,rate,open,setOpen }) =>
   };
 
 
+  const getFutureDateString = (daysAhead) => {
+    const futureDate = new Date();
+    futureDate.setDate(futureDate.getDate() + daysAhead);
+    const year = futureDate.getFullYear();
+    const month = String(futureDate.getMonth() + 1).padStart(2, "0");
+    const day = String(futureDate.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+
+
   useEffect(()=>{
     dispatch(updateCheckIn(checkInSearch))
     dispatch(updateCheckOut(checkOutSearch))
@@ -126,7 +137,7 @@ const CheckInCheckOutModal = ({ room_id,checkIn,checkOut,rate,open,setOpen }) =>
                 dispatch(updateCheckIn(e.target.value));
               }}
               min={getYesterdayDateString()}
-              max={checkOutDate?checkOutDate:checkOut}
+              max={checkOutDate?checkOutDate:checkOut || getFutureDateString(10)}
               value={checkInDate?checkInDate:checkIn}
               label="date"
               type="date"
@@ -141,11 +152,13 @@ const CheckInCheckOutModal = ({ room_id,checkIn,checkOut,rate,open,setOpen }) =>
             >
               Check Out
             </Typography>
+
             <Input
               onInput={(e) => {
                 dispatch(updateCheckOut(e.target.value));
               }}
-              min={checkIn || getYesterdayDateString()}
+              min={checkInDate || getYesterdayDateString()}
+              max={getFutureDateString(10)}
               value={checkOutDate?checkOutDate:checkOut}
               label="date"
               type="date"

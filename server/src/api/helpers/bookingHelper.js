@@ -5,6 +5,7 @@ const mongoose=require('mongoose')
 
 const createBookingHelper=(data,totalPrice,checkInDate,checkOutDate,totalNoRooms,roomInfo)=>{
 
+    console.log('booking creat3d')
     const roomDetails=data[0]
     const userDetails=data[1]
     const hotelDetails=data[2]

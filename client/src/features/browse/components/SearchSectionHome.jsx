@@ -10,10 +10,11 @@ const SearchSectionHome = () => {
   const [checkIn, setCheckInDate] = useState(null);
   const [checkOut, setCheckOutDate] = useState(null);
   const [searchString, setSearchString] = useState(null);
+  const [roomType,setRoomType]=useState(null)
  // const [roomType,setRoomType]=useState(null);
 
   //selectors
-  const roomType=useSelector(selectRoomType)
+  //const roomType=useSelector(selectRoomType)
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -45,6 +46,16 @@ const handleSubmit=async () => {
     return `${year}-${month}-${day}`;
   };
 
+  const getFutureDateString = (daysAhead) => {
+    const futureDate = new Date();
+    futureDate.setDate(futureDate.getDate() + daysAhead);
+    const year = futureDate.getFullYear();
+    const month = String(futureDate.getMonth() + 1).padStart(2, "0");
+    const day = String(futureDate.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+
   return (
     <>
       <h2 className="text-white capitalize font-bold sm:text-[2.2rem]  text-center mb-4">
@@ -67,7 +78,7 @@ const handleSubmit=async () => {
           }}
           type="date"
           min={getYesterdayDateString()}
-          max={checkOut}
+          max={checkOut || getFutureDateString(10)}
           className="ps-3 text-[1.1rem] focus:border-2 border-black"
         />
         <input
@@ -77,6 +88,7 @@ const handleSubmit=async () => {
           }}
           type="date"
           min={ checkIn || getYesterdayDateString()}
+          max={ getFutureDateString(10)}
           className="ps-3 text-[1.1rem]  focus:border-2 border-black"
         />
         {/* <input className="ps-3 text-[1.1rem] capitalize1 focus:border-2 border-black" /> */}
@@ -84,6 +96,7 @@ const handleSubmit=async () => {
           value={roomType}
           onChange={e => {
             dispatch(updateRoomType(e.target.value))
+            setRoomType(e.target.value)
           }} 
           className="ps-2 pe-3 text-[1.1rem] bg-white capitalize font-extralight"
           name=""

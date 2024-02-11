@@ -66,6 +66,15 @@ console.log(checkIn)
     return `${year}-${month}-${day}`;
   };
 
+  const getFutureDateString = (daysAhead) => {
+    const futureDate = new Date();
+    futureDate.setDate(futureDate.getDate() + daysAhead);
+    const year = futureDate.getFullYear();
+    const month = String(futureDate.getMonth() + 1).padStart(2, "0");
+    const day = String(futureDate.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
 //   console.log(priceRange)
 //   useEffect(()=>{
 // console.log(priceRange)
@@ -97,7 +106,7 @@ console.log(checkIn)
               dispatch(updateCheckIn(e.target.value));
             }}
             min={getYesterdayDateString()}
-            max={checkOut}
+            max={checkOut || getFutureDateString(10)}
             value={checkIn}
             name="checkIn"
             type="date"
@@ -112,6 +121,7 @@ console.log(checkIn)
               dispatch(updateCheckOut(e.target.value));
             }}
             min={checkIn || getYesterdayDateString()}
+            max={getFutureDateString(10)}
             name="checkOut"
             value={checkOut}
             type="date"

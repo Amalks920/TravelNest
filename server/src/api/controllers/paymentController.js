@@ -190,7 +190,14 @@ const payUsingWallet = async (req, res, next) => {
 const webHookController = async (req, res, next) => {
   try {
     const { type, data } = req.body;
+
+    console.log('checkout.session.completed coheclskdll time.exe')
+    console.log(type);
+    console.log('checkout.session.completed coheclskdll time.exe')
+
     if (type === "checkout.session.completed") {
+
+      
       const bookingDetailsString = data.object.metadata.booking_details;
       const roomDetailsString = data.object.metadata.roomDetails;
       const roomDetails = JSON.parse(roomDetailsString);
@@ -216,7 +223,7 @@ const webHookController = async (req, res, next) => {
         }
     
         result[0]=roomRes
-        console.log(result)
+        
        
 
       const response = await createBookingHelper(
@@ -226,7 +233,8 @@ const webHookController = async (req, res, next) => {
         checkOutDate,
         totalNoRooms
       );
-      console.log(response);
+      console.log(response)
+    
 
       res.status(200).json({ response });
     }

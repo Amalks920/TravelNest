@@ -6,7 +6,7 @@ import PageContainer from "./PageContainer";
 import { NavbarDefault } from "./NavbarDefault";
 import { Sidebar } from "./Sidebar";
 import { Footer } from "./Footer";
-import { useChekckBlockedOrNotQuery } from "../services/checkISBlockedOrNot";
+// import { useChekckBlockedOrNotQuery } from "../services/checkISBlockedOrNot";
 import SearchSection from "../features/browse/components/SearchSection";
 
 
@@ -16,9 +16,9 @@ const AuthPageContainer = ({home}) => {
     const role=useSelector(selectRole)
     const user_id=useSelector(selectUserId)
     const dispatch=useDispatch()
-    const {data:isBlocked,isError,isFetching,isLoading,isSuccess}=useChekckBlockedOrNotQuery({user_id})
-     console.log(home)
-    isBlocked &&  dispatch(logout())
+    // const {data:isBlocked,isError,isFetching,isLoading,isSuccess}=useChekckBlockedOrNotQuery({user_id})
+    //  console.log(home)
+    // isBlocked &&  dispatch(logout())
 
     if (!token) {
 

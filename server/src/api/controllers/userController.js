@@ -1,4 +1,4 @@
-const { fetchAllUsersHelper, blockOrUnblockUserHelper, checkUserBlockedOrNotHelper, getUserDetailsForProfileHelper, getAllUsersLengthHelper } = require("../helpers/userHelper")
+const { fetchAllUsersHelper, blockOrUnblockUserHelper, checkUserBlockedOrNotHelper, getUserDetailsForProfileHelper, getAllUsersLengthHelper, editUserNameHelper, editEmailHelper } = require("../helpers/userHelper")
 const { userWalletDetailsHelper, getWalletHistoryHelper, getWalletHistoryLengthHelper } = require("../helpers/walletHelper")
 
 
@@ -95,9 +95,35 @@ const getWalletHistoryLength=async (req,res)=>{
     }
 }
 
+const editUserName= async (req,res)=>{
+
+    try {
+        const user_id=req.params.user_id
+        const userName=req.body.userName
+        console.log(req.body)
+        const response=await editUserNameHelper(user_id,userName)
+        res.status(200).json({response})
+    } catch (error) {
+        res.status(500).json({error})
+    }
+}
+
+const editEmail=async (req,res) => {
+    try {
+        const email=req.body.email;
+        const user_id=req.body.user_id;
+        const response=await editEmailHelper(email,user_id)
+        res.status(200).json({response})
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({error})
+    }
+}
+
 
 module.exports={
     getAllUsers,blockOrUnblockUser,
     checkIfUserBlockedOrNot,getUserDetailsForProfile,getUserWalletDetails,
-    getWalletHistory,getAllUsersLength,getWalletHistoryLength
+    getWalletHistory,getAllUsersLength,getWalletHistoryLength,editUserName,
+    editEmail
 }

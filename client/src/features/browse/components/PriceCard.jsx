@@ -61,7 +61,7 @@ console.log(price)
 
   const [checkInDate, setCheckInDate] = useState(selectedCheckInDate);
   const [checkOutDate, setCheckOutDate] = useState(selectedCheckOutDate);
-  const [noOfRooms, setNoOfRooms] = useState(1);
+  const [noOfRooms, setNoOfRooms] = useState(null);
   const role = useSelector(selectRole);
   const token = useSelector(selectToken);
 
@@ -150,7 +150,7 @@ console.log(price)
             {/* <div className="mt-4 flex  justify-center mb-[40px]">
             <button className="border-2 p-1 px-6  border-gray-400">edit checkout</button>
             </div> */}
-            
+            {console.log(totalAvailableRooms)}
             <div className="mt-4 px-1">
               <label htmlFor="noOfRooms " className="capitalize font-bold text-[0.8rem]">select no of rooms</label>
              <select
@@ -161,8 +161,9 @@ console.log(price)
                 dispatch(updateNoOfRooms(e.target.value))
               }
               } 
+              
               className="bg-white w-full h-[40px] px-3 border-[1.3px] border-gray-400 rounded-lg">
-              <option value="" disabled>0</option>
+              <option value="0" disabled={totalAvailableRooms<=0}>0</option>
               <option value="1" disabled={totalAvailableRooms<1}>1</option>
               <option value="2" disabled={totalAvailableRooms<2} >2</option>
               <option value="3" disabled={totalAvailableRooms<3}>3</option>
@@ -173,12 +174,10 @@ console.log(price)
             </div >
 
             <Button
-             
+              disabled={
+                totalAvailableRooms<=0 || noOfRooms===null || noOfRooms==0 }
               onClick={async () => {
                 if (token && role === "user") {
-                
-                  
-                   console.log(roomDetails)
                   const response = await payment({
                     roomDetails,
                     totalPrice:price,
@@ -188,8 +187,6 @@ console.log(price)
                     totalNoRooms:noOfRooms,
                     noOfDays:noOfDays
                   });
-                  console.log(response);
-                  console.log('respooonnnnnseee')
              
                   dispatch(updateCheckIn(checkInDate));
                   dispatch(updateCheckOut(checkOutDate));
@@ -224,7 +221,6 @@ console.log(price)
               className="text-center mt-2 text-[0.9rem] text-black cursor-pointer capitalize"
         
             >
-              {console.log(wallet?.response[0]?.amount,totalPrice)}
               { wallet?.response[0]?.amount>price  ?
                 <Link to={"/wallet-payment-page"}>Pay Using Wallet</Link>:null
                 

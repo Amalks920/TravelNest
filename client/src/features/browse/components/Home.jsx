@@ -25,10 +25,6 @@ const Home = () => {
     const handleSearch = async () => {
       navigate(`/search-page`);
     };
-
-
-
-    {console.log(location)}
     
   return (
     <div className=" grid grid-flow-row grid-cols-1 md:grid-cols-4 xl:grid-cols-3  w-[100vw] ">

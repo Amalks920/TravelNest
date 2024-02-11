@@ -33,6 +33,9 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
     } else {
       api.dispatch(logout());
     }
+  }else if(result?.error?.originalStatus === 402){
+    console.log(result?.error)
+    api.dispatch(logout())
   }
 
   return result;
@@ -40,7 +43,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
 export const apiSlice = createApi({
   baseQuery: baseQueryWithReauth,
-  tagTypes: ['Users','Hotels','single-hotel-owner','get-rooms-of-hotel','single-booking-details','messages'],
+  tagTypes: ['Users','Hotels','single-hotel-owner','get-rooms-of-hotel','single-booking-details','messages','user'],
   endpoints: (builder) => ({}),
   //provideTags:['user','verifyEmail']
 });

@@ -13,6 +13,10 @@ import { useState } from "react";
 
 const BookingDetails = () => {
   const user_id = useSelector(selectUserId);
+
+
+
+ 
   const [pageNumber, setPageNumber] = useState(1);
   const {
     data: bookings,

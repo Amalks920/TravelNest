@@ -1,5 +1,5 @@
 const express = require('express');
-const { getAllUsers, blockOrUnblockUser, checkIfUserBlockedOrNot, getUserDetailsForProfile, getUserWalletDetails, getAllUsersLength } = require('../controllers/userController');
+const { getAllUsers, blockOrUnblockUser, checkIfUserBlockedOrNot, getUserDetailsForProfile, getUserWalletDetails, getAllUsersLength, editUserName, editEmail } = require('../controllers/userController');
 const verifyJwt = require('../utils/verifyJwt');
 const router = express.Router();
 
@@ -246,8 +246,9 @@ router.delete('/remove-from-favorites/{hotle-id}',(req,res)=>{
 })
 
 // user
-
 router.get('/get-user-details-for-user/:user_id',verifyJwt,getUserDetailsForProfile)
 router.get('/get-wallet-details/:user_id',verifyJwt,getUserWalletDetails);
+router.post('/edit-user-name-user/:user_id',verifyJwt,editUserName);
+router.post('/change-email',verifyJwt,editEmail)
 
 module.exports=router;
