@@ -5,9 +5,7 @@ const addReviewHelper = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await reviewModel.create(data);
-      console.log("ldskjdldsklkdl");
       console.log(await reviewModel.find({}));
-      console.log("ldskjdldsklkdl");
       resolve(response);
     } catch (error) {
       console.log(error);
@@ -29,7 +27,7 @@ const getReviewDoneByUser = (booking_id, user_id) => {
   });
 };
 
-const findReviewsOfHotelByHotelIdHelper = (hotel_id) => {
+const findReviewsOfHotelByHotelIdHelper = (hotel_id,room_id) => {
   return new Promise(async (resolve, reject) => {
     try {
       //   const response = await reviewModel.find(
@@ -38,9 +36,10 @@ const findReviewsOfHotelByHotelIdHelper = (hotel_id) => {
       const response = await reviewModel.aggregate([
         {
           $match: {
-            hotel_id: new mongoose.Types.ObjectId(hotel_id),
+            room_id: new mongoose.Types.ObjectId(room_id),
           },
         },
+
         {
           $lookup: {
             from: "users",
@@ -60,8 +59,9 @@ const findReviewsOfHotelByHotelIdHelper = (hotel_id) => {
             images: "$images",
             rating:'$rating'
           },
-        },
+        }
       ]);
+      console.log('(((((((===review response==)))))))')
       console.log(response);
       resolve(response);
     } catch (error) {

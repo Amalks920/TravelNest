@@ -25,9 +25,6 @@ const SingleHotel = () => {
   const [price, setPrice] = useState(0);
   const [viewDetailsModal, setViewDetailsModal] = useState(false);
 
-  // const checkInDate=useSelector(selectCheckIn)
-  // const checkOutDate=useSelector(selectCheckOut)
-
   const roomss = useSelector(selectRooms);
 
   const { hotel_id, room_id,checkIn,checkOut } = useParams();

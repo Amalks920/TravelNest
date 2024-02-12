@@ -19,7 +19,7 @@ import { usePostReviewDetailsMutation } from "../services/postReviewDetailsApiSl
 import { useSelector } from "react-redux";
 import { selectUserId } from "../../authentication/services/loginSlice";
 
-function ReviewModal({ openReviewModal: open, setOpenReviewModal: setOpen,booking_id,hotel_id }) {
+function ReviewModal({ openReviewModal: open, setOpenReviewModal: setOpen,booking_id,hotel_id,room_id }) {
   const [rating, setRating] = useState(0);
   const [review,setReview]=useState('')
   const [reviewDetails,setReviewDetails]=useState([])
@@ -37,6 +37,8 @@ function ReviewModal({ openReviewModal: open, setOpenReviewModal: setOpen,bookin
     formData.append('booking_id',booking_id);
     formData.append('user_id',user_id);
     formData.append('hotel_id',hotel_id);
+    formData.append('room_id',room_id);
+    
     for (let i = 0; i < reviewDetails.length; i++) {
       const file = reviewDetails[i];
       formData.append('images', file);

@@ -1,4 +1,6 @@
 const express=require('express')
+const { getSalesReport, getSalesReportByDate } = require('../controllers/salesController')
+const verifyAdminJwt = require('../middlewares/verifyAdminJwt')
 const router=express.Router()
 
 /**
@@ -74,8 +76,11 @@ const router=express.Router()
  *         - sales
  */
 
-router.get('/get-sales/{hotle-id}',(req,res)=>{
-    res.status(200).json({})
-})
+router.get('/get-all-sales-report-for-admin',verifyAdminJwt,getSalesReport);
+
+router.get('/get-sales-by-date-admin/:startDate/:endDate',verifyAdminJwt,getSalesReportByDate)
+
+
+
 
 module.exports=router

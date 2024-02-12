@@ -3,15 +3,14 @@ import { IMAGE_BASE_URL } from "../../../data/constants";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectCheckOut,selectCheckIn } from "../../../services/searchSlice";
+import EmptyHotelPage from "./EmptyHotelPage";
 
 const HotelListSection = ({ hotel }) => {
   const checkIn=useSelector(selectCheckIn)
   const checkOut=useSelector(selectCheckOut)
-  console.log(checkIn,checkOut)
-  console.log('checkIn','checkOut')
 
   return (
-    <div className="">
+(    <div className="">
       <div className="grid grid-flow-row grid-cols-[35%,10%,55%] mb-14 h-[300px] m-[5%]  p-2 border-2">
         <div
           className="col-span-1  max-h-[300px] bg-no-repeat bg-cover rounded-sm"
@@ -62,7 +61,7 @@ const HotelListSection = ({ hotel }) => {
           </div>
         </div>
       </div>
-    </div>
+    </div>)
   );
 };
 

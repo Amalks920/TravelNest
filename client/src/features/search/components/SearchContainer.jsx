@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectCheckIn, selectCheckOut, selectLocation, selectPriceRange, selectRoomType, selectSearchResult, updateSearchResult } from "../../../services/searchSlice";
 import { useEffect, useState } from "react";
 import { useSearchByLocationMutation } from "../services/searchApiSlice";
+import EmptyHotelPage from "./EmptyHotelPage";
 
 const SearchContainer = () => {
   
@@ -32,12 +33,17 @@ const SearchContainer = () => {
 
     
       <div className="row-span-1 col-span-2 lg:col-span-1 overflow-scroll">
-        {
-          data?.map((hotel,index)=>{
+      
+     {
+      data.length===0 ?
+      (
+      <EmptyHotelPage/>
+      ):
+      data?.map((hotel,index)=>{
         
-            return <HotelListSection key={index}  hotel={hotel}/>
-          })
-        }
+        return <HotelListSection key={index}  hotel={hotel}/>
+      })
+     }
         
       </div>
     </div>

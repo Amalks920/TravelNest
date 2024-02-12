@@ -19,7 +19,7 @@ const useGetAHotel = (hotel_id, room_id) => {
     isSuccess,
     isUninitialized,
   } = 
-    useGetAHotelForUserQuery({ hotel_id })
+    useGetAHotelForUserQuery({ hotel_id,room_id })
 
   const {
     data: room,

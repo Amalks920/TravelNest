@@ -8,7 +8,7 @@ const checkAvailability = async (req, res, next) => {
   const checkOutDate = req.query.checkOut || null;
   const newCheckIn = new Date(checkInDate);
   const newCheckOut = new Date(checkOutDate);
-  console.log(newCheckIn,newCheckOut,'new new checkin checkout')
+
   try {
     // const existingCollisions = await bookingModel.find({
     //   $or: [
@@ -99,8 +99,7 @@ const checkAvailability = async (req, res, next) => {
       // }
     ]);
 
-    console.log(existingCollisions)
-    console.log('exizting collisions   new collissssio  n ');
+  
 
     const  unavailableRooms=existingCollisions.filter((el,index)=>{
       return el.no_of_rooms_unavailabe_for_the_time_period===el.no_of_rooms_available
@@ -178,8 +177,6 @@ const checkAvailability = async (req, res, next) => {
 
     // console.log(responseArr)
     // console.log('responsweeee')
-
-    console.log(existingCollisions)
 
     res.locals.collisions=existingCollisions;
 

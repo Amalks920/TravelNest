@@ -24,7 +24,7 @@ const reviewSchema = new mongoose.Schema(
   {
     booking_id: {
       type: ObjectId,
-      ref: "booking",
+      ref: "Booking",
       required: true,
     },
     user_id: {
@@ -35,6 +35,11 @@ const reviewSchema = new mongoose.Schema(
     hotel_id:{
       type:ObjectId,
       ref:'Hotel',
+      required:true
+    },
+    room_id:{
+      type:ObjectId,
+      ref:'Room',
       required:true
     },
     // heading:{

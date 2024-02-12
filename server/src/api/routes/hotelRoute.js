@@ -101,7 +101,7 @@ router.put('/change-hotel-status/:hotel_id/:status',verifyJwt,changeHotelStatus)
 
 router.get('/get-all-hotels-user',getAllHotelsForUser)
 
-router.get('/get-a-hotel-user/:hotel_id',checkAvailability,getAHotelForUser)
+router.get('/get-a-hotel-user/:hotel_id/:room_id',checkAvailability,getAHotelForUser)
 
 router.get('/get-a-hotel-for-owner/:hotel_id',verifyJwt,getAHotel)
 

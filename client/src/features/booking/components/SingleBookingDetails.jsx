@@ -27,7 +27,7 @@ const SingleBookingDetails = () => {
 
   if (isLoading) return <Spinner />;
   {
-    console.log(booking.reviewResponse);
+    console.log(booking?.response[0]?.roomDetails[0]?._id);
    
   }
   return (
@@ -39,6 +39,7 @@ const SingleBookingDetails = () => {
         setOpenReviewModal={setOpenReviewModal}
         booking_id={booking_id}
         hotel_id={booking.response[0].hotel_id}
+        room_id={booking?.response[0]?.roomDetails[0]?._id}
       />
       <div className="w-[80%] mt-[2%] min-h-[100vh]">
         <h2

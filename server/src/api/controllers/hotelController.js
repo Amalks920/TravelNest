@@ -163,17 +163,20 @@ const getAllHotelsForUser=async (req,res,next)=>{
 }
 
 const getAHotelForUser=async (req,res,next)=>{
-  console.log('req user hotel')
-  console.log(req.locals)  
+  
   const hotel_id=req.params.hotel_id
+  const room_id=req.params.room_id
+console.log('room_id')
+console.log(room_id)
+console.log('room_id')
   try {
     const hotels=await getAHotelForUserHelper(hotel_id)
     const rooms=await getAllRoomsOfAHotelForUserHelper(hotel_id)
-    const reviews=await findReviewsOfHotelByHotelIdHelper(hotel_id);
-    console.log(rooms)
+    const reviews=await findReviewsOfHotelByHotelIdHelper(hotel_id,room_id);
+   
 
     const response=await Promise.all([hotels,rooms,reviews])
-    console.log(response)
+    
 
     res.status(200).json({response})
   } catch (error) {

@@ -64,7 +64,7 @@ const changePaymentStatus=(status)=>{
 const getAllBookingsHelper= async (hotel_id,pageNumber)=>{
  console.log(pageNumber)
         try {
-            const response=await bookingModel.find({hotel_id:hotel_id}).skip((pageNumber-1)*4).limit(pageNumber*4)
+            const response=await bookingModel.find({hotel_id:hotel_id}).sort({_id:-1}).skip((pageNumber-1)*4).limit(4)
             response.reverse()
             console.log(response)
             console.log('responsee')

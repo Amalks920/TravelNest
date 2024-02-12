@@ -141,4 +141,4 @@ const bookingSchema = new Schema(
   }
 );
 
-module.exports = mongoose.model("booking", bookingSchema);
+module.exports = mongoose.model("Booking", bookingSchema);
