@@ -247,9 +247,11 @@ const getAllRoomsOfAHotelForUserHelperByAvailabilty = (
               {
                 _id: { $nin: collisions },
               },
+
             ],
           },
         },
+
         {
           $group: {
             _id: "$roomType",
@@ -368,16 +370,10 @@ const addRoomImagesHelper = (room_id, imagePathArray) => {
   });
 };
 
-const searchRoomsHotel = async (location, collisions, priceRange, roomType) => {
-  console.log(collisions)
-  console.log(location)
-  console.log('collisionnns')
+const searchRoomsHotel = async (location, collisions, priceRange, roomType,amenities) => {
 
-  console.log(priceRange.min,roomType)
 if(!roomType) console.log(true)
 
-console.log(roomType=='null')
-console.log(priceRange)
 
   const matchQuery= {
     $and: [
@@ -398,6 +394,7 @@ console.log(priceRange)
       { rate: { $lte: Number(priceRange?.max) || Number.MAX_SAFE_INTEGER } }, // max price
 
         { roomType: roomType },
+    
 
     ],
   }
@@ -424,7 +421,6 @@ console.log(priceRange)
     ],
   }
 
-console.log(priceRange,roomType)
   const pipeline=        [
     {
       $lookup: {
@@ -442,6 +438,9 @@ console.log(priceRange,roomType)
         "hotelDetails.status": "listed",
       },
     },
+
+
+
     {
       $project: {
         _id: 1,
@@ -460,6 +459,7 @@ console.log(priceRange,roomType)
         location: "$hotelDetails.location",
       },
     },
+
     {
       $match:matchQuery
     },
@@ -491,6 +491,7 @@ console.log(priceRange,roomType)
       const response = await roomModel.aggregate(
         pipeline
       );
+
       return response
     } catch (error) {
       return error

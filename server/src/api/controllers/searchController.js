@@ -32,6 +32,7 @@ const searchController = async (req, res, next) => {
 };
 
 const roomSearchController = async (req, res, next) => {
+  const amenities=req.query.aminities.split(',')
   const collisions = res.locals.existingCollisions;
   const c=res.locals.collisions
   console.log(c)
@@ -55,7 +56,8 @@ const roomSearchController = async (req, res, next) => {
       location,
       collisions,
       priceRange,
-      roomType
+      roomType,
+      amenities
     );
     console.log(response)
     res.status(200).json({ response });

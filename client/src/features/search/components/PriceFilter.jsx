@@ -37,6 +37,7 @@ const PriceFilter = () => {
         checkOut: checkOut,
         roomType: roomType,
         priceRange: priceRange,
+        // aminities:aminities
       });
       console.log(response);
       dispatch(updateSearchResult(response.data.response));
@@ -47,6 +48,7 @@ const PriceFilter = () => {
   };
 
   useEffect(() => {
+    console.log(aminities)
     handleSearch();
   }, [priceRange,aminities]);
   return (
