@@ -10,14 +10,22 @@ import { useState } from "react";
 import SearchSectionHome from "./SearchSectionHome";
 import { useSearchMutation } from "../services/searchApiSlice";
 import { useNavigate } from "react-router-dom";
+import { useGetAllRoomsLocationMutation } from "../services/getAllHotelsApiSlice";
 
 const Home = () => {
   const isSearchBarOpen = useSelector(selectIsSearchBarOpen);
   const { hotels,location, isError, isFetching, isLoading, isUninitialized, error } =
     useGetAllHotels();
 
-    const [search, { isSuccess, reset }] =
-    useSearchMutation();
+    // const [search, { isSuccess, reset }] =
+    // useSearchMutation();
+
+    const [getAllRoomsLocation,
+      {
+        isError:isErrorRoomByLocation,
+        isLoading:isLoadingRoomByLocation,
+        isFetching:isFetchingRoomByLocation
+      }]=useGetAllRoomsLocationMutation()
 
     const dispatch=useDispatch()
     const navigate=useNavigate()
@@ -68,8 +76,9 @@ const Home = () => {
         location?.map(({ _id, hotelImages }, index) => (
           <div
           onClick={async ()=>{
-            const searchResult=await search({location:_id, checkIn: null, checkOut: null, roomType: null})
-            console.log(searchResult)
+           // const searchResult=await search({location:_id, checkIn: null, checkOut: null, roomType: null})
+          //  console.log(searchResult)
+          const searchResult=await getAllRoomsLocation({location:_id})
             dispatch(updateSearchResult(searchResult?.data?.response))
             handleSearch()
             

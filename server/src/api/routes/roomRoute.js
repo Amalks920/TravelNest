@@ -1,5 +1,5 @@
 const express = require('express');
-const { addRoom, getRooms, editRoom, getRoomsByType, editRoomDescription, addRoomImages, getRoomsForUser, getARoomForUser, checkAvailabilityOfRoom, getRoomsByLocation } = require('../controllers/roomController');
+const { addRoom, getRooms, editRoom, getRoomsByType, editRoomDescription, addRoomImages, getRoomsForUser, getARoomForUser, checkAvailabilityOfRoom, getRoomsByLocation, getHotelRoomsByLocation } = require('../controllers/roomController');
 const router = express.Router();
 const uploader=require('../../config/multer');
 const verifyJwt = require('../utils/verifyJwt');
@@ -40,7 +40,7 @@ const verifyOwnerJwt = require('../middlewares/verifyOwnerJwt');
  *           description: Bad request
  */
 
-router.post('/add-room/:hotel_id',verifyJwt,uploader.array('images',10),addRoom)
+router.post('/add-room/:hotel_id',verifyOwnerJwt,uploader.array('images',10),addRoom)
 
 /**
  * @openapi
@@ -82,12 +82,12 @@ router.post('/add-room/:hotel_id',verifyJwt,uploader.array('images',10),addRoom)
  *           description: Bad request
  */
 
-router.put('/edit-room/:hotel-id/:room-id',verifyJwt,editRoom)
+router.put('/edit-room/:hotel-id/:room-id',verifyOwnerJwt,editRoom)
 
 
 
 
-router.get('/get-rooms-list/:hotel_id',verifyJwt,getRoomsByType)
+router.get('/get-rooms-list/:hotel_id',verifyOwnerJwt,getRoomsByType)
 
 /**
  * @openapi
@@ -190,7 +190,7 @@ router.get('/check-availability-of-room/:room_id',checkAvailability,checkAvailab
 router.post('/get-all-rooms-user/:hotel_id',checkAvailabilityOfRooms,getRoomsForUser);
 router.get('/get-avg-rating-of-room/',verifyJwt,)
 router.get('/get-all-rooms-by-location',checkAvailability,getRoomsByLocation)
-
+router.get('/get-all-rooms/:location',getHotelRoomsByLocation)
 
 //owner
 router.put('/edit-room-description/:room_id',verifyOwnerJwt,editRoomDescription )

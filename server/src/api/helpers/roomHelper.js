@@ -648,6 +648,54 @@ const getRoomsByLocationHelper=async () =>{
   }
 }
 
+const getHotelRoomsByLocationHelper= async (location) => {
+  try {
+    const response=await roomModel.aggregate([
+    {
+      $lookup:{
+        from:'hotels',
+        localField:'hotel_id',
+        foreignField:'_id',
+        as:'hotelDetails'
+      }
+    },
+    // {
+    //   $match:{
+    //     'hotelDetails.0.location':location
+    //   }
+    // }
+    {
+      $unwind:'$hotelDetails'
+    },
+    {
+      $project: {
+        _id: 1,
+        roomType: 1,
+        description: 1,
+        size: 1,
+        amenities: 1,
+        rate: 1,
+        hotel_id: 1,
+        images: 1,
+        bathroomType: 1,
+        rate: 1,
+        hotelName: "$hotelDetails.hotelName",
+        hotelDescription: "$hotelDetails.description",
+        hotelImages: "$hotelDetails.images",
+        location: "$hotelDetails.location",
+      },
+    },
+  ]);
+
+
+  console.log(response);
+  
+  return response;
+  } catch (error) {
+    throw error
+  }
+}
+
 module.exports = {
   addRoomHelper,
   addRoomToHotel,
@@ -667,5 +715,6 @@ module.exports = {
   getAvgReviewOfARoomHelper,
   getARoomHelper,
   findNoOfRoomsAvailableHelper,
-  getRoomsByLocationHelper
+  getRoomsByLocationHelper,
+  getHotelRoomsByLocationHelper
 };

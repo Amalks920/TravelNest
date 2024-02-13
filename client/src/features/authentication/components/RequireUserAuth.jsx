@@ -7,9 +7,6 @@ const RequireUserAuth=({allowedRole})=>{
    const location=useLocation()
    const token=useSelector(selectToken)
    const role=useSelector(selectRole)
-   const navigate=useNavigate()
-  // console.log(role)
-   console.log(token)
    return (
       token && role==='user'?<Outlet/>:<Navigate to={'/login'} state={{from:location}} replace/>
    )

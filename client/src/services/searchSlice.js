@@ -7,7 +7,9 @@ const initialState={
     location:'',
     checkIn:'',
     checkOut:'',
-    roomType:''
+    roomType:'',
+    aminities:[]
+  
 }
 
 const searchSlice=createSlice({
@@ -17,19 +19,24 @@ const searchSlice=createSlice({
     reducers:{
         updateIsSearchBarOpen:(state,action)=>{
             state.isSearchBarOpen=action.payload
+            state.priceRange={}
         },
 
         updateLocation:(state,action)=>{
             state.location=action.payload
+            state.priceRange={}
         },
         updateCheckIn:(state,action)=>{
             state.checkIn=action.payload
+            state.priceRange={}
         },
         updateCheckOut:(state,action)=>{
             state.checkOut=action.payload
+            state.priceRange={}
         },
         updateRoomType:(state,action)=>{
             state.roomType=action.payload
+            state.priceRange={}
         },
         updateSearchResult:(state,action)=>{
             state.searchResult=action.payload
@@ -37,6 +44,7 @@ const searchSlice=createSlice({
         updatePriceRange:(state,action)=>{
             console.log(action.payload)
             state.priceRange=action.payload;
+            
         },
         updateAllDetails:(state,action)=>{
             const {location, checkIn, checkOut, roomType}=action.payload
@@ -44,18 +52,31 @@ const searchSlice=createSlice({
             state.checkIn=checkIn
             state.checkOut=checkOut
             state.roomType=roomType
+        },
+        updateAmenities:(state,action)=>{
+           console.log('update amenties')
+            state.aminities.push(action.payload)
+        },
+        removeFromAmenities:(state,action)=>{
+            console.log('remove amenties')
+            state.aminities.splice(action.payload,1)
         }
     }
 
 })
 
-export const selectIsSearchBarOpen=(state)=>state.search.isSearchBarOpen;
-export const selectLocation=(state)=>state.search.location;
-export const selectCheckIn=(state)=>state.search.checkIn;
-export const selectCheckOut=(state)=>state.search.checkOut;
-export const selectRoomType=(state)=>state.search.roomType;
-export const selectSearchResult=(state)=>state.search.searchResult;
-export const selectPriceRange=(state)=>state.search.priceRange;
+export const selectIsSearchBarOpen=(state)=>state.persistedSlice.search.isSearchBarOpen;
+export const selectLocation=(state)=>state.persistedSlice.search.location;
+export const selectCheckIn=(state)=>state.persistedSlice.search.checkIn;
+export const selectCheckOut=(state)=>state.persistedSlice.search.checkOut;
+export const selectRoomType=(state)=>state.persistedSlice.search.roomType;
+export const selectSearchResult=(state)=>state.persistedSlice.search.searchResult;
+export const selectPriceRange=(state)=>state.persistedSlice.search.priceRange;
+export const selectAminities=(state)=>state.persistedSlice.search.aminities;
+
 export default searchSlice.reducer
 export const {updateIsSearchBarOpen,updateLocation,updateCheckIn,
-              updateCheckOut,updateRoomType,updateSearchResult,updatePriceRange,updateAllDetails }=searchSlice.actions
+              updateCheckOut,updateRoomType,updateSearchResult,
+              updatePriceRange,updateAllDetails,updateAmenities,
+              removeFromAmenities
+             }=searchSlice.actions

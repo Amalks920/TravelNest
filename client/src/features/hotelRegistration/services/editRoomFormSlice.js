@@ -32,7 +32,7 @@ export const editRoomFormSlice=createSlice({
             state.noOfRooms=action.payload.noOfRooms
         },
         updateAmenities:(state,action)=>{
-            state.amenities=action.payload.amenities
+            state.amenities=action.payload
         },
         updateRate:(state,action)=>{
             state.rate=action.payload.rate

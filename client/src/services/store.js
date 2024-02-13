@@ -28,6 +28,7 @@ const rootReducer=combineReducers({
     auth:loginSlice,
     hotels:hotelListSlice,
     checkout:walletCheckOutSlice,
+    search:searchSlice,
   
 })
 
@@ -43,7 +44,7 @@ const store=configureStore({
         editRoomForm:editRoomFormSlice,
         priceSlice:priceSlice,
         roomsInHotel:roomsSlice,
-        search:searchSlice,
+        
     },
     middleware:[thunk],
     middleware: getDefaultMiddleware =>
