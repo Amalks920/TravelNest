@@ -84,7 +84,7 @@ router.post('/create-chat/{user-id}/{owner-id}',(req,res)=>{
 })
 
 
-router.get("/conversations/:user_id",verifyJwt, getConversations);
+router.get("/conversations/:user_id", getConversations);
 router.get("/:otherUserId/:userId",getMessages);
 router.get('/:owner_id',getUsersChat)
 router.post("/", sendMessage);

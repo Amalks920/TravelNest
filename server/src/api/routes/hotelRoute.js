@@ -97,13 +97,13 @@ router.get('/get-all-hotel-details/:hotel_id',verifyAdminJwt,getAllHotelDetails)
 
 router.delete('/delete-image/:hotel_id/:img_public_id',verifyJwt,deleteHotelImage)
 
-router.put('/change-hotel-status/:hotel_id/:status',verifyJwt,changeHotelStatus)
+router.put('/change-hotel-status/:hotel_id/:status',verifyAdminJwt,changeHotelStatus)
 
 router.get('/get-all-hotels-user',getAllHotelsForUser)
 
 router.get('/get-a-hotel-user/:hotel_id/:room_id',checkAvailability,getAHotelForUser)
 
-router.get('/get-a-hotel-for-owner/:hotel_id',verifyJwt,getAHotel)
+router.get('/get-a-hotel-for-owner/:hotel_id',verifyOwnerJwt,getAHotel)
 
   router.post('/test',(req,res)=>{
     console.log(req.body)

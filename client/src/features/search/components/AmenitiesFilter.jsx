@@ -16,7 +16,7 @@ const AmenitiesFilter=()=>{
    
 
     return (
-        <div className="  w-full">
+        <div className="  w-full hidden">
         <div className="flex  justify-left gap-5  ">
           <div className="flex justify-end mt-3 ms-3">
             <input

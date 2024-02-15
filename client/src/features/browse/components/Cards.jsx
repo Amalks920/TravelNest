@@ -14,11 +14,11 @@ import ToggleIcon from "../../../components/ToggleIcon";
 import ToggleIconLeft from "../../../components/ToggleIconLeft";
 import { IMAGE_BASE_URL } from "../../../data/constants";
 
-const Cards=({_id,images})=>{
+const Cards=({text,images})=>{
 
   console.log(images)
             return (
-        // <Link to={`/hotel-details/${hotel_id}`}>    
+         <Link to={`/hotels-by-location/${text}`}>    
 
 
 <div
@@ -34,7 +34,7 @@ const Cards=({_id,images})=>{
 <div class="p-6 relative -top-44 ">
     <div class="flex items-center justify-between mb-2">
       <p class="block font-sans text-base antialiased font-bold leading-relaxed text-white text-[1.4rem] uppercase">
-        {_id}
+        {text}
       </p>
       <p class="block font-sans text-base antialiased font-medium leading-relaxed text-white">
       
@@ -67,7 +67,7 @@ const Cards=({_id,images})=>{
     </button>
   </div> */}
 </div>
-    // </Link>  
+     </Link>  
             );
 }
 

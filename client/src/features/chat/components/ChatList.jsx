@@ -19,7 +19,7 @@ import {
         <List>
           <ListItem>
             <ListItemPrefix>
-              <Avatar variant="circular" alt="candice" src="https://docs.material-tailwind.com/img/face-1.jpg" />
+              <Avatar variant="circular"  src="" />
             </ListItemPrefix>
             <div>
               <Typography variant="h6" color="blue-gray">

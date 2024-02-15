@@ -18,8 +18,12 @@ const getAllHotelsApiSlice=apiSlice.injectEndpoints({
             query:()=>`/room/get-all-rooms-by-location`
         }),
         getAllRoomsLocation:builder.mutation({
-            query:(data)=>`/room/get-all-rooms/${data.location}`
+            query:(data)=>`/room/get-all-rooms-by-location`
+        }),
+        filterAllRoomsByLocation:builder.query({
+            query:(data)=>`/room/get-all-rooms-by-location/${data.location}`
         })
+ 
     })
 })
 
@@ -28,5 +32,7 @@ const getAllHotelsApiSlice=apiSlice.injectEndpoints({
 export const {useGetAllHotelQuery,
     useGetAllRoomsInHotelMutation,
     useGetAllHotelLocationQuery,
-    useGetAllRoomsLocationMutation
+    useGetAllRoomsLocationMutation,
+    useGetAllRoomsByLocaitonQuery,
+    useFilterAllRoomsByLocationQuery
 }=getAllHotelsApiSlice

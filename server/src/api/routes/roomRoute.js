@@ -1,5 +1,5 @@
 const express = require('express');
-const { addRoom, getRooms, editRoom, getRoomsByType, editRoomDescription, addRoomImages, getRoomsForUser, getARoomForUser, checkAvailabilityOfRoom, getRoomsByLocation, getHotelRoomsByLocation } = require('../controllers/roomController');
+const { addRoom, getRooms, editRoom, getRoomsByType, editRoomDescription, addRoomImages, getRoomsForUser, getARoomForUser, checkAvailabilityOfRoom, getRoomsByLocation, getHotelRoomsByLocation, filterRoomsByLocation } = require('../controllers/roomController');
 const router = express.Router();
 const uploader=require('../../config/multer');
 const verifyJwt = require('../utils/verifyJwt');
@@ -181,7 +181,7 @@ router.get('/get-a-room/:room_id',checkAvailability,getARoomForUser)
  *           description: Bad request
  */
 
-router.get('/get-rooms/:hotel_id',verifyJwt,getRooms)
+router.get('/get-rooms/:hotel_id',verifyOwnerJwt,getRooms)
 
 router.get('/check-availability-of-room/:room_id',checkAvailability,checkAvailabilityOfRoom)
 
@@ -191,6 +191,8 @@ router.post('/get-all-rooms-user/:hotel_id',checkAvailabilityOfRooms,getRoomsFor
 router.get('/get-avg-rating-of-room/',verifyJwt,)
 router.get('/get-all-rooms-by-location',checkAvailability,getRoomsByLocation)
 router.get('/get-all-rooms/:location',getHotelRoomsByLocation)
+
+router.get('/get-all-rooms-by-location/:location',checkAvailability,filterRoomsByLocation)
 
 //owner
 router.put('/edit-room-description/:room_id',verifyOwnerJwt,editRoomDescription )

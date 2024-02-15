@@ -54,6 +54,7 @@ import WalletPaymentPage from './pages/user/WalletPaymentPage.jsx';
 import WalletHistoryPage from './pages/user/WalletHistoryPage.jsx';
 import AllBookingsPage from './pages/owner/AllBookingsPage.jsx';
 import SalesReportPage from './pages/admin/SalesReportPage.jsx';
+import HotelsByLocationPage from './pages/user/HotelsByLocationPage.jsx';
 
 function App() {
   const token = useSelector(selectToken)
@@ -82,7 +83,7 @@ function App() {
        return socket && socket.close();
       }
   },[user_id])
-  console.log(socket)
+
   return (
     <Routes>
     <Route path="/" element={<AuthPageContainer />}>
@@ -90,8 +91,9 @@ function App() {
       <Route element={<CheckAuth currentRole={'user'}/>} >
       <Route path="login" element={<Login />} />
       <Route path="signup" element={<Signup />} />
-      <Route path='verify-email' element={<VerifyEmailPage  role={'user'} isOtpVerified={false}/>}></Route>
-      <Route path='verify-otp/:email' element={<VerifyEmailPage role={'user'}  isOtpVerified={true}/>}></Route>
+      <Route path='verify-email' element={<VerifyEmailPage  role={'user'} isOtpVerified={false} verifySignup={false}/>}></Route>
+      <Route path='verify-otp/:email' element={<VerifyEmailPage role={'user'}  isOtpVerified={true} verifySignup={false}/>}></Route>
+      <Route path='verify-otp-signup/:email' element={<VerifyEmailPage role={'user'}  isOtpVerified={true} verifySignup={true}/>}></Route>
       <Route path='reset-password/:email' element={<ResetPasswordPage role={'user'}/>}></Route>
 
 
@@ -101,8 +103,10 @@ function App() {
       <Route element={<CheckAuth currentRole={'owner'}/>} >
         <Route path="/owner/login" element={<Login />} />
         <Route path="/owner/signup" element={<Signup />} />
-        <Route path='/owner/verify-email' element={<VerifyEmailPage  role={'owner'} isOtpVerified={false}/>}></Route>
-      <Route path='/owner/verify-otp/:email' element={<VerifyEmailPage role={'owner'} isOtpVerified={true}/>}></Route>
+        <Route path='/owner/verify-email' element={<VerifyEmailPage  role={'owner'} isOtpVerified={false} verifySignup={false}/>}></Route>
+      <Route path='/owner/verify-otp/:email' element={<VerifyEmailPage role={'owner'} isOtpVerified={true} verifySignup={false} />}></Route>
+      <Route path='/owner/verify-otp-signup/:email' element={<VerifyEmailPage role={'user'}  isOtpVerified={true} verifySignup={true}/>}></Route>
+
       <Route path='/owner/reset-password/:email' element={<ResetPasswordPage role={'owner'}/>}></Route>
       </Route>
 
@@ -149,7 +153,8 @@ function App() {
        >
       <Route path="/home" element={<HomePage />} />
         <Route path="/hotel-details/:hotel_id/:room_id/:checkIn/:checkOut" element={<SingleHotelPage/>} />
-        <Route path='/search-page' element={<SearchPage/>}></Route>
+        <Route path='/search-page' element={<SearchPage/>}></Route>    
+        <Route path='/hotels-by-location/:location' element={<HotelsByLocationPage/>}></Route>    
 
 
         <Route element={<RequireUserAuth allowedRole={'user'}/>}>

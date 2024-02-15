@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const validateResource = require('../middlewares/validateResource')
 const userModel = require('../models/userModel');
-const { registerNewUser, login, handleRefreshToken, verifyEmail, verifyOtp, changePassword, googleSignIn } = require('../controllers/authController');
+const { registerNewUser, login, handleRefreshToken, verifyEmail, verifyOtp, changePassword, googleSignIn, verifyEmailSignup } = require('../controllers/authController');
 const { signUpValidation, loginValidation } = require('../utils/validations');
 const handleError = require('../middlewares/errorHandler');
 const { changePasswordHelper } = require('../helpers/authHelper');
@@ -110,6 +110,9 @@ router.post('/signup',signUpValidation,handleError, registerNewUser)
    */
 
 router.post('/verify-email',verifyEmail)
+
+
+router.post('/verify-email-signup',verifyEmailSignup)
 
   /**
    * @openapi

@@ -13,6 +13,7 @@ const {
   findNoOfRoomsAvailableHelper,
   getRoomsByLocationHelper,
   getHotelRoomsByLocationHelper,
+  filterRoomsByLocationHelper,
 } = require("../helpers/roomHelper");
 const mongoose=require('mongoose');
 const { uploadImages } = require("../helpers/hotelHelper");
@@ -213,8 +214,23 @@ console.log(newCheckIn,newCheckOut,'checkIndate','checkoutdate')
 
 
 const getRoomsByLocation=async (req,res)=>{
+  
   try {
     const response=await getRoomsByLocationHelper()
+    res.status(200).json({response});
+  } catch (error) {
+    res.status(500).json({error})
+  }
+}
+
+
+const filterRoomsByLocation=async (req,res)=>{
+  const location=req.params.location;
+  const collisions = res.locals.existingCollisions;
+  try {
+    console.log(location)
+    console.log(collisions)
+    const response=await filterRoomsByLocationHelper(location,collisions)
     res.status(200).json({response});
   } catch (error) {
     res.status(500).json({error})
@@ -237,5 +253,5 @@ module.exports = {
   editRoomDescription,addRoomImages,
   getRoomsForUser,getAvgReviewOfRoom,
   getARoomForUser,checkAvailabilityOfRoom,getRoomsByLocation,
-  getHotelRoomsByLocation
+  getHotelRoomsByLocation,filterRoomsByLocation
 };

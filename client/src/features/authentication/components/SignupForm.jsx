@@ -14,6 +14,9 @@ import {
   createUser,
 } from "../services/signupSlice";
 import { Spinner } from "@material-tailwind/react";
+import { useVerifyOtpMutation } from "../services/verifyOtpApiSlice";
+import { sendEmail } from "../services/verifyEmailSlice";
+import { useVerifyEmailMutation, useVerifyEmailSignupMutation } from "../services/verifyEmailApiSlice";
 
 const SignupForm = ({ role }) => {
   const error = useSelector(getSignupError);
@@ -21,8 +24,19 @@ const SignupForm = ({ role }) => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [verifyEmailSignup,{isError,isLoading,isSuccess,isUninitialized}]=useVerifyEmailSignupMutation()
 
-  const _onSave = (values) => {
+  const _onSave =async  (values) => {
+    
+    const response=await verifyEmailSignup({email:values.email}).unwrap()
+    console.log(response)
+     if(response.isOtpSend===true){
+      if(role==='user'){
+        navigate(`/verify-otp-signup/${values.email}`)
+      }else{
+        navigate(`/owner/verify-otp-signup/${values.email}`)
+      }
+     }
     values.role = role;
     dispatch(createUser(values));
   };

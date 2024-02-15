@@ -1,14 +1,14 @@
 import { PencilIcon } from "@heroicons/react/24/solid";
 import { Button } from "@material-tailwind/react";
-import { useChangeEmailMutation, useVerifyEmailMutation, useVerifyOtpMutation } from "../services/getUserInfoApiSlice";
+import { useChangeEmailMutation,  useVerifyEmailSignupMutation, useVerifyOtpMutation } from "../services/getUserInfoApiSlice";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { selectUserId } from "../../authentication/services/loginSlice";
 
 const EditEmail = ({ editEmail, setEditEmail, userEmail,setIsOtpInput ,otp,isOtpInput}) => {
     const user_id=useSelector(selectUserId)
-  const [verifyEmail, { isError, isLoading, isSuccess }] =
-    useVerifyEmailMutation();
+  const [verifyEmailSignup, { isError, isLoading, isSuccess }] =
+    useVerifyEmailSignupMutation();
 
   const [verifyOtp]=useVerifyOtpMutation()
 
@@ -28,7 +28,7 @@ const EditEmail = ({ editEmail, setEditEmail, userEmail,setIsOtpInput ,otp,isOtp
         <div className="col-span-1 row-span-1 flex justify-between gap-1">
           <Button
             onClick={async ()=>{
-             const response=  !isOtpInput? await verifyEmail({email:userEmail}):await verifyOtp({otp:otp,email:userEmail})
+             const response=  !isOtpInput? await verifyEmailSignup({email:userEmail}):await verifyOtp({otp:otp,email:userEmail})
                !isOtpInput && setIsOtpInput(true)
             if(response?.data===true){
                 await changeEmail({email:userEmail,user_id:user_id})

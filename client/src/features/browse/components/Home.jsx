@@ -78,9 +78,9 @@ const Home = () => {
           onClick={async ()=>{
            // const searchResult=await search({location:_id, checkIn: null, checkOut: null, roomType: null})
           //  console.log(searchResult)
-          const searchResult=await getAllRoomsLocation({location:_id})
-            dispatch(updateSearchResult(searchResult?.data?.response))
-            handleSearch()
+          // const searchResult=await getAllRoomsLocation({location:_id})
+          //   dispatch(updateSearchResult(searchResult?.data?.response))
+          //   handleSearch()
             
           }}
             key={_id}
@@ -89,7 +89,7 @@ const Home = () => {
             } col-span-2 lg:col-span-2 xl:col-span-1 mt-[70px] ms-[17%] cursor-pointer`}
           >
             <Cards
-            _id={_id}
+            text={_id}
             images={hotelImages[0]}
               // hotel_id={_id}
               // hotelName={hotelName}

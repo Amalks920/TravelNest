@@ -3,12 +3,12 @@ import { ButtonDefault } from "../../../components/form/ButtonDefault";
 import { FormInput } from "../../../components/form/FormInput";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { useVerifyEmailMutation } from "../services/verifyEmailApiSlice";
+import { useVerifyEmailMutation, useVerifyEmailSignupMutation } from "../services/verifyEmailApiSlice";
 import { useDispatch } from "react-redux";
 import { useVerifyOtpMutation } from "../services/verifyOtpApiSlice";
 import { useEffect, useRef, useState } from "react";
 
-const VerifyEmailOrPhone = ({ role, isOtpVerified }) => {
+const VerifyEmailOrPhone = ({ role, isOtpVerified,verifySignup }) => {
   const navigate = useNavigate();
 
   const navigateToVerifyOtpPage = () => navigate("/verify-otp");
@@ -17,6 +17,19 @@ const VerifyEmailOrPhone = ({ role, isOtpVerified }) => {
   const [error, setError] = useState("");
   const [verifyEmail, { isError, isLoading, isSuccess }] =
     useVerifyEmailMutation();
+
+  const [verifyEmailSignup]=useVerifyEmailSignupMutation();
+
+  const emailSchema = Yup.object({
+    email: Yup.string().email("Invalid email address").required("Email Required"),
+  });
+
+  const otpSchema = Yup.object({
+    otp: Yup.string().matches(/^\d{6}$/, "Invalid OTP").required("OTP is required"),
+  });
+
+  const selectedSchema = !isOtpVerified ? emailSchema : otpSchema
+
   const [
     verifyOtp,
     {
@@ -32,10 +45,14 @@ const VerifyEmailOrPhone = ({ role, isOtpVerified }) => {
   const _onSave = async (values) => {
     console.log("_onSave");
     try {
-      const response = await verifyEmail(values).unwrap();
+      const response =  !verifySignup? await verifyEmail(values).unwrap():await verifyEmailSignup(values).unwrap();
 
       console.log(response);
       if (response.isOtpSend) {
+
+
+
+
         emailRef.current = values.email;
         console.log("navigate to otp page");
         role === "user"
@@ -57,6 +74,14 @@ const VerifyEmailOrPhone = ({ role, isOtpVerified }) => {
       const response = await verifyOtp({ email: email, otp: values.otp });
       console.log(response);
       if (response.data) {
+
+        if(verifySignup){
+          if(role==='user'){
+         return   navigate('/login')
+         }else{
+         return   navigate('/owner/login')
+         }
+         }
        // navigate(`/reset-password/${email}`);
        role === "user"
        ? navigate(`/reset-password/${email}`)
@@ -73,13 +98,14 @@ const VerifyEmailOrPhone = ({ role, isOtpVerified }) => {
   return (
     <Formik
       initialValues={!isOtpVerified ? { email: "" } : { otp: null }}
-      validationSchema={Yup.object({
-        email: Yup.string()
-          .email("Invalid email address")
-          .required("Email Required"),
-        otp: Yup.string(),
-        //.matches(/^\d{6}$/,'invalid otp').required('otp is required')
-      })}
+      // validationSchema={Yup.object({
+      //   email: Yup.string()
+      //     .email("Invalid email address")
+      //     .required("Email Required"),
+      //   otp: Yup.string(),
+      //   //.matches(/^\d{6}$/,'invalid otp').required('otp is required')
+      // })}
+      validationSchema={selectedSchema}
       onSubmit={(values) =>
         !isOtpVerified ? _onSave(values) : handleVerifyOtp(values)
       }
@@ -130,7 +156,7 @@ const VerifyEmailOrPhone = ({ role, isOtpVerified }) => {
 
           <div>
             <ButtonDefault
-              onClick={() => console.log("clll")}
+             // onClick={() => console.log("clll")}
               type={"submit"}
               onSubmit={handleSubmit}
               disabled={isSubmitting}

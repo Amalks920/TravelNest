@@ -24,9 +24,9 @@ const getUserInfoApiSlice = apiSlice.injectEndpoints({
         }),
         invalidatesTags:['user']
     }),
-    verifyEmail:builder.mutation({
+    verifyEmailSignup:builder.mutation({
       query:(data)=>({
-        url:'/auth/verify-email',
+        url:'/auth/verify-email-signup',
         method:'post',
         body:data
       })
@@ -52,6 +52,6 @@ export const {
   useGetWalletDetailsQuery,
   useGetWalletHistoryQuery,
   useGetWalletHistoryLengthQuery,
-  useEditUserNameMutation,useVerifyEmailMutation,
+  useEditUserNameMutation,useVerifyEmailSignupMutation,
   useVerifyOtpMutation,useChangeEmailMutation
 } = getUserInfoApiSlice;

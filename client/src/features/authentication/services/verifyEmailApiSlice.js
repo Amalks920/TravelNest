@@ -11,9 +11,17 @@ export const verifyEmailSlice=apiSlice.injectEndpoints({
                 body:{...credentials}
             }),
             invalidatesTags:['auth']
-        })
+        }),
+        verifyEmailSignup: builder.mutation({
+            query:credentials=>({
+                url:'/auth/verify-email-signup',
+                method:'POST',
+                body:{...credentials}
+            }),
+            invalidatesTags:['auth']
+        }),
     })
 })
 
 
-export const {useVerifyEmailMutation}=verifyEmailSlice;
+export const {useVerifyEmailMutation,useVerifyEmailSignupMutation}=verifyEmailSlice;

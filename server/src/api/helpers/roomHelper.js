@@ -608,7 +608,7 @@ const getAvgReviewOfARoomHelper=async (room_id)=>{
   }
 }
 
-const getRoomsByLocationHelper=async () =>{
+const getRoomsByLocationHelper=async (location) =>{
   try {
     const response = await roomModel.aggregate([
 
@@ -647,6 +647,70 @@ const getRoomsByLocationHelper=async () =>{
   } catch (error) {
     throw error
   }
+}
+
+const filterRoomsByLocationHelper=async (location,collisions)=>{
+try {
+  const response=await roomModel.aggregate([
+    {
+      $lookup: {
+        from: "hotels",
+        localField: "hotel_id",
+        foreignField: "_id",
+        as: "hotelDetails",
+      },
+    },
+    {
+      $unwind: "$hotelDetails",
+    },
+    {
+      $match: {
+        "hotelDetails.status": "listed",
+      },
+    },
+
+
+
+    {
+      $project: {
+        _id: 1,
+        roomType: 1,
+        description: 1,
+        size: 1,
+        amenities: 1,
+        rate: 1,
+        hotel_id: 1,
+        images: 1,
+        bathroomType: 1,
+        rate: 1,
+        hotelName: "$hotelDetails.hotelName",
+        hotelDescription: "$hotelDetails.description",
+        hotelImages: "$hotelDetails.images",
+        location: "$hotelDetails.location",
+      },
+    },
+    {
+      $match:{
+        $and: [
+          {
+            location: {
+              $regex: `${location}`,
+              $options: "i",
+            },
+          },
+          {
+            _id: {
+              $nin: collisions,
+            },
+          },
+        ]    
+      }
+    }
+  ])
+  return response
+} catch (error) {
+  throw error
+}
 }
 
 const getHotelRoomsByLocationHelper= async (location) => {
@@ -717,5 +781,6 @@ module.exports = {
   getARoomHelper,
   findNoOfRoomsAvailableHelper,
   getRoomsByLocationHelper,
-  getHotelRoomsByLocationHelper
+  getHotelRoomsByLocationHelper,
+  filterRoomsByLocationHelper
 };

@@ -151,8 +151,9 @@ console.log(price)
             <button className="border-2 p-1 px-6  border-gray-400">edit checkout</button>
             </div> */}
             {console.log(totalAvailableRooms)}
-            <div className="mt-4 px-1">
+       { totalAvailableRooms>=0?   <div className="mt-4 px-1">
               <label htmlFor="noOfRooms " className="capitalize font-bold text-[0.8rem]">select no of rooms</label>
+              
              <select
              name='noOfRooms'
               value={noOfRooms} 
@@ -161,9 +162,9 @@ console.log(price)
                 dispatch(updateNoOfRooms(e.target.value))
               }
               } 
-              
+               
               className="bg-white w-full h-[40px] px-3 border-[1.3px] border-gray-400 rounded-lg">
-              <option value="0" disabled={totalAvailableRooms<=0}>0</option>
+              <option value="0" disabled={true}>0</option>
               <option value="1" disabled={totalAvailableRooms<1}>1</option>
               <option value="2" disabled={totalAvailableRooms<2} >2</option>
               <option value="3" disabled={totalAvailableRooms<3}>3</option>
@@ -171,7 +172,7 @@ console.log(price)
               <option value="5" disabled={totalAvailableRooms<5}>5</option>
              </select>
 
-            </div >
+            </div >:null}
 
             <Button
               disabled={

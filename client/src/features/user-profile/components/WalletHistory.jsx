@@ -12,7 +12,6 @@ const [pageNumber,setPageNumber]=useState(1)
 console.log(wallet_id)
 
 const {data:walletHistory,isError,isFetching,isLoading,isSuccess}=useGetWalletHistoryQuery({wallet_id,pageNumber})
-
 const {data:walletHistoryLength}=useGetWalletHistoryLengthQuery({wallet_id})
 
 console.log(walletHistory)
@@ -56,7 +55,7 @@ console.log(walletHistory)
     </td>
     <td className="p-4">
       <p className="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
-       {transaction_type}
+       {transaction_type==='deposit'?'refund':'withdrawal'}
       </p>
     </td>
     <td className="p-4">

@@ -175,7 +175,7 @@ const PriceFilter = () => {
         </div>
       </div>
 
-      <h2 className="w-full text-left mt-8 mb-5 ms-[11%] font-bold">Amenities</h2>
+      <h2 className="w-full text-left mt-8 mb-5 ms-[11%] font-bold hidden">Amenities</h2>
               <AmenitiesFilter/>
     </>
   );

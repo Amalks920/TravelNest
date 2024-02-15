@@ -11,6 +11,7 @@ const otpGenerator = require("otp-generator");
 const { findUserHelper } = require("../helpers/userHelper");
 const { createWalletHelper } = require("../helpers/walletHelper");
 const { OAuth2Client } = require("google-auth-library");
+
 const client = new OAuth2Client();
 
 const registerNewUser = async (req, res, next) => {
@@ -179,6 +180,73 @@ const verifyEmail = async (req, res, next) => {
   }
 };
 
+const verifyEmailSignup = async (req, res, next) => {
+  let email = req.body.email;
+  try {
+   
+
+   
+      userEmail = req.body.email;
+      const EMAIL = process.env.MAILGEN_EMAIL;
+      const PASSWORD = process.env.MAILGEN_PASSWORD;
+
+      let config = {
+        service: "gmail",
+        auth: {
+          user: EMAIL,
+          pass: PASSWORD,
+        },
+      };
+
+      let transporter = nodemailer.createTransport(config);
+
+      let MailGenerator = new MailGen({
+        theme: "default",
+        product: {
+          name: "Mailgen",
+          link: "https://mailgen.js/",
+        },
+      });
+
+      let otp = otpGenerator.generate(6, {
+        upperCaseAlphabets: false,
+        specialChars: false,
+        lowerCaseAlphabets: false,
+        digits: true,
+      });
+      let response = {
+        body: {
+          Email: userEmail,
+          intro: `Your OTP ${otp})}`,
+
+          outro: "Expires within 10 minuites",
+        },
+      };
+
+      let mail = MailGenerator.generate(response);
+
+      let message = {
+        from: EMAIL,
+        to: userEmail,
+        subject: "Your OTP",
+        html: mail,
+      };
+
+      transporter.sendMail(message).then(async () => {
+        req.session.otp = otp;
+        req.session.email = email;
+        req.session.isUserOtpSend = true;
+        console.log(req.session);
+
+        res.status(200).json({ isOtpSend: true });
+      });
+
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ error });
+  }
+};
+
 const verifyOtp = async (req, res, next) => {
   let otp = req.body.otp;
   let email = req.body.email;
@@ -190,6 +258,14 @@ const verifyOtp = async (req, res, next) => {
   try {
     console.log(email, otp);
     if (req.session.otp == otp && req.session.email == email) {
+       await userModel.updateOne(
+        {email:email},
+        {
+          $set:{
+            isBlocked:false
+          }
+        }
+        )
       res.status(200).json(true);
     } else {
       res.status(404).json({ msg: "incorrect otp" });
@@ -221,4 +297,5 @@ module.exports = {
   changePassword,
   verifyOtp,
   googleSignIn,
+  verifyEmailSignup
 };
