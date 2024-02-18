@@ -103,11 +103,12 @@ const SingleHotel = () => {
           }}
           className="row-span-1 md:row-span-2 sm:row-span-2 xl:row-span-2 col-span-12 xl:col-start-2 xl:col-end-8 border-2 shadow-md cursor-pointer"
         >
-          <img
+          {/* <img
             src={`${IMAGE_BASE_URL}/${images[1]} `}
             className="w-full h-full rounded-md"
             alt=""
-          />
+          /> */}
+          <div className="w-full h-full rounded-md bg-no-repeat bg-cover" style={{backgroundImage:`url(${IMAGE_BASE_URL}/${images[0]})`}}></div>
         </div>
         <div
           className={`hidden 2xl:grid row-span-1 col-span-2 border-2 bg-cover bg-no-repeat shadow-md rounded-md`}
