@@ -66,7 +66,7 @@ app.use('/api/chat',chatRouter)
 app.use('/api/payment',paymentRouter)
 app.use('/api/search',searchRouter)
 app.use('/api/wallet',walletRouter)
-
+app.use('/api/coupon',couponRouter)
 
 server.listen(4000,async ()=>{
     console.log('server running')

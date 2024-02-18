@@ -16,14 +16,19 @@ import {
   updatePrice,
   selectAvailableRoom,
   selectNoOfDays,
+  selectCouponCode,
+  selectDiscountAmount,
 } from "../services/priceSlice";
 
 //import { selectCheckIn,selectCheckOut } from "../../../services/searchSlice";
-import { selectCheckIn,selectCheckOut } from "../services/priceSlice";
+import { selectCheckIn, selectCheckOut } from "../services/priceSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { loadStripe } from "@stripe/stripe-js";
 import useHandlePayment from "../hooks/useHandlePayment";
-import { useGetWalletAmountQuery, usePaymentMutation } from "../services/paymentApiSlice";
+import {
+  useGetWalletAmountQuery,
+  usePaymentMutation,
+} from "../services/paymentApiSlice";
 import { useEffect, useState } from "react";
 import { Formik } from "formik";
 import { isMatch } from "react-day-picker";
@@ -36,28 +41,32 @@ import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { updateCheckOutDetails } from "../../walletPayment/service/walletCheckOutSlice";
 
-const PriceCard = ({ rate ,roomType,hotel_id,room_id,open,setOpen}) => {
+const PriceCard = ({ rate, roomType, hotel_id, room_id, open, setOpen,couponModalOpen, setCouponModalOpen}) => {
   const selectedCheckInDate = useSelector(selectCheckIn);
   const selectedCheckOutDate = useSelector(selectCheckOut);
-  const totalAvailableRooms = useSelector(selectAvailableRoom)
+  const totalAvailableRooms = useSelector(selectAvailableRoom);
 
   const totalPrice = useSelector(selectTotalPrice);
   const price = useSelector(selectPrice);
- // const roomDetails = useSelector(selectCheckedRooms);
- // const hotel_id = useSelector(selectHotelId);
+  // const roomDetails = useSelector(selectCheckedRooms);
+  // const hotel_id = useSelector(selectHotelId);
   const totalNoRooms = useSelector(selectTotalNumberOfRoom);
-  const noOfDays=useSelector(selectNoOfDays)
-  const user_id=useSelector(selectUserId)
-  const noOfAvailableRoom=useSelector(selectAvailableRoom);
-
+  const noOfDays = useSelector(selectNoOfDays);
+  const user_id = useSelector(selectUserId);
+  const noOfAvailableRoom = useSelector(selectAvailableRoom);
+  const couponCode=useSelector(selectCouponCode)
+  const discountAmount=useSelector(selectDiscountAmount)
+ 
 
   const [payment, { isError, isLoading, isSuccess, error }] =
     usePaymentMutation();
 
-const {data:wallet,isSuccess:isSuccessWallet}=useGetWalletAmountQuery({user_id})
+  const { data: wallet, isSuccess: isSuccessWallet } = useGetWalletAmountQuery({
+    user_id,
+  });
 
-console.log(wallet)
-console.log(price)
+  console.log(wallet);
+  console.log(price);
 
   const [checkInDate, setCheckInDate] = useState(selectedCheckInDate);
   const [checkOutDate, setCheckOutDate] = useState(selectedCheckOutDate);
@@ -68,16 +77,14 @@ console.log(price)
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  console.log(room_id, roomType, noOfRooms, price);
+  const roomDetails = [
+    { id: room_id, roomType: roomType, noOfRooms: noOfRooms, price: price },
+  ];
 
-  console.log(room_id,roomType,noOfRooms,price)
-  const roomDetails=[{id:room_id,roomType:roomType,noOfRooms:noOfRooms,price:price}]
-
-  
-  useEffect(()=>{
-    dispatch(updatePrice(rate*Number(noOfRooms)))
-  },[noOfRooms])
-
-
+  useEffect(() => {
+    dispatch(updatePrice(rate * Number(noOfRooms)-discountAmount ));
+  }, [noOfRooms]);
 
   const handlePayment = async (id) => {
     try {
@@ -109,151 +116,159 @@ console.log(price)
         handleSubmit,
         isSubmitting,
       }) => (
-        <div className="grid grid-flow-row grid-cols-[auto,auto]  sticky m-3 top-0 w-full   rounded-lg ">
-          <div className="col-span-2 p-2">
-            <h2 className="p-3 font-bold text-[1.6rem]">₹ {rate}</h2>
+
+      
+        <div className="grid grid-flow-row grid-cols-[auto,auto] m-3 top-0 w-full sticky self-start  ps-[11px] ">
+          <div className="col-span-2 pt-[20px] ">
+            <h2 className=" text-[1.6rem]">
+              ₹ {rate} <span className="font-light text-[1.1rem]">per day</span>
+            </h2>
           </div>
-          <div className="col-span-2 mt-5">
+          <div className="col-span-2 mt-5 flex flex-wrap pe-2">
             {/* {isError && (
               <h2 className="text-red-600 ps-5 text-[1rem]">please select</h2>
             )} */}
-
-            <Input
-            onClick={()=>{
-              setOpen(!open)
-            }}
-            type="date"
-            value={selectedCheckInDate}
-              datePassed={selectedCheckInDate}
-              setDate={setCheckInDate}
-              name="checkInDate"
-              label={"Check in"}
-              
-              readOnly   
-            />
-
-            <div className="mt-9">
-              <Input
-                onClick={()=>{
-                    setOpen(!open)
+            <div className="  flex ">
+              <input
+                onClick={() => {
+                  setOpen(!open);
                 }}
-              type="date"
-              value={selectedCheckOutDate}
+                className=" border-[1.3px] ps-4 border-gray-600 h-[60px] w-[170px] rounded-tl-lg"
+                type="date"
+                value={selectedCheckInDate}
+                datePassed={selectedCheckInDate}
+                setDate={setCheckInDate}
+                name="checkInDate"
+                label={"Check in"}
+                readOnly
+              />
+
+              <input
+                onClick={() => {
+                  setOpen(!open);
+                }}
+                type="date"
+                className="h-[60px] border-l-0 ps-4  border-[1.3px]  w-[170px]  border-gray-600 rounded-sm rounded-tr-lg"
+                value={selectedCheckOutDate}
                 datePassed={selectedCheckOutDate}
                 //  setDate={setCheckOutDate}
                 name="checkOutDate"
                 label={"Check out"}
                 readOnly
               />
-              
             </div>
-            {/* <div className="mt-4 flex  justify-center mb-[40px]">
-            <button className="border-2 p-1 px-6  border-gray-400">edit checkout</button>
-            </div> */}
-            {console.log(totalAvailableRooms)}
-       { totalAvailableRooms>=0?   <div className="mt-4 px-1">
-              <label htmlFor="noOfRooms " className="capitalize font-bold text-[0.8rem]">select no of rooms</label>
-              
-             <select
-             name='noOfRooms'
-              value={noOfRooms} 
-              onChange={e => {
-                setNoOfRooms(e.target.value)
-                dispatch(updateNoOfRooms(e.target.value))
-              }
-              } 
-               
-              className="bg-white w-full h-[40px] px-3 border-[1.3px] border-gray-400 rounded-lg">
-              <option value="0" disabled={true}>0</option>
-              <option value="1" disabled={totalAvailableRooms<1}>1</option>
-              <option value="2" disabled={totalAvailableRooms<2} >2</option>
-              <option value="3" disabled={totalAvailableRooms<3}>3</option>
-              <option value="4" disabled={totalAvailableRooms<4}>4</option>
-              <option value="5" disabled={totalAvailableRooms<5}>5</option>
-             </select>
+            <div className="">
+              {totalAvailableRooms >= 0 ? (
+                <div className=" px-1">
+                  {/* <label htmlFor="noOfRooms " className="capitalize font-bold text-[0.8rem]">select no of rooms</label> */}
+                </div>
+              ) : null}
+            </div>
 
-            </div >:null}
+            <div className="w-full ">
+              <select
+                name="noOfRooms"
+                value={noOfRooms}
+                onChange={(e) => {
+                  setNoOfRooms(e.target.value);
+                  dispatch(updateNoOfRooms(e.target.value));
+                }}
+                className="bg-white w-[100%] ps-5 h-[60px] border-t-0  border-[1.3px] border-gray-600 rounded-b-lg"
+              >
+                <option value="0" disabled={true}>
+                  0
+                </option>
+                <option value="1" disabled={totalAvailableRooms < 1}>
+                  1
+                </option>
+                <option value="2" disabled={totalAvailableRooms < 2}>
+                  2
+                </option>
+                <option value="3" disabled={totalAvailableRooms < 3}>
+                  3
+                </option>
+                <option value="4" disabled={totalAvailableRooms < 4}>
+                  4
+                </option>
+                <option value="5" disabled={totalAvailableRooms < 5}>
+                  5
+                </option>
+              </select>
+            </div>
 
+            <h2
+            onClick={
+            ()=>{
+              setCouponModalOpen(!couponModalOpen)
+            }}
+             className=" relative top-3 left-[230px] text-[0.9rem] cursor-pointer text-black">
+              Apply Coupon?
+            </h2>
+            
             <Button
               disabled={
-                totalAvailableRooms<=0 || noOfRooms===null || noOfRooms==0 }
+                totalAvailableRooms <= 0 || noOfRooms === null || noOfRooms == 0
+              }
               onClick={async () => {
                 if (token && role === "user") {
                   const response = await payment({
                     roomDetails,
-                    totalPrice:price,
+                    totalPrice: price,
                     checkInDate: selectedCheckInDate,
                     checkOutDate: selectedCheckOutDate,
                     hotel_id,
-                    totalNoRooms:noOfRooms,
-                    noOfDays:noOfDays
+                    totalNoRooms: noOfRooms,
+                    noOfDays: noOfDays,
+                    couponCode:couponCode
                   });
-             
+
                   dispatch(updateCheckIn(checkInDate));
                   dispatch(updateCheckOut(checkOutDate));
                   handlePayment(response.data.id);
-       
                 } else {
                   navigate("/login");
                 }
 
                 // if (isError) return console.log(error);
+                // bg-[#E41D56]
               }}
-              className="w-full mt-8"
+              color="black"
+              className="w-[100%] -ms-[2px] mt-5 py-4 "
             >
               Pay Using Card
             </Button>
+            <div>
             <h2
-            
               onClick={() => {
-             
                 dispatch(
                   updateCheckOutDetails({
                     checkInDate: selectedCheckInDate,
                     checkOutDate: selectedCheckOutDate,
-                    roomDetails:roomDetails,
-                    totalPrice:price,
-                    totalNoRooms:noOfRooms,
-                    hotel_id:hotel_id,
-                    noOfDays:noOfDays
+                    roomDetails: roomDetails,
+                    totalPrice: price,
+                    totalNoRooms: noOfRooms,
+                    hotel_id: hotel_id,
+                    noOfDays: noOfDays,
                   })
                 );
               }}
-              className="text-center mt-2 text-[0.9rem] text-black cursor-pointer capitalize"
-        
+              className="text-center ps-2  mt-2 text-[0.9rem] text-black cursor-pointer capitalize"
             >
-              { wallet?.response[0]?.amount>price  ?
-                <Link to={"/wallet-payment-page"}>Pay Using Wallet</Link>:null
-                
-           
-                }
+              {wallet?.response[0]?.amount > price ? (
+                <Link to={"/wallet-payment-page"}>Pay Using Wallet</Link>
+              ) : null}
             </h2>
-            <div className="mt-6 flex flex-col justify-between mx-3">
-              <div className="w-full mt-6 flex  justify-between mx-3">
-                <h2 className="font-bold">Price</h2>
-                <h2 className="me-3 font-bold">₹ {price}</h2>
+            </div>
+            <div className="mt-[70px] flex flex-col justify-between">
+              <div className="w-full flex  justify-between mx-3">
+                <h2 className="font-normal">Price :</h2>
+                <h2 className="me-3 font-normal">₹ {price}</h2>
               </div>
 
-              {/* {roomDetails.map(({ noOfRooms, price, roomType }, index) => {
-                return (
-                  <div className="w-full mt-6  flex  justify-between mx-3">
-                    <p className="font-bold">{roomType}</p>
-                    <p className="me-3 font-bold text-left">
-                      
-                      ₹ {Number(price) + " " + "x" + " " + Number(noOfRooms)}
-                    </p>
-                  </div>
-                );
-              })} */}
             </div>
           </div>
-
-          {/* <div className="col-span-2 flex flex-col gap-4">
-            <h1 className="ms-3 font-bold">Wallet Balance :</h1>
-              <Button className="w-full">Pay using Wallet</Button>
-          </div> */}
-
         </div>
+   
       )}
     </Formik>
   );

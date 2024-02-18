@@ -55,6 +55,8 @@ import WalletHistoryPage from './pages/user/WalletHistoryPage.jsx';
 import AllBookingsPage from './pages/owner/AllBookingsPage.jsx';
 import SalesReportPage from './pages/admin/SalesReportPage.jsx';
 import HotelsByLocationPage from './pages/user/HotelsByLocationPage.jsx';
+import AddCouponPage from './pages/owner/AddCouponPage.jsx';
+import AllCouponsPage from './pages/owner/AllCouponsPage.jsx';
 
 function App() {
   const token = useSelector(selectToken)
@@ -106,7 +108,6 @@ function App() {
         <Route path='/owner/verify-email' element={<VerifyEmailPage  role={'owner'} isOtpVerified={false} verifySignup={false}/>}></Route>
       <Route path='/owner/verify-otp/:email' element={<VerifyEmailPage role={'owner'} isOtpVerified={true} verifySignup={false} />}></Route>
       <Route path='/owner/verify-otp-signup/:email' element={<VerifyEmailPage role={'user'}  isOtpVerified={true} verifySignup={true}/>}></Route>
-
       <Route path='/owner/reset-password/:email' element={<ResetPasswordPage role={'owner'}/>}></Route>
       </Route>
 
@@ -122,8 +123,9 @@ function App() {
         <Route path='/owner/booking-details/:booking_id' element={<BookingDetailsPage/>}></Route>
         <Route path='/owner/chats' element={<OnwerChatPage socket={socket} />} ></Route>
         <Route path='/owner/all-bookings' element={<AllBookingsPage/>} ></Route>
-        
+        <Route path='/owner/add-coupon' element={<AddCouponPage/>}></Route>
         <Route path='/owner/review/:hotel_id' element={<HotelReviews/>}></Route>
+        <Route path='/owner/all-coupons' element={<AllCouponsPage/>}></Route>
 
       </Route>
        

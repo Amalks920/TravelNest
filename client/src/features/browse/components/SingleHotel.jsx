@@ -17,6 +17,7 @@ import { selectCheckIn, selectCheckOut } from "../services/priceSlice";
 import ReviewSection from "./ReviewSection";
 import { RoomDetailsModal } from "./RoomDetailsModal";
 import { useGetAHotelForUserQuery } from "../services/getAHotelForUserApiSlice";
+import CouponModal from "./CouponModal";
 
 const SingleHotel = () => {
   const [size, setSize] = useState(null);
@@ -30,7 +31,7 @@ const SingleHotel = () => {
   const { hotel_id, room_id,checkIn,checkOut } = useParams();
 
   const [open, setOpen] = useState(true);
-
+  const [couponModalOpen,setCouponModalOpen]=useState(false);
 
 
   const {
@@ -87,7 +88,9 @@ const SingleHotel = () => {
 
       <CheckInCheckOutModal room_id={room_id} checkIn={checkIn} checkOut={checkOut} rate={singleRoom?.rate} open={open} setOpen={setOpen}/>
 
-      <div className="grid grid-cols-12 grid-rows-[100px,200px,200px,auto,auto,auto] pb-14  w-[100%] min-h-[100vh] mt-16  gap-2 px-9 shadow-2xl">
+      <CouponModal couponModalOpen={couponModalOpen} setCouponModalOpen={setCouponModalOpen}/>
+
+      <div className="grid grid-cols-12 grid-rows-[100px,200px,200px,auto,auto,auto] pb-14  w-[100vw] min-h-[100vh] mt-16  gap-2 px-9 shadow-2xl ">
         <div className="row-span-1 col-start-1 md:col-start-2 col-span-10 ">
           <h2 className="font-bold mt-11 ms-2 text-[1rem] sm:text-2xl">
             {hotelName}
@@ -101,13 +104,13 @@ const SingleHotel = () => {
           className="row-span-1 md:row-span-2 sm:row-span-2 xl:row-span-2 col-span-12 xl:col-start-2 xl:col-end-8 border-2 shadow-md cursor-pointer"
         >
           <img
-            src={`${IMAGE_BASE_URL}/${images[2]} `}
+            src={`${IMAGE_BASE_URL}/${images[1]} `}
             className="w-full h-full rounded-md"
             alt=""
           />
         </div>
         <div
-          className={` hidden  2xl:grid row-span-1 col-span-2 border-2 bg-cover bg-no-repeat shadow-md rounded-md`}
+          className={`hidden 2xl:grid row-span-1 col-span-2 border-2 bg-cover bg-no-repeat shadow-md rounded-md`}
           style={{
             backgroundImage: `url(${IMAGE_BASE_URL}/${singleRoom?.images[0]} )`,
           }}
@@ -206,8 +209,12 @@ const SingleHotel = () => {
               })} */}
           </div>
         </div>
-        <div className="row-span-1 md:flex md:justify-center hidden border-2 col-span-3  border-t-2   rounded-lg">
-          <PriceCard price={price} hotel_id={hotel_id} rate={singleRoom?.rate} roomType={singleRoom?.roomType} room_id={room_id} totalAvailableRooms={totalAvailableRoom} open={open} setOpen={setOpen}/>
+        <div className="row-span-1 md:flex md:justify-center hidden border-2 col-span-3 rounded-lg shadow-sm">
+          <PriceCard price={price} hotel_id={hotel_id} rate={singleRoom?.rate}
+           roomType={singleRoom?.roomType} room_id={room_id}
+            totalAvailableRooms={totalAvailableRoom} open={open} setOpen={setOpen}
+             couponModalOpen={couponModalOpen} setCouponModalOpen={setCouponModalOpen}
+             />
         </div>
 
         <div className="row-span-2 col-span-8  flex flex-col ms-[120px] mt-11 ">

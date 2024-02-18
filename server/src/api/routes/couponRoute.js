@@ -1,4 +1,7 @@
 const express=require('express')
+const { addCoupon, getAllCouponsOwner, getAllCoupnsOwnerLength, getAllCouponsUser } = require('../controllers/couponController')
+const verifyOwnerJwt = require('../middlewares/verifyOwnerJwt')
+const verifyJwt = require('../utils/verifyJwt')
 const router=express.Router()
 
 
@@ -29,9 +32,14 @@ const router=express.Router()
  *           description: Bad request
  */
 
-router.post('/add-coupon',(req,res)=>{
-    res.status(200).json({})
-})
+//owner
+router.post('/add-coupon',verifyOwnerJwt,addCoupon)
+router.get('/get-all-coupon-owner',verifyOwnerJwt,getAllCouponsOwner)
+router.get('/get-all-coupons-owner-length',verifyOwnerJwt,getAllCoupnsOwnerLength)
+
+
+//user
+router.get('/get-all-coupon-user',getAllCouponsUser)
 
 
 /**

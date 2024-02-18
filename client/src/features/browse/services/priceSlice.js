@@ -13,7 +13,9 @@ const initialState = {
   room_id:null,
   hotel_id:null,
   checkedRoomIds:[],
-  noOfAvailableRooms:0
+  noOfAvailableRooms:0,
+  couponCode:"",
+  discountAmount:0
 };
 
 const priceSlice = createSlice({
@@ -54,11 +56,7 @@ const priceSlice = createSlice({
       console.log(selectedRooms);
       state.checkedRoomIds=selectedRooms;
       console.log(state.checkedRoomIds)
-      // const id = action.payload;
-      // const indexToDelete = state.checkedRoomIds.findIndex((el) => el === id);
-      // const priceToMinus=state.checkedRoomIds[indexToDelete].price*state.checkedRoomIds[indexToDelete].noOfRooms
       state.totalPrice-=priceToMinus
-      // state.checkedRoomIds.splice(indexToDelete, 1);
     },
 
     updateRoomId:(state,action)=>{
@@ -107,6 +105,17 @@ const priceSlice = createSlice({
       state.price=Number(state.noOfDays)*Number(state.price)*Number(state.noOfRooms);
     },
 
+    updateCouponCode:(state,action)=>{
+      const {code,discount,discountType}=action.payload
+
+      if(state.discountAmount!=0) state.price=state.price+state.discountAmount
+
+      state.couponCode=code;
+      let amountToMinus=discountType==='Fixed'?discount:(state.price*discount)/100
+      state.price=state.price-amountToMinus;
+      state.discountAmount=amountToMinus;
+    }
+
   },
 });
 
@@ -125,6 +134,8 @@ export const selectTotalNumberOfRoom= (state) =>state.priceSlice.totalNoOfRooms
 export const selectRoomType= (state) =>state.priceSlice.roomType
 export const selectAvailableRoom=(state) => state.priceSlice.noOfAvailableRooms
 export const selectNoOfDays=(state) => state.priceSlice.noOfDays
+export const selectCouponCode=(state) => state.priceSlice.couponCode
+export const selectDiscountAmount=(state) => state.priceSlice.discountAmount
 
 export const {
   updateIsModalOpen,
@@ -134,5 +145,6 @@ export const {
   removeUnCheckedRoomId,
   updateRoomId,updateCheckIn,
   updateCheckOut,updateHotelId,
-  updateRoomType,updateNoOfAvailableRooms
+  updateRoomType,updateNoOfAvailableRooms,
+  updateCouponCode
 } = priceSlice.actions;

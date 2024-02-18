@@ -29,6 +29,7 @@ import { updateRooms } from "../services/roomsSlice";
 import {selectCheckIn as searchCheckIn,selectCheckOut as searchCheckOut} from "../../../services/searchSlice";
 
 const CheckInCheckOutModal = ({ room_id,checkIn,checkOut,rate,open,setOpen }) => {
+  console.log(checkIn)
   
   const handleOpen = () => setOpen((cur) => !cur);
   const checkInDate = useSelector(selectCheckIn);
@@ -173,7 +174,7 @@ const CheckInCheckOutModal = ({ room_id,checkIn,checkOut,rate,open,setOpen }) =>
           </CardBody>
           <CardFooter className="pt-0">
             <Button
-              className="my-3"
+              className="my-3 bg-[#E41D56]"
               variant="gradient"
               onClick={() => {
                 handleOpen();
