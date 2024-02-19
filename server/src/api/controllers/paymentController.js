@@ -1,5 +1,5 @@
 const { createBookingHelper } = require("../helpers/bookingHelper");
-const mongoose=require('mongoose')
+const mongoose = require("mongoose");
 const {
   getAHotelHelper,
   getAHotelHelperForOrder,
@@ -10,16 +10,27 @@ const {
 } = require("../helpers/roomHelper");
 const { findUserByUserName } = require("../helpers/userHelper");
 const { checkout } = require("../routes/paymentRoute");
-const { updateWalletAmountHelper, updateWalletHistoryHelper, getWalletAmountHelper } = require("../helpers/walletHelper");
+const {
+  updateWalletAmountHelper,
+  updateWalletHistoryHelper,
+  getWalletAmountHelper,
+} = require("../helpers/walletHelper");
+const { getACouponByCodeHelper, changeCouponCountHelper } = require("../helpers/couponHelper");
 
 require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 const payment = async (req, res, next) => {
   try {
-    console.log(req.body);
-    const { roomDetails, checkInDate, checkOutDate, hotel_id, totalNoRooms, noOfDays } =
-      req.body;
+    const {
+      roomDetails,
+      checkInDate,
+      checkOutDate,
+      hotel_id,
+      totalNoRooms,
+      noOfDays,
+      couponCode,
+    } = req.body;
     const roomIds = [];
 
     roomDetails.forEach((room, index) => {
@@ -37,35 +48,39 @@ const payment = async (req, res, next) => {
       if (matchingRoomType) {
         const rate = matchingRoomType.rate;
         const noOfRooms = parseInt(room.noOfRooms);
-        totalPrice += rate* Number(noOfDays)*noOfRooms;
+        totalPrice += rate * Number(noOfDays) * noOfRooms;
       }
     });
 
-    roomDetails.price=totalPrice;
+    const couponDetails = await getACouponByCodeHelper(couponCode);
 
-    console.log(totalPrice)
-    console.log('totalPrice')
+    let priceAfterDiscount;
+    if (couponDetails) {
+      if (couponDetails?.discountType === "Fixed") {
+        priceAfterDiscount =
+          Number(totalPrice) - Number(couponDetails?.discountAmount);
+      } else {
+        priceAfterDiscount = (couponDetails?.discountAmount * totalPrice) / 100;
+      }
+    } else {
+      priceAfterDiscount = totalPrice;
+    }
+
+    roomDetails.price = priceAfterDiscount;
 
     const findUser = await findUserByUserName(req.user);
     const findHotel = await getAHotelHelperForOrder(hotel_id);
 
     const result = await Promise.all([roomDetailsFromDb, findUser, findHotel]);
 
-    const booking_details = {
-      result,
-      totalPrice,
-      checkInDate,
-      checkOutDate,
-      totalNoRooms,
-    };
-    // const response = await createBookingHelper(
+    // const booking_details = {
     //   result,
     //   totalPrice,
     //   checkInDate,
     //   checkOutDate,
-    //   totalNoRooms
-    // );
-    // console.log(response);
+    //   totalNoRooms,
+    // };
+
 
     const lineItems = roomDetails.map((product) => ({
       price_data: {
@@ -78,8 +93,6 @@ const payment = async (req, res, next) => {
       quantity: 1,
     }));
 
-    console.log(lineItems);
-
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: lineItems,
@@ -89,10 +102,11 @@ const payment = async (req, res, next) => {
       metadata: {
         booking_details: JSON.stringify({
           result,
-          totalPrice,
+          totalPrice:priceAfterDiscount,
           checkInDate,
           checkOutDate,
           totalNoRooms,
+          couponCode,
         }),
         roomDetails: JSON.stringify({
           roomDetails,
@@ -108,12 +122,17 @@ const payment = async (req, res, next) => {
 
 const payUsingWallet = async (req, res, next) => {
   try {
-   
-    let { roomDetails, checkInDate, checkOutDate, hotel_id, totalNoRooms,noOfDays } =
-      req.body;
+    let {
+      roomDetails,
+      checkInDate,
+      checkOutDate,
+      hotel_id,
+      totalNoRooms,
+      noOfDays,
+    } = req.body;
 
-      console.log(roomDetails)
-       console.log('roomDetails')
+    console.log(roomDetails);
+    console.log("roomDetails");
 
     const roomIds = [];
 
@@ -123,20 +142,18 @@ const payUsingWallet = async (req, res, next) => {
 
     const roomDetailsFromDb = await getRoomDetailsByIdHelper(roomIds);
     let totalPrice = 0;
-    let noOfRooms=0
+    let noOfRooms = 0;
 
     roomDetails.forEach((room) => {
       const matchingRoomType = roomDetailsFromDb.find(
         (dbRoom) => dbRoom.roomType == room.roomType
-
-
       );
 
       if (matchingRoomType) {
         const rate = matchingRoomType.rate;
-         noOfRooms = parseInt(room.noOfRooms);
-        
-        totalPrice += Number(rate) * Number(noOfRooms)*Number(noOfDays);
+        noOfRooms = parseInt(room.noOfRooms);
+
+        totalPrice += Number(rate) * Number(noOfRooms) * Number(noOfDays);
       }
     });
 
@@ -145,30 +162,27 @@ const payUsingWallet = async (req, res, next) => {
 
     const result = await Promise.all([roomDetailsFromDb, findUser, findHotel]);
 
-    const room={roomDetails}
-      roomDetails=room;
+    const room = { roomDetails };
+    roomDetails = room;
     const decreaseRoomCountResponse = await decreaseRoomsCount(roomDetails);
-    console.log(result[0])
-    console.log('result[0]')
-    let roomRes=result[0]
 
-    console.log(roomDetails)
-    console.log('rooom deeetails')
+    let roomRes = result[0];
 
-    for(var i=0;i<roomRes.length;i++){
- 
-      for(var j=0;j<roomDetails.roomDetails.length;j++){
-        console.log(roomRes[i]._id, new mongoose.Types.ObjectId(roomDetails.roomDetails[j].id))
-        if(roomRes[i]._id.equals(roomDetails.roomDetails[j].id)){
-          
-          roomRes[i].noOfRooms=roomDetails.roomDetails[j].noOfRooms
+
+    for (var i = 0; i < roomRes.length; i++) {
+      for (var j = 0; j < roomDetails.roomDetails.length; j++) {
+        console.log(
+          roomRes[i]._id,
+          new mongoose.Types.ObjectId(roomDetails.roomDetails[j].id)
+        );
+        if (roomRes[i]._id.equals(roomDetails.roomDetails[j].id)) {
+          roomRes[i].noOfRooms = roomDetails.roomDetails[j].noOfRooms;
         }
       }
     }
 
-    result[0]=roomRes
- 
-    
+    result[0] = roomRes;
+
     const response = await createBookingHelper(
       result,
       totalPrice,
@@ -178,11 +192,15 @@ const payUsingWallet = async (req, res, next) => {
       roomDetails
     );
 
-    await updateWalletAmountHelper({ user_id:findUser._id, amount:-totalPrice,type:'withdrawal' })
+    await updateWalletAmountHelper({
+      user_id: findUser._id,
+      amount: -totalPrice,
+      type: "withdrawal",
+    });
 
     res.status(200).json({});
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(404).json({ error });
   }
 };
@@ -191,13 +209,9 @@ const webHookController = async (req, res, next) => {
   try {
     const { type, data } = req.body;
 
-    console.log('checkout.session.completed coheclskdll time.exe')
-    console.log(type);
-    console.log('checkout.session.completed coheclskdll time.exe')
+
 
     if (type === "checkout.session.completed") {
-
-      
       const bookingDetailsString = data.object.metadata.booking_details;
       const roomDetailsString = data.object.metadata.roomDetails;
       const roomDetails = JSON.parse(roomDetailsString);
@@ -206,26 +220,31 @@ const webHookController = async (req, res, next) => {
 
       const bookingDetails = JSON.parse(bookingDetailsString);
 
-      const { result, totalPrice, checkInDate, checkOutDate, totalNoRooms } =
+      const { result, totalPrice, checkInDate,
+              checkOutDate, totalNoRooms,couponCode } =
         bookingDetails;
 
-        let roomRes=result[0]
+      let roomRes = result[0];
 
-        for(var i=0;i<roomRes.length;i++){
- 
-          for(var j=0;j<roomDetails.roomDetails.length;j++){
-            console.log(roomRes[i]._id, new mongoose.Types.ObjectId(roomDetails.roomDetails[j].id))
-            if( new mongoose.Types.ObjectId(roomRes[i]._id).equals(roomDetails.roomDetails[j].id)){
-              
-              roomRes[i].noOfRooms=Number(roomDetails.roomDetails[j].noOfRooms)
-            }
+      const decreaseCouponCount=await changeCouponCountHelper(couponCode,-1)
+
+      for (var i = 0; i < roomRes.length; i++) {
+        for (var j = 0; j < roomDetails.roomDetails.length; j++) {
+
+          if (
+            new mongoose.Types.ObjectId(roomRes[i]._id).equals(
+              roomDetails.roomDetails[j].id
+            )
+          ) {
+            roomRes[i].noOfRooms = Number(roomDetails.roomDetails[j].noOfRooms);
           }
         }
-    
-        result[0]=roomRes
-        
-       
+      }
 
+      result[0] = roomRes;
+      console.log("checkout.session.completed coheclskdll time.exe");
+            console.log(totalPrice)
+      console.log("checkout.session.completed coheclskdll time.exe");
       const response = await createBookingHelper(
         result,
         totalPrice,
@@ -233,9 +252,8 @@ const webHookController = async (req, res, next) => {
         checkOutDate,
         totalNoRooms
       );
-      console.log(response)
-    
-
+      console.log(response);
+      console.log('boooking response after booking')
       res.status(200).json({ response });
     }
   } catch (error) {
@@ -244,34 +262,33 @@ const webHookController = async (req, res, next) => {
   }
 };
 
-const updateWalletAmount= async (req,res) => {
+const updateWalletAmount = async (req, res) => {
   try {
-    const response=await updateWalletAmountHelper(req.body)
+    const response = await updateWalletAmountHelper(req.body);
     // console.log(response)
-    // const {_id,user_id,amount}=response;
-    // const walletHistoryResponse=await updateWalletHistoryHelper(_id,amount,'withdrawal')
-    console.log(response)
-    res.status(200).json({response})
+
+    console.log(response);
+    res.status(200).json({ response });
   } catch (error) {
-    res.status(200).json({error})
+    res.status(200).json({ error });
   }
-}
+};
 
-const getWalletAmount=async (req,res) =>{
-  const user_id=req.params.user_id
-    try {
-      const response=await getWalletAmountHelper(user_id)
+const getWalletAmount = async (req, res) => {
+  const user_id = req.params.user_id;
+  try {
+    const response = await getWalletAmountHelper(user_id);
 
-      res.status(200).json({response})
-    } catch (error) {
-      res.status(500).json({error})
-    }
-}
+    res.status(200).json({ response });
+  } catch (error) {
+    res.status(500).json({ error });
+  }
+};
 
 module.exports = {
   payment,
   webHookController,
   payUsingWallet,
   updateWalletAmount,
-  getWalletAmount
+  getWalletAmount,
 };

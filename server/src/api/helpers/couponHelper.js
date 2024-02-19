@@ -11,6 +11,15 @@ const addCouponHelper=async (data)=>{
     }
 }
 
+const getACouponByCodeHelper = async (couponCode) =>{
+    try {
+       const response=await couponModal.findOne({code:couponCode}) 
+       return response;
+    } catch (error) {
+        res.status(500).json({error})
+    }
+}
+
 const getAllCouponsOwnerHelper = async () =>{
     try {
         const response=await couponModal.find({})
@@ -38,9 +47,28 @@ const getAllCouponsUserHelper= async () =>{
     }
 }
 
+const changeCouponCountHelper = async (couponCode,valueToChange) => {
+    try {
+       const response=await couponModal.updateOne(
+        {code:couponCode},
+        {
+            $inc:{
+                maxRedemptions:valueToChange
+            }
+        }
+       ) 
+
+       return response
+
+    } catch (error) {
+        throw error
+    }
+}
+
 
 
 module.exports={
     addCouponHelper,getAllCouponsOwnerHelper,
-    getAllCoupnsOwnerLengthHelper,getAllCouponsUserHelper
+    getAllCoupnsOwnerLengthHelper,getAllCouponsUserHelper,
+    getACouponByCodeHelper,changeCouponCountHelper
 }

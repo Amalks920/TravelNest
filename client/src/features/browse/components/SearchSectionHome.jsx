@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useSearchMutation } from "../services/searchApiSlice";
 import { selectRoomType, updateAllDetails } from "../../../services/searchSlice";
-// import { updateCheckIn,updateCheckOut } from "../services/priceSlice";
 import { updateCheckIn,updateCheckOut,updateLocation, updateSearchResult,updateRoomType } from "../../../services/searchSlice";
 
 const SearchSectionHome = () => {
@@ -11,10 +10,6 @@ const SearchSectionHome = () => {
   const [checkOut, setCheckOutDate] = useState(null);
   const [searchString, setSearchString] = useState(null);
   const [roomType,setRoomType]=useState(null)
- // const [roomType,setRoomType]=useState(null);
-
-  //selectors
-  //const roomType=useSelector(selectRoomType)
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -33,10 +28,6 @@ const handleSubmit=async () => {
   const handleSearch = async () => {
     navigate(`/search-page`);
   };
-
-  // console.log(checkIn);
-  // console.log(checkOut);
-  // console.log(searchString);
 
   const getYesterdayDateString = () => {
     const yesterday = new Date();
@@ -91,7 +82,7 @@ const handleSubmit=async () => {
           max={ getFutureDateString(10)}
           className="ps-3 text-[1.1rem]  focus:border-2 border-black"
         />
-        {/* <input className="ps-3 text-[1.1rem] capitalize1 focus:border-2 border-black" /> */}
+
         <select
           value={roomType}
           onChange={e => {
@@ -102,6 +93,7 @@ const handleSubmit=async () => {
           name=""
           id=""
         >
+          <option value='' selected disabled></option>
           <option value="single">single</option>
           <option value="double">double</option>
           <option value="suite">suite</option>

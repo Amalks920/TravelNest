@@ -68,10 +68,7 @@ function CouponModal({ couponModalOpen, setCouponModalOpen }) {
                               dispatch(
                                 updateCouponCode({
                                   code: code,
-                                  discount:
-                                    discountType === "Fixed"
-                                      ? discountAmount
-                                      : percentageDiscount,
+                                  discount:discountAmount,
                                   discountType,
                                 })
                               );

@@ -2,7 +2,10 @@ import { useDispatch, useSelector } from "react-redux";
 import XXLDialog from "../../../components/modals/XXLDialog";
 import useGetAllHotels from "../hooks/useGetAllHotels";
 import Cards from "./Cards";
-import { selectIsSearchBarOpen, updateSearchResult } from "../../../services/searchSlice";
+import {
+  selectIsSearchBarOpen,
+  updateSearchResult,
+} from "../../../services/searchSlice";
 import { Button } from "@material-tailwind/react";
 import SearchSection from "./SearchSection";
 import { HotelCardSkeleton } from "./HotelCardSkeleton";
@@ -11,31 +14,39 @@ import SearchSectionHome from "./SearchSectionHome";
 import { useSearchMutation } from "../services/searchApiSlice";
 import { useNavigate } from "react-router-dom";
 import { useGetAllRoomsLocationMutation } from "../services/getAllHotelsApiSlice";
+import { IMAGE_BASE_URL } from "../../../data/constants";
 
 const Home = () => {
   const isSearchBarOpen = useSelector(selectIsSearchBarOpen);
-  const { hotels,location, isError, isFetching, isLoading, isUninitialized, error } =
-    useGetAllHotels();
+  const {
+    hotels,
+    location,
+    isError,
+    isFetching,
+    isLoading,
+    isUninitialized,
+    error,
+  } = useGetAllHotels();
 
-    // const [search, { isSuccess, reset }] =
-    // useSearchMutation();
+  const [
+    getAllRoomsLocation,
+    {
+      isError: isErrorRoomByLocation,
+      isLoading: isLoadingRoomByLocation,
+      isFetching: isFetchingRoomByLocation,
+    },
+  ] = useGetAllRoomsLocationMutation();
 
-    const [getAllRoomsLocation,
-      {
-        isError:isErrorRoomByLocation,
-        isLoading:isLoadingRoomByLocation,
-        isFetching:isFetchingRoomByLocation
-      }]=useGetAllRoomsLocationMutation()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [hotelLocation,setLocation]=useState(0)
 
-    const dispatch=useDispatch()
-    const navigate=useNavigate()
+  const handleSearch = async () => {
+    navigate(`/search-page`);
+  };
 
-    const handleSearch = async () => {
-      navigate(`/search-page`);
-    };
-    
   return (
-    <div className=" grid grid-flow-row grid-cols-1 md:grid-cols-4 xl:grid-cols-3  w-[100vw] ">
+    <div className=" grid grid-flow-row grid-cols-1 md:grid-cols-4 xl:grid-cols-3  w-[100vw] bg-gray-100">
       <div
         className="absolute row-span-1 h-[270px] col-span-full w-[100vw]  bg-cover flex flex-col justify-center items-center -ms-2 -mt-5"
         style={{
@@ -51,10 +62,34 @@ const Home = () => {
           backgroundImage: `url(${"https://assets.oyoroomscdn.com/cmsMedia/6e9d9804-9c6f-4b18-a5d5-5e9a8f9815e5.jpg"})`,
         }}
       ></div>
-      <div className="row-span-1 col-span-full">
-        <h1 className="text-center font-bold text-[1.8rem]">Popular Locations</h1>
+      <div className="row-span-1 col-span-full  min-h-[100vh]">
+        {/* <h1 className="text-center font-bold text-[1.8rem] m">Popular Locations</h1> */}
+        <div className="w-[91%] h-[35%] ms-[5%] rounded-lg shadow-md border-2 bg-white">
+          <div className="border-b-2 h-[60px] flex gap-4 justify-left items-center px-[50px]">
+            {location?.map(({ _id, hotelImages }, index) => {
+              return <h2
+              onClick={()=>{
+                setLocation(index)
+              }}
+               className={`capitalize cursor-pointer  text-[1.1rem] ${hotelLocation===index? 'border-b-4 border-black font-bold':null}
+                text-center   w-full h-[100%] pt-4`}>{_id}</h2>;
+            })}
+          </div>
+
+            <div className="flex gap-4 justify-left items-center px-[50px] ">
+          {location?.map(({ _id, hotelImages }, index) => {
+           
+            return   <div className=" text-center  w-full h-[100%] pt-4" >
+              {/* <img src={} alt="no img" /> */}
+              <div className="w-[80%] h-[170px] bg-cover cursor-pointer" style={{backgroundImage:`url(${IMAGE_BASE_URL+'/'+hotelImages[0][0]})`}}></div>
+            </div>
+          
+        })}
+          </div>
+        </div>
       </div>
-      {isLoading || isFetching || isUninitialized ? (
+
+      {/* {isLoading || isFetching || isUninitialized ? (
         <>
           <div className=" col-span-2 lg:col-span-2  mb-6   xl:col-span-1">
             <HotelCardSkeleton />
@@ -100,7 +135,7 @@ const Home = () => {
           </div>
         ))
 
-      )}
+      )} */}
     </div>
   );
 };

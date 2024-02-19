@@ -18,6 +18,8 @@ import {
   selectNoOfDays,
   selectCouponCode,
   selectDiscountAmount,
+  selectDisocunt,
+  selectDisocuntType,
 } from "../services/priceSlice";
 
 //import { selectCheckIn,selectCheckOut } from "../../../services/searchSlice";
@@ -45,15 +47,10 @@ const PriceCard = ({ rate, roomType, hotel_id, room_id, open, setOpen,couponModa
   const selectedCheckInDate = useSelector(selectCheckIn);
   const selectedCheckOutDate = useSelector(selectCheckOut);
   const totalAvailableRooms = useSelector(selectAvailableRoom);
-
-  const totalPrice = useSelector(selectTotalPrice);
   const price = useSelector(selectPrice);
-  // const roomDetails = useSelector(selectCheckedRooms);
-  // const hotel_id = useSelector(selectHotelId);
-  const totalNoRooms = useSelector(selectTotalNumberOfRoom);
+
   const noOfDays = useSelector(selectNoOfDays);
   const user_id = useSelector(selectUserId);
-  const noOfAvailableRoom = useSelector(selectAvailableRoom);
   const couponCode=useSelector(selectCouponCode)
   const discountAmount=useSelector(selectDiscountAmount)
  
@@ -65,14 +62,13 @@ const PriceCard = ({ rate, roomType, hotel_id, room_id, open, setOpen,couponModa
     user_id,
   });
 
-  console.log(wallet);
-  console.log(price);
-
   const [checkInDate, setCheckInDate] = useState(selectedCheckInDate);
   const [checkOutDate, setCheckOutDate] = useState(selectedCheckOutDate);
-  const [noOfRooms, setNoOfRooms] = useState(null);
+  const [noOfRooms, setNoOfRooms] = useState(1);
   const role = useSelector(selectRole);
   const token = useSelector(selectToken);
+  const discount=useSelector(selectDisocunt)
+  const discountType=useSelector(selectDisocuntType)
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -83,7 +79,8 @@ const PriceCard = ({ rate, roomType, hotel_id, room_id, open, setOpen,couponModa
   ];
 
   useEffect(() => {
-    dispatch(updatePrice(rate * Number(noOfRooms)-discountAmount ));
+    
+    dispatch(updatePrice(rate * Number(noOfRooms) ));
   }, [noOfRooms]);
 
   const handlePayment = async (id) => {
@@ -125,9 +122,7 @@ const PriceCard = ({ rate, roomType, hotel_id, room_id, open, setOpen,couponModa
             </h2>
           </div>
           <div className="col-span-2 mt-5 flex flex-wrap pe-2">
-            {/* {isError && (
-              <h2 className="text-red-600 ps-5 text-[1rem]">please select</h2>
-            )} */}
+
             <div className="  flex ">
               <input
                 onClick={() => {
@@ -160,7 +155,6 @@ const PriceCard = ({ rate, roomType, hotel_id, room_id, open, setOpen,couponModa
             <div className="">
               {totalAvailableRooms >= 0 ? (
                 <div className=" px-1">
-                  {/* <label htmlFor="noOfRooms " className="capitalize font-bold text-[0.8rem]">select no of rooms</label> */}
                 </div>
               ) : null}
             </div>
@@ -173,7 +167,7 @@ const PriceCard = ({ rate, roomType, hotel_id, room_id, open, setOpen,couponModa
                   setNoOfRooms(e.target.value);
                   dispatch(updateNoOfRooms(e.target.value));
                 }}
-                className="bg-white w-[100%] ps-5 h-[60px] border-t-0  border-[1.3px] border-gray-600 rounded-b-lg"
+                className="bg-white w-[98.1%] ps-5 h-[60px] border-t-0  border-[1.3px] border-gray-600 rounded-b-lg"
               >
                 <option value="0" disabled={true}>
                   0
@@ -229,7 +223,7 @@ const PriceCard = ({ rate, roomType, hotel_id, room_id, open, setOpen,couponModa
                   navigate("/login");
                 }
 
-                // if (isError) return console.log(error);
+         
                 // bg-[#E41D56]
               }}
               color="black"
@@ -259,11 +253,17 @@ const PriceCard = ({ rate, roomType, hotel_id, room_id, open, setOpen,couponModa
               ) : null}
             </h2>
             </div>
-            <div className="mt-[70px] flex flex-col justify-between">
-              <div className="w-full flex  justify-between mx-3">
-                <h2 className="font-normal">Price :</h2>
-                <h2 className="me-3 font-normal">₹ {price}</h2>
+            <div className="mt-[10px] flex flex-col justify-center items-center  w-full">
+              <div className="w-[100%] flex  justify-between mx-3 px-2">
+                <h2 className="font-extralight text-[1.1rem]">price :</h2>
+                <h2 className="me-3 font-extralight text-[1.1rem]">₹ {price}</h2>
               </div>
+
+              <div className="w-[100%] flex  justify-between mx-3 px-2 mt-[20px]">
+                <h2 className="font-extralight text-[1.1rem]">Discount :</h2>
+                <h2 className="me-3 font-bold text-[1.1rem] text-green-700">{ discount } {discountType==='Fixed'?'':'%'} </h2>
+              </div>
+
 
             </div>
           </div>

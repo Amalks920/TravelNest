@@ -1,32 +1,24 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import React from "react";
 import XXLDialog from "../../../components/modals/XXLDialog";
-import { Field } from "formik";
-import { Select, Button, Spinner } from "@material-tailwind/react";
-import { FormInput } from "../../../components/form/FormInput";
-import DatePicker from "../../../components/form/DatePicker";
+import { Spinner } from "@material-tailwind/react";
 import { Link, useParams } from "react-router-dom";
 import useGetAHotel from "../hooks/useGetAHotel";
 import { IMAGE_BASE_URL } from "../../../data/constants";
-import RoomSection from "./RoomSection";
 import PriceCard from "./PriceCard";
 import CheckInCheckOutModal from "./CheckInCheckOutModal";
 import { useSelector } from "react-redux";
 import { selectRooms } from "../services/roomsSlice";
-import { selectCheckIn, selectCheckOut } from "../services/priceSlice";
 import ReviewSection from "./ReviewSection";
 import { RoomDetailsModal } from "./RoomDetailsModal";
-import { useGetAHotelForUserQuery } from "../services/getAHotelForUserApiSlice";
 import CouponModal from "./CouponModal";
 
 const SingleHotel = () => {
   const [size, setSize] = useState(null);
   const [imagesToPass, setImages] = useState([]);
-  const [isAccordionOpen, setIsAccordionOpen] = useState(-1);
   const [price, setPrice] = useState(0);
   const [viewDetailsModal, setViewDetailsModal] = useState(false);
 
-  const roomss = useSelector(selectRooms);
 
   const { hotel_id, room_id,checkIn,checkOut } = useParams();
 
@@ -70,8 +62,6 @@ const SingleHotel = () => {
   const singleRoom = room?.response[0];
   const totalAvailableRoom=room?.totalAvailableRoom;
 
-  
-  const rooms = hotel?.response[1];
   const reviews = hotel?.response[2];
 
   return (
@@ -103,11 +93,6 @@ const SingleHotel = () => {
           }}
           className="row-span-1 md:row-span-2 sm:row-span-2 xl:row-span-2 col-span-12 xl:col-start-2 xl:col-end-8 border-2 shadow-md cursor-pointer"
         >
-          {/* <img
-            src={`${IMAGE_BASE_URL}/${images[1]} `}
-            className="w-full h-full rounded-md"
-            alt=""
-          /> */}
           <div className="w-full h-full rounded-md bg-no-repeat bg-cover" style={{backgroundImage:`url(${IMAGE_BASE_URL}/${images[0]})`}}></div>
         </div>
         <div
@@ -186,31 +171,9 @@ const SingleHotel = () => {
                 </button>
               </div>
             </div>
-
-            {/*  {!roomss && <h1>RoomsList Empty</h1>}
-            {roomss &&
-              roomss?.map((room, index) => {
-                return (
-                  <div
-                    className="flex  items-center"
-                    key={index}
-                    onClick={() => {
-                      setIsAccordionOpen(index);
-                    }}
-                  >
-                    <RoomSection
-                      setImages={setImages}
-                      setSize={setSize}
-                      isAccordionOpen={isAccordionOpen === index}
-                      roomType={room._id}
-                      rooms={room.rooms}
-                    />
-                  </div>
-                );
-              })} */}
           </div>
         </div>
-        <div className="row-span-1 md:flex md:justify-center hidden border-2 col-span-3 rounded-lg shadow-sm">
+        <div className="row-span-1 md:flex md:justify-center hidden  col-span-3 rounded-lg shadow-sm">
           <PriceCard price={price} hotel_id={hotel_id} rate={singleRoom?.rate}
            roomType={singleRoom?.roomType} room_id={room_id}
             totalAvailableRooms={totalAvailableRoom} open={open} setOpen={setOpen}

@@ -9,6 +9,7 @@ import { Field, Formik } from "formik";
 import * as Yup from "yup";
 import { useAddCouponMutation } from "../services/couponApiSlice";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const TABLE_HEAD = ["Booking Id", "Hotel Name", "User Name", "Status", ""];
 
@@ -21,12 +22,14 @@ const getYesterdayDateString = () => {
 };
 
 const AddCoupon = () => {
-  // const [discountType,setDiscountType]=useState(null)
+
   const [addCoupon, { isError, isLoading, isSuccess }] = useAddCouponMutation();
+  const navigate=useNavigate()
 
   async function _onSave(values) {
     console.log(values);
     await addCoupon({ values });
+    navigate('/owner/all-coupons')
   }
 
   return (
@@ -36,7 +39,7 @@ const AddCoupon = () => {
           code: "",
           discountAmount: null,
           minimumAmount: null,
-          maximumRedemption: null,
+          maxRedemptions: null,
           expirationDate: "",
           description: "",
           discountType: "",
@@ -45,7 +48,7 @@ const AddCoupon = () => {
           code: Yup.string().min(8).max(20).required(),
           discountAmount: Yup.number().required(),
           minimumAmount: Yup.number().required(),
-          maximumRedemption: Yup.number().required(),
+          maxRedemptions: Yup.number().required(),
           expirationDate: Yup.date().required(),
           description: Yup.string()
             .min(30, "description should contain atleast 30 characters")
@@ -168,21 +171,21 @@ const AddCoupon = () => {
                 onBlur={handleBlur}
                 value={values.max}
                 error={
-                  errors.maximumRedemption &&
-                  touched.maximumRedemption &&
-                  errors.maximumRedemption
+                  errors.maxRedemptions &&
+                  touched.maxRedemptions &&
+                  errors.maxRedemptions
                 }
                 success={
-                  !errors.maximumRedemption && touched.maximumRedemption
+                  !errors.maxRedemptions && touched.maxRedemptions
                     ? true
                     : false
                 }
                 label={
-                  !errors.maximumRedemption
+                  !errors.maxRedemptions
                     ? "Maximum Redemption"
-                    : errors.maximumRedemption
+                    : errors.maxRedemptions
                 }
-                name="maximumRedemption"
+                name="maxRedemptions"
                 min={1}
                 type="Number"
                 className="border-2 rounded-md"
@@ -233,7 +236,7 @@ const AddCoupon = () => {
               ></Textarea>
             </div>
             <div className="col-span-2 px-5 flex items-center justify-center ">
-              <Button type="submit" className="rounded-md w-[30%] bg-black">
+              <Button loading={isLoading} type="submit" className="rounded-md w-[30%] bg-black">
                 Submit
               </Button>
             </div>
