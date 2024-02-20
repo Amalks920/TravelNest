@@ -384,6 +384,33 @@ const getRatingOfAHotelHelper=async (hotel_id)=>{
   }
 }
 
+const getAllHotelIdsHelper= async (owner_id) => {
+  try {
+    const response=await hotelModel.aggregate([
+      {
+        $match:{
+          owner_id:new mongoose.Types.ObjectId(owner_id)
+        }
+      },
+      {
+        $project:{
+          _id:1
+        }
+      },
+      {
+        $group:{
+          _id:null,
+          hotelIds:{$push:'$_id'}
+        }
+      }
+    ])
+
+    return response[0].hotelIds
+  } catch (error) {
+    throw error
+  }
+}
+
 
 
 module.exports = {
@@ -404,5 +431,6 @@ module.exports = {
   findHotelByLocationHelper,
   getRatingOfAHotelHelper,
   getAllHotelsLengthHelper,
-  getAllHotelForAdminLengthHelper
+  getAllHotelForAdminLengthHelper,
+  getAllHotelIdsHelper
 };

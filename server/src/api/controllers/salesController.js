@@ -1,4 +1,5 @@
-const { getSalesReportHelper, getSalesReportByDateHelper, getSalesReportForOwnerHelper, getSalesReportForOwnerHotelsHelper } = require("../helpers/salesHelper")
+const { getAllHotelIdsHelper } = require("../helpers/hotelHelper")
+const { getSalesReportHelper, getSalesReportByDateHelper, getSalesReportForOwnerHelper, getSalesReportForOwnerHotelsHelper, getSalesPerTwoWeekHelper, getSalesPerMonthHelper, getSalesPerDayHelper, getYearlyReportHelper } = require("../helpers/salesHelper")
 
 
 const getSalesReport=async (req,res)=>{
@@ -48,9 +49,60 @@ const getSalesReportForOwnerHotels = async (req,res) =>{
     }
 }
 
+const getSalesPerTwoWeek= async (req,res)=>{
+    try {
+    const owner_id=req.params.owner_id
+    const hotelIdArray=await getAllHotelIdsHelper(owner_id)
+     const response = await getSalesPerTwoWeekHelper(hotelIdArray)
+     res.status(200).json({response})
+    } catch (error) {
+        res.status(500).json({error})
+    }
+}
+const getSalesPerMonth= async (req,res)=>{
+    try {
+    const owner_id=req.params.owner_id
+    const hotelIdArray=await getAllHotelIdsHelper(owner_id)
+     const response = await getSalesPerMonthHelper(hotelIdArray)
+     res.status(200).json({response})
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({error})
+    }
+}
+const getSalesPerDay= async (req,res)=>{
+    try {
+    const owner_id=req.params.owner_id
+    const hotelIdArray=await getAllHotelIdsHelper(owner_id)
+     const response = await getSalesPerDayHelper(hotelIdArray)
+     res.status(200).json({response})
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({error})
+    }
+}
+const getSalesPerYear= async (req,res)=>{
+    try {
+    const owner_id=req.params.owner_id
+    const hotelIdArray=await getAllHotelIdsHelper(owner_id)
+     const response = await getYearlyReportHelper(hotelIdArray)
+     
+     res.status(200).json({response})
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({error})
+    }
+}
+
+
+
+
+
 module.exports={
     getSalesReport,getSalesReportByDate,
     getSalesReportForOwner,
-    getSalesReportForOwnerHotels
-    
+    getSalesReportForOwnerHotels,
+    getSalesPerTwoWeek,
+    getSalesPerMonth,
+    getSalesPerDay,getSalesPerYear
 }

@@ -59,6 +59,7 @@ import AddCouponPage from './pages/owner/AddCouponPage.jsx';
 import AllCouponsPage from './pages/owner/AllCouponsPage.jsx';
 import OwnerSalesPage from './pages/owner/OwnerSalesPage.jsx';
 import OwnerSalesByHotelPage from './pages/owner/OwnerSalesByHotelPage.jsx';
+import OwnerHomePage from './pages/owner/OwnerHomePage.jsx';
 
 function App() {
   const token = useSelector(selectToken)
@@ -114,6 +115,7 @@ function App() {
       </Route>
 
         <Route element={<RequireOwnerAuth allowedRole={'owner'} />}>
+          <Route path='/owner/home' element={<OwnerHomePage/>}></Route>
         <Route path="/owner/register-hotel" element={<HotelRegistration isEditForm={false} />} />
         <Route path="/owner/edit-hotel/:hotel_id" element={<HotelRegistration isEditForm={true} />} />
         <Route path="/owner/edit-room/:hotel_id/:_id" element={<RoomRegistration isEditForm={true} />} />
