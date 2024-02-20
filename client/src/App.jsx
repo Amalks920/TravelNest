@@ -57,6 +57,8 @@ import SalesReportPage from './pages/admin/SalesReportPage.jsx';
 import HotelsByLocationPage from './pages/user/HotelsByLocationPage.jsx';
 import AddCouponPage from './pages/owner/AddCouponPage.jsx';
 import AllCouponsPage from './pages/owner/AllCouponsPage.jsx';
+import OwnerSalesPage from './pages/owner/OwnerSalesPage.jsx';
+import OwnerSalesByHotelPage from './pages/owner/OwnerSalesByHotelPage.jsx';
 
 function App() {
   const token = useSelector(selectToken)
@@ -126,6 +128,8 @@ function App() {
         <Route path='/owner/add-coupon' element={<AddCouponPage/>}></Route>
         <Route path='/owner/review/:hotel_id' element={<HotelReviews/>}></Route>
         <Route path='/owner/all-coupons' element={<AllCouponsPage/>}></Route>
+        <Route path='/owner/sales-report/:hotel_id' element={<OwnerSalesPage/>}></Route>
+        <Route path='/owner/sales-report-hotels' element={<OwnerSalesByHotelPage/>}></Route>
 
       </Route>
        

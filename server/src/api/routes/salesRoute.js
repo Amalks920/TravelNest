@@ -1,6 +1,7 @@
 const express=require('express')
-const { getSalesReport, getSalesReportByDate } = require('../controllers/salesController')
-const verifyAdminJwt = require('../middlewares/verifyAdminJwt')
+const { getSalesReport, getSalesReportByDate, getSalesReportForOwner, getSalesReportForOwnerHotels } = require('../controllers/salesController')
+const verifyAdminJwt = require('../middlewares/verifyAdminJwt');
+const verifyOwnerJwt = require('../middlewares/verifyOwnerJwt');
 const router=express.Router()
 
 /**
@@ -79,6 +80,10 @@ const router=express.Router()
 router.get('/get-all-sales-report-for-admin',verifyAdminJwt,getSalesReport);
 
 router.get('/get-sales-by-date-admin/:startDate/:endDate',verifyAdminJwt,getSalesReportByDate)
+router.get('/filter-owner-sales-by-date/:startDate/:endDate',verifyOwnerJwt,getSalesReportByDate)
+
+router.get('/get-sales-report-booking/:hotel_id',verifyOwnerJwt,getSalesReportForOwner)
+router.get('/get-sales-report-hotel-owner/:user_id',verifyOwnerJwt,getSalesReportForOwnerHotels)
 
 
 

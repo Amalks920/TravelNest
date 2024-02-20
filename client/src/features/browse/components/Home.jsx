@@ -80,7 +80,6 @@ const Home = () => {
           {location?.map(({ _id, hotelImages }, index) => {
            
             return   <div className=" text-center  w-full h-[100%] pt-4" >
-              {/* <img src={} alt="no img" /> */}
               <div className="w-[80%] h-[170px] bg-cover cursor-pointer" style={{backgroundImage:`url(${IMAGE_BASE_URL+'/'+hotelImages[0][0]})`}}></div>
             </div>
           
@@ -88,54 +87,6 @@ const Home = () => {
           </div>
         </div>
       </div>
-
-      {/* {isLoading || isFetching || isUninitialized ? (
-        <>
-          <div className=" col-span-2 lg:col-span-2  mb-6   xl:col-span-1">
-            <HotelCardSkeleton />
-          </div>
-
-          <div className=" col-span-2 lg:col-span-2  mb-6   xl:col-span-1">
-            <HotelCardSkeleton />
-          </div>
-
-          <div className=" col-span-2 lg:col-span-2  mb-6   xl:col-span-1">
-            <HotelCardSkeleton />
-          </div>
-
-          <div className=" col-span-2 lg:col-span-2  mb-6   xl:col-span-1">
-            <HotelCardSkeleton />
-          </div>
-        </>
-      ) : (
-        location?.map(({ _id, hotelImages }, index) => (
-          <div
-          onClick={async ()=>{
-           // const searchResult=await search({location:_id, checkIn: null, checkOut: null, roomType: null})
-          //  console.log(searchResult)
-          // const searchResult=await getAllRoomsLocation({location:_id})
-          //   dispatch(updateSearchResult(searchResult?.data?.response))
-          //   handleSearch()
-            
-          }}
-            key={_id}
-            className={`${
-              (index ===0 || index%3===0)  && " "
-            } col-span-2 lg:col-span-2 xl:col-span-1 mt-[70px] ms-[17%] cursor-pointer`}
-          >
-            <Cards
-            text={_id}
-            images={hotelImages[0]}
-              // hotel_id={_id}
-              // hotelName={hotelName}
-              // price={price}
-              // description={description}
-              // images={images}
-            />
-          </div>
-        ))
-
-      )} */}
     </div>
   );
 };
