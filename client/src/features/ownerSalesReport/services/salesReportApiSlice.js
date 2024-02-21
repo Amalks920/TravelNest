@@ -12,7 +12,14 @@ const salesReportApiSlice=apiSlice.injectEndpoints({
 
         filterOwnerSalesByDate:builder.mutation({
             query:(data)=>`/sales/filter-owner-sales-by-date/${data.startDate}/${data.endDate}`
+        }),
+        downloadSalesReport:builder.mutation({
+            query:(data)=>`/sales/download-sales-report`
+        }),
+        filterBookingsByDate:builder.mutation({
+            query:(data)=>`/sales/filter-bookings-by-date/${data.startDate}/${data.endDate}`
         })
+        
         
     }),
 
@@ -24,5 +31,7 @@ const salesReportApiSlice=apiSlice.injectEndpoints({
 export const {
     useGetSalesReportForOwnerMutation,
     useGetSalesReportBookingsQuery,
-    useFilterOwnerSalesByDateMutation
+    useFilterOwnerSalesByDateMutation,
+    useDownloadSalesReportMutation,
+    useFilterBookingsByDateMutation
 } = salesReportApiSlice;

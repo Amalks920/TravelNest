@@ -38,6 +38,50 @@ export function Sidebar() {
   return (
     <Card className="h-[calc(100vh-2rem)] fixed w-fit max-w-[20rem] p-4 rounded-none z-10">
       <List>
+
+      <Accordion
+          open={open === 3}
+          icon={
+            <ChevronDownIcon
+              strokeWidth={2.5}
+              className={`mx-auto h-4 w-4 transition-transform ${open === 3 ? "rotate-180" : ""}`}
+            />
+          }
+        >
+          <ListItem className="p-0" >
+            <AccordionHeader onClick={() => console.log()} className="border-b-0 p-3">
+              <ListItemPrefix>
+                <HomeModernIcon className="h-5 w-5" />
+              </ListItemPrefix>
+              <Typography color="blue-gray" className="mr-auto font-normal">
+             <Link to={role==='owner'?'/owner/home':'/admin/home'}> { 'Dashboard'}</Link> 
+              </Typography>
+            </AccordionHeader>
+          </ListItem>
+
+          {/* <AccordionBody className="py-1">
+            <List className="p-0">
+              <ListItem>
+                <ListItemPrefix>
+                  <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                </ListItemPrefix>
+                <Link to={role==='owner'?'/owner/home':role==='admin'?'/admin/home':null}>{role==='owner'?'Register Hotel':role==='admin'?'users list':null}</Link>
+              </ListItem>
+
+              {
+
+              
+            role==='owner'?(<ListItem>
+                <ListItemPrefix>
+                  <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                </ListItemPrefix>
+                <Link to={'/owner/hotel-list'}>Hotel List</Link>  
+              </ListItem>):null
+              }
+
+            </List>
+          </AccordionBody> */}
+        </Accordion>
         <Accordion
           open={open === 3}
           icon={

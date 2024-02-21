@@ -3,8 +3,17 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import useGetSales from "../hooks/userGetSales";
 import useGetSalesByDate from "../hooks/useGetSalesByDate";
+import { useDownloadSalesReportMutation } from "../services/salesReportApiSlice";
+import { getYesterdayDateString } from "../../../utils/formatDate";
+
+
 
 const OwnerSalesByHotel = () => {
+
+  const [downloadSalesReport]=useDownloadSalesReportMutation()
+
+
+
   const [salesReport, setBookingDetails] = useState([]);
 
   const [startDate, setStartDate] = useState(null);
@@ -30,6 +39,8 @@ const OwnerSalesByHotel = () => {
               onInput={(e) => {
                 setStartDate(e.target.value);
               }}
+              
+              max={endDate || getYesterdayDateString()}
               className="h-[40px]  bg-blue-gray-50 w-[25%] text-[0.7rem] ps-2  rounded-lg "
               type="date"
             />
@@ -37,6 +48,8 @@ const OwnerSalesByHotel = () => {
               onInput={(e) => {
                 setEndDate(e.target.value);
               }}
+              min={startDate}
+              max={startDate || getYesterdayDateString()}
               className="h-[40px] bg-blue-gray-50 w-[25%] text-[0.7rem] ps-2 rounded-lg "
               type="date"
             />
@@ -49,7 +62,14 @@ const OwnerSalesByHotel = () => {
             >
               Update search
             </button>
-            <button className="text-[0.8rem]">Download Report</button>
+
+            <button 
+            onClick={async ()=>{
+              await downloadSalesReport()
+              
+            }}
+            className="text-[0.8rem]">Download Report</button>
+            {/* <button className="text-[0.8rem]">Download Report</button> */}
           </div>
         </div>
 
@@ -73,8 +93,8 @@ const OwnerSalesByHotel = () => {
                 <div className="text-[0.8rem] w-full">
                   {sales?.totalRevenue}
                 </div>
-                <div className="text-[0.8rem] w-full">Total Bookings</div>
-                <div className="text-[0.8rem] w-full text-blue-900 cursor-pointer">
+                <div className="text-[0.8rem] w-full">{sales?.bookings.length}</div>
+                <div className="text-[0.6rem] w-full text-blue-900 cursor-pointer">
                   <Link to={`/owner/sales-report/${sales?.hotel_id}`}>
                     View Details
                   </Link>

@@ -25,6 +25,7 @@
     "otp-generator": "^4.0.1",
     "path": "^0.12.7",
     "pino": "^8.16.2",
+    "puppeteer": "^22.1.0",
     "query-string": "^8.1.0",
     "redis": "^4.6.12",
     "socket.io": "^4.7.4",

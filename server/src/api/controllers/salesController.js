@@ -1,5 +1,5 @@
 const { getAllHotelIdsHelper } = require("../helpers/hotelHelper")
-const { getSalesReportHelper, getSalesReportByDateHelper, getSalesReportForOwnerHelper, getSalesReportForOwnerHotelsHelper, getSalesPerTwoWeekHelper, getSalesPerMonthHelper, getSalesPerDayHelper, getYearlyReportHelper } = require("../helpers/salesHelper")
+const { getSalesReportHelper, getSalesReportByDateHelper, getSalesReportForOwnerHelper, getSalesReportForOwnerHotelsHelper, getSalesPerTwoWeekHelper, getSalesPerMonthHelper, getSalesPerDayHelper, getYearlyReportHelper, downloadOwnerSalesPdfHelper, filterBookingsByDateHelper, getBookingsGroupedHelper, getAllHotelsMonthlySalesHelper } = require("../helpers/salesHelper")
 
 
 const getSalesReport=async (req,res)=>{
@@ -94,6 +94,50 @@ const getSalesPerYear= async (req,res)=>{
     }
 }
 
+const filterBookingsByDate= async (req,res) =>{
+
+    try {
+        const {startDate,endDate}=req.params
+        console.log(startDate,endDate)
+        const response=await filterBookingsByDateHelper(startDate,endDate)
+        console.log(response)
+        res.status(200).json({response})
+    } catch (error) {
+        console.log(error)
+       res.status(500).json({error}) 
+    }
+}
+
+
+const downloadSalesReport= async (req,res) => {
+    try {
+     const response= await downloadOwnerSalesPdfHelper() 
+     res.download(response);
+    } catch (error) {
+        res.status(500).json({error})
+    }
+}
+
+const getBookingsGrouped = async (req,res) => {
+    try {
+      const owner_id=req.params.owner_id
+      const hotelIdArray=await getAllHotelIdsHelper(owner_id)
+      const response=await getBookingsGroupedHelper(hotelIdArray)
+      res.status(200).json({response})
+    } catch (error) {
+        res.status(500).json({error})
+    }
+}
+
+const getAllHotelsMonthlySales = async (req,res) => {
+    try {
+        const response=await getAllHotelsMonthlySalesHelper()
+
+        res.status(200).json({response})
+    } catch (error) {
+        res.status(500).json({error})
+    }
+}
 
 
 
@@ -104,5 +148,6 @@ module.exports={
     getSalesReportForOwnerHotels,
     getSalesPerTwoWeek,
     getSalesPerMonth,
-    getSalesPerDay,getSalesPerYear
+    getSalesPerDay,getSalesPerYear,downloadSalesReport,
+    filterBookingsByDate,getBookingsGrouped,getAllHotelsMonthlySales
 }

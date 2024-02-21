@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useGetSalesReportBookingsQuery } from "../services/salesReportApiSlice";
+import { useFilterBookingsByDateMutation, useGetSalesReportBookingsQuery } from "../services/salesReportApiSlice";
 import { useEffect, useState } from "react";
 import useGetSales from "../hooks/userGetSales";
 
@@ -12,10 +12,12 @@ const OwnerSales = () => {
   const [bookingSales, setBookingDetails] = useState([]);
 
   const data = useGetSales(bookingSales, setBookingDetails);
-console.log('<<hi>>')
+
   // const {data:bookingSales,isError,isFetching,isLoading,isSuccess}=  useGetSalesReportBookingsQuery({hotel_id})
 
   // console.log(bookingSales.response)
+
+  const [filterBookingsByDate]=useFilterBookingsByDateMutation()
   return (
     <div className=" w-full  min-h-[100vh]">
       <h2 className="text-center mt-[50px] text-[1.1rem] py-5">Sales Report</h2>
@@ -38,7 +40,9 @@ console.log('<<hi>>')
             />
             <button 
                         onClick={async ()=>{
-                            filterSalesByDate({startDate,endDate})
+                          const response= await   filterBookingsByDate({startDate,endDate})
+                          console.log(response)
+                          setBookingDetails(response.data)
                          }}
             className=" px-4 py-1  bg-black text-white h-[37px] text-[0.8rem] rounded-none">
               Update search
@@ -66,13 +70,13 @@ console.log('<<hi>>')
             <div className="row-span-1 col-span-full ">
               <div className="flex justify-around  py-5 ps-[3%] gap-10">
                 <div className="text-[0.8rem] w-full">{index + 1}</div>
-                <div className="text-[0.8rem] w-full">{booking?.userName}</div>
-                <div className="text-[0.8rem] w-full">{booking?.createdAt}</div>
+                <div className="text-[0.8rem] w-full">{booking?.bookings[0]?.userName}</div>
+                <div className="text-[0.8rem] w-full">{booking?.bookings[0]?.createdAt}</div>
                 <div className="text-[0.8rem] w-full">
-                  {booking?.totalAmount}
+                  {booking?.bookings[0]?.totalAmount}
                 </div>
                 <div className="text-[0.8rem] w-full">
-                  {booking?.paymentType}
+                  {booking?.bookings[0]?.paymentType}
                 </div>
                 <div className="text-[0.8rem] w-full"></div>
               </div>

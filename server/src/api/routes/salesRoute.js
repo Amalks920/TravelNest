@@ -1,5 +1,5 @@
 const express=require('express')
-const { getSalesReport, getSalesReportByDate, getSalesReportForOwner, getSalesReportForOwnerHotels , getSalesPerMonth, getSalesPerTwoWeek, getSalesPerDay, getSalesPerYear } = require('../controllers/salesController')
+const { getSalesReport, getSalesReportByDate, getSalesReportForOwner, getSalesReportForOwnerHotels , getSalesPerMonth, getSalesPerTwoWeek, getSalesPerDay, getSalesPerYear, downloadSalesReport, filterBookingsByDate, getBookingsGrouped, getAllHotelsMonthlySales } = require('../controllers/salesController')
 const verifyAdminJwt = require('../middlewares/verifyAdminJwt');
 const verifyOwnerJwt = require('../middlewares/verifyOwnerJwt');
 const router=express.Router()
@@ -78,17 +78,20 @@ const router=express.Router()
  */
 
 router.get('/get-all-sales-report-for-admin',verifyAdminJwt,getSalesReport);
-
 router.get('/get-sales-by-date-admin/:startDate/:endDate',verifyAdminJwt,getSalesReportByDate)
+router.get('/get-total-monthly-sales-of-all-hotels',getAllHotelsMonthlySales)
+
+
 router.get('/filter-owner-sales-by-date/:startDate/:endDate',verifyOwnerJwt,getSalesReportByDate)
-
-
 router.get('/get-sales-report-booking/:hotel_id',verifyOwnerJwt,getSalesReportForOwner)
 router.get('/get-sales-report-hotel-owner/:user_id',verifyOwnerJwt,getSalesReportForOwnerHotels)
 router.get('/get-sales-per-week/:owner_id',getSalesPerTwoWeek)
 router.get('/get-sales-per-month/:owner_id',getSalesPerMonth)
 router.get('/get-sales-per-day/:owner_id',getSalesPerDay)
 router.get('/get-sales-per-year/:owner_id',getSalesPerYear)
+router.get('/download-sales-report',downloadSalesReport),
+router.get('/filter-bookings-by-date/:startDate/:endDate',verifyOwnerJwt,filterBookingsByDate)
+router.get('/get-bookings-grouped/:owner_id',verifyOwnerJwt,getBookingsGrouped)
 
 
 
