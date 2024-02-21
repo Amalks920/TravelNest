@@ -60,6 +60,7 @@ import AllCouponsPage from './pages/owner/AllCouponsPage.jsx';
 import OwnerSalesPage from './pages/owner/OwnerSalesPage.jsx';
 import OwnerSalesByHotelPage from './pages/owner/OwnerSalesByHotelPage.jsx';
 import OwnerHomePage from './pages/owner/OwnerHomePage.jsx';
+import AdminHomePage from './pages/admin/AdminHomePage.jsx';
 
 function App() {
   const token = useSelector(selectToken)
@@ -146,7 +147,8 @@ function App() {
         </Route>
 
         <Route element={<RequireAdminAuth allowedRole={'admin'}/>}>
-            <Route path='/admin/home' element={<UsersList/>}></Route>
+        <Route path='/admin/home' element={<AdminHomePage/>}></Route>
+            <Route path='/admin/users-list' element={<UsersList/>}></Route>
             <Route path='/admin/hotel-details/:_id' element={<DetailsPage/>} > </Route>
             <Route path='/admin/hotel-list' element={<AdminHotelListPage/>} > </Route>
             <Route path='/admin/sales-report' element={<SalesReportPage/>} > </Route>
