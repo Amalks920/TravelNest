@@ -1,12 +1,15 @@
 import { Spinner } from "@material-tailwind/react";
 import { useGetAHotelForUserQuery } from "../../browse/services/getAHotelForUserApiSlice";
 import { IMAGE_BASE_URL } from "../../../data/constants";
+import { useSelector } from "react-redux";
+import { selectPrice } from "../../browse/services/priceSlice";
 
 
 const PaymentDetails=({hotel_id,checkInDate,checkOutDate,totalNoRooms,roomDetails})=>{
-    console.log(roomDetails)
-    const {data:hotel,isError,isFetching,isLoading,isSuccess,isUninitialized}=useGetAHotelForUserQuery({hotel_id})
-    console.log(hotel)
+
+    const {data:hotel,isError,isFetching,isLoading,isSuccess,isUninitialized}=useGetAHotelForUserQuery({hotel_id,room_id:roomDetails[0].id})
+
+
     if(isLoading)  return <Spinner/>
     return (
         <div className="my-8 flex flex-col gap-5">

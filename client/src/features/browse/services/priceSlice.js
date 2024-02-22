@@ -25,14 +25,14 @@ const priceSlice = createSlice({
   initialState,
   reducers: {
     updatePrice: (state, action) => {
-      if (state.discountType === "Fixed") {
-        state.price = Number(state.noOfDays) * Number(action.payload) - state.discountAmount;
-      } else if (state.discountType === "Percentage") {
-        const totalPrice =Number(state.noOfDays) * Number(action.payload);
+      if (state?.discountType === "Fixed") {
+        state.price = Number(state?.noOfDays) * Number(action?.payload) - state?.discountAmount;
+      } else if (state?.discountType === "Percentage") {
+        const totalPrice =Number(state?.noOfDays) * Number(action?.payload);
 
         state.price = (state.discount * totalPrice) / 100;
       } else {
-        state.price =Number(state.noOfDays) * Number(action.payload);
+        state.price =Number(state.noOfDays) * Number(action?.payload);
       }
     },
 

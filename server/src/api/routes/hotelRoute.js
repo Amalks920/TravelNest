@@ -95,7 +95,7 @@ router.get(`/get-a-hotel/:hotel-id`,verifyJwt,getAHotel)
 
 router.get('/get-all-hotel-details/:hotel_id',verifyAdminJwt,getAllHotelDetails)
 
-router.delete('/delete-image/:hotel_id/:img_public_id',verifyJwt,deleteHotelImage)
+router.delete('/delete-image/:hotel_id/:img_public_id',verifyOwnerJwt,deleteHotelImage)
 
 router.put('/change-hotel-status/:hotel_id/:status',verifyAdminJwt,changeHotelStatus)
 

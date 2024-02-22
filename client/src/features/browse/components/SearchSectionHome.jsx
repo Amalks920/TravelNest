@@ -49,7 +49,7 @@ const handleSubmit=async () => {
 
   return (
     <>
-      <h2 className="text-white capitalize font-bold sm:text-[2.2rem]  text-center mb-4">
+      <h2 className="text-white capitalize font-bold sm:text-[2.2rem]     text-center mb-4">
         Over 174,000+ hotels and homes across 35+ countries
       </h2>
       <div 
@@ -59,7 +59,7 @@ const handleSubmit=async () => {
             updateLocation(e.target.value)
             setSearchString(e.target.value);
           }}
-          className="ps-3 text-[1.1rem] capitalize focus:font-bold focus:border-2 border-black"
+          className="ps-3 sm:text-[1.1rem] text-[0.8rem]  capitalize focus:font-bold focus:border-2 border-black"
           placeholder="Search by location"
         />
         <input
@@ -70,7 +70,7 @@ const handleSubmit=async () => {
           type="date"
           min={getYesterdayDateString()}
           max={checkOut || getFutureDateString(10)}
-          className="ps-3 text-[1.1rem] focus:border-2 border-black"
+          className="ps-3 text-[1rem]  focus:border-2  border-black"
         />
         <input
           onChange={(e) => {
@@ -80,7 +80,7 @@ const handleSubmit=async () => {
           type="date"
           min={ checkIn || getYesterdayDateString()}
           max={ getFutureDateString(10)}
-          className="ps-3 text-[1.1rem]  focus:border-2 border-black"
+          className="ps-3 text-[1rem]  focus:border-2 border-black"
         />
 
         <select
@@ -89,15 +89,15 @@ const handleSubmit=async () => {
             dispatch(updateRoomType(e.target.value))
             setRoomType(e.target.value)
           }} 
-          className="ps-2 pe-3 text-[1.1rem] bg-white capitalize font-extralight"
+          className="ps-2 pe-3 text-[1rem] text-gray-500 bg-white  font-extralight"
           name=""
           id=""
         >
-          <option value='' selected disabled></option>
-          <option value="single">single</option>
-          <option value="double">double</option>
-          <option value="suite">suite</option>
-          <option value="family">family</option>
+          <option value='' selected disabled>select room type</option>
+          <option value="single" className="text-black">single</option>
+          <option value="double" className="text-black">double</option>
+          <option value="suite" className="text-black">suite</option>
+          <option value="family" className="text-black">family</option>
         </select>
 
         <button

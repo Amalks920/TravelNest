@@ -10,9 +10,8 @@ import EmptyHotelPage from "./EmptyHotelPage";
 
 const SearchContainer = () => {
   
-//console.log( useGetSearchHotels())
+
   const dispatch=useDispatch()  
-  //const [data,setData]=useState([])
   const location=useSelector(selectLocation)
   const checkIn=useSelector(selectCheckIn)
   const checkOut=useSelector(selectCheckOut)

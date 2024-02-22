@@ -33,6 +33,7 @@ const findReviewsOfHotelByHotelIdHelper = (hotel_id,room_id) => {
       //   const response = await reviewModel.find(
       //      {hotel_id: new mongoose.Types.ObjectId(hotel_id)}
       //      )
+
       const response = await reviewModel.aggregate([
         {
           $match: {
@@ -61,6 +62,7 @@ const findReviewsOfHotelByHotelIdHelper = (hotel_id,room_id) => {
           },
         }
       ]);
+      console.log(room_id)
       console.log('(((((((===review response==)))))))')
       console.log(response);
       resolve(response);

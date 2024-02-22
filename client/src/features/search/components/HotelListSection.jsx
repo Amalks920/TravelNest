@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectCheckOut,selectCheckIn } from "../../../services/searchSlice";
 import EmptyHotelPage from "./EmptyHotelPage";
+import { updateNoOfRooms, updatePrice } from "../../browse/services/priceSlice";
 
 const HotelListSection = ({ hotel }) => {
   const checkIn=useSelector(selectCheckIn)
@@ -51,6 +52,10 @@ const HotelListSection = ({ hotel }) => {
             <div>
               <Link to={`/hotel-details/${hotel?.hotel_id}/${hotel?._id}/${checkIn}/${checkOut}`}>
                 <Button
+                onClick={()=>{
+                  updatePrice(Number(hotel?.rate))
+                  updateNoOfRooms(1)
+                }}
                   size="sm"
                   className="bg-white border-2 border-gray-600 px-4 py-2 text-gray-500 font-light text-[0.6rem]"
                 >

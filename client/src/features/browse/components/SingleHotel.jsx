@@ -126,17 +126,17 @@ const SingleHotel = () => {
           </div>
           <div className=" h-fit font-medium  text-left ps-3 text-[0.9rem] leading-8">
             <h2 className="font-bold text-xl  mb-4 ">About</h2>
-            <h2 className="w-[80%]">{description}</h2>
+            <h2 className="w-[80%] text-[1rem]">{description}</h2>
           </div>
-          <div className=" h-fit font-medium  text-left ps-3 text-[0.9rem] leading-8 mt-8 ms-4">
-            <button className="border-2 border-black px-3  text-[0.7rem] rounded-lg me-4 hover:transform hover:scale-105 transition-transform duration-300 ease-in-out">
+          <div className=" h-fit font-medium  text-left ps-3 text-[0.9rem] leading-8 mt-8 ">
+            <button className="border-2 border-black px-3   text-[0.7rem] rounded-lg me-4 hover:transform hover:scale-105 transition-transform duration-300 ease-in-out">
               <Link to={`/chat/${owner_id}`}>chat with user</Link>
             </button>
           </div>
 
           <div className=" h-fit ">{amenities}</div>
-          <div className=" h-fit mt-12">
-            <h2 className="font-bold text-xl   mb-2">Choose Your Room</h2>
+          <div className=" h-fit mt-[100px]">
+            <h2 className="font-bold text-xl ms-2  mb-2">Choose Your Room</h2>
 
             <div className=" shadow-xl mt-[40px] border-2 rounded-lg">
               <div className="flex justify-between flex-grow h-[200px] p-5">

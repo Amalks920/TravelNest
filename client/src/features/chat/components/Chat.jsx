@@ -37,13 +37,13 @@ console.log(owner_id,user_id)
 
   return (
     <div className="grid grid-cols-[25%,50%,25%] grid-rows-1 h-[83vh] -mt-32 w-full">
-      <div className="row-span-1 col-span-1 border-2 flex flex-col">
+      <div className="row-span-1  col-span-1 border-2 flex flex-col">
       <Archived setRecipientId={setRecipientId}/>
         
       </div>
 
       <div className={`row-span-1 ${role==='owner'?'col-span-2':'col-span-1'} border-y-2 flex flex-col`}>
-        <div className={`${role==='user'?'h-[60px]':'h-[60px]'} border-b-2 flex justify-between`}>
+        <div className={`${role==='user'?'h-[95px]':'h-[115px]'} border-b-2 flex justify-between`}>
           <div></div>
            <button className={`border-2 border-black w-[100px] m-4 rounded-full text-[0.8rem] font-bold hidden`}>Hide Details</button> 
         </div>

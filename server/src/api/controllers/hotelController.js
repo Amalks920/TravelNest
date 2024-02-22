@@ -166,9 +166,7 @@ const getAHotelForUser=async (req,res,next)=>{
   
   const hotel_id=req.params.hotel_id
   const room_id=req.params.room_id
-console.log('room_id')
-console.log(room_id)
-console.log('room_id')
+
   try {
     const hotels=await getAHotelForUserHelper(hotel_id)
     const rooms=await getAllRoomsOfAHotelForUserHelper(hotel_id)

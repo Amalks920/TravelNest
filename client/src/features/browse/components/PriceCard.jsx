@@ -43,7 +43,7 @@ import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { updateCheckOutDetails } from "../../walletPayment/service/walletCheckOutSlice";
 
-const PriceCard = ({ rate, roomType, hotel_id, room_id, open, setOpen,couponModalOpen, setCouponModalOpen}) => {
+const  PriceCard = ({ rate, roomType, hotel_id, room_id, open, setOpen,couponModalOpen, setCouponModalOpen}) => {
   const selectedCheckInDate = useSelector(selectCheckIn);
   const selectedCheckOutDate = useSelector(selectCheckOut);
   const totalAvailableRooms = useSelector(selectAvailableRoom);
@@ -115,8 +115,9 @@ const PriceCard = ({ rate, roomType, hotel_id, room_id, open, setOpen,couponModa
       }) => (
 
       
-        <div className="grid grid-flow-row grid-cols-[auto,auto] m-3 top-0 w-full sticky self-start  ps-[11px] ">
-          <div className="col-span-2 pt-[20px] ">
+        <div className="grid grid-flow-row grid-cols-[auto,auto] m-3 top-0 w-full sticky self-start  ps-[11px] 
+        ">
+          <div className="col-span-2 pt-[20px]  pb-[50px]">
             <h2 className=" text-[1.6rem]">
               ₹ {rate} <span className="font-light text-[1.1rem]">per day</span>
             </h2>
@@ -128,7 +129,7 @@ const PriceCard = ({ rate, roomType, hotel_id, room_id, open, setOpen,couponModa
                 onClick={() => {
                   setOpen(!open);
                 }}
-                className=" border-[1.3px] ps-4 border-gray-600 h-[60px] w-[170px] rounded-tl-lg"
+                className=" border-[0.7px] cursor-pointer ps-4 border-gray-600 h-[60px] w-[170px] rounded-tl-lg"
                 type="date"
                 value={selectedCheckInDate}
                 datePassed={selectedCheckInDate}
@@ -143,7 +144,7 @@ const PriceCard = ({ rate, roomType, hotel_id, room_id, open, setOpen,couponModa
                   setOpen(!open);
                 }}
                 type="date"
-                className="h-[60px] border-l-0 ps-4  border-[1.3px]  w-[170px]  border-gray-600 rounded-sm rounded-tr-lg"
+                className="h-[60px] border-l-0 ps-4 cursor-pointer  border-[0.7px]  w-[170px]  border-gray-600 rounded-sm rounded-tr-lg"
                 value={selectedCheckOutDate}
                 datePassed={selectedCheckOutDate}
                 //  setDate={setCheckOutDate}
@@ -167,7 +168,7 @@ const PriceCard = ({ rate, roomType, hotel_id, room_id, open, setOpen,couponModa
                   setNoOfRooms(e.target.value);
                   dispatch(updateNoOfRooms(e.target.value));
                 }}
-                className="bg-white w-[98.1%] ps-5 h-[60px] border-t-0  border-[1.3px] border-gray-600 rounded-b-lg"
+                className="bg-white w-[98.1%] ps-5 h-[60px] border-t-0  border-[0.7px] border-gray-600 rounded-b-lg"
               >
                 <option value="0" disabled={true}>
                   0
@@ -190,18 +191,11 @@ const PriceCard = ({ rate, roomType, hotel_id, room_id, open, setOpen,couponModa
               </select>
             </div>
 
-            <h2
-            onClick={
-            ()=>{
-              setCouponModalOpen(!couponModalOpen)
-            }}
-             className=" relative top-3 left-[230px] text-[0.9rem] cursor-pointer text-black">
-              Apply Coupon?
-            </h2>
+
             
             <Button
               disabled={
-                totalAvailableRooms <= 0 || noOfRooms === null || noOfRooms == 0
+                totalAvailableRooms <= 0 || noOfRooms === null || noOfRooms == 0 || price === null
               }
               onClick={async () => {
                 if (token && role === "user") {
@@ -226,12 +220,22 @@ const PriceCard = ({ rate, roomType, hotel_id, room_id, open, setOpen,couponModa
          
                 // bg-[#E41D56]
               }}
-              color="black"
-              className="w-[100%] -ms-[2px] mt-5 py-4 "
+              
+              className="w-[100%] -ms-[2px] mt-5 py-4 bg-gray-800  border-2"
             >
               Pay Using Card
             </Button>
-            <div>
+            <div className="flex justify-between w-full">
+
+
+            <h2
+            onClick={
+            ()=>{
+              setCouponModalOpen(!couponModalOpen)
+            }}
+             className=" text-[0.9rem] cursor-pointer text-black pt-[7px]">
+              Apply Coupon?
+            </h2>
             <h2
               onClick={() => {
                 dispatch(
@@ -252,16 +256,19 @@ const PriceCard = ({ rate, roomType, hotel_id, room_id, open, setOpen,couponModa
                 <Link to={"/wallet-payment-page"}>Pay Using Wallet</Link>
               ) : null}
             </h2>
+            </div>  
+            <div className="mt-[70px]">
+
             </div>
             <div className="mt-[10px] flex flex-col justify-center items-center  w-full">
               <div className="w-[100%] flex  justify-between mx-3 px-2">
-                <h2 className="font-extralight text-[1.1rem]">price :</h2>
-                <h2 className="me-3 font-extralight text-[1.1rem]">₹ {price}</h2>
+                <h2 className="font-extralight text-[1rem]">price :</h2>
+                <h2 className="me-3 font-extralight text-[1rem]">₹ {price}</h2>
               </div>
 
               <div className="w-[100%] flex  justify-between mx-3 px-2 mt-[20px]">
-                <h2 className="font-extralight text-[1.1rem]">Discount :</h2>
-                <h2 className="me-3 font-bold text-[1.1rem] text-green-700">{ discount } {discountType==='Fixed'?'':'%'} </h2>
+                <h2 className="font-extralight text-[1rem]">Discount :</h2>
+                <h2 className="me-3 font-bold text-[1rem] text-green-700">{ discount } {discountType==='Fixed'?'':'%'} </h2>
               </div>
 
 

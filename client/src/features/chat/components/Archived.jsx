@@ -24,12 +24,14 @@ console.log(conversations)
         <h2 className="font-bold text-[1.3rem] ms-5 p-4">Archived</h2>
       </div>
 
-      <div className="flex flex-col m-5 justify-left items-center py-3 px-2 gap-2 hover:bg-blue-gray-50 hover:cursor-pointer rounded-lg">
+      <div className="flex flex-col m-5 justify-left items-center
+       py-3 px-2 gap-2 hover:bg-blue-gray-50 hover:cursor-pointer
+        rounded-lg overflow-scroll">
  {conversations.map((conversation,index)=>{
   return <div onClick={
     ()=>{
-      setRecipientId(conversation.participants[0]._id)
-  }} className="w-full" key={index} ><ChatList  username={conversation?.participants[0]?.username} text={conversation.lastMessage?.texxt}/></div>
+      setRecipientId(conversation?.participants[0]._id)
+  }} className="w-full" key={index} ><ChatList  username={conversation?.participants[0]?.username} text={conversation?.lastMessage?.text}/></div>
  }) }
         {/* <h2 className="capitalize text-[1.1rem] font-extralight">{conversations[0]?.participants[0]?.username}</h2>
         <h2 className="capitalize text-[0.9rem] font-extralight">{conversations[0]?.lastMessage?.text}</h2>

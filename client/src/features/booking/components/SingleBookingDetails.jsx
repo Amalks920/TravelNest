@@ -9,6 +9,7 @@ import { selectUserId } from "../../authentication/services/loginSlice";
 import ReviewModal from "./ReviewModal";
 import { PencilIcon } from "@heroicons/react/24/solid";
 import { format } from "date-fns";
+import PrintButton from "./PrintButton";
 
 const SingleBookingDetails = () => {
   const { booking_id } = useParams();
@@ -22,10 +23,12 @@ const SingleBookingDetails = () => {
     data: booking,
     isError,
     isLoading,
+    isFetching,
+    isUninitialized,
     isSuccess,
   } = useGetABookingDetailsForUserQuery({ booking_id, user_id });
 
-  if (isLoading) return <Spinner />;
+  if (isLoading || isFetching || isUninitialized) return <Spinner />;
   {
     console.log(booking?.response[0]?.roomDetails[0]?._id);
    
@@ -38,44 +41,39 @@ const SingleBookingDetails = () => {
         openReviewModal={openReviewModal}
         setOpenReviewModal={setOpenReviewModal}
         booking_id={booking_id}
-        hotel_id={booking.response[0].hotel_id}
+        hotel_id={booking?.response[0]?.hotel_id}
         room_id={booking?.response[0]?.roomDetails[0]?._id}
       />
       <div className="w-[80%] mt-[2%] min-h-[100vh]">
         <h2
           className={`font-bold ${
-            booking.response[0].status === "checkOut"
+            booking?.response[0]?.status === "checkOut"
               ? "text-green-500"
-              : booking.response[0].status === "cancelled"
+              : booking?.response[0]?.status === "cancelled"
               ? "text-red-500"
               : null
           } sm:text-2xl text-[0.8rem] ms-3`}
         >
           {booking.response[0].status === "checkOut"
             ? "Thanks for staying with us!"
-            : booking.response[0].status === "cancelled"
+            : booking?.response[0]?.status === "cancelled"
             ? "Cancelled"
             : null}
         </h2>
 
         <div className=" flex justify-between items-between mt-11   sm:ms-6 w-full">
-          <button
-            class="bg-transparent text-black  border-2 sm:text-sm text-[0.7rem] font-bold border-black 
-        sm:w-[150px] sm:h-[40px]    w-[80px] h-[25px]  ms-3 sm:ms-0"
-          >
-            print
-          </button>
-          {console.log(booking.response[0].status)}
-          {booking.response[0].status !== "cancelled" && booking.response[0].status !== 'checkOut' ? (
+          <PrintButton booking={booking?.response} />
+          {console.log(booking?.response[0]?.status)}
+          {booking?.response[0]?.status !== "cancelled" && booking?.response[0]?.status !== 'checkOut' ? (
             <button
               onClick={() => {
                 setData({
                   user_id: user_id,
                   booking_id: booking_id,
                   status: "cancelled",
-                  room_id: booking.response[0].roomDetails[0]._id,
-                  totalNoOfRooms: booking.response[0].totalNoOfRooms,
-                  amount: booking.response[0].totalAmount,
+                  room_id: booking?.response[0]?.roomDetails[0]?._id,
+                  totalNoOfRooms: booking?.response[0]?.totalNoOfRooms,
+                  amount: booking?.response[0]?.totalAmount,
                 });
                 // setRoomId(booking.response[0].roomDetails[0]._id)
                 // setTotalNoOfRooms(booking.response[0].totalNoOfRooms)
