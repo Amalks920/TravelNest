@@ -134,6 +134,7 @@ const bookingSchema = new Schema(
       type: String,
       // required: true,
       default: "null",
+      enum:["wallet","card"]
     }, // Remove the extra comma here
   },
   {

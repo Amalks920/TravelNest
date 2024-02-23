@@ -95,6 +95,7 @@ const WalletPayment = () => {
               totalNoRooms,
               roomDetails,
               noOfDays,
+              discountAmount
             });
           }}
         >

@@ -15,7 +15,7 @@ import {
 
   
     return (
-      <Card className="w-[100%]">
+      <Card className="w-[100%] shadow-none">
         <List>
           <ListItem>
             <ListItemPrefix>

@@ -1,14 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { selectRole, selectToken, selectUserId, selectUserName } from "../../authentication/services/loginSlice";
-//import socket from "../../../utils/socket";
-import { select } from "@material-tailwind/react";
-import { useNavigate } from "react-router-dom";
+import { selectRole, selectUserId } from "../../authentication/services/loginSlice";
 import ChatMessage from "./ChatMessage";
 import Archived from "./Archived";
 import MessageInput from "./MessageInput";
-import io from "socket.io-client";
 
 
 const Chat = ({socket}) => {
@@ -17,51 +13,53 @@ const Chat = ({socket}) => {
     const {owner_id}=useParams()
     const user_id=useSelector(selectUserId);
 
-    const [recipientId,setRecipientId]=useState(null);
+    const [recipientId,setRecipientId]=useState(null);  
     
-
-console.log(owner_id,user_id)
-
-
-    const handleMessage=()=>{
-
-      // socket.onAny((event,...args)=>{
-      //   console.log(event,args)
-      // })
-
-      // socket.emit('private_message',{message:message,user_id:1})
-
-    }
+    const [lastMessage,setLastMessage]=useState('')
 
 
 
   return (
-    <div className="grid grid-cols-[25%,50%,25%] grid-rows-1 h-[83vh] -mt-32 w-full">
+    <div className="grid grid-cols-[25%,50%,25%] grid-rows-[9%,80%,11%] h-[83vh] -mt-32 w-full sticky" style={{overflowAnchor:'none'}}>
+
+      <div className="row-span-1  col-span-1 border-2  flex flex-col ">
+
+      <div className="h-[60px] border-b-2  flex justify-left items-center">
+        <h2 className="font-bold text-[1.3rem] ms-5 p-4">Archived</h2>
+      </div>
+      {/* <Archived setRecipientId={setRecipientId}/> */}
+      </div>
       <div className="row-span-1  col-span-1 border-2 flex flex-col">
+      <div className="h-[60px] border-b-2  flex justify-left items-center">
+      </div>
+      {/* <Archived setRecipientId={setRecipientId}/> */}
+      </div>
+      <div className="row-span-1  col-span-1 border-2 flex flex-col">
+      <div className="h-[60px] border-b-2  flex justify-left items-center">
+        <h2 className="font-bold text-[1.3rem] ms-5 p-4"></h2>
+      </div>
+      {/* <Archived setRecipientId={setRecipientId}/> */}
+      </div>
+
+
+      <div className="row-span-1 col-span-1 border-2 border-r-0 border-t-0">
       <Archived setRecipientId={setRecipientId}/>
-        
       </div>
 
-      <div className={`row-span-1 ${role==='owner'?'col-span-2':'col-span-1'} border-y-2 flex flex-col`}>
-        <div className={`${role==='user'?'h-[95px]':'h-[115px]'} border-b-2 flex justify-between`}>
-          <div></div>
-           <button className={`border-2 border-black w-[100px] m-4 rounded-full text-[0.8rem] font-bold hidden`}>Hide Details</button> 
-        </div>
-
-        <div className=" flex-grow border-b-2 overflow-scroll">
-          <ChatMessage recipient_id={role==='user'?owner_id:recipientId} socket={socket}/>
-        </div>
-
-        <div className="m-4">
-      <MessageInput recipientId={role==='user'?owner_id:recipientId} senderId={user_id}/>
-        </div>
-
+      <div  className="row-span-1 col-span-1 border-2 border-r-2 border-t-0 overflow-y-scroll flex overflow-auto" >
+      <ChatMessage recipient_id={role==='user'?owner_id:recipientId} socket={socket} lastMessage={lastMessage} setLastMessage={setLastMessage}/>
       </div>
 
-      <div className={`row-span-1 col-span-1 border-2 flex flex-col ${role==='owner'?'hidden':null}`}>
-        <div className="h-[60px] border-2"></div>
-      </div>
-    </div>
+      <div className="row-span-1 col-span-1 border-2 border-t-0 border-b-0 "></div>
+
+<div className="row-span-1 col-start-1 border-2 border-t-0 "></div>
+<div className="row-span-1 col-start-2 col-end-3 border-2 border-t-0">
+<MessageInput recipientId={role==='user'?owner_id:recipientId} senderId={user_id} lastMessage={lastMessage} setLastMessage={setLastMessage}/>
+</div>
+
+<div className="row-span-1 col-start-3 border-2"></div>
+ </div>
+
   );
 };
 

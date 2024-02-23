@@ -3,8 +3,8 @@ const roomModel=require('../models/roomModel')
 
 const mongoose=require('mongoose')
 
-const createBookingHelper=(data,totalPrice,checkInDate,checkOutDate,totalNoRooms,roomInfo)=>{
-
+const createBookingHelper=(data,totalPrice,checkInDate,checkOutDate,totalNoRooms,roomInfo,discountAmount,paymentMethod)=>{
+    
     const roomDetails=data[0]
     const userDetails=data[1]
     const hotelDetails=data[2]
@@ -20,7 +20,9 @@ const createBookingHelper=(data,totalPrice,checkInDate,checkOutDate,totalNoRooms
         totalAmount:totalPrice,
         checkIn:checkInDate,
         checkOut:checkOutDate,
-        totalNoOfRooms:totalNoRooms
+        totalNoOfRooms:totalNoRooms,
+        discountAmount:discountAmount,
+        paymentType:paymentMethod
     }
 
     return new Promise(async (resolve,reject)=>{

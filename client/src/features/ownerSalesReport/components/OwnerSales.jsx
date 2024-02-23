@@ -1,7 +1,9 @@
 import { useParams } from "react-router-dom";
 import { useFilterBookingsByDateMutation, useGetSalesReportBookingsQuery } from "../services/salesReportApiSlice";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useGetSales from "../hooks/userGetSales";
+import { getYesterdayDateString } from "../../../utils/formatDate";
+import { useReactToPrint } from "react-to-print";
 
 const OwnerSales = () => {
   const { hotel_id } = useParams();
@@ -12,6 +14,11 @@ const OwnerSales = () => {
   const [bookingSales, setBookingDetails] = useState([]);
 
   const data = useGetSales(bookingSales, setBookingDetails);
+  const componentRef=useRef()
+
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
 
   // const {data:bookingSales,isError,isFetching,isLoading,isSuccess}=  useGetSalesReportBookingsQuery({hotel_id})
 
@@ -21,17 +28,20 @@ const OwnerSales = () => {
   return (
     <div className=" w-full  min-h-[100vh]">
       <h2 className="text-center mt-[50px] text-[1.1rem] py-5">Sales Report</h2>
-      <div className="grid grid-flow-row grid-cols-12 mx-6 shadow-md border-t-2 rounded-md">
+      <div ref={componentRef} className="grid grid-flow-row grid-cols-12 mx-6 shadow-md border-t-2 rounded-md">
         <div className="row-span-1 col-start-5 col-end-13  h-[100px]">
           <div className="flex gap-3 justify-around items-center   h-full">
             <input
               onInput={(e) => {
                 setStartDate(e.target.value);
               }}
+              max={endDate || getYesterdayDateString()}
               className="h-[40px] bg-blue-gray-50 w-[25%] text-[0.7rem] ps-2  rounded-lg "
               type="date"
             />
             <input
+                          min={startDate}
+                          max={startDate || getYesterdayDateString()}
               onInput={(e) => {
                 setEndDate(e.target.value);
               }}
@@ -47,7 +57,11 @@ const OwnerSales = () => {
             className=" px-4 py-1  bg-black text-white h-[37px] text-[0.8rem] rounded-none">
               Update search
             </button>
-            <button className="text-[0.8rem]">Download Report</button>
+            <button
+            onClick={()=>{
+              handlePrint()
+            }}
+             className="text-[0.8rem]">Download Report</button>
           </div>
         </div>
 

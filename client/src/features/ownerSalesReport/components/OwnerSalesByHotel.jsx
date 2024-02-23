@@ -1,21 +1,25 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 //import { useGetSalesReportForOwnerQuery } from "../services/salesReportApiSlice";
 import { Link } from "react-router-dom";
 import useGetSales from "../hooks/userGetSales";
 import useGetSalesByDate from "../hooks/useGetSalesByDate";
 import { useDownloadSalesReportMutation } from "../services/salesReportApiSlice";
 import { getYesterdayDateString } from "../../../utils/formatDate";
+import { useReactToPrint } from "react-to-print";
+
 
 
 
 const OwnerSalesByHotel = () => {
 
-  const [downloadSalesReport]=useDownloadSalesReportMutation()
-
+  //const [downloadSalesReport]=useDownloadSalesReportMutation()
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
 
 
   const [salesReport, setBookingDetails] = useState([]);
-
+  const componentRef=useRef(null)
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
@@ -32,7 +36,7 @@ const OwnerSalesByHotel = () => {
   return (
     <div className=" w-full  min-h-[100vh]">
       <h2 className="text-center mt-[50px] text-[1.1rem] py-5">Sales Report</h2>
-      <div className="grid grid-flow-row grid-cols-12 mx-6 shadow-md border-t-2 rounded-md">
+      <div ref={componentRef} className="grid grid-flow-row grid-cols-12 mx-6 shadow-md border-t-2 rounded-md">
         <div className="row-span-1 col-start-5 col-end-13  h-[100px]">
           <div className="flex gap-3 justify-around items-center   h-full">
             <input
@@ -65,7 +69,8 @@ const OwnerSalesByHotel = () => {
 
             <button 
             onClick={async ()=>{
-              await downloadSalesReport()
+              handlePrint()
+             // await downloadSalesReport()
               
             }}
             className="text-[0.8rem]">Download Report</button>

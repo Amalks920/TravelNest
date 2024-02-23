@@ -108,11 +108,8 @@ async function getConversations(req, res) {
 }
 
 const getUsersChat=async (req,res)=>{
-	console.log('hiii')
+
 	const owner_id=req?.params?.owner_id;
-	console.log('c')
-	console.log(owner_id)
-	console.log('c')
 
 	try {
 	const response=	await chatHelper(owner_id)

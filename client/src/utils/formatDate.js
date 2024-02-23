@@ -1,3 +1,5 @@
+import { format } from "date-fns";
+
 export const getYesterdayDateString = () => {
     const yesterday = new Date();
     const year = yesterday.getFullYear();
@@ -14,3 +16,16 @@ export const getYesterdayDateString = () => {
     const day = String(futureDate.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   };
+
+
+  export const formatDate=(date) =>{
+   return  format(date, "yyyy-MM-dd", {
+      timeZone: "Asia/Kolkata",
+    })
+  }
+
+  export const formatTime=(date) =>{
+    return  format(date, " HH:mm:ss", {
+      timeZone: "Asia/Kolkata",
+    }) 
+  }

@@ -3,7 +3,7 @@ import { useSendMessageMutation } from "../services/chatApiSlice";
 import { useSelector } from "react-redux";
 import { selectRole } from "../../authentication/services/loginSlice";
 
-const MessageInput = ({ recipientId, senderId,lastMessage,setLastMessage }) => {
+const OwnerMessageInput = ({ recipientId, senderId }) => {
   const [message, setMessage] = useState("");
   const [sendMessage, { isError, isLoading, isSuccess }] =
     useSendMessageMutation();
@@ -22,10 +22,9 @@ const MessageInput = ({ recipientId, senderId,lastMessage,setLastMessage }) => {
         stroke-width="1.5"
         stroke="currentColor"
         className={`w-7 h-7 top-14  absolute ${
-          role === "user" ? "left-[70%] top-[93%]" : "left-[80%]"
+          role === "user" ? "left-[69%] top-[91%]" : "left-[85.5%] top-[91.5%]"
         } top-11 cursor-pointer ${message.length === 0 ? "hidden" : "flex"}`}
         onClick={(e) => {
-        //  setLastMessage(message)
           handleMessage();
         }}
       >
@@ -34,13 +33,13 @@ const MessageInput = ({ recipientId, senderId,lastMessage,setLastMessage }) => {
 
       <input
         onChange={(e) => {
-         
+         // setLastMessage(e.target.value)
           setMessage(e.target.value);
         }}
         value={message}
         type="text"
         className={`border-2 border-black rounded-full my-4 ps-[5%] ms-[5%]  text-sm ${
-          role === "owner" ? "w-[65%] h-[50px] ms-[10%]" : " h-[50px] w-[90%]"
+          role === "owner" ? "w-[70%] h-[38px] ms-[16%]" : " h-[50px] w-[90%]"
         }`}
         placeholder="type message here"
       />
@@ -48,4 +47,4 @@ const MessageInput = ({ recipientId, senderId,lastMessage,setLastMessage }) => {
   );
 };
 
-export default MessageInput;
+export default OwnerMessageInput;

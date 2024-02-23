@@ -3,7 +3,7 @@ import { useGetABookingDetailsForUserQuery } from "../services/getABookingDetail
 import { Button, Rating, Spinner, Textarea } from "@material-tailwind/react";
 import { IMAGE_BASE_URL } from "../../../data/constants";
 import BookingCancelModel from "./BookingCancelModel";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectUserId } from "../../authentication/services/loginSlice";
 import ReviewModal from "./ReviewModal";
@@ -15,6 +15,8 @@ const SingleBookingDetails = () => {
   const { booking_id } = useParams();
   const [open, setOpen] = useState(false);
   const [openReviewModal, setOpenReviewModal] = useState(false);
+  
+  const componentRef=useRef()
 
   const user_id = useSelector(selectUserId);
   const [data, setData] = useState("");
@@ -44,7 +46,7 @@ const SingleBookingDetails = () => {
         hotel_id={booking?.response[0]?.hotel_id}
         room_id={booking?.response[0]?.roomDetails[0]?._id}
       />
-      <div className="w-[80%] mt-[2%] min-h-[100vh]">
+      <div  className="w-[80%] mt-[2%] min-h-[100vh]">
         <h2
           className={`font-bold ${
             booking?.response[0]?.status === "checkOut"
@@ -60,9 +62,9 @@ const SingleBookingDetails = () => {
             ? "Cancelled"
             : null}
         </h2>
-
+          <div >
         <div className=" flex justify-between items-between mt-11   sm:ms-6 w-full">
-          <PrintButton booking={booking?.response} />
+          <PrintButton booking={booking?.response} componentRef={componentRef}/>
           {console.log(booking?.response[0]?.status)}
           {booking?.response[0]?.status !== "cancelled" && booking?.response[0]?.status !== 'checkOut' ? (
             <button
@@ -107,7 +109,7 @@ const SingleBookingDetails = () => {
           ) => {
             return (
              
-              <div className="grid grid-rows-[100px,auto,auto,auto] gird-cols-12  mt-12 gap-2 -ms-3 md:0 sm:ps-6 overflow-y-hidden mb-[200px]">
+              <div ref={componentRef} className="grid grid-rows-[100px,auto,auto,auto] gird-cols-12  mt-12 gap-2 -ms-3 md:0 sm:ps-6 overflow-y-hidden mb-[200px]">
                 <div className="row-span-1 col-span-12 sm:col-span-4 lg:col-span-12 md:col-span-8  flex justify-between sm:p-7  p-6">
                   <div className="">
                     <h2 className="font-normal text-[0.8rem] mb-3  md:text-[1.3rem]">
@@ -270,6 +272,7 @@ const SingleBookingDetails = () => {
             );
           }
         )}
+</div>
       </div>
     </>
   );

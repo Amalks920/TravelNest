@@ -55,12 +55,15 @@ const payment = async (req, res, next) => {
     const couponDetails = await getACouponByCodeHelper(couponCode);
 
     let priceAfterDiscount;
+    let discountAmount;
     if (couponDetails) {
       if (couponDetails?.discountType === "Fixed") {
         priceAfterDiscount =
           Number(totalPrice) - Number(couponDetails?.discountAmount);
+          discountAmount=Number(couponDetails?.discountAmount)
       } else {
         priceAfterDiscount = (couponDetails?.discountAmount * totalPrice) / 100;
+        discountAmount = totalPrice - priceAfterDiscount;
       }
     } else {
       priceAfterDiscount = totalPrice;
@@ -107,6 +110,7 @@ const payment = async (req, res, next) => {
           checkOutDate,
           totalNoRooms,
           couponCode,
+          discountAmount
         }),
         roomDetails: JSON.stringify({
           roomDetails,
@@ -121,6 +125,7 @@ const payment = async (req, res, next) => {
 };
 
 const payUsingWallet = async (req, res, next) => {
+
   try {
     let {
       roomDetails,
@@ -129,10 +134,8 @@ const payUsingWallet = async (req, res, next) => {
       hotel_id,
       totalNoRooms,
       noOfDays,
+      discountAmount
     } = req.body;
-
-    console.log(roomDetails);
-    console.log("roomDetails");
 
     const roomIds = [];
 
@@ -182,15 +185,21 @@ const payUsingWallet = async (req, res, next) => {
     }
 
     result[0] = roomRes;
+    let payementMethod='wallet'
 
     const response = await createBookingHelper(
       result,
-      totalPrice,
+      totalPrice-discountAmount,
       checkInDate,
       checkOutDate,
       totalNoRooms,
-      roomDetails
+      roomDetails,
+      discountAmount,
+      paymentMethod
     );
+
+
+
 
     await updateWalletAmountHelper({
       user_id: findUser._id,
@@ -221,8 +230,10 @@ const webHookController = async (req, res, next) => {
       const bookingDetails = JSON.parse(bookingDetailsString);
 
       const { result, totalPrice, checkInDate,
-              checkOutDate, totalNoRooms,couponCode } =
+              checkOutDate, totalNoRooms,couponCode,discountAmount } =
         bookingDetails;
+        console.log(bookingDetails)
+        console.log('bookingssssderrrrttaiillls')
 
       let roomRes = result[0];
 
@@ -245,12 +256,18 @@ const webHookController = async (req, res, next) => {
       console.log("checkout.session.completed coheclskdll time.exe");
             console.log(totalPrice)
       console.log("checkout.session.completed coheclskdll time.exe");
+
+      console.log(result,'result')
+      console.log(discountAmount,'discountAmount'),
+      console.log(roomDetails,'roomdetails')
       const response = await createBookingHelper(
         result,
         totalPrice,
         checkInDate,
         checkOutDate,
-        totalNoRooms
+        totalNoRooms,
+        roomDetails,
+        discountAmount
       );
       console.log(response);
       console.log('boooking response after booking')

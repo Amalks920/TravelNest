@@ -46,7 +46,7 @@ import UserAccount from './features/user-profile/components/UserAccount.jsx';
 import ChatPage from './pages/user/ChatPage.jsx';
 import WalletPage from './pages/user/WalletPage.jsx';
 import UserDetailsPage from './pages/user/UserDetailsPage.jsx';
-import OnwerChatPage from './pages/owner/OwnerChatPage.jsx';
+import OwnerChatPage from './pages/owner/OwnerChatPage.jsx';
 import HotelReviews from './features/hotelManagement/components/HotelReviews.jsx';
 import { useEffect, useState } from 'react';
 import io from 'socket.io-client'
@@ -126,7 +126,7 @@ function App() {
         <Route path='/owner/hotel-details/:hotel_id' element={<HotelDetailsPage/>}></Route>
         <Route path='/owner/bookings-list/:hotel_id' element={<BookingsList/>}></Route>
         <Route path='/owner/booking-details/:booking_id' element={<BookingDetailsPage/>}></Route>
-        <Route path='/owner/chats' element={<OnwerChatPage socket={socket} />} ></Route>
+        <Route path='/owner/chats' element={<OwnerChatPage socket={socket} />} ></Route>
         <Route path='/owner/all-bookings' element={<AllBookingsPage/>} ></Route>
         <Route path='/owner/add-coupon' element={<AddCouponPage/>}></Route>
         <Route path='/owner/review/:hotel_id' element={<HotelReviews/>}></Route>

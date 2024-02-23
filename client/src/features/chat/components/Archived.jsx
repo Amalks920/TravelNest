@@ -20,11 +20,12 @@ const Archived = ({setRecipientId}) => {
 console.log(conversations)
   return (
     <>
-      <div className="h-[60px] border-b-2  flex justify-left items-center">
+      {/* <div className="h-[60px] border-b-2  flex justify-left items-center">
         <h2 className="font-bold text-[1.3rem] ms-5 p-4">Archived</h2>
-      </div>
+      </div> */}
 
-      <div className="flex flex-col m-5 justify-left items-center
+      <div className="flex flex-col mt-4
+       justify-left items-center w-full 
        py-3 px-2 gap-2 hover:bg-blue-gray-50 hover:cursor-pointer
         rounded-lg overflow-scroll">
  {conversations.map((conversation,index)=>{
