@@ -318,6 +318,8 @@ const editRoomDescriptionHelper = (room_id, description) => {
   });
 };
 
+
+
 const getRoomDetailsByIdHelper = (roomIds) => {
   // roomId
   // priceRoom
@@ -600,6 +602,25 @@ const updateRoomNumberHelper = (room_id, noOfRooms) => {
   });
 };
 
+const changeRoomNumberHelper = (room_id, noOfRooms) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await roomModel.updateOne(
+        { _id: room_id },
+        {
+          $set: {
+            noOfRooms: Number(noOfRooms),
+          },
+        }
+      );
+      console.log(response);
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 const getAvgReviewOfARoomHelper=async (room_id)=>{
   try {
    
@@ -782,5 +803,6 @@ module.exports = {
   findNoOfRoomsAvailableHelper,
   getRoomsByLocationHelper,
   getHotelRoomsByLocationHelper,
-  filterRoomsByLocationHelper
+  filterRoomsByLocationHelper,
+  changeRoomNumberHelper
 };

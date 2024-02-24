@@ -16,7 +16,7 @@ const Archived = ({setRecipientId}) => {
   } = useGetConversationsQuery({ user_id });
 
 
- if(isLoading || isFetching) return <Spinner/>
+ if(isLoading || isFetching) return <h1></h1>
 console.log(conversations)
   return (
     <>
@@ -32,7 +32,7 @@ console.log(conversations)
   return <div onClick={
     ()=>{
       setRecipientId(conversation?.participants[0]._id)
-  }} className="w-full" key={index} ><ChatList  username={conversation?.participants[0]?.username} text={conversation?.lastMessage?.text}/></div>
+  }} className="w-full" key={index} ><ChatList  username={conversation?.participants[0]?.username} sender={conversation?.lastMessage?.sender} text={conversation?.lastMessage?.text}/></div>
  }) }
         {/* <h2 className="capitalize text-[1.1rem] font-extralight">{conversations[0]?.participants[0]?.username}</h2>
         <h2 className="capitalize text-[0.9rem] font-extralight">{conversations[0]?.lastMessage?.text}</h2>

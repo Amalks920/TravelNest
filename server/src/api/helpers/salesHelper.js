@@ -762,6 +762,21 @@ const getAllHotelsMonthlySalesHelper = async () => {
   }
 }
 
+const getOwnerDashBoardDataHelper =async (hotelIdArray) => {
+  try {
+    const response=await bookingModel.aggregate([
+      {
+        $match:{
+          hotel_id:{$in:hotelIdArray}
+        }
+      }
+    ])
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
 module.exports = {
   getSalesReportHelper,
   getSalesReportByDateHelper,
@@ -774,5 +789,6 @@ module.exports = {
   downloadOwnerSalesPdfHelper,
   filterBookingsByDateHelper,
   getBookingsGroupedHelper,
-  getAllHotelsMonthlySalesHelper
+  getAllHotelsMonthlySalesHelper,
+  getOwnerDashBoardDataHelper
 };

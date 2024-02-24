@@ -2,6 +2,7 @@ import { AgChartsReact } from "ag-charts-react";
 import { useEffect, useState } from "react";
 import {
   useGetBookingsGroupedQuery,
+  useGetDashBoardDatasQuery,
   useGetSalesOFPerviousSevenDaysMutation,
   useGetSalesPerMonthMutation,
   useGetSalesPerWeekQuery,
@@ -48,6 +49,8 @@ const Home = () => {
     series: [],
   });
 
+  const {data}=useGetDashBoardDatasQuery({owner_id:user_id})
+
   useEffect(() => {
     console.log(salesPerWeek?.response);
     setChartOptions({
@@ -69,7 +72,7 @@ const Home = () => {
 
   return (
     <div className="w-full  min-h-[100vh] flex">
-      <div className="w-full grid gird-cols-12 grid-rows-[100px,150px,auto,auto,auto]">
+      <div className="w-full grid gird-cols-12 grid-rows-[100px,10px,auto,auto,auto]">
         <div className="row-span-1 col-span-4 flex justify-left ps-[50px] items-center">
           <div>
             <h2 className="text-[1.8rem] font-bold mb-1">Dashboard</h2>
@@ -79,11 +82,19 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="row-span-1 col-span-12 flex justify-around items-center gap-11 ps-[4%] px-[5%] ">
-          <div className={` w-full h-[70%] border-2 shadow-md `}></div>
-          <div className={` w-full h-[70%] border-2 shadow-md `}></div>
-          <div className={` w-full h-[70%] border-2 shadow-md `}></div>
+        <div className="flex row-span-1 col-span-12  justify-around items-center gap-11 ps-[4%] px-[5%] ">
+          <div className={`hidden w-full h-[70%]  justify-left gap-3 ps-[20px] `}>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-1w-12">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+</svg>
+    <div>
+      <h2 className="mt-[35px] text-[1.2rem] font-bold">Revenue</h2>
+    </div>
+          </div>
+          <div className={` w-full h-[70%]  `}></div>
+          <div className={` w-full h-[70%]  `}></div>
         </div>
+
         <div
           className="row-span-1 col-span-6 h-[400px] pb-[100px] max-w-[500px] 
                 flex-col justify-left items-center gap-11  px-[5%] mt-8 "

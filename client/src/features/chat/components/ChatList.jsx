@@ -9,24 +9,27 @@ import {
     Card,
     Typography,
   } from "@material-tailwind/react";
+import { useSelector } from "react-redux";
+import { selectUserId } from "../../authentication/services/loginSlice";
 
    
-   function ChatList({username,text}) {
-
+   function ChatList({username,sender,text}) {
+  
+    const user_id=useSelector(selectUserId)
   
     return (
-      <Card className="w-[100%] shadow-none">
+      <Card className="w-[100%] shadow-none h-[50%]">
         <List>
-          <ListItem>
+          <ListItem className="">
             <ListItemPrefix>
-              <Avatar variant="circular"  src="" />
+             
             </ListItemPrefix>
             <div>
               <Typography variant="h6" color="blue-gray">
-                {username}
+               { username}
               </Typography>
               <Typography variant="small" color="gray" className="font-normal">
-                {text}
+                {user_id==sender && 'you :'} {text}
               </Typography>
             </div>
           </ListItem>

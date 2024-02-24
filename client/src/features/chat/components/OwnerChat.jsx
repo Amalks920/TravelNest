@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import {
@@ -18,10 +18,12 @@ const OwnerChat = ({ socket }) => {
 
   const [recipientId, setRecipientId] = useState(null);
 
+
+
   return (
-    <div className="grid grid-cols-[25%,70%] grid-rows-[9%,80%,11%] h-[83vh] -mt-[7%] w-full ms-[5%]">
+    <div className="grid grid-cols-[25%,70%] grid-rows-[9%,80%,11%] h-[83vh] shadow-md -mt-[7%] w-full ms-[5%]">
       <div className="row-span-1  col-span-1 border-2 flex flex-col">
-        <h2 className="font-bold text-center mt-4">Archieved</h2>
+        <h2 className="font-bold text-center mt-4">Messages</h2>
       </div>
 
       <div className="row-span-1  col-span-1 border-2 flex flex-col">

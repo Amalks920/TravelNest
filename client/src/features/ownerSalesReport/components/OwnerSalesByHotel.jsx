@@ -36,9 +36,9 @@ const OwnerSalesByHotel = () => {
   return (
     <div className=" w-full  min-h-[100vh]">
       <h2 className="text-center mt-[50px] text-[1.1rem] py-5">Sales Report</h2>
-      <div ref={componentRef} className="grid grid-flow-row grid-cols-12 mx-6 shadow-md border-t-2 rounded-md">
+      <div ref={componentRef} className="grid grid-flow-row grid-cols-12 mx-6 shadow-md  rounded-md">
         <div className="row-span-1 col-start-5 col-end-13  h-[100px]">
-          <div className="flex gap-3 justify-around items-center   h-full">
+          <div className=" gap-3 justify-around items-center hidden   h-full">
             <input
               onInput={(e) => {
                 setStartDate(e.target.value);

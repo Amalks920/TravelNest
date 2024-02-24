@@ -30,6 +30,7 @@ const VerifyEmailOrPhone = ({ role, isOtpVerified,verifySignup }) => {
 
   const selectedSchema = !isOtpVerified ? emailSchema : otpSchema
 
+
   const [
     verifyOtp,
     {
@@ -40,7 +41,30 @@ const VerifyEmailOrPhone = ({ role, isOtpVerified,verifySignup }) => {
     },
   ] = useVerifyOtpMutation();
 
-  console.log(isOtpVerified);
+const onTimeout=()=>{
+
+}
+
+const [seconds, setSeconds] = useState(60);
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    setSeconds((prevSeconds) => {
+      if (prevSeconds<=0 ) {
+        clearInterval(interval);
+        onTimeout();
+        return 0;
+      }
+      return prevSeconds - 1;
+    });
+  }, 1000);
+
+  return () => clearInterval(interval);
+}, [onTimeout]);
+
+
+
+
 
   const _onSave = async (values) => {
     console.log("_onSave");
@@ -55,6 +79,8 @@ const VerifyEmailOrPhone = ({ role, isOtpVerified,verifySignup }) => {
 
         emailRef.current = values.email;
         console.log("navigate to otp page");
+
+          if(verifySignup && role==='user') return  navigate(`/verify-otp-signup/${emailRef.current}`)
         role === "user"
           ? navigate(`/verify-otp/${emailRef.current}`)
           : role === "owner"
@@ -162,6 +188,13 @@ const VerifyEmailOrPhone = ({ role, isOtpVerified,verifySignup }) => {
               disabled={isSubmitting}
             />
           </div>
+        { seconds>0 ? <h1>{seconds}s</h1>:
+          <h1 className="cursor-pointer " onClick={
+             ()=>{
+              _onSave({email:email})
+             }
+          }
+          >Resend otp</h1>}
         </form>
       )}
     </Formik>

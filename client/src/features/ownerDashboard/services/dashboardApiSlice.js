@@ -17,8 +17,12 @@ const dashboardApiSlice=apiSlice.injectEndpoints({
         }),
         getBookingsGrouped:builder.query({
             query:(data)=>`/sales/get-bookings-grouped/${data.owner_id}`
+        }),
+        getDashBoardDatas:builder.query({
+            query:(data)=>`/sales/get-dashboard-data/${data.owner_id}`
         })
     }),
+
       
 
 })
@@ -29,5 +33,6 @@ export const {
               useGetSalesPerMonthMutation,
               useGetSalesOFPerviousSevenDaysMutation,
               useGetYearlySalesQuery,
-              useGetBookingsGroupedQuery
+              useGetBookingsGroupedQuery,
+              useGetDashBoardDatasQuery
             }=dashboardApiSlice;

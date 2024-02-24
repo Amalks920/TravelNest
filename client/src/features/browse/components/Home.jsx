@@ -62,9 +62,9 @@ const Home = () => {
           backgroundImage: `url(${"https://assets.oyoroomscdn.com/cmsMedia/6e9d9804-9c6f-4b18-a5d5-5e9a8f9815e5.jpg"})`,
         }}
       ></div>
-      <div className="row-span-1 col-span-full  min-h-[100vh]">
+      <div className="row-span-1 col-span-full  min-h-fit">
         {/* <h1 className="text-center font-bold text-[1.8rem] m">Popular Locations</h1> */}
-        <div className="w-[91%] h-[35%] ms-[5%] rounded-lg shadow-md border-2 bg-white">
+        <div className="w-[91%] hidden h-[35%] ms-[5%] rounded-lg shadow-md border-2 bg-white">
           <div className="border-b-2 h-[60px] flex gap-4 justify-left items-center px-[50px]">
             {location?.map(({ _id, hotelImages }, index) => {
               return <h2

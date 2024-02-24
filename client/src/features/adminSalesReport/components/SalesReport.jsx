@@ -1,31 +1,35 @@
 import { Button, Spinner } from "@material-tailwind/react";
-import { useGetSalesReportByDateMutation, useGetSalesReportQuery } from "../services/salesReportApiSlice";
+import { useGetSalesReportByDateMutation } from "../services/salesReportApiSlice";
 import { useEffect, useRef, useState } from "react";
+import useGetSalesAdmin from "../hooks/useGetSalesAdmin";
 
 const SalesReport = () => {
 
 
 const [startDate,setStartDate]=useState(null)
 const [endDate,setEndDate]=useState(null)
+const [salesReport,setSalesReport]=useState([])
 
 
-const {
-  data: salesResponse,
-  isError,
-  isFetching,
-  isLoading,
-  isSuccess,
-} = useGetSalesReportQuery();
+// const {
+//   data: salesResponse,
+//   isError,
+//   isFetching,
+//   isLoading,
+//   isSuccess,
+// } = useGetSalesReportQuery();
+
+  useGetSalesAdmin(salesReport,setSalesReport)
 
 //const [sales,setSales]=useState(salesResponse);
 
-const sales=useRef(null)
+// const sales=useRef(null)
 
-useEffect(()=>{
-  console.log(salesResponse)
-  sales.current=salesResponse?.response
+// useEffect(()=>{
+//   console.log(salesResponse)
+//   sales.current=salesResponse?.response
 
-},[salesResponse])
+// },[salesResponse])
 
 const [
   getSalesReportByDate,
@@ -40,7 +44,7 @@ const [
 
 async function filterSalesByDate(){
   const response=await getSalesReportByDate({startDate,endDate})
-  sales.current=response?.data
+  setSalesReport(response?.data) 
 }
 
   const getYesterdayDateString = () => {
@@ -51,7 +55,7 @@ async function filterSalesByDate(){
     return `${year}-${month}-${day}`;
   };
 
-  if (isFetching || isLoading) return <Spinner />;
+  // if (isFetching || isLoading) return <Spinner />;
 
   return (
     <div className="w-[90%]">
@@ -59,8 +63,8 @@ async function filterSalesByDate(){
 
 
 
-        <div class="p-6 px-0 overflow-scroll">
-          <div className="flex justify-end gap-5 h-[30px]">
+        <div class="p-6 px-0 overflow-scroll ">
+          <div className=" justify-end gap-5 h-[30px] hidden">
             <input
             onInput={(e)=>{
               setStartDate(e.target.value)
@@ -107,7 +111,7 @@ async function filterSalesByDate(){
             </thead>
             <tbody>
 
-              {sales?.current?.response?.map(({_id,totalRevenue,bookings,hotelDetails}, index) => {
+              {salesReport?.response?.map(({_id,totalRevenue,bookings,hotelDetails,hotelName}, index) => {
            
                 return (
                   <tr key={index}>
@@ -124,7 +128,7 @@ async function filterSalesByDate(){
                     <td class="p-4 border-b border-blue-gray-50">
                       <div class="flex flex-col">
                         <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                          {hotelDetails[0]?.hotelName}
+                          {!startDate?hotelDetails[0]?.hotelName:hotelName}
                         </p>
                       </div>
                     </td>
@@ -145,7 +149,7 @@ async function filterSalesByDate(){
                         type="button"
                       >
                         <span class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-                          <svg
+                          {/* <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
                             fill="currentColor"
@@ -153,7 +157,7 @@ async function filterSalesByDate(){
                             class="w-4 h-4"
                           >
                             <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z"></path>
-                          </svg>
+                          </svg> */}
                         </span>
                       </button>
                     </td>
@@ -167,7 +171,7 @@ async function filterSalesByDate(){
 
         <div class="flex items-center justify-between p-4 border-t border-blue-gray-50">
           <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
-            Page 1 of 10
+            Page 1 of 1
           </p>
           <div class="flex gap-2">
             <button

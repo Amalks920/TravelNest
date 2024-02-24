@@ -19,7 +19,7 @@ const SingleHotel = () => {
   const [price, setPrice] = useState(0);
   const [viewDetailsModal, setViewDetailsModal] = useState(false);
 
-
+  
   const { hotel_id, room_id,checkIn,checkOut } = useParams();
 
   const [open, setOpen] = useState(true);

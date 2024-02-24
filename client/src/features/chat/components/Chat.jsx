@@ -18,23 +18,22 @@ const Chat = ({socket}) => {
     const [lastMessage,setLastMessage]=useState('')
 
 
-
   return (
     <div className="grid grid-cols-[25%,50%,25%] grid-rows-[9%,80%,11%] h-[83vh] -mt-32 w-full sticky" style={{overflowAnchor:'none'}}>
 
-      <div className="row-span-1  col-span-1 border-2  flex flex-col ">
+      <div className="row-span-1  col-span-1   flex flex-col ">
 
-      <div className="h-[60px] border-b-2  flex justify-left items-center">
-        <h2 className="font-bold text-[1.3rem] ms-5 p-4">Archived</h2>
+      <div className="h-[60px] border-b-2  flex justify-left items-center rounded-l-md bg-gray-800">
+        <h2 className="font-bold text-[1.3rem] ms-5 p-4 text-white">Messages</h2>
       </div>
       {/* <Archived setRecipientId={setRecipientId}/> */}
       </div>
-      <div className="row-span-1  col-span-1 border-2 flex flex-col">
+      <div className="row-span-1  col-span-1  flex flex-col bg-gray-800">
       <div className="h-[60px] border-b-2  flex justify-left items-center">
       </div>
       {/* <Archived setRecipientId={setRecipientId}/> */}
       </div>
-      <div className="row-span-1  col-span-1 border-2 flex flex-col">
+      <div className="row-span-1  col-span-1  flex flex-col bg-gray-800 rounded-r-md">
       <div className="h-[60px] border-b-2  flex justify-left items-center">
         <h2 className="font-bold text-[1.3rem] ms-5 p-4"></h2>
       </div>

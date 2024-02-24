@@ -10,9 +10,9 @@ import {
   Input,
   Checkbox,
 } from "@material-tailwind/react";
-import { useGetAllCouponsQuery } from "../services/getCouponApiSlice";
+import { useGetAllCouponsForUserQuery, useGetAllCouponsQuery } from "../services/getCouponApiSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCouponCode, updateCouponCode } from "../services/priceSlice";
+import { selectCouponCode, selectPrice, updateCouponCode } from "../services/priceSlice";
 
 function CouponModal({ couponModalOpen, setCouponModalOpen }) {
   const {
@@ -21,8 +21,9 @@ function CouponModal({ couponModalOpen, setCouponModalOpen }) {
     isFetching,
     isLoading,
     isSuccess,
-  } = useGetAllCouponsQuery();
+  } = useGetAllCouponsForUserQuery();
 
+  const price = useSelector(selectPrice);
   const couponCode = useSelector(selectCouponCode);
   const dispatch = useDispatch();
   const handleOpen = () => setCouponModalOpen((cur) => !cur);
@@ -49,6 +50,7 @@ function CouponModal({ couponModalOpen, setCouponModalOpen }) {
                   discountType,
                   discountAmount,
                   percentageDiscount,
+                  minimumAmount
                 },
                 index
               ) => {
@@ -63,8 +65,13 @@ function CouponModal({ couponModalOpen, setCouponModalOpen }) {
                       {
                         <button
                           onClick={() => {
+
+                            if(minimumAmount>price){
+                              return alert(`minimum amount should be ${ minimumAmount} `)
+                            }
                            
                             if(couponCode!==code ){
+                              
                               dispatch(
                                 updateCouponCode({
                                   code: code,

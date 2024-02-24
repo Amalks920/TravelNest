@@ -14,6 +14,20 @@ const OwnerChatMessage=({recipient_id,socket,lastMessage,setLastMessage})=>{
     const {data:messages,isError,isFetching,isLoading,isSuccess,refetch}=useGetMessagesQuery({recipient_id,user_id})
   console.log(messages)
 
+
+  useEffect(()=>{
+   
+    const lastMessageIsFromOtherUser= messages?.length && messages[messages?.length-1].sender?._id != user_id
+
+    if(lastMessageIsFromOtherUser){
+      socket.emit("markMessagesAsSeen", {
+				conversationId: messages[messages?.length-1]?.conversationId,
+				userId: messages[messages?.length-1].sender?._id,
+			});
+    }
+
+  })
+
     // useEffect(()=>{
       socket?.on('newMessage',(message)=>{  
         refetch()
@@ -21,6 +35,9 @@ const OwnerChatMessage=({recipient_id,socket,lastMessage,setLastMessage})=>{
       // })
     })
 
+    socket?.on('messageSeen',({conversationId})=>{
+      console.log(conversationId,'conversationId')
+    })
 //     return (
 //         <div className="flex flex-col mx-[10%] mt-[50px] min-h-full">
 //           <div className="grid grid-flow-row grid-cols-[50px,auto]" >
@@ -62,7 +79,7 @@ return (
   <div className="flex flex-col mx-[10%] mt-[50px] min-h-full ms-[20%]">
     <div className="grid grid-flow-row grid-cols-[50px,30vw]" >
       
-{  messages?.map(({text,sender,updatedAt},index)=>{
+{  messages?.map(({text,sender,updatedAt,seen},index)=>{
 // const date = updatedAt?.toISOString()?.split('T')[0];
 // const time = updatedAt?.toISOString()?.split('T')[1]?.split('.')[0]; 
 return <>
@@ -77,6 +94,7 @@ return <>
         <h3 className="text-[0.7rem] mt-3 ms-2">{formatTime( updatedAt)}</h3>
         </div>
         <h2 className={` p-1 text-[0.8rem] font-thin`}>{text}</h2>
+        {seen && sender._id===user_id && <h2 className={` p-1 text-[0.8rem] font-thin`}>{'seen'}</h2>}
         {/* <h2 className="text-[0.7rem] p-1">Read By</h2> */}
       </div>
       </>

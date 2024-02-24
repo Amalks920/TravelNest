@@ -1,5 +1,5 @@
 const { getAllHotelIdsHelper } = require("../helpers/hotelHelper")
-const { getSalesReportHelper, getSalesReportByDateHelper, getSalesReportForOwnerHelper, getSalesReportForOwnerHotelsHelper, getSalesPerTwoWeekHelper, getSalesPerMonthHelper, getSalesPerDayHelper, getYearlyReportHelper, downloadOwnerSalesPdfHelper, filterBookingsByDateHelper, getBookingsGroupedHelper, getAllHotelsMonthlySalesHelper } = require("../helpers/salesHelper")
+const { getSalesReportHelper, getSalesReportByDateHelper, getSalesReportForOwnerHelper, getSalesReportForOwnerHotelsHelper, getSalesPerTwoWeekHelper, getSalesPerMonthHelper, getSalesPerDayHelper, getYearlyReportHelper, downloadOwnerSalesPdfHelper, filterBookingsByDateHelper, getBookingsGroupedHelper, getAllHotelsMonthlySalesHelper, getOwnerDashBoardDataHelper } = require("../helpers/salesHelper")
 
 
 const getSalesReport=async (req,res)=>{
@@ -131,6 +131,7 @@ const getBookingsGrouped = async (req,res) => {
 
 const getAllHotelsMonthlySales = async (req,res) => {
     try {
+       
         const response=await getAllHotelsMonthlySalesHelper()
 
         res.status(200).json({response})
@@ -139,6 +140,15 @@ const getAllHotelsMonthlySales = async (req,res) => {
     }
 }
 
+const getOwnerDashBoardData = async (req,res)=>{
+    const owner_id=req.params.owner_id
+    try {
+        const hotelIdArray=await getAllHotelIdsHelper(owner_id)
+       const response=await  getOwnerDashBoardDataHelper(hotelIdArray)
+    } catch (error) {
+        res.status(500).json({error})
+    }
+}
 
 
 
@@ -149,5 +159,6 @@ module.exports={
     getSalesPerTwoWeek,
     getSalesPerMonth,
     getSalesPerDay,getSalesPerYear,downloadSalesReport,
-    filterBookingsByDate,getBookingsGrouped,getAllHotelsMonthlySales
+    filterBookingsByDate,getBookingsGrouped,getAllHotelsMonthlySales,
+    getOwnerDashBoardData
 }

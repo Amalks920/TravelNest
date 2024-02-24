@@ -40,7 +40,11 @@ const getAllCoupnsOwnerLengthHelper = async () => {
 
 const getAllCouponsUserHelper= async () =>{
     try {
-        const response=await couponModal.find({})
+        const response=await couponModal.find(
+            {maxRedemptions:{$ne:0},
+            expirationDate: { $gt: new Date() }
+        },
+            )
         return response
     } catch (error) {
         throw error

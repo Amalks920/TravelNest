@@ -1,5 +1,5 @@
 const express=require('express')
-const { getSalesReport, getSalesReportByDate, getSalesReportForOwner, getSalesReportForOwnerHotels , getSalesPerMonth, getSalesPerTwoWeek, getSalesPerDay, getSalesPerYear, downloadSalesReport, filterBookingsByDate, getBookingsGrouped, getAllHotelsMonthlySales } = require('../controllers/salesController')
+const { getSalesReport, getSalesReportByDate, getSalesReportForOwner, getSalesReportForOwnerHotels , getSalesPerMonth, getSalesPerTwoWeek, getSalesPerDay, getSalesPerYear, downloadSalesReport, filterBookingsByDate, getBookingsGrouped, getAllHotelsMonthlySales, getOwnerDashBoardData } = require('../controllers/salesController')
 const verifyAdminJwt = require('../middlewares/verifyAdminJwt');
 const verifyOwnerJwt = require('../middlewares/verifyOwnerJwt');
 const router=express.Router()
@@ -91,7 +91,8 @@ router.get('/get-sales-per-day/:owner_id',getSalesPerDay)
 router.get('/get-sales-per-year/:owner_id',getSalesPerYear)
 router.get('/download-sales-report',downloadSalesReport),
 router.get('/filter-bookings-by-date/:startDate/:endDate',verifyOwnerJwt,filterBookingsByDate)
-router.get('/get-bookings-grouped/:owner_id',verifyOwnerJwt,getBookingsGrouped)
+router.get('/get-bookings-grouped/:owner_id',verifyOwnerJwt,getBookingsGrouped);
+router.get('/get-dashboard-data/:owner_id',verifyOwnerJwt,getOwnerDashBoardData)
 
 
 

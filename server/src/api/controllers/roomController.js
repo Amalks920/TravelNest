@@ -14,6 +14,8 @@ const {
   getRoomsByLocationHelper,
   getHotelRoomsByLocationHelper,
   filterRoomsByLocationHelper,
+  updateRoomNumberHelper,
+  changeRoomNumberHelper,
 } = require("../helpers/roomHelper");
 const mongoose=require('mongoose');
 const { uploadImages } = require("../helpers/hotelHelper");
@@ -100,6 +102,18 @@ const editRoomDescription=async (req,res,next)=>{
       console.log(error)
       res.status(404).json({error})
     }
+}
+
+const updateRoomNumber = async (req,res) =>{
+  const room_id=req.params.room_id;
+  const noOfRooms=req.body.noOfRooms;
+  try {
+    const response=await changeRoomNumberHelper(room_id,noOfRooms)
+    res.status(200).json({response})
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({error})
+  }
 }
 
 const addRoomImages= async (req,res,next)=>{
@@ -253,5 +267,5 @@ module.exports = {
   editRoomDescription,addRoomImages,
   getRoomsForUser,getAvgReviewOfRoom,
   getARoomForUser,checkAvailabilityOfRoom,getRoomsByLocation,
-  getHotelRoomsByLocation,filterRoomsByLocation
+  getHotelRoomsByLocation,filterRoomsByLocation,updateRoomNumber
 };

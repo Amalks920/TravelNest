@@ -104,7 +104,7 @@ const googleLoginHelper = async function ( email,role ) {
 const changePasswordHelper= function (email,password){
     return new Promise(async (resolve,reject)=>{
         try {
-            console.log(email,password)
+  
             const findUser=await userModel.findOne({email:email})
             findUser.password=password;
             findUser.save()
