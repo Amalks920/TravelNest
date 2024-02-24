@@ -29,7 +29,7 @@ import { selectUserId } from "../../authentication/services/loginSlice";
                { username}
               </Typography>
               <Typography variant="small" color="gray" className="font-normal">
-                {user_id==sender && 'you :'} {text}
+                {user_id==sender && 'you :'} {text.slice(0,10)}...
               </Typography>
             </div>
           </ListItem>

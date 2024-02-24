@@ -35,7 +35,7 @@ const OwnerChat = ({ socket }) => {
       </div>
 
    
-          <div  className="row-span-1 col-span-1  border-r-2 border-t-0 overflow-y-scroll flex overflow-auto " >
+          <div  className="row-span-1 col-span-1  border-r-2 border-t-0 overflow-y-scroll flex overflow-hidden " >
       <OwnerChatMessage recipient_id={role==='user'?owner_id:recipientId} socket={socket} />
       </div>
   

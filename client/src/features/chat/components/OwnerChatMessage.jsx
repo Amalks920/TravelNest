@@ -77,15 +77,15 @@ const OwnerChatMessage=({recipient_id,socket,lastMessage,setLastMessage})=>{
 
 return (
   <div className="flex flex-col mx-[10%] mt-[50px] min-h-full ms-[20%]">
-    <div className="grid grid-flow-row grid-cols-[50px,30vw]" >
+    <div className="grid grid-flow-row grid-cols-[38vw]" >
       
 {  messages?.map(({text,sender,updatedAt,seen},index)=>{
 // const date = updatedAt?.toISOString()?.split('T')[0];
 // const time = updatedAt?.toISOString()?.split('T')[1]?.split('.')[0]; 
 return <>
 {/* ${user_id!==sender._id?'bg-blue-gray-50':'bg-gray-300 '} */}
+{/* 
     <div className={`col-span-1 
-
      mb-3 rounded-s-lg`}></div>      
       <div className={`col-span-1 p-3    mb-3 rounded-e-lg  w-[100%] hover:shadow-md `}>
         <h2 className={`text-center text-[0.7rem] font-bold w-full`}>{formatDate( updatedAt)}</h2>
@@ -95,8 +95,14 @@ return <>
         </div>
         <h2 className={` p-1 text-[0.8rem] font-thin`}>{text}</h2>
         {seen && sender._id===user_id && <h2 className={` p-1 text-[0.8rem] font-thin`}>{'seen'}</h2>}
-        {/* <h2 className="text-[0.7rem] p-1">Read By</h2> */}
-      </div>
+      </div> */}
+                  <div className={`  flex my-4 ${sender?.role!='user' && 'justify-end'}`}>
+              <div className={`${sender?.role=='user' ? ' bg-gray-50':'bg-black text-white' } px-10 flex gap-14  ${sender?.role=='user'?'rounded-bl-2xl rounded-e-2xl':'rounded-s-2xl rounded-br-2xl'} py-3 w-fit border-2 `}>
+               <h2 className="text-[1rem]">{text}</h2> 
+               <h2 className="text-[0.8rem] mt-1">{formatTime( updatedAt)}</h2>
+                </div>
+              
+            </div>
       </>
       })
       }

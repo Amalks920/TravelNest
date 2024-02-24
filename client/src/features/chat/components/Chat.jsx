@@ -19,7 +19,7 @@ const Chat = ({socket}) => {
 
 
   return (
-    <div className="grid grid-cols-[25%,50%,25%] grid-rows-[9%,80%,11%] h-[83vh] -mt-32 w-full sticky" style={{overflowAnchor:'none'}}>
+    <div className="grid grid-cols-[25%,50%,25%] grid-rows-[9%,80%,11%] h-[83vh] -mt-32 w-full sticky overflow-hidden" style={{overflowAnchor:'none'}}>
 
       <div className="row-span-1  col-span-1   flex flex-col ">
 

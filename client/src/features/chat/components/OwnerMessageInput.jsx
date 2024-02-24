@@ -22,7 +22,7 @@ const OwnerMessageInput = ({ recipientId, senderId }) => {
         stroke-width="1.5"
         stroke="currentColor"
         className={`w-7 h-7 top-14  absolute ${
-          role === "user" ? "left-[69%] top-[91%]" : "left-[79.8%] top-[91.5%]"
+          role === "user" ? "left-[69%] top-[91%]" : "left-[88%] top-[91.5%]"
         } top-11 cursor-pointer ${message.length === 0 ? "hidden" : "flex"}`}
         onClick={(e) => {
           handleMessage();
@@ -38,9 +38,9 @@ const OwnerMessageInput = ({ recipientId, senderId }) => {
         }}
         value={message}
         type="text"
-        className={`border-2 border-black rounded-full my-4 ps-[5%] ms-[5%]  text-sm ${
-          role === "owner" ? "w-[70%] h-[38px] ms-[16%]" : " h-[50px] w-[90%]"
-        }`}
+        className={`border-2 border-black  my-4 ps-[5%] ms-[10%]  text-sm 
+          w-[80%] h-[40px] 
+        `}
         placeholder="type message here"
       />
     </div>
