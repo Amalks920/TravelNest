@@ -70,7 +70,6 @@ async function getMessages(req, res) {
 		const conversation = await Conversation.findOne({
 			participants: { $all: [userId, otherUserId] },
 		});
-		console.log(conversation)
 
 		if (!conversation) {
 			return res.status(404).json({ error: "Conversation not found" });

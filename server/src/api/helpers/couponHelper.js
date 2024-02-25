@@ -42,7 +42,8 @@ const getAllCouponsUserHelper= async () =>{
     try {
         const response=await couponModal.find(
             {maxRedemptions:{$ne:0},
-            expirationDate: { $gt: new Date() }
+            expirationDate: { $gt: new Date() },
+            isActive:true
         },
             )
         return response
@@ -69,10 +70,26 @@ const changeCouponCountHelper = async (couponCode,valueToChange) => {
     }
 }
 
+const deListCouponHelper = async (id,status) =>{
+    try {
+    const response=await couponModal.updateOne({
+        _id:id
+    },
+    {
+        $set:{isActive:status}
+    }
+    )
+    return response
+    } catch (error) {
+        throw error
+    }
+}
+
 
 
 module.exports={
     addCouponHelper,getAllCouponsOwnerHelper,
     getAllCoupnsOwnerLengthHelper,getAllCouponsUserHelper,
-    getACouponByCodeHelper,changeCouponCountHelper
+    getACouponByCodeHelper,changeCouponCountHelper,
+    deListCouponHelper
 }

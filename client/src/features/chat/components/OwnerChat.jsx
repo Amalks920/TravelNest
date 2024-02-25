@@ -6,10 +6,10 @@ import {
   selectUserId,
 } from "../../authentication/services/loginSlice";
 import ChatMessage from "./ChatMessage";
-import Archived from "./Archived";
 import MessageInput from "./MessageInput";
 import OwnerMessageInput from "./OwnerMessageInput";
 import OwnerChatMessage from "./OwnerChatMessage";
+import OwnerArchived from "./OwnerArchived";
 
 const OwnerChat = ({ socket }) => {
   const role = useSelector(selectRole);
@@ -31,7 +31,7 @@ const OwnerChat = ({ socket }) => {
       </div>
 
       <div className="row-span-1  col-span-1 border-2 flex flex-col">
-        <Archived setRecipientId={setRecipientId} />
+        <OwnerArchived setRecipientId={setRecipientId} socket={socket} />
       </div>
 
    

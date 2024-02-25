@@ -69,7 +69,7 @@ const payment = async (req, res, next) => {
       priceAfterDiscount = totalPrice;
     }
 
-    roomDetails.price = priceAfterDiscount;
+    roomDetails.price = Math.round(priceAfterDiscount);
 
     const findUser = await findUserByUserName(req.user);
     const findHotel = await getAHotelHelperForOrder(hotel_id);
@@ -185,7 +185,7 @@ const payUsingWallet = async (req, res, next) => {
     }
 
     result[0] = roomRes;
-    let payementMethod='wallet'
+    let paymentMethod='wallet'
 
     const response = await createBookingHelper(
       result,
@@ -256,7 +256,7 @@ const webHookController = async (req, res, next) => {
       console.log("checkout.session.completed coheclskdll time.exe");
             console.log(totalPrice)
       console.log("checkout.session.completed coheclskdll time.exe");
-
+      let paymentMethod='card'
       console.log(result,'result')
       console.log(discountAmount,'discountAmount'),
       console.log(roomDetails,'roomdetails')
@@ -267,7 +267,8 @@ const webHookController = async (req, res, next) => {
         checkOutDate,
         totalNoRooms,
         roomDetails,
-        discountAmount
+        discountAmount,
+        paymentMethod
       );
       console.log(response);
       console.log('boooking response after booking')

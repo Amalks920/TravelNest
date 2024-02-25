@@ -42,7 +42,7 @@ const Chat = ({socket}) => {
 
 
       <div className="row-span-1 col-span-1 border-2 border-r-0 border-t-0">
-      <Archived setRecipientId={setRecipientId}/>
+      <Archived setRecipientId={setRecipientId} socket={socket}/>
       </div>
 
       <div  className="row-span-1 col-span-1 border-2 border-r-2 border-t-0 overflow-y-scroll flex overflow-auto" >

@@ -1,5 +1,5 @@
 const express=require('express')
-const { addCoupon, getAllCouponsOwner, getAllCoupnsOwnerLength, getAllCouponsUser } = require('../controllers/couponController')
+const { addCoupon, getAllCouponsOwner, getAllCoupnsOwnerLength, getAllCouponsUser, deListCoupon } = require('../controllers/couponController')
 const verifyOwnerJwt = require('../middlewares/verifyOwnerJwt')
 const verifyJwt = require('../utils/verifyJwt')
 const router=express.Router()
@@ -36,6 +36,7 @@ const router=express.Router()
 router.post('/add-coupon',verifyOwnerJwt,addCoupon)
 router.get('/get-all-coupon-owner',verifyOwnerJwt,getAllCouponsOwner)
 router.get('/get-all-coupons-owner-length',verifyOwnerJwt,getAllCoupnsOwnerLength)
+router.post('/delistCoupon/:id',verifyOwnerJwt,deListCoupon)
 
 
 //user

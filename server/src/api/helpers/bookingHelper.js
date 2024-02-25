@@ -22,7 +22,7 @@ const createBookingHelper=(data,totalPrice,checkInDate,checkOutDate,totalNoRooms
         checkOut:checkOutDate,
         totalNoOfRooms:totalNoRooms,
         discountAmount:discountAmount,
-        paymentType:paymentMethod
+        payementType:paymentMethod
     }
 
     return new Promise(async (resolve,reject)=>{

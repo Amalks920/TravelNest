@@ -36,7 +36,7 @@ const AdminHome = () => {
           </div>
         </div>
 
-        <div className="row-span-1 col-span-12 flex justify-around items-center gap-11 ps-[4%] px-[5%] ">
+        <div className="hidden row-span-1 col-span-12  justify-around items-center gap-11 ps-[4%] px-[5%] ">
           <div className={` w-full h-[70%] border-2 shadow-md `}></div>
           <div className={` w-full h-[70%] border-2 shadow-md `}></div>
           <div className={` w-full h-[70%] border-2 shadow-md `}></div>
@@ -113,6 +113,7 @@ const AdminHome = () => {
 
 
         <div className="row-span-1 h-[450px] col-span-12 w-[90%] ms-[2%]">
+          <h2 className="font-bold text-center mb-3">Total Sales Of All Hotels.</h2>
           <AgChartsReact options={lineGraph} strokeWidth={10} />
         </div>
       </div>

@@ -46,7 +46,7 @@ const Home = () => {
   };
 
   return (
-    <div className=" grid grid-flow-row grid-cols-1 md:grid-cols-4 xl:grid-cols-3  w-[100vw] bg-gray-100">
+    <div className=" grid grid-flow-row grid-cols-1 md:grid-cols-4 xl:grid-cols-3 min-h-[100vh] w-[100vw] bg-gray-100">
       <div
         className="absolute row-span-1 h-[270px] col-span-full w-[100vw]  bg-cover flex flex-col justify-center items-center -ms-2 -mt-5"
         style={{
@@ -62,25 +62,27 @@ const Home = () => {
           backgroundImage: `url(${"https://assets.oyoroomscdn.com/cmsMedia/6e9d9804-9c6f-4b18-a5d5-5e9a8f9815e5.jpg"})`,
         }}
       ></div>
-      <div className="row-span-1 col-span-full  min-h-fit">
+      <div className="row-span-1 col-span-full  min-h-[50vh]">
         {/* <h1 className="text-center font-bold text-[1.8rem] m">Popular Locations</h1> */}
-        <div className="w-[91%] hidden h-[35%] ms-[5%] rounded-lg shadow-md border-2 bg-white">
+        <div className="w-[91%]  h-[70%] ms-[5%] rounded-lg shadow-md border-2 bg-white">
           <div className="border-b-2 h-[60px] flex gap-4 justify-left items-center px-[50px]">
-            {location?.map(({ _id, hotelImages }, index) => {
+
+            <h2 className="font-bold text-[1.3rem] text-center w-full my-3">Popular Locations</h2>
+            {/* {location?.map(({ _id, hotelImages }, index) => {
               return <h2
               onClick={()=>{
                 setLocation(index)
               }}
                className={`capitalize cursor-pointer  text-[1.1rem] ${hotelLocation===index? 'border-b-4 border-black font-bold':null}
                 text-center   w-full h-[100%] pt-4`}>{_id}</h2>;
-            })}
+            })} */}
           </div>
 
             <div className="flex gap-4 justify-left items-center px-[50px] ">
           {location?.map(({ _id, hotelImages }, index) => {
            
             return   <div className=" text-center  w-full h-[100%] pt-4" >
-              <div className="w-[80%] h-[170px] bg-cover cursor-pointer" style={{backgroundImage:`url(${IMAGE_BASE_URL+'/'+hotelImages[0][0]})`}}></div>
+              <div className="w-[80%] h-[170px] bg-cover" style={{backgroundImage:`url(${IMAGE_BASE_URL+'/'+hotelImages[0][0]})`}}></div>
             </div>
           
         })}

@@ -1,4 +1,4 @@
-const { addCouponHelper, getAllCouponsOwnerHelper, getAllCoupnsOwnerLengthHelper, getAllCouponsUserHelper } = require("../helpers/couponHelper")
+const { addCouponHelper, getAllCouponsOwnerHelper, getAllCoupnsOwnerLengthHelper, getAllCouponsUserHelper, deListCouponHelper } = require("../helpers/couponHelper")
 
 
 const addCoupon = async (req,res) => {
@@ -34,6 +34,18 @@ const getAllCoupnsOwnerLength= async (req,res) => {
     }
 }
 
+const deListCoupon = async (req,res) => {
+    const id=req.params.id
+    const status=req.body.status
+    try {
+      const response=await deListCouponHelper(id,status)  
+      res.status(200).json({response})
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({error})
+    }
+}
+
 const getAllCouponsUser = async (req,res)=>{
     try {
      const response=await getAllCouponsUserHelper()
@@ -45,6 +57,7 @@ const getAllCouponsUser = async (req,res)=>{
 
 module.exports={
     addCoupon,getAllCouponsOwner,
-    getAllCoupnsOwnerLength,getAllCouponsUser
+    getAllCoupnsOwnerLength,getAllCouponsUser,
+    deListCoupon
 }
 

@@ -43,7 +43,9 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
 export const apiSlice = createApi({
   baseQuery: baseQueryWithReauth,
-  tagTypes: ['Users','Hotels','single-hotel-owner','get-rooms-of-hotel','single-booking-details','messages','user'],
+  tagTypes: ['Users','Hotels','single-hotel-owner',
+  'get-rooms-of-hotel','single-booking-details',
+  'messages','user','coupons','conversations'],
   endpoints: (builder) => ({}),
   //provideTags:['user','verifyEmail']
 });

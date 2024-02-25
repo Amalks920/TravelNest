@@ -11,12 +11,26 @@ const couponApiSlice=apiSlice.injectEndpoints({
             })
         }),
         getAllCoupons:builder.query({
-            query:()=>`/coupon/get-all-coupons-owner`
+            query:()=>`/coupon/get-all-coupons-owner`,
+            providesTags:['coupons']
         }),
+        
+        
         getAllCouponsLength:builder.query({
             query:()=>`/coupon/get-all-coupons-owner-length`
+        }),
+        deListCoupon:builder.mutation({
+            query:(data)=>({
+                url:`/coupon/delistCoupon/${data.id}`,
+                method:'post',
+                body:data
+            }),
+            invalidatesTags:['coupons']
         })
     })
 })
 
-export const {useAddCouponMutation,useGetAllCouponsQuery,useGetAllCouponsLengthQuery} = couponApiSlice;
+export const {
+    useAddCouponMutation,useGetAllCouponsQuery,
+    useGetAllCouponsLengthQuery,useDeListCouponMutation
+} = couponApiSlice;

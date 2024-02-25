@@ -17,8 +17,9 @@ import { useGetAllCouponsQuery } from "../services/couponApiSlice";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import { useState } from "react";
+import CancelCouponModal from "./CancelCouponModal";
 
-  const TABLE_HEAD = ["Coupon Code", "Description", "Discount Type","Minimum Amount" ,"Discount", "Expiration Date"];
+  const TABLE_HEAD = ["Coupon Code", "Description", "Discount Type","Minimum Amount" ,"Discount", "Expiration Date",""];
 
 
   const TABLE_ROWS = [
@@ -37,9 +38,14 @@ import { useState } from "react";
 
 const AllCoupons=({couponsLength})=>{
     const [pageNumber,setPageNumber]=useState(1)
+    const [open,setOpen]=useState(false)
     const {data:coupons,isError,isFetching,isLoading,isSuccess}=useGetAllCouponsQuery()
-
+    const [id,setId]=useState(null)
+    const [status,setStatus]=useState(null)
+    
     return (
+      <>
+        <CancelCouponModal open={open} setOpen={setOpen} id={id} status={!status}/>
         <Card className="h-full w-full p-16">
         <CardHeader floated={false} shadow={false} className="rounded-none">
           <div className="mb-8 flex items-center justify-between gap-8">
@@ -50,15 +56,7 @@ const AllCoupons=({couponsLength})=>{
             </div>
           </div>
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            {/* <Tabs value="all" className="w-full md:w-max z-0">
-                      <TabsHeader>
-                        {TABS.map(({ label, value,className }) => (
-                          <Tab key={value} className={"text-[0.8rem] w-[150px] font-bold "+className} value={value}>
-                            &nbsp;&nbsp;{label}&nbsp;&nbsp;
-                          </Tab>
-                        ))}
-                      </TabsHeader>
-                    </Tabs> */}
+
             <div className="w-full md:w-72 hidden">
               <Input
                 label="Search"
@@ -164,13 +162,6 @@ const AllCoupons=({couponsLength})=>{
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {/* <Link to={`/owner/room-list/${_id}`} className="text-[0.56rem] text-center">View Rooms</Link> */}
-                        {/* <Link
-                          to={`/owner/booking-details/${_id}`}
-                          className="text-[0.56rem] text-center"
-                        >
-                          View Details
-                        </Link> */}
                         <h2>{discountType==='Percentage'?percentageDiscount:discountAmount}</h2>
                       </Typography>
                     </td>
@@ -180,6 +171,17 @@ const AllCoupons=({couponsLength})=>{
                                           {format(expirationDate, "yyyy-MM-dd", {
                                             timeZone: "Asia/Kolkata",
                                           })}
+                    </h2>
+                    </td>
+                    <td>
+                    <h2 className="text-[0.7rem] text-black ps-5">
+                                   <Button
+                                   onClick={()=>{
+                                    setOpen(!open)
+                                    setId(_id)
+                                    setStatus(isActive)
+                                   }}
+                                    size="sm">{isActive?'Delist':'List'}</Button>
                     </h2>
                     </td>
                   </tr>
@@ -216,6 +218,7 @@ const AllCoupons=({couponsLength})=>{
           </div>
         </CardFooter>
       </Card>
+      </>
     )
 }
 

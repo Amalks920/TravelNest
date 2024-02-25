@@ -99,7 +99,7 @@ const Home = () => {
           className="row-span-1 col-span-6 h-[400px] pb-[100px] max-w-[500px] 
                 flex-col justify-left items-center gap-11  px-[5%] mt-8 "
         >
-          <h2 className="mb-3 font-bold ms-[30px]">Sales Chart</h2>
+          <h2 className="mb-3 font-bold ms-[30px]">Monthly Sales Chart</h2>
           <button
             onClick={async () => {
               const response = await getSalesOFPerviousSevenDays({
@@ -167,6 +167,7 @@ const Home = () => {
 
 
         <div className="row-span-1 h-[400px] col-span-12 w-[90%] ms-[2%]">
+          <h2 className="text-center font-bold">Total Sales</h2>
           <AgChartsReact options={lineGraph} strokeWidth={10} />
         </div>
       </div>

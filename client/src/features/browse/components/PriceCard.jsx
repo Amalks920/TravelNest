@@ -201,7 +201,7 @@ const  PriceCard = ({ rate, roomType, hotel_id, room_id, open, setOpen,couponMod
                 if (token && role === "user") {
                   const response = await payment({
                     roomDetails,
-                    totalPrice: price,
+                    totalPrice: Math.round(price),
                     checkInDate: selectedCheckInDate,
                     checkOutDate: selectedCheckOutDate,
                     hotel_id,
@@ -243,7 +243,7 @@ const  PriceCard = ({ rate, roomType, hotel_id, room_id, open, setOpen,couponMod
                     checkInDate: selectedCheckInDate,
                     checkOutDate: selectedCheckOutDate,
                     roomDetails: roomDetails,
-                    totalPrice: price,
+                    totalPrice: Math.round(price),
                     totalNoRooms: noOfRooms,
                     hotel_id: hotel_id,
                     noOfDays: noOfDays,
@@ -263,12 +263,12 @@ const  PriceCard = ({ rate, roomType, hotel_id, room_id, open, setOpen,couponMod
             <div className="mt-[10px] flex flex-col justify-center items-center  w-full">
               <div className="w-[100%] flex  justify-between mx-3 px-2">
                 <h2 className="font-extralight text-[1rem]">price :</h2>
-                <h2 className="me-3 font-extralight text-[1rem]">₹ {price}</h2>
+                <h2 className="me-3 font-extralight text-[1rem]">₹ {Math.round(price)}</h2>
               </div>
 
               <div className="w-[100%] flex  justify-between mx-3 px-2 mt-[20px]">
                 <h2 className="font-extralight text-[1rem]">Discount :</h2>
-                <h2 className="me-3 font-bold text-[1rem] text-green-700">{ discount } {discountType==='Fixed'?'':'%'} </h2>
+                <h2 className="me-3 font-bold text-[1rem] text-green-700">{ discount } {discountType==='Fixed'?'':discountType==='Percentage'?'%':null} </h2>
               </div>
 
 

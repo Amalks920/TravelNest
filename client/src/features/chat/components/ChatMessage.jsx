@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { useGetMessagesQuery } from "../services/chatApiSlice";
+import { useGetMessagesQuery, useReFetchMessagesMutation } from "../services/chatApiSlice";
 import { selectRole, selectUserId, selectUserName } from "../../authentication/services/loginSlice";
 import { useEffect, useRef, useState } from "react";
 import { setDay } from "date-fns";
@@ -12,9 +12,14 @@ const ChatMessage=({recipient_id,socket,lastMessage,setLastMessage})=>{
   const role=useSelector(selectRole)
   const user=useSelector(selectUserName)
   
+  const [messages,setMessages]=useState([])
 
-    const {data:messages,isError,isFetching,isLoading,isSuccess,refetch}=useGetMessagesQuery({recipient_id,user_id})
+    const {data:messagesArray,isError,isFetching,isLoading,isSuccess,refetch,}=useGetMessagesQuery({recipient_id,user_id})
+    const [reFetchMessages]=useReFetchMessagesMutation()
  
+   useEffect(()=>{
+      setMessages(messagesArray)
+   },[messagesArray])
   
   useEffect(()=>{
    
@@ -34,23 +39,24 @@ const ChatMessage=({recipient_id,socket,lastMessage,setLastMessage})=>{
   })
 
     // useEffect(()=>{
-      socket?.on('newMessage',(message)=>{  
+      socket?.on('newMessage',async (message)=>{  
+       
+        const response=await reFetchMessages({recipient_id,user_id})
+        console.log(response)
         // console.log(message)
         // setLastMessage(message.text)
-       refetch()
+     //  refetch()
+     setMessages(response.data)
     
       // })
     })
 
-
-
-    console.log(messages)
     return (
         <div className="flex flex-col mx-[10%]  mt-[50px] min-h-full mb-[10%]  h-fit">
           <div className="grid grid-flow-row grid-cols-[38vw]  pb-[50px]" >
             
 {  messages?.map(({text,sender,updatedAt,seen},index)=>{
-  console.log(sender,user_id)
+
   // const date = updatedAt?.toISOString()?.split('T')[0];
   // const time = updatedAt?.toISOString()?.split('T')[1]?.split('.')[0]; 
 return <>

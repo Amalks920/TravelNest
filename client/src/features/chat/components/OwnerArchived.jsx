@@ -11,7 +11,7 @@ import { Spinner } from "@material-tailwind/react";
 import ChatList from "./ChatList";
 import { useEffect, useState } from "react";
 
-const Archived = ({ setRecipientId, socket }) => {
+const OwnerArchived = ({ setRecipientId, socket }) => {
   const user_id = useSelector(selectUserId);
   const role = useSelector(selectRole);
 
@@ -78,4 +78,4 @@ const Archived = ({ setRecipientId, socket }) => {
   );
 };
 
-export default Archived;
+export default OwnerArchived;

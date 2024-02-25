@@ -182,9 +182,9 @@ const SingleHotel = () => {
         </div>
 
         <div className="row-span-2 col-span-8  flex flex-col ms-[120px] mt-11 ">
-          <h2 className="font-bold text-[1.2rem] pt-2 ps-5 mb-9">
+        { reviews?.length!==0 && <h2 className="font-bold text-[1.2rem] pt-2 ps-5 mb-9">
             Reviews & Ratings
-          </h2>
+          </h2>}
           <ReviewSection reviews={reviews} />
         </div>
       </div>
