@@ -31,7 +31,7 @@ const SearchContainer = () => {
       </div>
 
     
-      <div className="row-span-1 col-span-2 lg:col-span-1 overflow-scroll">
+      <div className="row-span-1 col-span-2 lg:col-span-1 overflow-scroll" style={{scrollbarWidth:'none'}}>
       
      {
       data.length===0 ?

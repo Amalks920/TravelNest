@@ -4,14 +4,16 @@
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+
 }
 
+*{
+  scrollbar-width: none;
+}
 h1,p{
   font-family: 'Courier New', Courier, monospace;
 }
 
-
-
-
-
-
+html{
+  scrollbar-width: none;
+}

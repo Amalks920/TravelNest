@@ -16,7 +16,7 @@ const addRoomHelper = (data) => {
 };
 
 const addRoomToHotel = (hotel_id, room_id) => {
-  console.log(hotel_id, " +++++++----===>  ", room_id);
+
   return new Promise(async (resolve, reject) => {
     try {
       const res = await hotelModel.updateOne(
@@ -373,7 +373,8 @@ const addRoomImagesHelper = (room_id, imagePathArray) => {
 };
 
 const searchRoomsHotel = async (location, collisions, priceRange, roomType,amenities) => {
-
+console.log(amenities)
+console.log('amenities')
 if(!roomType) console.log(true)
 
 
@@ -400,30 +401,30 @@ if(!roomType) console.log(true)
 
     ],
   }
-  const matchQuery2= {
-    $and: [
-      {
-        location: {
-          $regex: `${location}`,
-          $options: "i",
-        },
-      },
-      {
-        _id: {
-          $nin: collisions,
-        },
-      },
+  // const matchQuery2= {
+  //   $and: [
+  //     {
+  //       location: {
+  //         $regex: `${location}`,
+  //         $options: "i",
+  //       },
+  //     },
+  //     {
+  //       _id: {
+  //         $nin: collisions,
+  //       },
+  //     },
 
-      // { rate: { $gte: Number(priceRange?.min) || 0 } }, // min price
+  //     // { rate: { $gte: Number(priceRange?.min) || 0 } }, // min price
 
-      // { rate: { $lte: Number(priceRange?.max) || Number.MAX_SAFE_INTEGER } }, // max price
+  //     // { rate: { $lte: Number(priceRange?.max) || Number.MAX_SAFE_INTEGER } }, // max price
 
-      //   { roomType: roomType },
+  //     //   { roomType: roomType },
 
-    ],
-  }
+  //   ],
+  // }
 
-  const pipeline=        [
+  const pipeline=[
     {
       $lookup: {
         from: "hotels",
@@ -433,6 +434,14 @@ if(!roomType) console.log(true)
       },
     },
     {
+      $lookup: {
+        from:'reviews',
+        localField:'_id',
+        foreignField:'room_id',
+        as:'reviewDetails'
+      }
+    },
+    {
       $unwind: "$hotelDetails",
     },
     {
@@ -440,9 +449,6 @@ if(!roomType) console.log(true)
         "hotelDetails.status": "listed",
       },
     },
-
-
-
     {
       $project: {
         _id: 1,
@@ -459,6 +465,7 @@ if(!roomType) console.log(true)
         hotelDescription: "$hotelDetails.description",
         hotelImages: "$hotelDetails.images",
         location: "$hotelDetails.location",
+        reviewDetails:1
       },
     },
 

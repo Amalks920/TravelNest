@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useGetAllHotelDetailsQuery } from "../../userManagement/services/getAllHotelDetailsApiSlice";
 import { HotelTable } from "./HotelTable";
-import { OwnerTable } from "./ownerTable";
+import { OwnerTable } from "./OwnerTable";
 import RoomDetails from "../../hotelManagement/components/RoomsDetails";
 import { RoomsTable } from "./RoomsTable";
 import { Button } from "@material-tailwind/react";

@@ -24,12 +24,19 @@ const SignupForm = ({ role }) => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [verifyEmailSignup,{isError,isLoading,isSuccess,isUninitialized}]=useVerifyEmailSignupMutation()
+  const [verifyEmailSignup,{isError,isLoading,isSuccess,isUninitialized,error:signupError}]=useVerifyEmailSignupMutation()
 
   const _onSave =async  (values) => {
     
     const response=await verifyEmailSignup({email:values.email}).unwrap()
-    console.log(response)
+
+
+   
+
+    dispatch(createUser(values));
+    if(error) return 
+
+
      if(response.isOtpSend===true){
       if(role==='user'){
         navigate(`/verify-otp-signup/${values.email}`)
@@ -38,7 +45,7 @@ const SignupForm = ({ role }) => {
       }
      }
     values.role = role;
-    dispatch(createUser(values));
+
   };
 
   if (status === "pending") {
@@ -103,7 +110,7 @@ const SignupForm = ({ role }) => {
       }) => (
         <form
           onSubmit={handleSubmit}
-          className="grid grid-rows-7   gap-8 shadow-2xl p-10 w-[27%] rounded-md"
+          className="grid  gap-8 shadow-2xl p-10 w-[27%] rounded-md border-2 "
         >
           <h2 className="grid-row-1 text-[2rem] font-bold text-center 
          bg-black 
@@ -171,7 +178,7 @@ const SignupForm = ({ role }) => {
 
           <div>
             <FormInput
-            className={'rounded-none border-blue-400'}
+            className={'rounded-none border-blue-400 '}
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.repassword}
@@ -187,7 +194,7 @@ const SignupForm = ({ role }) => {
             />
           </div>
 
-          <Link to={"/login"}>
+          <Link to={"/login"} className="">
             <p className="font-medium text-sm text-black">
               Already Have an Account?
             </p>

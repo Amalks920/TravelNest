@@ -98,6 +98,7 @@ const handleSubmit=async () => {
           <option value="double" className="text-black">double</option>
           <option value="suite" className="text-black">suite</option>
           <option value="family" className="text-black">family</option>
+          <option value="presidential" className="text-black">presidential</option>
         </select>
 
         <button

@@ -77,14 +77,14 @@ const router=express.Router()
  *         - sales
  */
 
-router.get('/get-all-sales-report-for-admin',verifyAdminJwt,getSalesReport);
-router.get('/get-sales-by-date-admin/:startDate/:endDate',verifyAdminJwt,getSalesReportByDate)
+router.get('/get-all-sales-report-for-admin',getSalesReport);
+router.get('/get-sales-by-date-admin/:startDate/:endDate',getSalesReportByDate)
 router.get('/get-total-monthly-sales-of-all-hotels',getAllHotelsMonthlySales)
 
 
-router.get('/filter-owner-sales-by-date/:startDate/:endDate',verifyOwnerJwt,getSalesReportByDate)
-router.get('/get-sales-report-booking/:hotel_id',verifyOwnerJwt,getSalesReportForOwner)
-router.get('/get-sales-report-hotel-owner/:user_id',verifyOwnerJwt,getSalesReportForOwnerHotels)
+router.get('/filter-owner-sales-by-date/:startDate/:endDate',getSalesReportByDate)
+router.get('/get-sales-report-booking/:hotel_id',getSalesReportForOwner)
+router.get('/get-sales-report-hotel-owner/:user_id',getSalesReportForOwnerHotels)
 router.get('/get-sales-per-week/:owner_id',getSalesPerTwoWeek)
 router.get('/get-sales-per-month/:owner_id',getSalesPerMonth)
 router.get('/get-sales-per-day/:owner_id',getSalesPerDay)

@@ -37,7 +37,7 @@ const PriceFilter = () => {
         checkOut: checkOut,
         roomType: roomType,
         priceRange: priceRange,
-        // aminities:aminities
+        aminities:aminities
       });
       console.log(response);
       dispatch(updateSearchResult(response.data.response));
@@ -67,7 +67,7 @@ const PriceFilter = () => {
               size={"sm"}
             />
           </div>
-          <h2 className="mt-3  flex justify-between w-[50%] text-[0.9rem] ">
+          <h2 className="mt-3  flex justify-between w-[50%] text-[0.9rem] md:text-[0.7rem]">
             <span>₹500</span> - <span>₹1999</span>
           </h2>
         </div>
@@ -84,7 +84,7 @@ const PriceFilter = () => {
               size={"sm"}
             />
           </div>
-          <h2 className="mt-3  flex justify-between w-[50%] text-[0.9rem]  ">
+          <h2 className="mt-3  flex justify-between w-[50%] text-[0.9rem] md:text-[0.7rem]">
             <span>₹2000</span> - <span>₹3499</span>
           </h2>
         </div>
@@ -101,7 +101,7 @@ const PriceFilter = () => {
               size={"sm"}
             />
           </div>
-          <h2 className="mt-3  flex justify-between w-[50%] text-[0.9rem]  ">
+          <h2 className="mt-3  flex justify-between w-[50%] text-[0.9rem]  md:text-[0.7rem]">
             <span>₹3500</span> - <span>₹4999</span>
           </h2>
         </div>
@@ -118,7 +118,7 @@ const PriceFilter = () => {
               size={"sm"}
             />
           </div>
-          <h2 className="mt-3  flex justify-between w-[50%] text-[0.9rem]  ">
+          <h2 className="mt-3  flex justify-between w-[50%] text-[0.9rem]  md:text-[0.7rem]">
             <span>₹5000</span> - <span>₹6499</span>
           </h2>
         </div>
@@ -135,7 +135,7 @@ const PriceFilter = () => {
               size={"sm"}
             />
           </div>
-          <h2 className="mt-3  flex justify-between w-[50%] text-[0.9rem]  ">
+          <h2 className="mt-3  flex justify-between w-[50%] text-[0.9rem]  md:text-[0.7rem]">
             <span>₹6500</span> - <span>₹7499</span>
           </h2>
         </div>
@@ -152,7 +152,7 @@ const PriceFilter = () => {
               size={"sm"}
             />
           </div>
-          <h2 className="mt-3  flex justify-between w-[50%] text-[0.9rem]  ">
+          <h2 className="mt-3  flex justify-between w-[50%] text-[0.9rem] md:text-[0.7rem]">
             <span>₹7500</span> - <span>₹8499</span>
           </h2>
         </div>
@@ -169,14 +169,14 @@ const PriceFilter = () => {
               size={"sm"}
             />
           </div>
-          <h2 className="mt-3  flex justify-between w-[50%] text-[0.9rem]  ">
-            <span>₹8500</span> - <span>₹9499</span>
+          <h2 className="mt-3  flex justify-between w-[50%] text-[0.9rem] md:text-[0.7rem] ">
+            <span> ₹ 8500 </span> - <span> ₹ 9499</span>
           </h2>
         </div>
       </div>
 
       <h2 className="w-full text-left mt-8 mb-5 ms-[11%] font-bold hidden">Amenities</h2>
-              <AmenitiesFilter/>
+              <AmenitiesFilter />
     </>
   );
 };

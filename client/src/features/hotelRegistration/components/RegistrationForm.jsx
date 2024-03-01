@@ -16,16 +16,16 @@ import {
   selectUserId,
 } from "../../authentication/services/loginSlice";
 
-import {
-  selectHotelName,
-  selectDescription,
-  selectImages,
-  selectLocation,
-  updateDescription,
-  updateHotelName,
-  updateImage,
-  updateLocation,
-} from "../services/editHotelFormSlice";
+// import {
+//   selectHotelName,
+//   selectDescription,
+//   selectImages,
+//   selectLocation,
+//   updateDescription,
+//   updateHotelName,
+//   updateImage,
+//   updateLocation,
+// } from "../services/editHotelFormSlice";
 import useGetHotel from "../hooks/useGetHotel";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { useEditHotelMutation } from "../services/EditHotelApiSlice";
@@ -38,11 +38,11 @@ const RegistrationForm = ({ isEditForm }) => {
   const user_id = useSelector(selectUserId);
   const imageToBeRemoved=useRef(null)
 
-  const initialHotelName = useSelector(selectHotelName);
-  const initialLocation = useSelector(selectLocation);
-  const initialDescription = useSelector(selectDescription);
-  const initialImages = useSelector(selectImages);
-  const hotelImages = useGetHotel(hotel_id);
+  // const initialHotelName = useSelector(selectHotelName);
+  // const initialLocation = useSelector(selectLocation);
+  // const initialDescription = useSelector(selectDescription);
+  // const initialImages = useSelector(selectImages);
+  // const hotelImages = useGetHotel(hotel_id);
   const navigate = useNavigate();
   const [isModalOpen,setIsModalOpen]=useState(false)
 
@@ -94,10 +94,10 @@ const RegistrationForm = ({ isEditForm }) => {
   return (
     <Formik
       initialValues={{
-        hotelName: !isEditForm ? "" : initialHotelName,
-        location: !isEditForm ? "" : initialLocation,
-        description: !isEditForm ? "" : initialDescription,
-        images: isEditForm ? [] : initialImages,
+        hotelName: "",
+        location: "",
+        description: "",
+        images: "",
       }}
       validationSchema={Yup.object().shape({
         hotelName: Yup.string()

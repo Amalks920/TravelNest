@@ -35,8 +35,6 @@ const roomSearchController = async (req, res, next) => {
   const amenities=req.query.aminities.split(',')
   const collisions = res.locals.existingCollisions;
   const c=res.locals.collisions
-  console.log(c)
-  console.log('c')
 
   const location = req.query.search; 
   const roomType = req.query.roomType || null;
@@ -48,8 +46,6 @@ const roomSearchController = async (req, res, next) => {
     min,
     max,
   };
-
-
 
   try {
     const response = await searchRoomsHotel(

@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   selectHotelName,
   updateHotelName,
-} from "../../hotelRegistration/services/editHotelFormSlice";
+} from "../../hotelRegistration/services/EditHotelFormSlice";
 import { selectHotelById } from "../services/hotelListSlice";
 import TableRow from "./TableRow";
 import { Link } from "react-router-dom";

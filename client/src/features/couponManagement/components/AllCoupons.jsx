@@ -19,7 +19,7 @@ import { format } from "date-fns";
 import { useState } from "react";
 import CancelCouponModal from "./CancelCouponModal";
 
-  const TABLE_HEAD = ["Coupon Code", "Description", "Discount Type","Minimum Amount" ,"Discount", "Expiration Date",""];
+  const TABLE_HEAD = ["Coupon Code", "Description", "Discount Type","Minimum Amount" ,"Discount", "Expiration Date","",""];
 
 
   const TABLE_ROWS = [
@@ -121,13 +121,13 @@ const AllCoupons=({couponsLength})=>{
                     </td>
   
                     <td className={classes + " " + "border-r-2"}>
-                      <div className="flex flex-col">
+                      <div className="flex flex-col w-[50%]  p-0">
                         <Typography
                           variant="small"
                           color="blue-gray"
-                          className="font-normal text-[0.8rem] "
+                          className="font-normal text-[0.8rem]"
                         >
-                          {description}
+                       <h2 className="w-[50%]">{description}</h2>   
                         </Typography>
                       </div>
                     </td>
@@ -173,6 +173,12 @@ const AllCoupons=({couponsLength})=>{
                                           })}
                     </h2>
                     </td>
+                    <td>
+                    <Link className="text-[0.7rem] text-blue-900 ps-5" to={`/owner/edit-coupon/${_id}`}>
+                                     Edit
+                    </Link>
+                    </td>
+
                     <td>
                     <h2 className="text-[0.7rem] text-black ps-5">
                                    <Button

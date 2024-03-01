@@ -26,11 +26,24 @@ const couponApiSlice=apiSlice.injectEndpoints({
                 body:data
             }),
             invalidatesTags:['coupons']
+        }),
+        getACoupon:builder.query({
+            query:(data)=> `/coupon/get-a-coupon/${data.coupon_id}`
+        }),
+        editACoupon:builder.mutation({
+
+            query:(data)=>({
+             url:`/coupon/edit-coupon/${data.coupon_id}`,
+             method:'post',
+             body:data
+            })
+            
         })
     })
 })
 
 export const {
     useAddCouponMutation,useGetAllCouponsQuery,
-    useGetAllCouponsLengthQuery,useDeListCouponMutation
+    useGetAllCouponsLengthQuery,useDeListCouponMutation,
+    useGetACouponQuery,useEditACouponMutation
 } = couponApiSlice;

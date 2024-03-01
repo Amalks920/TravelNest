@@ -16,11 +16,11 @@ const client = new OAuth2Client();
 
 const registerNewUser = async (req, res, next) => {
   try {
+
     const response = await signupHelper(req.body);
     await createWalletHelper(response._id);
     res.status(200).json({ response });
   } catch (error) {
-   // console.log(error.message);
     console.log(error.code)
     res.status(500).json({success:false, error: 'internal server error' });
   }
@@ -184,9 +184,11 @@ const verifyEmailSignup = async (req, res, next) => {
   let email = req.body.email;
   try {
    
-
-   
       userEmail = req.body.email;
+
+      const DoesUserExist=await findUserHelper(userEmail)
+
+
       const EMAIL = process.env.MAILGEN_EMAIL;
       const PASSWORD = process.env.MAILGEN_PASSWORD;
 

@@ -9,14 +9,14 @@ import io from 'socket.io-client';
 
 import {thunk} from 'redux-thunk';
 import verifyEmailSlice from '../features/authentication/services/verifyEmailSlice';
-import EditHotelFormSlice from '../features/hotelRegistration/services/editHotelFormSlice';
+import EditHotelFormSlice from '../features/hotelRegistration/services/EditHotelFormSlice';
 import hotelListSlice from '../features/hotelManagement/services/hotelListSlice';
 import editRoomFormSlice from '../features/hotelRegistration/services/editRoomFormSlice';
 import priceSlice from '../features/browse/services/priceSlice';
 import searchSlice from './searchSlice';
 import roomsSlice from '../features/browse/services/roomsSlice';
 import walletCheckOutSlice from '../features/walletPayment/service/walletCheckOutSlice';
-
+       
 // const socket = io.connect('http://localhost:4000');
 
 const persistConfig={
@@ -40,7 +40,7 @@ const store=configureStore({
         persistedSlice:persistedAuthReducer,
         verify:verifyEmailSlice,
         signup:signupSlice,
-        editHotelForm:EditHotelFormSlice,
+       editHotelForm:EditHotelFormSlice,
         editRoomForm:editRoomFormSlice,
         priceSlice:priceSlice,
         roomsInHotel:roomsSlice,

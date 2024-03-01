@@ -11,8 +11,8 @@ const HotelListSection = ({ hotel }) => {
   const checkOut=useSelector(selectCheckOut)
 
   return (
-(    <div className="">
-      <div className="grid grid-flow-row grid-cols-[35%,10%,55%] mb-14 h-[300px] m-[5%]  p-2 border-2">
+(    <div className="" >
+      <div className="grid grid-flow-row grid-cols-[35%,10%,55%] mb-14 h-[300px] m-[5%]  p-2 border-2" >
         <div
           className="col-span-1  max-h-[300px] bg-no-repeat bg-cover rounded-sm"
           style={{

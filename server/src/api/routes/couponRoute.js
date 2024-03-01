@@ -1,5 +1,5 @@
 const express=require('express')
-const { addCoupon, getAllCouponsOwner, getAllCoupnsOwnerLength, getAllCouponsUser, deListCoupon } = require('../controllers/couponController')
+const { addCoupon, getAllCouponsOwner, getAllCoupnsOwnerLength, getAllCouponsUser, deListCoupon, getACouponController, editCoupon } = require('../controllers/couponController')
 const verifyOwnerJwt = require('../middlewares/verifyOwnerJwt')
 const verifyJwt = require('../utils/verifyJwt')
 const router=express.Router()
@@ -77,9 +77,7 @@ router.get('/get-all-coupon-user',getAllCouponsUser)
  *           description: Bad request
  */
 
-router.put('/edit-coupon/{coupon-id}',(req,res)=>{
-    res.status(200).json({})
-})
+router.post('/edit-coupon/:coupon_id',editCoupon)
 
 /**
  * @openapi
@@ -140,9 +138,7 @@ router.delete('/delete-coupon/{coupon-id}',(req,res)=>{
  */
 
 
-router.get('/get-coupon/{coupon-id}',(req,res)=>{
-    res.status(200).json({})
-})
+router.get('/get-a-coupon/:coupon_id',getACouponController)
 
 
 module.exports=router

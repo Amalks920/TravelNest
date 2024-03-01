@@ -71,7 +71,7 @@ const AddCoupon = () => {
           <form
             onSubmit={handleSubmit}
             action=""
-            className="h-full grid grid-rows-7 grid-cols-2"
+            className="h-full grid grid-rows-7  grid-cols-2"
           >
             <div className="col-span-2 px-5 flex items-center">
               <h2 className="text-center w-full font-bold">Add Coupon</h2>
@@ -217,7 +217,7 @@ const AddCoupon = () => {
                 className="border-2 rounded-md"
               />
             </div>
-            <div className="col-span-2  px-5 flex items-center">
+            <div className="col-span-2  px-5 flex items-center mt-[65px]">
               <Textarea
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -235,7 +235,7 @@ const AddCoupon = () => {
                 className="border-2 rounded-md"
               ></Textarea>
             </div>
-            <div className="col-span-2 px-5 flex items-center justify-center ">
+            <div className="col-span-2 px-5 flex items-center justify-center mt-[90px]">
               <Button loading={isLoading} type="submit" className="rounded-md w-[30%] bg-black">
                 Submit
               </Button>

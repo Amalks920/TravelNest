@@ -85,11 +85,33 @@ const deListCouponHelper = async (id,status) =>{
     }
 }
 
+const getACouponHelper = async (coupon_id) => {
+    try {
+      const response= await couponModal.findOne({_id:coupon_id})  
+      return response
+    } catch (error) {
+        throw error
+    }
+}
+
+const editCouponHelper = async (data) => {
+    const {values,coupon_id}=data
+    try {
+    const response=await couponModal.updateOne(
+        {_id:coupon_id},
+        values
+        )
+        return response
+    } catch (error) {
+        throw error;
+    }
+}
+
 
 
 module.exports={
     addCouponHelper,getAllCouponsOwnerHelper,
     getAllCoupnsOwnerLengthHelper,getAllCouponsUserHelper,
     getACouponByCodeHelper,changeCouponCountHelper,
-    deListCouponHelper
+    deListCouponHelper,getACouponHelper,editCouponHelper
 }

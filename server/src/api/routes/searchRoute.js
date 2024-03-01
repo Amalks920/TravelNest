@@ -7,5 +7,4 @@ const router = express.Router();
 
 router.get('/',checkAvailability,roomSearchController);
 
-
 module.exports=router;

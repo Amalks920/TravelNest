@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { useGetAHotelForAdminQuery } from "../services/getAHotelApiSlice";
-import { updateEditHotelFormSlice } from "../../hotelRegistration/services/editHotelFormSlice";
+import { updateEditHotelFormSlice } from "../../hotelRegistration/services/EditHotelFormSlice";
 
 
 const useGetHotelDetails=(hotel_id)=>{

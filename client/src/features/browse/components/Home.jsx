@@ -63,30 +63,33 @@ const Home = () => {
         }}
       ></div>
       <div className="row-span-1 col-span-full  min-h-[50vh]">
-        {/* <h1 className="text-center font-bold text-[1.8rem] m">Popular Locations</h1> */}
+        <h1 className="text-center font-bold text-[1.3rem] mb-10"> Locations</h1>
         <div className="w-[91%]  h-[70%] ms-[5%] rounded-lg shadow-md border-2 bg-white">
-          <div className="border-b-2 h-[60px] flex gap-4 justify-left items-center px-[50px]">
+          
+          <div className="border-b-2 h-[60px]  gap-4 justify-left items-center px-[50px] hidden">
 
-            <h2 className="font-bold text-[1.3rem] text-center w-full my-3">Popular Locations</h2>
-            {/* {location?.map(({ _id, hotelImages }, index) => {
+            {/* <h2 className="font-bold text-[1.3rem] text-center w-full my-3">Popular Locations</h2> */}
+            {location?.map(({ _id, hotelImages }, index) => {
               return <h2
               onClick={()=>{
-                setLocation(index)
+                console.log(_id)
+                setLocation(_id)
               }}
                className={`capitalize cursor-pointer  text-[1.1rem] ${hotelLocation===index? 'border-b-4 border-black font-bold':null}
                 text-center   w-full h-[100%] pt-4`}>{_id}</h2>;
-            })} */}
+            })}
           </div>
 
-            <div className="flex gap-4 justify-left items-center px-[50px] ">
+            <div className="flex gap-4 justify-left items-center px-[50px] mb-4">
           {location?.map(({ _id, hotelImages }, index) => {
            
-            return   <div className=" text-center  w-full h-[100%] pt-4" >
-              <div className="w-[80%] h-[170px] bg-cover" style={{backgroundImage:`url(${IMAGE_BASE_URL+'/'+hotelImages[0][0]})`}}></div>
+            return   <div className=" text-center  w-full h-[100%] pt-4 cursor-pointer" >
+              <div className="w-[80%] h-[170px] bg-cover rounded-md" style={{backgroundImage:`url(${IMAGE_BASE_URL+'/'+hotelImages[0][0]})`}}></div>
             </div>
           
         })}
           </div>
+
         </div>
       </div>
     </div>

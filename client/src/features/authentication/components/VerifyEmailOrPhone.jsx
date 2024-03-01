@@ -41,16 +41,20 @@ const VerifyEmailOrPhone = ({ role, isOtpVerified,verifySignup }) => {
     },
   ] = useVerifyOtpMutation();
 
-const onTimeout=()=>{
 
-}
 
 const [seconds, setSeconds] = useState(60);
+const [isInputDisabled,setIsInputDisabled]=useState(false);
+
+const onTimeout=()=>{
+ // setIsInputDisabled(true)
+}
 
 useEffect(() => {
   const interval = setInterval(() => {
     setSeconds((prevSeconds) => {
       if (prevSeconds<=0 ) {
+        
         clearInterval(interval);
         onTimeout();
         return 0;
@@ -72,20 +76,22 @@ useEffect(() => {
       const response =  !verifySignup? await verifyEmail(values).unwrap():await verifyEmailSignup(values).unwrap();
 
       console.log(response);
+      
       if (response.isOtpSend) {
 
-
+        setIsInputDisabled(false)
 
 
         emailRef.current = values.email;
         console.log("navigate to otp page");
-
+       if(verifySignup) window.location.reload(true)
           if(verifySignup && role==='user') return  navigate(`/verify-otp-signup/${emailRef.current}`)
         role === "user"
           ? navigate(`/verify-otp/${emailRef.current}`)
           : role === "owner"
           ? navigate(`/owner/verify-otp/${emailRef.current}`)
           : navigate(`/admin/verify-otp/${emailRef.current}`);
+        
       }
     } catch (error) {
       setError(error.data.message);
@@ -94,13 +100,11 @@ useEffect(() => {
   };
 
   const handleVerifyOtp = async (values) => {
-    console.log(values);
-
     try {
       const response = await verifyOtp({ email: email, otp: values.otp });
       console.log(response);
       if (response.data) {
-
+        setIsInputDisabled(false)
         if(verifySignup){
           if(role==='user'){
          return   navigate('/login')
@@ -148,13 +152,13 @@ useEffect(() => {
       }) => (
         <form
           onSubmit={handleSubmit}
-          className="grid grid-rows-7  gap-8 shadow-2xl p-10 border-t-2 border-t-gray-100"
+          className="grid grid-rows-1  gap-8 shadow-2xl p-10 border-t-2 border-t-gray-100"
         >
           <p className="text-center font-bold">
             {!isOtpVerified ? "Enter Email/Phone" : "Verify OTP"}
           </p>
           <p className="text-center  text-red-900">{error}</p>
-          <div className="w-80">
+          <div className="w-80 s">
             {!isOtpVerified ? (
               <FormInput
                 label={!errors.email ? "Email" : errors.email}
@@ -171,11 +175,13 @@ useEffect(() => {
                 label={!errors.otp ? "otp" : errors.otp}
                 type={"number"}
                 name={"otp"}
+                
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.otp}
                 error={errors.otp && touched.otp && errors.otp}
                 success={!errors.otp && touched.otp ? true : false}
+               disabled={isInputDisabled}
               />
             )}
           </div>
@@ -189,9 +195,11 @@ useEffect(() => {
             />
           </div>
         { seconds>0 ? <h1>{seconds}s</h1>:
-          <h1 className="cursor-pointer " onClick={
+          <h1 className={`cursor-pointer ${!isOtpVerified && 'hidden'}`} onClick={
              ()=>{
+              setIsInputDisabled(false)
               _onSave({email:email})
+
              }
           }
           >Resend otp</h1>}

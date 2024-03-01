@@ -86,12 +86,12 @@ const LoginForm = ({ role }) => {
         >
 
 
-          <div className="flex justify-center ">
+          <div className="row-span-1 col-span-full flex justify-center ">
             {/* <Auth  text={"SIGNIN WITH GOOGLE"} /> */}
             <GoogleAuth role={role} setErr={setErr}/>
           </div>
 
-          <div className="row-span-1">
+          <div className="row-span-1 mt-[10%]">
             {/* <h1 className="text-2xl">TravelNest</h1> */}
             {/* <h2 className="text-center text-[2rem]">{'TravelNest'}</h2> */}
 { err &&           <h2 className="text-red-700 capitalize text-sm text-center text-[0.8rem]  w-full">
@@ -100,7 +100,7 @@ const LoginForm = ({ role }) => {
             {console.log(errors)}
           </div>
 
-          <div className="w-72">
+          <div className="row-span-1 w-72 mt-[10%]">
             <FormInput
               label={!errors.email ? "Email" : errors.email}
               name={"email"}
@@ -113,7 +113,7 @@ const LoginForm = ({ role }) => {
             />
           </div>
 
-          <div className="w-72">
+          <div className="row-span-1 w-72 mt-[25%]">
             <FormInput
               label={!errors.password ? "Password" : errors.password}
               name="password"
@@ -126,7 +126,7 @@ const LoginForm = ({ role }) => {
             />
           </div>
 
-          <div className="flex justify-between">
+          <div className="row-span-1 flex justify-between mt-[45%] mx-4">
           <Link to={role === "user" ? "/signup" : "/owner/signup"}>
             <p className="  font-light -mt-5 text-black text-[0.8rem]">
               Signup?
@@ -147,7 +147,8 @@ const LoginForm = ({ role }) => {
             </p>
           </Link>
           </div>
-          <div className=" -mt-5">
+
+          <div className="row-span-1 mt-[35%]">
             <ButtonDefault
               loading={isLoading}
               value="submit"

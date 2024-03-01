@@ -58,8 +58,13 @@ const searchSlice=createSlice({
             state.aminities.push(action.payload)
         },
         removeFromAmenities:(state,action)=>{
-            console.log('remove amenties')
-            state.aminities.splice(action.payload,1)
+            if(state.aminities.length==0) return state.aminities.push(action.payload)
+           const arr1= state.aminities.slice(0,Number(action.payload))
+           const arr2=state.aminities.slice(Number(action.payload)+1,state.aminities.length+1)
+            state.aminities=[...arr1,...arr2]
+        },
+        clearAmenities:(state,action) =>{
+            state.aminities=[]
         }
     }
 
@@ -71,12 +76,12 @@ export const selectCheckIn=(state)=>state.persistedSlice.search.checkIn;
 export const selectCheckOut=(state)=>state.persistedSlice.search.checkOut;
 export const selectRoomType=(state)=>state.persistedSlice.search.roomType;
 export const selectSearchResult=(state)=>state.persistedSlice.search.searchResult;
-export const selectPriceRange=(state)=>state.persistedSlice.search.priceRange;
-export const selectAminities=(state)=>state.persistedSlice.search.aminities;
+export const selectPriceRange=(state) => state.persistedSlice.search.priceRange;
+export const selectAminities=(state) => state.persistedSlice.search.aminities;
 
 export default searchSlice.reducer
 export const {updateIsSearchBarOpen,updateLocation,updateCheckIn,
               updateCheckOut,updateRoomType,updateSearchResult,
               updatePriceRange,updateAllDetails,updateAmenities,
-              removeFromAmenities
+              removeFromAmenities,clearAmenities
              }=searchSlice.actions

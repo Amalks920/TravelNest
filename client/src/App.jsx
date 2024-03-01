@@ -1,28 +1,18 @@
 import './App.css'
 // import { Navigate, , redirect } from 'react-router-dom'
-import { createBrowserRouter, redirect, Route, RouterProvider, Routes } from 'react-router-dom'
+import {  Route, Routes } from 'react-router-dom'
 import Signup from './pages/Signup'
 import Login from './pages/Login';
-import VerifyEmailOrPhone from './features/authentication/components/VerifyEmailOrPhone';
 import AuthPageContainer from './layouts/AuthPageContainer';
-import ForgotPasswordForm from './features/authentication/components/ForgotPasswordForm';
 import PageContainer from './layouts/PageContainer';
 import HotelRegistration from './pages/owner/HotelRegistration';
-import CustomersList from './pages/owner/CustomersList';
 import RoomRegistration from './pages/owner/RoomRegistration';
-import HotelDetails from './pages/owner/HotelDetails';
 import HomePage from './pages/user/HomePage.jsx';
 import RequireUserAuth from './features/authentication/components/RequireUserAuth';
-import PublicRoutes from './utils/routes/PublicRoutes';
-import UserRoutes from './utils/routes/UserRoutes';
-import OwnerRoutes from './utils/routes/OwnerRoutes';
-import { checkAuth } from './utils/checkAuth';
 import { useSelector } from 'react-redux';
 import { selectRole, selectToken, selectUserId } from './features/authentication/services/loginSlice';
-import path from 'path';
 import RequireOwnerAuth from './features/authentication/components/RequireOwnerAuth';
 import CheckAuth from './features/authentication/components/CheckAuth';
-import HotelList from './features/hotelManagement/components/HotelList';
 import RoomList from './features/hotelManagement/components/RoomList';
 import HotelListPage from './pages/owner/HotelListPage';
 import RequireAdminAuth from './features/authentication/components/RequireAdminAuth';
@@ -31,13 +21,11 @@ import DetailsPage from './pages/admin/DetailsPage.jsx';
 import AdminHotelListPage from './pages/admin/AdminHotelListPage.jsx';
 import SingleHotelPage from './pages/user/SingleHotelPage.jsx';
 import VerifyEmailPage from './pages/VeirfyEmailPage.jsx';
-import ResetPassword from './features/authentication/components/ResetPassword.jsx';
 import ResetPasswordPage from './pages/ResetPasswordPage.jsx';
 import HotelDetailsPage from './pages/owner/HotelDetailsPage.jsx';
 import SearchPage from './pages/user/SearchPage.jsx';
 import Success from './features/booking/components/Success.jsx';
 import BookingsList from './features/bookingManagement/components/BookingsList.jsx';
-import BookingDetails from './features/booking/components/BookingDetails.jsx';
 import BookingsListPage from './pages/user/BookingsListPage.jsx';
 import SingleBookingDetails from './features/booking/components/SingleBookingDetails.jsx';
 import BookingDetailsPage from './pages/owner/BookingDetailsPage.jsx';
@@ -61,6 +49,8 @@ import OwnerSalesPage from './pages/owner/OwnerSalesPage.jsx';
 import OwnerSalesByHotelPage from './pages/owner/OwnerSalesByHotelPage.jsx';
 import OwnerHomePage from './pages/owner/OwnerHomePage.jsx';
 import AdminHomePage from './pages/admin/AdminHomePage.jsx';
+import BookingSalesAdminPage from './pages/admin/BookingSalesAdminPage.jsx';
+import EditCouponPage from './pages/owner/EditCouponPage.jsx';
 
 function App() {
   const token = useSelector(selectToken)
@@ -100,6 +90,7 @@ function App() {
       <Route path='verify-email' element={<VerifyEmailPage  role={'user'} isOtpVerified={false} verifySignup={false}/>}></Route>
       <Route path='verify-otp/:email' element={<VerifyEmailPage role={'user'}  isOtpVerified={true} verifySignup={false}/>}></Route>
       <Route path='verify-otp-signup/:email' element={<VerifyEmailPage role={'user'}  isOtpVerified={true} verifySignup={true}/>}></Route>
+
       <Route path='reset-password/:email' element={<ResetPasswordPage role={'user'}/>}></Route>
 
 
@@ -129,6 +120,7 @@ function App() {
         <Route path='/owner/chats' element={<OwnerChatPage socket={socket} />} ></Route>
         <Route path='/owner/all-bookings' element={<AllBookingsPage/>} ></Route>
         <Route path='/owner/add-coupon' element={<AddCouponPage/>}></Route>
+        <Route path='/owner/edit-coupon/:coupon_id' element={<EditCouponPage/>}></Route>
         <Route path='/owner/review/:hotel_id' element={<HotelReviews/>}></Route>
         <Route path='/owner/all-coupons' element={<AllCouponsPage/>}></Route>
         <Route path='/owner/sales-report/:hotel_id' element={<OwnerSalesPage/>}></Route>
@@ -152,6 +144,7 @@ function App() {
             <Route path='/admin/hotel-details/:_id' element={<DetailsPage/>} > </Route>
             <Route path='/admin/hotel-list' element={<AdminHotelListPage/>} > </Route>
             <Route path='/admin/sales-report' element={<SalesReportPage/>} > </Route>
+            <Route path='/admin/booking-sales/:hotel_id' element={<BookingSalesAdminPage/>} > </Route>
           </Route>
       </Route>
        
